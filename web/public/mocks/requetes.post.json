@@ -1,0 +1,4 @@
+{
+  "nom": "ma-requete",
+  "sql": "SELECT p.nom, SUM(a.nb_commits) AS commits, SUM(a.ajouts) AS ajouts\nFROM activite_jour a\nJOIN projet p ON p.id = a.projet_id\nGROUP BY p.nom\nORDER BY commits DESC"
+}

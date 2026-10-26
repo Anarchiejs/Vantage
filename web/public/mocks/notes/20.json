@@ -1,0 +1,17 @@
+{
+  "id": 20,
+  "titre": "Go",
+  "dossier": "Technos",
+  "degre": 1,
+  "chemin": "Technos/Go.md",
+  "maj": "2026-10-26",
+  "contenu": "# Go\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Observatoire]].",
+  "voisins": [
+    {
+      "id": 1,
+      "titre": "Observatoire",
+      "dossier": "Projets",
+      "degre": 7
+    }
+  ]
+}

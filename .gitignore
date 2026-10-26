@@ -6,3 +6,4 @@ testdata/depots/
 /observatoire.exe
 web/node_modules/
 web/dist/
+web/tsconfig.tsbuildinfo

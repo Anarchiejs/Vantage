@@ -1,0 +1,29 @@
+{
+  "id": 4,
+  "titre": "Northwind",
+  "dossier": "Projets",
+  "degre": 3,
+  "chemin": "Projets/Northwind.md",
+  "maj": "2026-10-26",
+  "contenu": "# Northwind\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[TypeScript]].\nLié à [[MongoDB]].\nLié à [[IA locale]].",
+  "voisins": [
+    {
+      "id": 22,
+      "titre": "TypeScript",
+      "dossier": "Technos",
+      "degre": 5
+    },
+    {
+      "id": 26,
+      "titre": "MongoDB",
+      "dossier": "Technos",
+      "degre": 1
+    },
+    {
+      "id": 43,
+      "titre": "IA locale",
+      "dossier": "IA",
+      "degre": 2
+    }
+  ]
+}

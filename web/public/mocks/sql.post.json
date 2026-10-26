@@ -1,0 +1,14 @@
+{
+  "colonnes": ["nom", "commits", "ajouts"],
+  "lignes": [
+    ["Observatoire", 120, 6400],
+    ["Compass", 157, null],
+    ["Harbor", 231, 1800],
+    ["Keel", 268, 900],
+    ["Quartz", 342, 4100],
+    ["Sable", 379, 220],
+    ["Waypoint", 453, 300]
+  ],
+  "duree_ms": 12,
+  "tronque": false
+}

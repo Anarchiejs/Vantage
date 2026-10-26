@@ -1,0 +1,41 @@
+{
+  "id": 22,
+  "titre": "TypeScript",
+  "dossier": "Technos",
+  "degre": 5,
+  "chemin": "Technos/TypeScript.md",
+  "maj": "2026-10-26",
+  "contenu": "# TypeScript\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Observatoire]].\nLié à [[Compass]].\nLié à [[Northwind]].\nLié à [[Lantern]].\nLié à [[Waypoint]].",
+  "voisins": [
+    {
+      "id": 1,
+      "titre": "Observatoire",
+      "dossier": "Projets",
+      "degre": 7
+    },
+    {
+      "id": 2,
+      "titre": "Compass",
+      "dossier": "Projets",
+      "degre": 4
+    },
+    {
+      "id": 4,
+      "titre": "Northwind",
+      "dossier": "Projets",
+      "degre": 3
+    },
+    {
+      "id": 5,
+      "titre": "Lantern",
+      "dossier": "Projets",
+      "degre": 2
+    },
+    {
+      "id": 10,
+      "titre": "Waypoint",
+      "dossier": "Projets",
+      "degre": 3
+    }
+  ]
+}

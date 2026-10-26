@@ -1,0 +1,17 @@
+{
+  "id": 27,
+  "titre": "Luau",
+  "dossier": "Technos",
+  "degre": 1,
+  "chemin": "Technos/Luau.md",
+  "maj": "2026-10-26",
+  "contenu": "# Luau\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Keel]].",
+  "voisins": [
+    {
+      "id": 6,
+      "titre": "Keel",
+      "dossier": "Projets",
+      "degre": 2
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "date_mesure": "2026-03-31",
+    "langage": "Go",
+    "lignes_code": 2
+  },
+  {
+    "date_mesure": "2026-03-31",
+    "langage": "Markdown",
+    "lignes_code": 38
+  },
+  {
+    "date_mesure": "2026-03-31",
+    "langage": "Plain Text",
+    "lignes_code": 2
+  },
+  {
+    "date_mesure": "2026-03-31",
+    "langage": "SQL",
+    "lignes_code": 1
+  },
+  {
+    "date_mesure": "2026-03-31",
+    "langage": "TypeScript",
+    "lignes_code": 1
+  }
+]

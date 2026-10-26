@@ -1,0 +1,29 @@
+{
+  "id": 40,
+  "titre": "Claude Code",
+  "dossier": "IA",
+  "degre": 3,
+  "chemin": "IA/Claude Code.md",
+  "maj": "2026-10-26",
+  "contenu": "# Claude Code\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Observatoire]].\nLié à [[Lantern]].\nLié à [[Sable]].",
+  "voisins": [
+    {
+      "id": 1,
+      "titre": "Observatoire",
+      "dossier": "Projets",
+      "degre": 7
+    },
+    {
+      "id": 5,
+      "titre": "Lantern",
+      "dossier": "Projets",
+      "degre": 2
+    },
+    {
+      "id": 9,
+      "titre": "Sable",
+      "dossier": "Projets",
+      "degre": 2
+    }
+  ]
+}

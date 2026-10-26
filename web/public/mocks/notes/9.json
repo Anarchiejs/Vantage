@@ -1,0 +1,23 @@
+{
+  "id": 9,
+  "titre": "Sable",
+  "dossier": "Projets",
+  "degre": 2,
+  "chemin": "Projets/Sable.md",
+  "maj": "2026-10-26",
+  "contenu": "# Sable\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Python]].\nLié à [[Claude Code]].",
+  "voisins": [
+    {
+      "id": 25,
+      "titre": "Python",
+      "dossier": "Technos",
+      "degre": 3
+    },
+    {
+      "id": 40,
+      "titre": "Claude Code",
+      "dossier": "IA",
+      "degre": 3
+    }
+  ]
+}

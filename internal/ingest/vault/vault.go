@@ -55,7 +55,7 @@ func Lire(racine string) (Resultat, error) {
 				source = ""
 			}
 			fiche := model.Fiche{Nom: note.Titre, Statut: meta.first("statut"), CheminSource: source,
-				Maj: note.Maj, VerifieLe: meta.first("verifie_le"), VerifieCommit: meta.first("verifie_commit")}
+				Maj: note.Maj, VerifieLe: meta.first("verifie_le"), VerifieCommit: shaEnTete(meta.first("verifie_commit"))}
 			for _, techno := range meta.values("technos") {
 				if target := cible(techno); target != "" {
 					fiche.Technos = append(fiche.Technos, target)
@@ -261,6 +261,14 @@ func liens(body string) []string {
 	}
 	return result
 }
+
+// shaEnTete garde le sha en tête de verifie_commit (« 0df64eb2 (ComfyUI officiel) » → « 0df64eb2 ») ;
+// "" si la valeur ne commence pas par un sha (« aucun », « non vérifié »).
+func shaEnTete(v string) string {
+	return strings.ToLower(shaDebut.FindString(strings.TrimSpace(v)))
+}
+
+var shaDebut = regexp.MustCompile(`(?i)^[0-9a-f]{7,40}\b`)
 
 var journalLine = regexp.MustCompile(`^- (\d{4}-\d{2}-\d{2}) - \[\[([^\]]+)\]\] - (.*)$`)
 

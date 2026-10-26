@@ -1,0 +1,83 @@
+﻿[
+  {
+    "id": 1,
+    "nom": "Observatoire",
+    "statut": "en cours",
+    "commits": 120,
+    "dernier_commit": "2026-10-26T14:30:00Z",
+    "langage_principal": "Go"
+  },
+  {
+    "id": 2,
+    "nom": "Compass",
+    "statut": "en cours",
+    "commits": 157,
+    "dernier_commit": "2026-10-25T14:30:00Z",
+    "langage_principal": "TypeScript"
+  },
+  {
+    "id": 3,
+    "nom": "Lantern",
+    "statut": "en cours",
+    "commits": 194,
+    "dernier_commit": "2026-10-24T14:30:00Z",
+    "langage_principal": "JavaScript"
+  },
+  {
+    "id": 4,
+    "nom": "Harbor",
+    "statut": "en cours",
+    "commits": 231,
+    "dernier_commit": "2026-10-23T14:30:00Z",
+    "langage_principal": "Python"
+  },
+  {
+    "id": 5,
+    "nom": "Keel",
+    "statut": "en cours",
+    "commits": 268,
+    "dernier_commit": "2026-10-22T14:30:00Z",
+    "langage_principal": "Luau"
+  },
+  {
+    "id": 6,
+    "nom": "Northwind",
+    "statut": "en cours",
+    "commits": 305,
+    "dernier_commit": "2026-10-21T14:30:00Z",
+    "langage_principal": "TypeScript"
+  },
+  {
+    "id": 7,
+    "nom": "Quartz",
+    "statut": "en cours",
+    "commits": 342,
+    "dernier_commit": "2026-10-20T14:30:00Z",
+    "langage_principal": "Rust"
+  },
+  {
+    "id": 8,
+    "nom": "Sable",
+    "statut": "en cours",
+    "commits": 379,
+    "dernier_commit": "2026-08-19T14:30:00Z",
+    "langage_principal": "Python"
+  },
+  {
+    "id": 9,
+    "nom": "Tidepool",
+    "statut": "en cours",
+    "commits": 416,
+    "dernier_commit": "2026-08-15T14:30:00Z",
+    "langage_principal": "TypeScript"
+  },
+  {
+    "id": 10,
+    "nom": "Waypoint",
+    "statut": "terminé",
+    "commits": 453,
+    "dernier_commit": "2026-08-11T14:30:00Z",
+    "langage_principal": "JavaScript"
+  }
+]
+

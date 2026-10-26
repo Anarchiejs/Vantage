@@ -1,0 +1,23 @@
+{
+  "id": 43,
+  "titre": "IA locale",
+  "dossier": "IA",
+  "degre": 2,
+  "chemin": "IA/IA locale.md",
+  "maj": "2026-10-26",
+  "contenu": "# IA locale\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Northwind]].\nLié à [[Quartz]].",
+  "voisins": [
+    {
+      "id": 4,
+      "titre": "Northwind",
+      "dossier": "Projets",
+      "degre": 3
+    },
+    {
+      "id": 8,
+      "titre": "Quartz",
+      "dossier": "Projets",
+      "degre": 2
+    }
+  ]
+}

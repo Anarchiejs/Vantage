@@ -1,0 +1,23 @@
+{
+  "id": 52,
+  "titre": "2026-10-26 - Observatoire",
+  "dossier": "Sessions",
+  "degre": 2,
+  "chemin": "Sessions/2026-10-26 - Observatoire.md",
+  "maj": "2026-10-26",
+  "contenu": "# 2026-10-26 - Observatoire\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Observatoire]].\nLié à [[Codex]].",
+  "voisins": [
+    {
+      "id": 1,
+      "titre": "Observatoire",
+      "dossier": "Projets",
+      "degre": 7
+    },
+    {
+      "id": 41,
+      "titre": "Codex",
+      "dossier": "IA",
+      "degre": 4
+    }
+  ]
+}
