@@ -1,0 +1,23 @@
+{
+  "id": 5,
+  "titre": "Lantern",
+  "dossier": "Projets",
+  "degre": 2,
+  "chemin": "Projets/Lantern.md",
+  "maj": "2026-10-26",
+  "contenu": "# Lantern\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[TypeScript]].\nLié à [[Claude Code]].",
+  "voisins": [
+    {
+      "id": 22,
+      "titre": "TypeScript",
+      "dossier": "Technos",
+      "degre": 5
+    },
+    {
+      "id": 40,
+      "titre": "Claude Code",
+      "dossier": "IA",
+      "degre": 3
+    }
+  ]
+}

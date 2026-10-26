@@ -1,0 +1,23 @@
+{
+  "id": 6,
+  "titre": "Keel",
+  "dossier": "Projets",
+  "degre": 2,
+  "chemin": "Projets/Keel.md",
+  "maj": "2026-10-26",
+  "contenu": "# Keel\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Luau]].\nLié à [[Codex]].",
+  "voisins": [
+    {
+      "id": 27,
+      "titre": "Luau",
+      "dossier": "Technos",
+      "degre": 1
+    },
+    {
+      "id": 41,
+      "titre": "Codex",
+      "dossier": "IA",
+      "degre": 4
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "chemin": [
+    {
+      "id": 1,
+      "titre": "Observatoire",
+      "dossier": "Projets",
+      "degre": 7
+    },
+    {
+      "id": 22,
+      "titre": "TypeScript",
+      "dossier": "Technos",
+      "degre": 5
+    },
+    {
+      "id": 2,
+      "titre": "Compass",
+      "dossier": "Projets",
+      "degre": 4
+    }
+  ]
+}

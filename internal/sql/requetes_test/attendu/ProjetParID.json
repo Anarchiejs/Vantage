@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "nom": "Atlas",
+  "statut": "actif",
+  "chemin_source": null,
+  "fiche_maj": "2026-10-26",
+  "verifie_commit": "a1b2c3d",
+  "verifie_le": "2026-10-26"
+}

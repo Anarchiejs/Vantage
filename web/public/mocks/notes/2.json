@@ -1,0 +1,35 @@
+{
+  "id": 2,
+  "titre": "Compass",
+  "dossier": "Projets",
+  "degre": 4,
+  "chemin": "Projets/Compass.md",
+  "maj": "2026-10-26",
+  "contenu": "# Compass\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[React]].\nLié à [[TypeScript]].\nLié à [[Expo]].\nLié à [[Codex]].",
+  "voisins": [
+    {
+      "id": 21,
+      "titre": "React",
+      "dossier": "Technos",
+      "degre": 3
+    },
+    {
+      "id": 22,
+      "titre": "TypeScript",
+      "dossier": "Technos",
+      "degre": 5
+    },
+    {
+      "id": 24,
+      "titre": "Expo",
+      "dossier": "Technos",
+      "degre": 1
+    },
+    {
+      "id": 41,
+      "titre": "Codex",
+      "dossier": "IA",
+      "degre": 4
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+[
+  {
+    "date": "2026-10-26",
+    "type": "journal",
+    "titre": "préparation des fixtures fictives avec [[Atlas]].",
+    "ref": "1",
+    "ia": "Claude Code"
+  },
+  {
+    "date": "2026-10-20",
+    "type": "session",
+    "titre": "2026-10-20 - Atlas - import initial",
+    "ref": "Sessions/2026-10-20 - Atlas - import initial.md",
+    "ia": "Claude Code"
+  },
+  {
+    "date": "2026-03-20T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 20",
+    "ref": "b80abed1bfffc2982e4ab60efc491c8dd2aa7d05",
+    "ia": null
+  },
+  {
+    "date": "2026-03-17T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 19",
+    "ref": "8603cbbfcb2d2b22b9ba41c1d11a97479a846acd",
+    "ia": null
+  },
+  {
+    "date": "2026-03-14T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 18",
+    "ref": "c9ddb8aa6c42ad47bcfa1e8404a0d7abc4dd717c",
+    "ia": null
+  },
+  {
+    "date": "2026-03-11T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 17",
+    "ref": "09b4ebd21a4110f4b33fa2b452ebb391474fc2e8",
+    "ia": null
+  },
+  {
+    "date": "2026-03-08T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 16",
+    "ref": "30aec3d3b310a84e91f25118f4325fcd618e06c2",
+    "ia": null
+  },
+  {
+    "date": "2026-03-05T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha multiline subject",
+    "ref": "3f014c29c7f6695616abfa2e57ea71000db4a8c9",
+    "ia": null
+  },
+  {
+    "date": "2026-02-23T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 14 merge",
+    "ref": "236a61c261ab0ae348dba9d857e2b33baf188af7",
+    "ia": null
+  },
+  {
+    "date": "2026-02-23T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 14 mainline",
+    "ref": "861fa46e1a7392a3831fd9cf316b878d5c0fc9d8",
+    "ia": null
+  },
+  {
+    "date": "2026-02-20T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 13",
+    "ref": "73251c88f8e87f45f3919977a7281726fae1128d",
+    "ia": null
+  },
+  {
+    "date": "2026-02-17T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 12",
+    "ref": "f323a702be7034fed82f743f38ae1f1a97cd8591",
+    "ia": null
+  },
+  {
+    "date": "2026-02-14T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 11",
+    "ref": "9d745aec7a3ad85f615d4bad45986bca6ac2abc8",
+    "ia": null
+  },
+  {
+    "date": "2026-02-11T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 10",
+    "ref": "b1c1ed8eba7ebde53428fcc19230a5d1b19d06bb",
+    "ia": null
+  },
+  {
+    "date": "2026-02-08T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 09",
+    "ref": "95d2ba944668afa2123e5c93e6404bfe888c53e0",
+    "ia": null
+  },
+  {
+    "date": "2026-02-05T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 08",
+    "ref": "44827257e16a8b8aebfabfa37c6cf7ad341f6ea3",
+    "ia": null
+  },
+  {
+    "date": "2026-01-13T23:30:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 07",
+    "ref": "e8835779ed39f789bc5696be13650751f1a432d3",
+    "ia": null
+  },
+  {
+    "date": "2026-01-11T23:30:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 06",
+    "ref": "247f9a2a97d79c913e1e0d293d1e880cd1679999",
+    "ia": null
+  },
+  {
+    "date": "2026-01-11T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 03",
+    "ref": "dd8c24c00c56656fe065617ff4839293eb91f2ff",
+    "ia": null
+  },
+  {
+    "date": "2026-01-10T23:30:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 05",
+    "ref": "14420f75a146dee2a65b8e91b81e85be8de84e2b",
+    "ia": null
+  },
+  {
+    "date": "2026-01-08T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 02",
+    "ref": "99387a8cfec6fa68cb84f6ef7eb99cd6b9493113",
+    "ia": null
+  },
+  {
+    "date": "2026-01-07T23:30:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 04",
+    "ref": "3959f6a147d82bf9ff951ab4dd49fe4c6efb93ba",
+    "ia": null
+  },
+  {
+    "date": "2026-01-05T12:00:00Z",
+    "type": "commit",
+    "titre": "fixture alpha change 01",
+    "ref": "9257abf8159ddfa0b7e892eebf70210382cfde03",
+    "ia": null
+  }
+]

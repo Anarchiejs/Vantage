@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "titre": "Cartographie",
+    "dossier": "Concepts",
+    "degre": 1
+  },
+  {
+    "id": 5,
+    "titre": "Journal",
+    "dossier": "",
+    "degre": 2
+  },
+  {
+    "id": 6,
+    "titre": "Atlas - Detaille",
+    "dossier": "Projets",
+    "degre": 1
+  },
+  {
+    "id": 7,
+    "titre": "Atlas - Resume",
+    "dossier": "Projets",
+    "degre": 1
+  },
+  {
+    "id": 14,
+    "titre": "2026-10-20 - Atlas - import initial",
+    "dossier": "Sessions",
+    "degre": 1
+  }
+]

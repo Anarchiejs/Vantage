@@ -1,0 +1,17 @@
+{
+  "id": 24,
+  "titre": "Expo",
+  "dossier": "Technos",
+  "degre": 1,
+  "chemin": "Technos/Expo.md",
+  "maj": "2026-10-26",
+  "contenu": "# Expo\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Compass]].",
+  "voisins": [
+    {
+      "id": 2,
+      "titre": "Compass",
+      "dossier": "Projets",
+      "degre": 4
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": 29,
+  "titre": "Rust",
+  "dossier": "Technos",
+  "degre": 1,
+  "chemin": "Technos/Rust.md",
+  "maj": "2026-10-26",
+  "contenu": "# Rust\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Quartz]].",
+  "voisins": [
+    {
+      "id": 8,
+      "titre": "Quartz",
+      "dossier": "Projets",
+      "degre": 2
+    }
+  ]
+}

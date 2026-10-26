@@ -23,7 +23,7 @@ func TestLireFixture(t *testing.T) {
 	}
 	want := []model.Fiche{
 		{Nom: "Atlas", Statut: "actif", Maj: "2026-10-26", VerifieLe: "2026-10-26", VerifieCommit: "a1b2c3d", Technos: []string{"Go", "TypeScript"}},
-		{Nom: "Boussole", Statut: "archive", CheminSource: "C:/Fixtures/Boussole", Maj: "2026-07-01", VerifieLe: "2026-07-01", VerifieCommit: "deadbeef-perime", Technos: []string{"Markdown"}},
+		{Nom: "Boussole", Statut: "archive", CheminSource: "C:/Fixtures/Boussole", Maj: "2026-07-01", VerifieLe: "2026-07-01", VerifieCommit: "deadbeef", Technos: []string{"Markdown"}},
 	}
 	if !reflect.DeepEqual(r.Fiches, want) {
 		t.Fatalf("fiches: %#v", r.Fiches)
@@ -168,5 +168,20 @@ func TestHiddenDirectoriesAndNonMarkdown(t *testing.T) {
 	}
 	if _, err := Lire(filepath.Join(root, "missing")); err == nil {
 		t.Fatal("missing root accepted")
+	}
+}
+
+func TestShaEnTete(t *testing.T) {
+	for entree, attendu := range map[string]string{
+		"0df64eb2 (ComfyUI officiel, non modifié)": "0df64eb2",
+		"E5843FE":   "e5843fe",
+		"aucun":     "",
+		"abc":       "",
+		"deadbeefz": "",
+		" 0f085ad ": "0f085ad",
+	} {
+		if got := shaEnTete(entree); got != attendu {
+			t.Errorf("shaEnTete(%q) = %q, attendu %q", entree, got, attendu)
+		}
 	}
 }

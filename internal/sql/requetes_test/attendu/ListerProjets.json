@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "nom": "Atlas",
+    "statut": "actif",
+    "commits": 21,
+    "dernier_commit": "2026-03-20T12:00:00Z",
+    "langage_principal": "Go"
+  },
+  {
+    "id": 2,
+    "nom": "Boussole",
+    "statut": "archive",
+    "commits": 21,
+    "dernier_commit": "2026-03-20T12:00:00Z",
+    "langage_principal": "Go"
+  }
+]

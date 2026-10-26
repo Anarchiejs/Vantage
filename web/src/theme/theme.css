@@ -1,0 +1,104 @@
+@import 'tailwindcss';
+
+/* Thème « ciel de nuit » : sombre bleu nuit / clair papier, un seul accent ambre.
+   Les composants n'utilisent QUE ces jetons (classes bg-fond, text-doux, border-bordure…),
+   jamais de couleur en dur, pour que les deux thèmes marchent partout. */
+
+:root {
+  --fond: #f6f5f1;
+  --surface: #ffffff;
+  --surface-2: #efede6;
+  --bordure: #dedbd1;
+  --texte: #1d2330;
+  --doux: #5f6675;
+  --accent: #b86e00;
+  --accent-doux: #f6e3c2;
+  --succes: #2f8a57;
+  --alerte: #b86e00;
+  --danger: #c0392b;
+  /* séries de graphiques, dans cet ordre */
+  --serie-1: #2f6fb3;
+  --serie-2: #d08a1f;
+  --serie-3: #3b9a6b;
+  --serie-4: #b4508a;
+  --serie-5: #6b5fc7;
+  --serie-6: #c4573a;
+  --serie-7: #2a9aa8;
+  --serie-8: #8a8f2a;
+  /* échelle du calendrier : 0 activité → max */
+  --chaleur-0: #ebe8df;
+  --chaleur-1: #f3d9a8;
+  --chaleur-2: #e9b45e;
+  --chaleur-3: #cf8a1f;
+  --chaleur-4: #9a5c00;
+  color-scheme: light;
+}
+
+:root[data-theme='sombre'] {
+  --fond: #0d1220;
+  --surface: #141b2d;
+  --surface-2: #1b2438;
+  --bordure: #263049;
+  --texte: #e6e9f0;
+  --doux: #8b94a8;
+  --accent: #f2a93b;
+  --accent-doux: #3a2c14;
+  --succes: #4cc38a;
+  --alerte: #f2a93b;
+  --danger: #ef6b5b;
+  --serie-1: #6aa7ec;
+  --serie-2: #f2a93b;
+  --serie-3: #5fcf97;
+  --serie-4: #e27bb6;
+  --serie-5: #9b8ff0;
+  --serie-6: #f08a6a;
+  --serie-7: #4fc6d4;
+  --serie-8: #c4c95a;
+  --chaleur-0: #1b2438;
+  --chaleur-1: #3d3420;
+  --chaleur-2: #7a5a1e;
+  --chaleur-3: #c48a2a;
+  --chaleur-4: #f7c46a;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-fond: var(--fond);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-bordure: var(--bordure);
+  --color-texte: var(--texte);
+  --color-doux: var(--doux);
+  --color-accent: var(--accent);
+  --color-accent-doux: var(--accent-doux);
+  --color-succes: var(--succes);
+  --color-alerte: var(--alerte);
+  --color-danger: var(--danger);
+  --font-sans: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Cascadia Code', 'JetBrains Mono', ui-monospace, monospace;
+}
+
+html,
+body {
+  background: var(--fond);
+  color: var(--texte);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+mark {
+  background: var(--accent-doux);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* Animations sobres : désactivées si l'utilisateur le demande. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

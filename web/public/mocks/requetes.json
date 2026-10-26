@@ -1,0 +1,14 @@
+[
+  {
+    "nom": "commits-par-projet",
+    "sql": "SELECT p.nom, COUNT(*) AS commits\nFROM commit_git c\nJOIN depot d ON d.id = c.depot_id\nJOIN projet p ON p.id = d.projet_id\nGROUP BY p.nom\nORDER BY commits DESC"
+  },
+  {
+    "nom": "notes-par-dossier",
+    "sql": "SELECT dossier, COUNT(*) AS notes\nFROM note\nGROUP BY dossier\nORDER BY notes DESC"
+  },
+  {
+    "nom": "liens-casses",
+    "sql": "SELECT source_id, cible_titre\nFROM lien\nWHERE cible_id IS NULL\nORDER BY cible_titre"
+  }
+]

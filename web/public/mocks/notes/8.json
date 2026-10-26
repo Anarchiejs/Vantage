@@ -1,0 +1,23 @@
+{
+  "id": 8,
+  "titre": "Quartz",
+  "dossier": "Projets",
+  "degre": 2,
+  "chemin": "Projets/Quartz.md",
+  "maj": "2026-10-26",
+  "contenu": "# Quartz\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Rust]].\nLié à [[IA locale]].",
+  "voisins": [
+    {
+      "id": 29,
+      "titre": "Rust",
+      "dossier": "Technos",
+      "degre": 1
+    },
+    {
+      "id": 43,
+      "titre": "IA locale",
+      "dossier": "IA",
+      "degre": 2
+    }
+  ]
+}

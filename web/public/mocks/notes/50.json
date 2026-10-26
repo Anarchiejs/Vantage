@@ -1,0 +1,17 @@
+{
+  "id": 50,
+  "titre": "Architecture Observatoire",
+  "dossier": "Concepts",
+  "degre": 1,
+  "chemin": "Concepts/Architecture Observatoire.md",
+  "maj": "2026-10-26",
+  "contenu": "# Architecture Observatoire\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Observatoire]].\nÀ compléter : [[Plan de déploiement]].",
+  "voisins": [
+    {
+      "id": 1,
+      "titre": "Observatoire",
+      "dossier": "Projets",
+      "degre": 7
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": 25,
+  "titre": "Python",
+  "dossier": "Technos",
+  "degre": 3,
+  "chemin": "Technos/Python.md",
+  "maj": "2026-10-26",
+  "contenu": "# Python\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Harbor]].\nLié à [[Sable]].\nLié à [[Waypoint]].",
+  "voisins": [
+    {
+      "id": 3,
+      "titre": "Harbor",
+      "dossier": "Projets",
+      "degre": 3
+    },
+    {
+      "id": 9,
+      "titre": "Sable",
+      "dossier": "Projets",
+      "degre": 2
+    },
+    {
+      "id": 10,
+      "titre": "Waypoint",
+      "dossier": "Projets",
+      "degre": 3
+    }
+  ]
+}
