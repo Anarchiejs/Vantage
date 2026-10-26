@@ -1,0 +1,13 @@
+version: "2"
+sql:
+  - engine: sqlite
+    schema: migrations
+    queries:
+      - internal/sql/import
+    gen:
+      go:
+        package: gen
+        out: internal/sql/gen
+        emit_json_tags: true
+        emit_pointers_for_null_types: true
+        emit_prepared_queries: true

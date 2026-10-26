@@ -1,0 +1,8 @@
+.orchestra/
+testdata/depots/
+*.db
+*.db-wal
+*.db-shm
+/observatoire.exe
+web/node_modules/
+web/dist/
