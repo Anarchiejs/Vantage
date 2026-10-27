@@ -4,6 +4,7 @@ go 1.26.4
 
 require (
 	github.com/boyter/scc/v3 v3.7.0
+	github.com/fsnotify/fsnotify v1.10.1
 	github.com/pressly/goose/v3 v3.29.0
 	gopkg.in/yaml.v3 v3.0.1
 	modernc.org/libc v1.79.0
