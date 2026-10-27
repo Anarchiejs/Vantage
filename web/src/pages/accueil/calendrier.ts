@@ -19,7 +19,7 @@ export function optionCalendrier(jours: JourActivite[]): EChartsOption {
     calendar: { range: donnees.length ? [donnees[0].jour, donnees.at(-1)!.jour] : new Date().getFullYear(), cellSize: ['auto', 19], left: 44, right: 20, top: 35, bottom: 45,
       itemStyle: { borderColor: jeton('surface'), borderWidth: 3 }, splitLine: { show: false }, yearLabel: { show: false },
       dayLabel: { firstDay: 1, nameMap: ['D', 'L', 'M', 'M', 'J', 'V', 'S'], color: jeton('doux') },
-      monthLabel: { nameMap: 'FR', color: jeton('doux') } },
+      monthLabel: { nameMap: ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'], color: jeton('doux') } },
     visualMap: { type: 'piecewise', orient: 'horizontal', bottom: 0, right: 0, dimension: 1, textStyle: { color: jeton('doux') },
       pieces: couleurs.map((color, value) => ({ value, color, label: ['Aucun', 'Faible', 'Modéré', 'Soutenu', 'Fort'][value] })) },
     series: [{ type: 'heatmap', coordinateSystem: 'calendar', data: donnees.map(j => [j.jour, j.commits === 0 ? 0 : 1 + seuils.filter(s => j.commits > s).length]) }],

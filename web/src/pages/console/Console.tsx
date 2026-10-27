@@ -1,3 +1,4 @@
+import { Entete } from '../../ui/Entete'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { sql, SQLite } from '@codemirror/lang-sql'
 import { HighlightStyle, syntaxHighlighting } from '@codemirror/language'
@@ -244,8 +245,8 @@ export default function Console() {
   const indices = resultat ? new Set(colonnesNumeriques(resultat)) : new Set<number>()
 
   return (
-    <div className="flex h-[calc(100vh-3rem)] flex-col gap-4">
-      <h1 className="shrink-0 text-xl font-semibold">Console SQL</h1>
+    <div className="console-page flex min-h-[780px] flex-col gap-4">
+      <Entete titre="Console SQL" description="Explorez vos données, posez vos questions et visualisez les résultats." />
       <div className="grid min-h-0 flex-1 grid-cols-[260px_minmax(0,1fr)] items-stretch gap-4">
         <aside className="flex min-h-0 flex-col gap-4">
           <Carte titre="Schéma" className="flex min-h-0 flex-1 flex-col overflow-hidden [&>header]:shrink-0">

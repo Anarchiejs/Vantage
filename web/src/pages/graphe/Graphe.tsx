@@ -9,6 +9,7 @@ import { Charge, Vide } from '../../ui/Etat'
 import { Graphique } from '../../ui/Graphique'
 import { date } from '../../ui/format'
 import { jeton, series } from '../../theme/theme'
+import { Entete } from '../../ui/Entete'
 
 export const tailleNoeud = (degre: number) => Math.max(9, Math.min(44, 9 + Math.sqrt(Math.max(0, degre)) * 4))
 export function selectionNote(d: Donnees, id?: string, titre?: string | null) {
@@ -48,7 +49,7 @@ export function optionGraphe(d: Donnees, dossiers: string[], selection?: number,
   const trajet = new Set(chemin)
   const aretes = new Set(chemin.slice(1).flatMap((id, i) => [`${chemin[i]}:${id}`, `${id}:${chemin[i]}`]))
   const grand = d.noeuds.length > 500
-  return { animation: !grand, xAxis: { show: false }, yAxis: { show: false }, tooltip: { trigger: 'item', formatter: '{b}', renderMode: 'richText' }, series: [{ type: 'graph', layout: 'force', roam: true,
+  return { animation: !grand, xAxis: { show: false }, yAxis: { show: false }, tooltip: { trigger: 'item', formatter: '{b}', renderMode: 'richText' }, series: [{ type: 'graph', layout: 'force', roam: true, draggable: true, scaleLimit: { min: .2, max: 5 }, label: { color: jeton('texte') },
     animation: !grand, force: { repulsion: grand ? 35 : 140, edgeLength: [35, 90], layoutAnimation: !grand },
     categories: categories.map((name, i) => ({ name, itemStyle: { color: couleurs[i % couleurs.length] } })),
     data: visibles.map(n => ({ id: String(n.id), name: n.titre, category: categories.indexOf(n.dossier), symbolSize: tailleNoeud(n.degre),
@@ -159,5 +160,5 @@ function Exploration({ d }: { d: Donnees }) {
 
 export default function Graphe() {
   const graphe = useApi<Donnees>('/api/graphe')
-  return <div className="space-y-5"><h1 className="text-2xl font-semibold">Graphe du cerveau</h1><Charge etat={graphe}>{d => <Exploration d={d} />}</Charge></div>
+  return <div className="space-y-5"><Entete titre="Graphe du cerveau" description="Explorez les connexions entre vos notes. Déplacez les nœuds, zoomez et ouvrez une note pour suivre ses liens." /><Charge etat={graphe}>{d => <Exploration d={d} />}</Charge></div>
 }

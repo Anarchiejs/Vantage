@@ -6,6 +6,7 @@ import { useApi } from '../../api/useApi'
 import { Carte } from '../../ui/Carte'
 import { Chargement, ErreurAffichee, Vide } from '../../ui/Etat'
 import { date } from '../../ui/format'
+import { Entete } from '../../ui/Entete'
 import { htmlSurligne } from './surligne'
 
 const EXEMPLES = ['"phrase exacte"', 'go AND sqlite', 'pref*']
@@ -123,7 +124,7 @@ export default function Recherche() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Recherche</h1>
+      <Entete titre="Recherche" description="Retrouvez une idée, une note ou un changement dans l’ensemble de votre travail." />
       <form role="search" className="space-y-3" onSubmit={(e) => e.preventDefault()}>
         <input
           ref={champ}

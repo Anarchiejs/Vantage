@@ -13,10 +13,10 @@ export function Carte({
   className?: string
 }) {
   return (
-    <section className={`rounded-xl border border-bordure bg-surface p-4 ${className}`}>
+    <section className={`panel ${className}`}>
       {(titre || action) && (
-        <header className="mb-3 flex items-center justify-between gap-2">
-          {titre && <h2 className="text-sm font-semibold tracking-wide text-doux uppercase">{titre}</h2>}
+        <header className="panel-header">
+          {titre && <h2>{titre}</h2>}
           {action}
         </header>
       )}

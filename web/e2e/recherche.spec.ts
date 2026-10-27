@@ -2,7 +2,7 @@ import { expect, test } from './fixture'
 
 test('la touche / ouvre la recherche et surligne un terme des fixtures', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { level: 1, name: 'Accueil' })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 1, name: 'Votre travail prend forme.' })).toBeVisible()
   await page.keyboard.press('/')
   await expect(page).toHaveURL(/\/recherche/)
   await expect(page.getByRole('heading', { level: 1, name: 'Recherche' })).toBeVisible()
