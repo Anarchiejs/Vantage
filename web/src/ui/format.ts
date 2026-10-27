@@ -14,7 +14,10 @@ export function date(s: string | null | undefined): string {
 /** « il y a 3 jours ». */
 export function depuis(s: string | null | undefined, maintenant = new Date()): string {
   if (!s) return 'jamais'
-  const jours = Math.round((new Date(s).getTime() - maintenant.getTime()) / 86_400_000)
+  const instant = new Date(s.length === 10 ? `${s}T12:00:00` : s)
+  if (Number.isNaN(instant.getTime())) return 'date inconnue'
+  const jour = (d: Date) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())
+  const jours = Math.round((jour(instant) - jour(maintenant)) / 86_400_000)
   return rf.format(jours, 'day')
 }
 

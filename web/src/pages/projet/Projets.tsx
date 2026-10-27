@@ -5,6 +5,7 @@ import { useApi } from '../../api/useApi'
 import { Carte } from '../../ui/Carte'
 import { Charge, Vide } from '../../ui/Etat'
 import { date, nombre } from '../../ui/format'
+import { Entete } from '../../ui/Entete'
 export type Colonne = 'nom' | 'statut' | 'commits' | 'dernier_commit' | 'langage_principal'
 export function trierProjets(projets: ProjetResume[], colonne: Colonne, desc = false): ProjetResume[] {
   return [...projets].sort((a, b) => {
@@ -22,7 +23,7 @@ export default function Projets() {
   const [tri, setTri] = useState<Colonne>('nom')
   const [desc, setDesc] = useState(false)
   const naviguer = useNavigate()
-  return <div className="space-y-5"><h1 className="text-xl font-semibold">Projets</h1><Carte>
+  return <div className="space-y-5"><Entete titre="Projets" description="Tous vos dépôts, leur activité et les technologies qui les font vivre." /><Carte>
     <label className="mb-4 block text-sm">Filtrer les projets<input className="ml-3 rounded border border-bordure bg-fond px-3 py-2" type="search" value={filtre} onChange={e => setFiltre(e.target.value)} placeholder="Nom, statut, langage…" /></label>
     <Charge etat={etat}>{projets => {
       const lignes = trierProjets(projets.filter(p => [p.nom, p.statut, p.langage_principal].some(v => v?.toLocaleLowerCase('fr').includes(filtre.trim().toLocaleLowerCase('fr')))), tri, desc)

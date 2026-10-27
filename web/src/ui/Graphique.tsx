@@ -13,12 +13,16 @@ function base(): EChartsOption {
     backgroundColor: 'transparent',
     textStyle: { color: texte, fontFamily: getComputedStyle(document.body).fontFamily },
     tooltip: {
+      confine: true,
+      renderMode: 'richText',
       backgroundColor: jeton('surface'),
       borderColor: bordure,
       textStyle: { color: texte },
     },
-    legend: { textStyle: { color: doux } },
-    grid: { left: 40, right: 16, top: 24, bottom: 32, containLabel: true },
+    animationDuration: 300,
+    animation: !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
+    legend: { type: 'scroll', textStyle: { color: doux }, top: 0, itemWidth: 12, itemHeight: 8 },
+    grid: { left: 16, right: 20, top: 48, bottom: 28, containLabel: true },
     xAxis: { axisLine: { lineStyle: { color: bordure } }, axisLabel: { color: doux }, splitLine: { show: false } },
     yAxis: { axisLine: { show: false }, axisLabel: { color: doux }, splitLine: { lineStyle: { color: bordure } } },
   }
@@ -49,10 +53,12 @@ export function Graphique({
     if (!ref.current) return
     const g = echarts.init(ref.current, undefined, { renderer: 'canvas' })
     graph.current = g
-    const obs = new ResizeObserver(() => g.resize())
+    let frame = 0
+    const obs = new ResizeObserver(() => { cancelAnimationFrame(frame); frame = requestAnimationFrame(() => { if (!g.isDisposed()) g.resize() }) })
     obs.observe(ref.current)
     return () => {
       obs.disconnect()
+      cancelAnimationFrame(frame)
       g.dispose()
       graph.current = null
     }
@@ -63,7 +69,29 @@ export function Graphique({
       const g = graph.current
       if (!g) return
       const o = typeof option === 'function' ? option() : option
-      g.setOption({ ...base(), ...o }, { notMerge: true })
+      const defaults = base()
+      // Preserve themed axes/tooltips when a page supplies data or a formatter.
+      // Non-cartesian charts must not inherit a pair of unrelated axes.
+      const s = Array.isArray(o.series) ? o.series : o.series ? [o.series] : []
+      const cartesien = s.some(v => ['line', 'bar', 'scatter'].includes(String(v.type)))
+      const fusion = { ...defaults, ...o } as EChartsOption
+      for (const cle of ['tooltip', 'legend', 'grid', 'xAxis', 'yAxis'] as const) {
+        const specifique = o[cle]
+        if (!Array.isArray(specifique)) {
+          const commun = defaults[cle] as Record<string, unknown>
+          const valeur = specifique as Record<string, unknown> | undefined
+          const ensemble = { ...commun, ...valeur }
+          for (const sousCle of ['axisLabel', 'axisLine', 'splitLine', 'textStyle']) {
+            if (commun?.[sousCle] || valeur?.[sousCle]) ensemble[sousCle] = { ...(commun?.[sousCle] as object), ...(valeur?.[sousCle] as object) }
+          }
+          Object.assign(fusion, { [cle]: ensemble })
+        }
+      }
+      if (!cartesien) { delete fusion.xAxis; delete fusion.yAxis; delete fusion.grid }
+      if (o.legend && !Array.isArray(o.legend) && o.legend.bottom !== undefined && !Array.isArray(fusion.legend)) {
+        delete fusion.legend!.top
+      }
+      g.setOption(fusion, { notMerge: true })
     }
     appliquer()
     window.addEventListener('observatoire:theme', appliquer)

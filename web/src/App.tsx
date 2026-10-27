@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
-import { BrowserRouter, NavLink, Route, Routes, useNavigate } from 'react-router'
+import { BrowserRouter, NavLink, Route, Routes, useNavigate, useLocation } from 'react-router'
+import { Icone } from './ui/Icone'
 import { useTheme } from './theme/theme'
 import { Chargement } from './ui/Etat'
 
@@ -14,12 +15,12 @@ const Console = lazy(() => import('./pages/console/Console'))
 const Palette = lazy(() => import('./pages/palette/Palette'))
 
 const NAV = [
-  { a: '/', libelle: 'Accueil', icone: '◎' },
-  { a: '/projets', libelle: 'Projets', icone: '▤' },
-  { a: '/technos', libelle: 'Technos & IA', icone: '⋈' },
-  { a: '/graphe', libelle: 'Graphe', icone: '✦' },
-  { a: '/recherche', libelle: 'Recherche', icone: '⌕' },
-  { a: '/console', libelle: 'Console SQL', icone: '›_' },
+  { a: '/', libelle: 'Accueil', icone: 'accueil' },
+  { a: '/projets', libelle: 'Projets', icone: 'projets' },
+  { a: '/technos', libelle: 'Technos & IA', icone: 'technos' },
+  { a: '/graphe', libelle: 'Graphe', icone: 'graphe' },
+  { a: '/recherche', libelle: 'Recherche', icone: 'recherche' },
+  { a: '/console', libelle: 'Console SQL', icone: 'console' },
 ]
 
 /** Relaie les événements SSE du serveur en « observatoire:maj » (écoutés par useApi). */
@@ -55,6 +56,8 @@ function useRaccourcis(ouvrirPalette: () => void) {
 }
 
 function Cadre() {
+  const { pathname } = useLocation()
+  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
   const [theme, basculer] = useTheme()
   const [palette, setPalette] = useState(false)
   useMisesAJour()
@@ -66,41 +69,46 @@ function Cadre() {
   }, [basculer])
 
   return (
-    <div className="flex min-h-screen bg-fond text-texte">
-      <nav className="sticky top-0 flex h-screen w-52 shrink-0 flex-col gap-1 border-r border-bordure bg-surface p-3">
-        <div className="mb-4 flex items-center gap-2 px-2 py-1">
-          <span className="text-xl text-accent">◉</span>
-          <span className="font-semibold">Observatoire</span>
+    <div className="app-shell">
+      <a className="skip-link" href="#contenu">Aller au contenu</a>
+      <nav aria-label="Navigation principale" className="app-sidebar">
+        <div className="brand">
+          <span className="brand-mark">◉</span>
+          <div><span className="font-semibold">Observatoire</span><small>Le fil de vos projets</small></div>
         </div>
+        <p className="nav-caption">ESPACE DE TRAVAIL</p>
+        <div className="nav-links">
         {NAV.map((n) => (
           <NavLink
             key={n.a}
             to={n.a}
             end={n.a === '/'}
             className={({ isActive }) =>
-              `flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
-                isActive ? 'bg-accent-doux font-medium text-texte' : 'text-doux hover:bg-surface-2 hover:text-texte'
-              }`
+              `nav-link ${isActive ? 'is-active' : ''}`
             }
           >
-            <span className="w-5 text-center font-mono text-xs">{n.icone}</span>
-            {n.libelle}
+            <Icone nom={n.icone} /><span>{n.libelle}</span>
           </NavLink>
         ))}
-        <div className="mt-auto flex flex-col gap-2 px-2 text-xs text-doux">
+        </div>
+        <div className="sidebar-bottom">
+          <div className="local-note"><span>◎</span><div>Votre activité, réunie.<small>Dépôts Git & coffre Obsidian</small></div></div>
           <button
             type="button"
             onClick={() => setPalette(true)}
-            className="flex items-center justify-between rounded-md border border-bordure px-2 py-1 hover:text-texte"
+            className="sidebar-command"
           >
             Commandes <kbd className="font-mono">Ctrl K</kbd>
           </button>
-          <button type="button" onClick={basculer} className="rounded-md border border-bordure px-2 py-1 hover:text-texte">
+          <button type="button" onClick={basculer} className="sidebar-command">
+            <Icone nom={theme === 'clair' ? 'lune' : 'soleil'} />
             Thème {theme === 'clair' ? 'sombre ☾' : 'clair ☀'}
           </button>
         </div>
       </nav>
-      <main className="min-w-0 flex-1 p-6">
+      <div className="app-workspace">
+      <div className="app-topbar"><span>Mon observatoire <span className="text-doux">/ {NAV.find(n => n.a === '/' ? pathname === '/' : pathname.startsWith(n.a))?.libelle ?? 'Page'}</span></span><button onClick={() => setPalette(true)} className="top-search"><Icone nom="recherche" /> Rechercher… <kbd>Ctrl K</kbd></button></div>
+      <main id="contenu" className="app-main">
         <Suspense fallback={<Chargement lignes={6} />}>
           <Routes>
             <Route path="/" element={<Accueil />} />
@@ -111,9 +119,11 @@ function Cadre() {
             <Route path="/graphe/:id" element={<Graphe />} />
             <Route path="/recherche" element={<Recherche />} />
             <Route path="/console" element={<Console />} />
+            <Route path="*" element={<p>Cette page n’existe pas. <NavLink to="/">Retour à l’accueil</NavLink></p>} />
           </Routes>
         </Suspense>
       </main>
+      </div>
       {palette && (
         <Suspense fallback={null}>
           <Palette fermer={() => setPalette(false)} />

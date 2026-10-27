@@ -11,7 +11,7 @@ export type EtatApi<T> =
  * (événement « observatoire:maj » émis par la connexion SSE de App.tsx). `chemin` null = ne rien charger.
  */
 export function useApi<T>(chemin: string | null): EtatApi<T> & { recharger: () => void } {
-  const [etat, setEtat] = useState<EtatApi<T>>({ statut: 'chargement' })
+  const [reponse, setReponse] = useState<{ chemin: string | null; etat: EtatApi<T> }>({ chemin: null, etat: { statut: 'chargement' } })
   const [tour, setTour] = useState(0)
   const recharger = useCallback(() => setTour((t) => t + 1), [])
 
@@ -23,14 +23,14 @@ export function useApi<T>(chemin: string | null): EtatApi<T> & { recharger: () =
   useEffect(() => {
     if (chemin === null) return
     const ctrl = new AbortController()
-    setEtat((e) => (e.statut === 'ok' ? e : { statut: 'chargement' }))
     get<T>(chemin, ctrl.signal)
-      .then((donnees) => setEtat({ statut: 'ok', donnees }))
+      .then((donnees) => { if (!ctrl.signal.aborted) setReponse({ chemin, etat: { statut: 'ok', donnees } }) })
       .catch((erreur: Error) => {
-        if (erreur.name !== 'AbortError') setEtat({ statut: 'erreur', erreur })
+        if (!ctrl.signal.aborted) setReponse({ chemin, etat: { statut: 'erreur', erreur } })
       })
     return () => ctrl.abort()
   }, [chemin, tour])
 
+  const etat: EtatApi<T> = chemin !== null && reponse.chemin === chemin ? reponse.etat : { statut: 'chargement' }
   return { ...etat, recharger }
 }
