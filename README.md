@@ -44,7 +44,8 @@ Si l'*Accès contrôlé aux dossiers* de Windows Defender est actif (fréquent q
 
 **Ensuite**
 
-- Relancer ou mettre à jour les données : `.\lancer.cmd` (réimporte puis relance l'interface ; seuls les nouveaux commits et les notes modifiées sont relus).
+- Tant que `lancer.cmd` tourne, une note modifiée ou un nouveau commit apparaît dans l'interface en quelques secondes, sans recharger la page.
+- Relancer plus tard : `.\lancer.cmd` (seuls les nouveaux commits et les notes modifiées sont relus).
 - Après un `git pull` : `.\construire.cmd`.
 
 ## Préparer ton coffre
@@ -91,14 +92,14 @@ Facultatif : `verifie_commit` / `verifie_le` (repérer les fiches périmées), d
 | `serve` | lance l'interface sur 127.0.0.1 |
 | `rapport` | écrit `Statistiques.md` (bilan de la semaine) à la racine du coffre |
 | `migrate` | crée ou met à jour le schéma (fait aussi automatiquement par les autres commandes) |
-| `watch` | prévu, pas encore implémenté |
+| `watch` | importe, lance l'interface et réimporte dès qu'une note ou un dépôt change ; la page ouverte se met à jour seule (ce que fait `lancer.cmd`) |
 
 | Option | Commandes | Défaut |
 |---|---|---|
 | `-db <fichier>` | toutes | `observatoire.db` (dossier courant) |
-| `-coffre <dossier>` | `import`, `rapport` | `C:\dev\Obsidian Vault` |
-| `-depots "Nom=dossier,…"` | `import` | remplace le `chemin_source` des fiches nommées |
-| `-port <n>` | `serve` | `7878` |
+| `-coffre <dossier>` | `import`, `watch`, `rapport` | `C:\dev\Obsidian Vault` |
+| `-depots "Nom=dossier,…"` | `import`, `watch` | remplace le `chemin_source` des fiches nommées |
+| `-port <n>` | `serve`, `watch` | `7878` |
 | `-stdout` | `rapport` | affiche le rapport au lieu de l'écrire |
 
 Exemple : `.\observatoire.exe rapport -coffre "C:\Users\toi\Documents\Mon Coffre"`. Le rapport refuse d'écraser un `Statistiques.md` qui n'a pas été généré par Observatoire.
@@ -143,12 +144,13 @@ Mise à jour des résultats attendus des requêtes, après relecture : `go test 
 ### Architecture
 
 ```
-cmd/observatoire/   point d'entrée (import, serve, rapport, migrate)
+cmd/observatoire/   point d'entrée (import, serve, watch, rapport, migrate)
 internal/api/       serveur HTTP : vues JSON, console SQL, SSE, interface
 internal/db/        SQLite et migrations
 internal/ingest/    import : git/, code/ (langages via scc), vault/ (coffre)
 internal/report/    Statistiques.md
 internal/sql/       requêtes sqlc et code généré (gen/)
+internal/watch/     surveillance du coffre et des dépôts (fsnotify)
 migrations/         schéma SQL (goose)
 scripts/            installer.ps1, construire.ps1, lancer.ps1 (appelés par les .cmd de la racine), fixtures/
 testdata/           coffre fictif et dépôts de test

@@ -54,6 +54,7 @@ if ($global:ObsSortie | Where-Object { $_ -match '^0 d' }) {
 }
 
 Etape 'Lancement de l''interface : http://127.0.0.1:7878  (Ctrl+C pour arrêter)'
+Info 'Mise à jour automatique : une note ou un commit modifié est réimporté en quelques secondes.'
 Start-Job -ScriptBlock { Start-Sleep -Seconds 2; Start-Process 'http://127.0.0.1:7878' } | Out-Null
-& '.\observatoire.exe' serve
+& '.\observatoire.exe' watch -coffre $Coffre
 exit $LASTEXITCODE
