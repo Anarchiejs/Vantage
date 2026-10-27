@@ -1,119 +1,57 @@
 # Observatoire
 
-Observatoire est un tableau de bord **local** de ton travail de développement. Il lit tes dépôts Git et ton coffre Obsidian, range tout dans une base SQLite, puis affiche le résultat dans une interface web sur `http://127.0.0.1:7878`. Rien ne quitte ta machine.
-
-Au menu : historique Git (commits, fichiers, renommages), lignes de code par langage, notes et liens Obsidian (y compris les liens cassés), graphe des notes, recherche plein texte, console SQL en lecture seule et rapport hebdomadaire `Statistiques.md` écrit dans le coffre.
-
-> **Toutes les commandes se lancent depuis la racine du dépôt** (le dossier qui contient `go.mod`), dans PowerShell.
-
----
+Un tableau de bord **local** de ton travail de développement : il lit ton coffre Obsidian et les dépôts Git de tes projets, puis affiche tout sur **http://127.0.0.1:7878** (historique, langages, graphe des notes, recherche, console SQL). Rien ne quitte ta machine.
 
 ## Démarrage rapide (Windows)
 
-Objectif : voir l'interface avec les **données de démo** fournies (un coffre fictif et deux petits dépôts Git générés).
+Ouvre **PowerShell** et lance ces commandes une par une.
 
-**Prérequis** : [Git](https://git-scm.com/), [Go](https://go.dev/dl/) 1.26.4 ou plus, [Node.js](https://nodejs.org/) 22.12 ou plus (avec npm). Vérifie :
-
-```powershell
-git --version
-go version
-node --version
-```
-
-### 1. Cloner le projet
+**0. Récupérer le projet** (une seule fois)
 
 ```powershell
 git clone https://github.com/Anarchiejs/Observatoire.git
 cd Observatoire
 ```
 
-### 2. Installer les dépendances
+> Pas encore Git ? `winget install --id Git.Git -e`, puis ferme et rouvre PowerShell.
+> Toutes les commandes suivantes se lancent **depuis ce dossier `Observatoire`**.
+
+**1. Installer** — git, Go et Node (via winget s'ils manquent), puis les dépendances
 
 ```powershell
-go mod download
-npm --prefix web install
+.\installer.cmd
 ```
 
-Tu dois voir à la fin `added … packages`.
+→ `Installation terminée.`
 
-### 3. Construire l'interface, puis l'exécutable
-
-L'ordre compte : l'exécutable embarque le dossier `web\dist` produit par la première commande.
+**2. Construire** — l'interface puis `observatoire.exe`
 
 ```powershell
-npm --prefix web run build
-go build -tags embed ./cmd/observatoire
-go build -o make-repos.exe ./scripts/fixtures
+.\construire.cmd
 ```
 
-- La première affiche `✓ built in …`. Un avertissement `Some chunks are larger than 500 kB` peut apparaître **en rouge** (PowerShell l'affiche comme `NativeCommandError`) : il est **sans gravité**, le build a bien réussi.
-- Les deux suivantes n'affichent rien quand tout va bien. Tu as maintenant `observatoire.exe` (l'application) et `make-repos.exe` (le générateur des dépôts de démo).
+→ `Build terminé : observatoire.exe`
 
-### 4. Autoriser les exécutables dans Windows Defender (si le dépôt est dans `Documents`)
+Si l'*Accès contrôlé aux dossiers* de Windows Defender est actif (fréquent quand le dépôt est dans `Documents`), une fenêtre administrateur s'ouvre pour autoriser `observatoire.exe` : **accepte-la**, sinon il ne pourra pas créer sa base.
 
-Si l'**Accès contrôlé aux dossiers** de Windows Defender est actif, il empêche les programmes inconnus d'écrire dans `Documents`, `Bureau`, etc. Sans cette étape, l'application ne peut pas créer sa base (voir [Problèmes fréquents](#problèmes-fréquents)).
-
-**Option A — autoriser les deux exécutables.** Récupère leurs chemins complets :
+**3. Lancer** — importe ton coffre Obsidian puis ouvre l'interface dans le navigateur. Remplace le chemin par celui de **ton** coffre (le dossier que tu ouvres dans Obsidian, pas celui du projet), entre guillemets
 
 ```powershell
-(Resolve-Path .\observatoire.exe).Path
-(Resolve-Path .\make-repos.exe).Path
+.\lancer.cmd "C:\Users\toi\Documents\Mon Coffre"
 ```
 
-Puis, dans un **PowerShell lancé en administrateur**, avec tes chemins :
+→ le navigateur s'ouvre sur **http://127.0.0.1:7878**. `Ctrl+C` arrête le serveur. Le chemin est mémorisé : les fois suivantes, `.\lancer.cmd` suffit.
 
-```powershell
-Add-MpPreference -ControlledFolderAccessAllowedApplications "C:\Users\<toi>\Documents\Observatoire\observatoire.exe"
-Add-MpPreference -ControlledFolderAccessAllowedApplications "C:\Users\<toi>\Documents\Observatoire\make-repos.exe"
-```
+**Ensuite**
 
-Sans ligne de commande : *Sécurité Windows › Protection contre les virus et menaces › Gérer la protection contre les ransomware › Autoriser une application via l'Accès contrôlé aux dossiers*.
+- Relancer ou mettre à jour les données : `.\lancer.cmd` (réimporte puis relance l'interface ; seuls les nouveaux commits et les notes modifiées sont relus).
+- Après un `git pull` : `.\construire.cmd`.
 
-Recompiler au même endroit continue en général de fonctionner ; si Windows bloque de nouveau, refais l'autorisation.
+## Préparer ton coffre
 
-**Option B — placer le dépôt hors des dossiers protégés**, par exemple `C:\dev\Observatoire`, puis reprendre à l'étape 1.
+Toutes les notes `.md` sont importées (recherche, graphe, liens cassés). Le coffre n'est **jamais modifié** par l'import.
 
-### 5. Générer les dépôts de démo
-
-```powershell
-.\make-repos.exe
-```
-
-Rien ne s'affiche ; le dossier `testdata\depots\` contient maintenant `alpha` et `beta`.
-
-### 6. Importer la démo
-
-```powershell
-.\observatoire.exe import -db demo.db -coffre testdata/coffre -depots "Atlas=testdata/depots/alpha,Boussole=testdata/depots/beta"
-```
-
-Tu dois voir :
-
-```
-2 dépôts, 42 commits ajoutés ; notes : 14 écrites, 0 inchangées, 0 supprimées ; …ms
-```
-
-### 7. Lancer le serveur et ouvrir l'interface
-
-```powershell
-.\observatoire.exe serve -db demo.db
-```
-
-Il affiche `Observatoire sur http://127.0.0.1:7878`. Ouvre **http://127.0.0.1:7878** dans ton navigateur : les projets Atlas et Boussole apparaissent. `Ctrl+C` arrête le serveur.
-
----
-
-## Utiliser avec ton propre coffre
-
-### 1. Repérer ton coffre Obsidian
-
-C'est le dossier que tu ouvres dans Obsidian (il contient un sous-dossier caché `.obsidian`). Par défaut l'application cherche `C:\dev\Obsidian Vault` ; si ton coffre est ailleurs (c'est presque toujours le cas), **il faut passer `-coffre`** à chaque `import` et `rapport`.
-
-Tu n'as pas de coffre ? Tu peux partir d'une copie de `testdata\coffre` comme modèle.
-
-### 2. Décrire tes projets avec une fiche
-
-Un projet n'est reconnu que par une **fiche** placée exactement en `Projets\<Nom>\<Nom>.md` avec `type: projet`. Pour qu'il reçoive les données Git, la fiche doit contenir **`chemin_source` avec le chemin absolu** du dépôt :
+Un **projet** est une fiche placée exactement en `Projets\<Nom>\<Nom>.md`. Pour qu'il ait ses commits, elle doit contenir `type: projet` et **`chemin_source` avec le chemin absolu de son dépôt Git** :
 
 ```markdown
 ---
@@ -122,170 +60,97 @@ statut: en cours
 chemin_source: C:\dev\mon-projet
 technos:
   - "[[Go]]"
-  - "[[TypeScript]]"
 ---
 # Mon projet
 ```
 
-- Sans `chemin_source`, ou avec une valeur qui n'est pas un chemin absolu (`C:\…` ou `/…`), le projet existe mais **n'a aucun commit**.
-- `verifie_commit: <sha>` et `verifie_le: <date>` (facultatifs) servent à repérer les fiches périmées.
-- Le rapport classe en « projets qui dorment » ceux dont le `statut` est exactement `en cours`.
-
-Facultatif aussi :
-
-- **Sessions** : notes du dossier `Sessions\` avec `type: session`, `projet: "[[Nom]]"`, `date: AAAA-MM-JJ`, `ia: "[[Nom de l'IA]]"`.
-- **Journal** : `Journal.md` à la racine du coffre, lignes `- AAAA-MM-JJ - [[IA]] - texte`.
-
-Toutes les autres notes `.md` sont importées pour la recherche et le graphe (les dossiers cachés et les liens symboliques sont ignorés). L'import **ne modifie jamais** le coffre.
-
-### 3. Importer
-
-```powershell
-.\observatoire.exe import -coffre "C:\Users\<toi>\Documents\Mon Coffre"
-```
-
-La base `observatoire.db` est créée dans le dossier courant. Le bilan indique combien de dépôts et de commits ont été importés ; un dépôt introuvable affiche `attention : <Projet> (<chemin>) : …` sans bloquer les autres.
-
-Relance cette commande quand tu veux : seuls les nouveaux commits et les notes modifiées sont réécrits.
-
-### 4. Ouvrir l'interface
-
-```powershell
-.\observatoire.exe serve
-```
-
-Puis **http://127.0.0.1:7878**.
-
-### 5. (Facultatif) Écrire le rapport de la semaine dans le coffre
-
-```powershell
-.\observatoire.exe rapport -coffre "C:\Users\<toi>\Documents\Mon Coffre"
-.\observatoire.exe rapport -stdout      # pour juste l'afficher
-```
-
-Il crée ou remplace `Statistiques.md` à la racine du coffre.
-
----
+Facultatif : `verifie_commit` / `verifie_le` (repérer les fiches périmées), des sessions (notes du dossier `Sessions\` avec `type: session`, `projet: "[[Nom]]"`, `date: AAAA-MM-JJ`, `ia: "[[Nom]]"`) et un `Journal.md` à la racine (lignes `- AAAA-MM-JJ - [[IA]] - texte`). Exemple complet : `testdata\coffre`.
 
 ## Problèmes fréquents
 
-| Ce que tu vois | Cause | Solution |
-|---|---|---|
-| `erreur : ouverture de demo.db : unable to open database file (14)` (ou le serveur s'arrête aussitôt) | L'Accès contrôlé aux dossiers bloque `observatoire.exe` | [Étape 4](#4-autoriser-les-exécutables-dans-windows-defender-si-le-dépôt-est-dans-documents) du démarrage rapide, ou dépôt hors de `Documents` |
-| `mkdir testdata\depots: The system cannot find the file specified` avec `go run ./scripts/fixtures/make-repos.go` | `go run` crée un exécutable temporaire au nom aléatoire, que Defender bloque | Utiliser `go build -o make-repos.exe ./scripts/fixtures`, autoriser `make-repos.exe`, puis `.\make-repos.exe` |
-| `erreur : lecture du coffre : lstat C:\dev\Obsidian Vault: …` | Le coffre par défaut n'existe pas chez toi | Ajouter `-coffre "<chemin de ton coffre>"` |
-| `0 dépôts, 0 commits ajoutés` | Aucune fiche `Projets\<Nom>\<Nom>.md` avec `type: projet` et un `chemin_source` absolu | Voir [Décrire tes projets](#2-décrire-tes-projets-avec-une-fiche) |
-| `attention : <Projet> (<chemin>) : git rev-parse: …` | Le `chemin_source` n'est pas un dépôt Git, ou Git n'est pas dans le `PATH` | Corriger le chemin ; vérifier `git --version` |
-| `Some chunks are larger than 500 kB` en rouge / `NativeCommandError` | Simple avertissement de Vite | À ignorer |
-| `npm error … ENOENT … web\package.json` | Commande lancée hors de la racine du dépôt | `cd` à la racine (dossier qui contient `go.mod`) |
-| `interface absente : API seule (construire avec npm --prefix web run build)` | Exécutable compilé **sans** `-tags embed` et lancé hors de la racine, ou `web\dist` pas construit | Relancer l'étape 3 (`npm --prefix web run build` puis `go build -tags embed ./cmd/observatoire`) |
-| `erreur : listen tcp 127.0.0.1:7878: bind: …` | Le port est déjà pris (un autre `serve` tourne ?) | Fermer l'autre serveur, ou `serve -port 8080` |
-| `refus d'ecraser …\Statistiques.md: front matter genere_par: observatoire absent` | Un `Statistiques.md` écrit à la main existe déjà dans le coffre | Le renommer, ou utiliser `rapport -stdout` |
-| `fixtures absentes : lancer d'abord go run ./scripts/fixtures/make-repos.go` (tests Go) | Dépôts de démo non générés | `.\make-repos.exe` |
+| Message | Solution |
+|---|---|
+| `unable to open database file (14)`, ou le serveur s'arrête aussitôt | Defender bloque `observatoire.exe` : relance `construire.ps1` et accepte la fenêtre administrateur, ou autorise-le dans *Sécurité Windows › Protection contre les virus et menaces › Gérer la protection contre les ransomware › Autoriser une application*. Autre solution : mettre le dépôt hors de `Documents` (ex. `C:\dev`). |
+| `… est introuvable` / `vient d'être installé mais reste introuvable` | Ferme et rouvre PowerShell, puis relance le script. |
+| `winget est introuvable` | Installe « App Installer » depuis le Microsoft Store. |
+| `Some chunks are larger than 500 kB` | Simple avertissement de Vite, à ignorer. |
+| `dossier introuvable : …` | Vérifie le chemin du coffre et mets-le entre guillemets. |
+| `aucun dépôt Git importé` / `0 dépôts` | Aucune fiche `Projets\<Nom>\<Nom>.md` avec `type: projet` et un `chemin_source` absolu. |
+| `attention : <Projet> (<chemin>) : git rev-parse: …` | Ce `chemin_source` n'est pas un dépôt Git : corrige la fiche. Les autres projets sont quand même importés. |
+| `erreur : listen tcp 127.0.0.1:7878: bind: …` | Le port est pris (un autre `serve` tourne ?) : ferme-le, ou `.\observatoire.exe serve -port 8080`. |
 
 ---
 
 ## Référence
 
-### Commandes et options
-
-```
-observatoire <commande> [options]
-```
+### Commandes de `observatoire.exe`
 
 | Commande | Rôle |
 |---|---|
-| `migrate` | crée ou met à jour le schéma de la base |
-| `import` | importe les dépôts Git et le coffre |
-| `serve` | lance l'interface sur http://127.0.0.1 |
-| `rapport` | écrit `Statistiques.md` dans le coffre |
-| `watch` | prévu, **pas encore implémenté** |
+| `import` | importe le coffre et les dépôts Git (ce que fait `lancer.cmd`) |
+| `serve` | lance l'interface sur 127.0.0.1 |
+| `rapport` | écrit `Statistiques.md` (bilan de la semaine) à la racine du coffre |
+| `migrate` | crée ou met à jour le schéma (fait aussi automatiquement par les autres commandes) |
+| `watch` | prévu, pas encore implémenté |
 
-| Option | Commandes | Défaut | Rôle |
-|---|---|---|---|
-| `-db <fichier>` | toutes | `observatoire.db` | fichier de la base |
-| `-coffre <dossier>` | `import`, `rapport` | `C:\dev\Obsidian Vault` | racine du coffre Obsidian |
-| `-depots "Nom=dossier,…"` | `import` | — | remplace le `chemin_source` des fiches nommées (chemins relatifs acceptés) |
-| `-port <n>` | `serve` | `7878` | port sur 127.0.0.1 |
-| `-stdout` | `rapport` | désactivé | affiche le rapport au lieu de l'écrire |
+| Option | Commandes | Défaut |
+|---|---|---|
+| `-db <fichier>` | toutes | `observatoire.db` (dossier courant) |
+| `-coffre <dossier>` | `import`, `rapport` | `C:\dev\Obsidian Vault` |
+| `-depots "Nom=dossier,…"` | `import` | remplace le `chemin_source` des fiches nommées |
+| `-port <n>` | `serve` | `7878` |
+| `-stdout` | `rapport` | affiche le rapport au lieu de l'écrire |
 
-`import`, `serve`, `rapport` et `migrate` appliquent eux-mêmes les migrations : `migrate` n'est jamais obligatoire.
+Exemple : `.\observatoire.exe rapport -coffre "C:\Users\toi\Documents\Mon Coffre"`. Le rapport refuse d'écraser un `Statistiques.md` qui n'a pas été généré par Observatoire.
 
-À savoir sur `serve` :
+**Données** : la base `observatoire.db` (+ `-wal`, `-shm`) et les requêtes enregistrées de la console (`requetes\`) sont à la racine du dépôt. Tu peux supprimer la base : `lancer.cmd` la reconstruit.
 
-- il n'écoute que sur `127.0.0.1` et refuse toute requête dont l'en-tête `Host` n'est pas local ;
-- la **console SQL** est en lecture seule (pas d'écriture, d'`ATTACH`, de `PRAGMA` d'écriture ni de transaction), limitée à 5 s, 1000 lignes et 2 requêtes simultanées ;
-- les **requêtes enregistrées** sont des fichiers `*.sql` dans un dossier `requetes\` à côté de la base.
-
-### Où sont les données
-
-| Quoi | Où |
-|---|---|
-| Base SQLite | `observatoire.db` dans le dossier courant, ou le fichier de `-db` (plus ses fichiers `-wal` et `-shm`) |
-| Requêtes enregistrées | `requetes\` à côté de la base |
-| Rapport | `Statistiques.md` à la racine du coffre |
-
-Tu peux supprimer la base à tout moment : un nouvel `import` la reconstruit.
-
-`.gitignore` ignore déjà `*.db`, `*.db-wal`, `*.db-shm`, `/observatoire.exe`, `testdata/depots/` et `web/dist/`, mais **pas `make-repos.exe`** : pense à l'ajouter si tu ne veux pas le committer.
-
-### Compiler sans l'interface intégrée
-
-`go build ./cmd/observatoire` (ou `go run ./cmd/observatoire <commande>`) produit un exécutable qui lit l'interface sur le disque dans `web\dist`, **relativement au dossier courant** : il ne marche donc que lancé depuis la racine du dépôt. Avec `-tags embed`, l'interface est dans l'exécutable et il marche de n'importe où (il faut alors avoir construit `web\dist` avant de compiler).
+**Console SQL** : lecture seule (pas d'écriture, d'`ATTACH`, de `PRAGMA` d'écriture ni de transaction), 5 s, 1000 lignes et 2 requêtes simultanées au maximum. Le serveur n'accepte que les requêtes locales.
 
 ### Développer le front
 
 ```powershell
-cd web
-npm run dev          # Vite ; les appels /api partent vers http://127.0.0.1:7878
-npm run dev:mock     # Vite sans serveur Go : réponses lues dans public/mocks/*.json
-npm run typecheck
-npm test
+npm --prefix web run dev        # Vite ; /api relayé vers http://127.0.0.1:7878 (laisse « serve » tourner)
+npm --prefix web run dev:mock   # sans serveur Go : réponses lues dans web\public\mocks
+npm --prefix web run typecheck
 ```
 
-Pour `npm run dev`, laisse `observatoire.exe serve` tourner dans un autre terminal (port 7878), puis ouvre l'adresse affichée par Vite. `dev:mock` charge `web\.env.mock` (`VITE_MOCK=1`).
+`construire.ps1` compile avec `-tags embed` : l'interface est dans l'exécutable. Un `go build ./cmd/observatoire` sans ce tag lit `web\dist` sur le disque et ne marche que lancé depuis la racine du dépôt.
 
-### Base, migrations et sqlc
+### Migrations et sqlc
 
-- **Migrations** : `migrations\*.sql` (goose), embarquées dans l'exécutable et appliquées automatiquement. Pour changer le schéma, ajoute `0003_….sql` avec `-- +goose Up` / `-- +goose Down`, puis recompile.
-- **Code SQL** : les requêtes de `internal\sql\import` et `internal\sql\requetes` sont compilées par sqlc (`sqlc.yaml`) vers `internal\sql\gen`, à ne pas modifier à la main. Pour régénérer (sqlc 1.31.1) :
+- **Migrations** (goose) : `migrations\*.sql`, embarquées et appliquées automatiquement. Nouveau changement de schéma : `0003_….sql` avec `-- +goose Up` / `-- +goose Down`, puis `construire.ps1`.
+- **Code SQL** : les requêtes de `internal\sql\import` et `internal\sql\requetes` sont compilées par sqlc 1.31.1 (`sqlc.yaml`) vers `internal\sql\gen` (ne pas modifier à la main) :
 
   ```powershell
   go install github.com/sqlc-dev/sqlc/cmd/sqlc@v1.31.1
   sqlc generate
   ```
 
-  Particularités des requêtes : `internal\sql\requetes\README.md`.
-
 ### Tests
 
+Les tests Go ont besoin de deux petits dépôts Git générés dans `testdata\depots` :
+
 ```powershell
-.\make-repos.exe                 # une fois (hors Windows : go run ./scripts/fixtures/make-repos.go)
+go build -o make-repos.exe ./scripts/fixtures   # hors Windows : go run ./scripts/fixtures/make-repos.go
+.\make-repos.exe                                # dans Documents, à autoriser dans Defender comme observatoire.exe
 go test ./...
-npm --prefix web test
+npm --prefix web test                           # Node 22.12 ou plus
 ```
 
-Après relecture, mettre à jour les résultats attendus des requêtes SQL :
-
-```powershell
-go test ./internal/sql/requetes_test -count=1 -args -maj
-```
+Mise à jour des résultats attendus des requêtes, après relecture : `go test ./internal/sql/requetes_test -count=1 -args -maj`. `make-repos.exe` n'est pas dans `.gitignore` (contrairement à `observatoire.exe` et `*.db`).
 
 ### Architecture
 
 ```
-.
-├── cmd/observatoire/   point d'entrée (migrate, import, serve, rapport)
-├── internal/
-│   ├── api/            serveur HTTP : vues JSON, console SQL, SSE, interface
-│   ├── db/             ouverture SQLite et migrations
-│   ├── ingest/         import : git/ (historique), code/ (langages, scc), vault/ (coffre)
-│   ├── model/          types partagés
-│   ├── report/         génération de Statistiques.md
-│   └── sql/            requêtes sqlc (import/, requetes/), code généré (gen/), tests
-├── migrations/         schéma SQL (goose)
-├── scripts/fixtures/   générateur des dépôts de démo
-├── testdata/           coffre fictif + dépôts générés
-├── web/                interface React + Vite (src/, public/mocks/, embed.go, disque.go)
-└── sqlc.yaml
+cmd/observatoire/   point d'entrée (import, serve, rapport, migrate)
+internal/api/       serveur HTTP : vues JSON, console SQL, SSE, interface
+internal/db/        SQLite et migrations
+internal/ingest/    import : git/, code/ (langages via scc), vault/ (coffre)
+internal/report/    Statistiques.md
+internal/sql/       requêtes sqlc et code généré (gen/)
+migrations/         schéma SQL (goose)
+scripts/            installer.ps1, construire.ps1, lancer.ps1 (appelés par les .cmd de la racine), fixtures/
+testdata/           coffre fictif et dépôts de test
+web/                interface React + Vite
 ```
