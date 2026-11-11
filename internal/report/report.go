@@ -13,158 +13,162 @@ import (
 	"github.com/Anarchiejs/Observatoire/internal/sql/gen"
 )
 
-const jour = "2006-01-02"
+const dayLayout = "2006-01-02"
 
-// Generer writes the Markdown report for the week ending at aujourdhui.
-func Generer(ctx context.Context, q *gen.Queries, aujourdhui string) ([]byte, error) {
-	fin, err := time.Parse(jour, aujourdhui)
-	if err != nil {
-		return nil, fmt.Errorf("date aujourdhui invalide: %w", err)
-	}
-	lundi := fin.AddDate(0, 0, -((int(fin.Weekday()) + 6) % 7))
-	precedentFin := lundi.AddDate(0, 0, -1)
-	precedentDebut := precedentFin.AddDate(0, 0, -6)
+const reportName = "Statistics.md"
 
-	semaine, err := q.ChiffresPeriode(ctx, gen.ChiffresPeriodeParams{Debut: lundi.Format(jour), Fin: aujourdhui})
+// Generate writes the Markdown report for the week ending on today.
+func Generate(ctx context.Context, q *gen.Queries, today string) ([]byte, error) {
+	end, err := time.Parse(dayLayout, today)
 	if err != nil {
-		return nil, fmt.Errorf("chiffres semaine: %w", err)
+		return nil, fmt.Errorf("invalid today date: %w", err)
 	}
-	precedente, err := q.ChiffresPeriode(ctx, gen.ChiffresPeriodeParams{Debut: precedentDebut.Format(jour), Fin: precedentFin.Format(jour)})
+	monday := end.AddDate(0, 0, -((int(end.Weekday()) + 6) % 7))
+	previousEnd := monday.AddDate(0, 0, -1)
+	previousStart := previousEnd.AddDate(0, 0, -6)
+
+	week, err := q.PeriodStats(ctx, gen.PeriodStatsParams{StartDate: monday.Format(dayLayout), EndDate: today})
 	if err != nil {
-		return nil, fmt.Errorf("chiffres semaine precedente: %w", err)
+		return nil, fmt.Errorf("week stats: %w", err)
 	}
-	actifs, err := q.ProjetsActifs(ctx, aujourdhui)
+	previous, err := q.PeriodStats(ctx, gen.PeriodStatsParams{StartDate: previousStart.Format(dayLayout), EndDate: previousEnd.Format(dayLayout)})
 	if err != nil {
-		return nil, fmt.Errorf("projets actifs: %w", err)
+		return nil, fmt.Errorf("previous week stats: %w", err)
 	}
-	dormants, err := q.ProjetsDormants(ctx, aujourdhui)
+	active, err := q.ActiveProjects(ctx, today)
 	if err != nil {
-		return nil, fmt.Errorf("projets dormants: %w", err)
+		return nil, fmt.Errorf("active projects: %w", err)
 	}
-	perimees, err := q.FichesPerimees(ctx)
+	dormant, err := q.DormantProjects(ctx, today)
 	if err != nil {
-		return nil, fmt.Errorf("fiches perimees: %w", err)
+		return nil, fmt.Errorf("dormant projects: %w", err)
 	}
-	ias, err := q.SessionsIAPeriode(ctx, gen.SessionsIAPeriodeParams{Debut: lundi.Format(jour), Fin: aujourdhui})
+	stale, err := q.StaleCards(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("sessions IA semaine: %w", err)
+		return nil, fmt.Errorf("stale cards: %w", err)
 	}
-	calendrier, err := q.Calendrier(ctx, aujourdhui)
+	assistants, err := q.AISessionsInPeriod(ctx, gen.AISessionsInPeriodParams{StartDate: monday.Format(dayLayout), EndDate: today})
 	if err != nil {
-		return nil, fmt.Errorf("calendrier: %w", err)
+		return nil, fmt.Errorf("AI sessions this week: %w", err)
+	}
+	calendar, err := q.Calendar(ctx, today)
+	if err != nil {
+		return nil, fmt.Errorf("calendar: %w", err)
 	}
 
 	var b strings.Builder
-	fmt.Fprintf(&b, "---\ntype: statistiques\ngenere_par: observatoire\ngenere_le: %s\n---\n# Statistiques — semaine du %s au %s\n\n", aujourdhui, lundi.Format(jour), aujourdhui)
-	b.WriteString("Note générée automatiquement par [[Observatoire]] : ne pas modifier à la main, elle est réécrite chaque semaine.\nRetour au centre : [[Statistics]]\n\n")
-	b.WriteString("## Activité\n\n| | Cette semaine | Semaine précédente |\n|---|---:|---:|\n")
-	metric := func(n string, a, z int64) { fmt.Fprintf(&b, "| %s | %s | %s |\n", n, nombre(a), nombre(z)) }
-	metric("Commits", semaine.Commits, precedente.Commits)
-	metric("Lignes ajoutées", semaine.Ajouts, precedente.Ajouts)
-	metric("Lignes supprimées", semaine.Suppressions, precedente.Suppressions)
-	metric("Sessions", semaine.Sessions, precedente.Sessions)
-	metric("Projets actifs", semaine.ProjetsActifs, precedente.ProjetsActifs)
-	b.WriteString("\n## Projets actifs\n\n")
-	if len(actifs) == 0 {
-		b.WriteString("Aucun.\n")
+	fmt.Fprintf(&b, "---\ntype: statistics\ngenerated_by: observatoire\ngenerated_on: %s\n---\n# Statistics — week of %s to %s\n\n", today, monday.Format(dayLayout), today)
+	b.WriteString("Note generated automatically by [[Observatoire]]: do not edit it by hand; it is rewritten every week.\nBack to the hub: [[Statistics]]\n\n")
+	b.WriteString("## Activity\n\n| | This week | Previous week |\n|---|---:|---:|\n")
+	metric := func(name string, current, earlier int64) {
+		fmt.Fprintf(&b, "| %s | %s | %s |\n", name, grouped(current), grouped(earlier))
+	}
+	metric("Commits", week.Commits, previous.Commits)
+	metric("Lines added", week.Additions, previous.Additions)
+	metric("Lines deleted", week.Deletions, previous.Deletions)
+	metric("Sessions", week.Sessions, previous.Sessions)
+	metric("Active projects", week.ActiveProjects, previous.ActiveProjects)
+	b.WriteString("\n## Active projects\n\n")
+	if len(active) == 0 {
+		b.WriteString("None.\n")
 	} else {
-		for _, p := range actifs {
-			fmt.Fprintf(&b, "- [[%s]] — %s, dernier commit le %s\n", lien(p.Nom), pluriel(p.Commits30j, "commit"), premiers(valeur(p.DernierCommit, "inconnu"), 10))
+		for _, project := range active {
+			fmt.Fprintf(&b, "- [[%s]] — %s, last commit on %s\n", link(project.Name), plural(project.Commits30d, "commit"), first(value(project.LastCommit, "unknown"), 10))
 		}
 	}
-	b.WriteString("\n## Projets qui dorment\n\n")
-	if len(dormants) == 0 {
-		b.WriteString("Aucun.\n")
+	b.WriteString("\n## Dormant projects\n\n")
+	if len(dormant) == 0 {
+		b.WriteString("None.\n")
 	} else {
-		for _, p := range dormants {
-			etat := "aucun commit importé"
-			if p.Jours >= 0 {
-				etat = "sans commit depuis " + pluriel(p.Jours, "jour")
+		for _, project := range dormant {
+			state := "no imported commits"
+			if project.Days >= 0 {
+				state = "no commits for " + plural(project.Days, "day")
 			}
-			fmt.Fprintf(&b, "- [[%s]] — %s\n", lien(p.Nom), etat)
+			fmt.Fprintf(&b, "- [[%s]] — %s\n", link(project.Name), state)
 		}
 	}
-	b.WriteString("\n## Fiches périmées\n\n")
-	if len(perimees) == 0 {
-		b.WriteString("Aucun.\n")
+	b.WriteString("\n## Stale cards\n\n")
+	if len(stale) == 0 {
+		b.WriteString("None.\n")
 	} else {
-		for _, p := range perimees {
-			sha := "inconnu"
-			if p.VerifieCommit != nil && *p.VerifieCommit != "" {
-				sha = *p.VerifieCommit
+		for _, project := range stale {
+			sha := "unknown"
+			if project.VerifiedCommit != nil && *project.VerifiedCommit != "" {
+				sha = *project.VerifiedCommit
 			}
-			depuis := "commit vérifié introuvable dans le dépôt"
-			if p.CommitsDepuis >= 0 {
-				depuis = pluriel(p.CommitsDepuis, "commit") + " depuis"
+			since := "verified commit not found in the repository"
+			if project.CommitsSince >= 0 {
+				since = plural(project.CommitsSince, "commit") + " since"
 			}
-			fmt.Fprintf(&b, "- [[%s]] — vérifiée à %s, %s\n", lien(p.Nom), sha, depuis)
+			fmt.Fprintf(&b, "- [[%s]] — verified at %s, %s\n", link(project.Name), sha, since)
 		}
 	}
-	b.WriteString("\n## IA de la semaine\n\n")
-	if len(ias) == 0 {
-		b.WriteString("Aucune.\n")
+	b.WriteString("\n## AI this week\n\n")
+	if len(assistants) == 0 {
+		b.WriteString("None.\n")
 	} else {
-		for _, ia := range ias {
-			nom := "inconnue"
-			if ia.Ia != nil {
-				nom = *ia.Ia
+		for _, assistant := range assistants {
+			name := "unknown"
+			if assistant.Ai != nil {
+				name = *assistant.Ai
 			}
-			if nom == "Claude Code" {
-				nom = "Claude Code|Claude"
+			if name == "Claude Code" {
+				name = "Claude Code|Claude"
 			}
-			fmt.Fprintf(&b, "- [[%s]] — %s\n", lien(nom), pluriel(ia.Sessions, "session"))
+			fmt.Fprintf(&b, "- [[%s]] — %s\n", link(name), plural(assistant.Sessions, "session"))
 		}
 	}
-	b.WriteString("\n## Jours les plus actifs\n\n")
-	type jourActif struct {
+	b.WriteString("\n## Most active days\n\n")
+	type activeDay struct {
 		date    string
 		commits int64
 	}
-	var jours []jourActif
-	for _, j := range calendrier {
-		if j.Jour >= lundi.Format(jour) && j.Jour <= aujourdhui && j.Commits > 0 {
-			jours = append(jours, jourActif{date: j.Jour, commits: j.Commits})
+	var days []activeDay
+	for _, day := range calendar {
+		if day.Day >= monday.Format(dayLayout) && day.Day <= today && day.Commits > 0 {
+			days = append(days, activeDay{date: day.Day, commits: day.Commits})
 		}
 	}
-	sort.SliceStable(jours, func(i, j int) bool {
-		if jours[i].commits == jours[j].commits {
-			return jours[i].date < jours[j].date
+	sort.SliceStable(days, func(i, j int) bool {
+		if days[i].commits == days[j].commits {
+			return days[i].date < days[j].date
 		}
-		return jours[i].commits > jours[j].commits
+		return days[i].commits > days[j].commits
 	})
-	if len(jours) > 3 {
-		jours = jours[:3]
+	if len(days) > 3 {
+		days = days[:3]
 	}
-	if len(jours) == 0 {
-		b.WriteString("Aucun.\n")
+	if len(days) == 0 {
+		b.WriteString("None.\n")
 	} else {
-		for _, j := range jours {
-			fmt.Fprintf(&b, "- %s — %s\n", j.date, pluriel(j.commits, "commit"))
+		for _, day := range days {
+			fmt.Fprintf(&b, "- %s — %s\n", day.date, plural(day.commits, "commit"))
 		}
 	}
 	return []byte(b.String()), nil
 }
 
-// Ecrire atomically replaces an existing generated report, refusing unrelated files.
-func Ecrire(coffre string, contenu []byte) error {
-	if err := os.MkdirAll(coffre, 0755); err != nil {
+// Write atomically replaces an existing generated report and refuses unrelated files.
+func Write(vault string, content []byte) error {
+	if err := os.MkdirAll(vault, 0755); err != nil {
 		return err
 	}
-	target := filepath.Join(coffre, "Statistiques.md")
+	target := filepath.Join(vault, reportName)
 	if old, err := os.ReadFile(target); err == nil {
-		if !strings.Contains(string(old), "genere_par: observatoire") {
-			return fmt.Errorf("refus d'ecraser %s: front matter genere_par: observatoire absent", target)
+		if !strings.Contains(string(old), "generated_by: observatoire") {
+			return fmt.Errorf("refusing to overwrite %s: front matter generated_by: observatoire is missing", target)
 		}
 	} else if !os.IsNotExist(err) {
 		return err
 	}
-	tmp, err := os.CreateTemp(coffre, ".Statistiques-*.tmp")
+	tmp, err := os.CreateTemp(vault, ".Statistics-*.tmp")
 	if err != nil {
 		return err
 	}
 	name := tmp.Name()
 	defer os.Remove(name)
-	if _, err = tmp.Write(contenu); err != nil {
+	if _, err = tmp.Write(content); err != nil {
 		tmp.Close()
 		return err
 	}
@@ -178,18 +182,22 @@ func Ecrire(coffre string, contenu []byte) error {
 	return os.Rename(name, target)
 }
 
-func nombre(n int64) string {
-	s := fmt.Sprintf("%d", n)
-	if n < 0 {
-		return s
+func grouped(n int64) string {
+	negative := n < 0
+	if negative {
+		n = -n
 	}
+	s := fmt.Sprintf("%d", n)
 	for i := len(s) - 3; i > 0; i -= 3 {
-		s = s[:i] + "\u202f" + s[i:]
+		s = s[:i] + "," + s[i:]
+	}
+	if negative {
+		return "-" + s
 	}
 	return s
 }
 
-func valeur(v any, fallback string) string {
+func value(v any, fallback string) string {
 	if v == nil {
 		return fallback
 	}
@@ -200,20 +208,19 @@ func valeur(v any, fallback string) string {
 	return s
 }
 
-func lien(s string) string { return strings.ReplaceAll(strings.TrimSpace(s), "]", "") }
+func link(s string) string { return strings.ReplaceAll(strings.TrimSpace(s), "]", "") }
 
-// premiers garde les n premiers caractères (la date d'un instant ISO).
-func premiers(s string, n int) string {
+// first keeps the first n characters (the date of an ISO timestamp).
+func first(s string, n int) string {
 	if len(s) > n {
 		return s[:n]
 	}
 	return s
 }
 
-// pluriel : « 1 commit », « 3 commits », « 0 commit » (règle française).
-func pluriel(n int64, mot string) string {
-	if n > 1 {
-		mot += "s"
+func plural(n int64, word string) string {
+	if n != 1 {
+		word += "s"
 	}
-	return nombre(n) + " " + mot
+	return grouped(n) + " " + word
 }

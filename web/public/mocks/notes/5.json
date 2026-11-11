@@ -1,23 +1,23 @@
 {
   "id": 5,
-  "titre": "Lantern",
-  "dossier": "Projets",
-  "degre": 2,
-  "chemin": "Projets/Lantern.md",
-  "maj": "2026-10-26",
-  "contenu": "# Lantern\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[TypeScript]].\nLié à [[Claude Code]].",
-  "voisins": [
+  "title": "Lantern",
+  "folder": "Projects",
+  "degree": 2,
+  "path": "Projects/Lantern.md",
+  "updated": "2026-10-26",
+  "content": "# Lantern\n\nDemo note from the Observatoire vault.\n\nLinked to [[TypeScript]].\nLinked to [[Claude Code]].",
+  "neighbors": [
     {
       "id": 22,
-      "titre": "TypeScript",
-      "dossier": "Technos",
-      "degre": 5
+      "title": "TypeScript",
+      "folder": "Technologies",
+      "degree": 5
     },
     {
       "id": 40,
-      "titre": "Claude Code",
-      "dossier": "IA",
-      "degre": 3
+      "title": "Claude Code",
+      "folder": "IA",
+      "degree": 3
     }
   ]
 }

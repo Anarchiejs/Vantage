@@ -1,17 +1,17 @@
 {
   "id": 27,
-  "titre": "Luau",
-  "dossier": "Technos",
-  "degre": 1,
-  "chemin": "Technos/Luau.md",
-  "maj": "2026-10-26",
-  "contenu": "# Luau\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Keel]].",
-  "voisins": [
+  "title": "Luau",
+  "folder": "Technologies",
+  "degree": 1,
+  "path": "Technologies/Luau.md",
+  "updated": "2026-10-26",
+  "content": "# Luau\n\nDemo note from the Observatoire vault.\n\nLinked to [[Keel]].",
+  "neighbors": [
     {
       "id": 6,
-      "titre": "Keel",
-      "dossier": "Projets",
-      "degre": 2
+      "title": "Keel",
+      "folder": "Projects",
+      "degree": 2
     }
   ]
 }

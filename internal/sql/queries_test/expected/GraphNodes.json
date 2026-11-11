@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "title": "Claude Code",
+    "folder": "AI",
+    "degree": 1
+  },
+  {
+    "id": 2,
+    "title": "GPT-6 Luna",
+    "folder": "AI",
+    "degree": 0
+  },
+  {
+    "id": 3,
+    "title": "Mapping",
+    "folder": "Concepts",
+    "degree": 1
+  },
+  {
+    "id": 4,
+    "title": "Naïve",
+    "folder": "Concepts",
+    "degree": 0
+  },
+  {
+    "id": 5,
+    "title": "Journal",
+    "folder": "",
+    "degree": 2
+  },
+  {
+    "id": 6,
+    "title": "Atlas - Detail",
+    "folder": "Projects",
+    "degree": 1
+  },
+  {
+    "id": 7,
+    "title": "Atlas - Summary",
+    "folder": "Projects",
+    "degree": 1
+  },
+  {
+    "id": 8,
+    "title": "Atlas",
+    "folder": "Projects",
+    "degree": 5
+  },
+  {
+    "id": 9,
+    "title": "Compass - Detail",
+    "folder": "Projects",
+    "degree": 1
+  },
+  {
+    "id": 10,
+    "title": "Compass - Summary",
+    "folder": "Projects",
+    "degree": 1
+  },
+  {
+    "id": 11,
+    "title": "Compass",
+    "folder": "Projects",
+    "degree": 3
+  },
+  {
+    "id": 12,
+    "title": "Draft",
+    "folder": "Projects",
+    "degree": 0
+  },
+  {
+    "id": 13,
+    "title": "2026-07-01 - Compass - archive",
+    "folder": "Sessions",
+    "degree": 1
+  },
+  {
+    "id": 14,
+    "title": "2026-10-20 - Atlas - initial import",
+    "folder": "Sessions",
+    "degree": 1
+  }
+]

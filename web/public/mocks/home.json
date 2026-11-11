@@ -1,0 +1,3897 @@
+{
+  "calendar": [
+    {
+      "day": "2025-10-27",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2025-10-28",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2025-10-29",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2025-10-30",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2025-10-31",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2025-11-01",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2025-11-02",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2025-11-03",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2025-11-04",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2025-11-05",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2025-11-06",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2025-11-07",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2025-11-08",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2025-11-09",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2025-11-10",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2025-11-11",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2025-11-12",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2025-11-13",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2025-11-14",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2025-11-15",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2025-11-16",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2025-11-17",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2025-11-18",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2025-11-19",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2025-11-20",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2025-11-21",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2025-11-22",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2025-11-23",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2025-11-24",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2025-11-25",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2025-11-26",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2025-11-27",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2025-11-28",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2025-11-29",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2025-11-30",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2025-12-01",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2025-12-02",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2025-12-03",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2025-12-04",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2025-12-05",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2025-12-06",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2025-12-07",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2025-12-08",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2025-12-09",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2025-12-10",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2025-12-11",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2025-12-12",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2025-12-13",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2025-12-14",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2025-12-15",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2025-12-16",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2025-12-17",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2025-12-18",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2025-12-19",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2025-12-20",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2025-12-21",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2025-12-22",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2025-12-23",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2025-12-24",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2025-12-25",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2025-12-26",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2025-12-27",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2025-12-28",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2025-12-29",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2025-12-30",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2025-12-31",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-01-01",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-01-02",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-01-03",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-01-04",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-01-05",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-01-06",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-01-07",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-01-08",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-01-09",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-01-10",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-01-11",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-01-12",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-01-13",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-01-14",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-01-15",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-01-16",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-01-17",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-01-18",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-01-19",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-01-20",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-01-21",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-01-22",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-01-23",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-01-24",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-01-25",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-01-26",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-01-27",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-01-28",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-01-29",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-01-30",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-01-31",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-02-01",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-02-02",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-02-03",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-02-04",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-02-05",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-02-06",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-02-07",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-02-08",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-02-09",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-02-10",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-02-11",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-02-12",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-02-13",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-02-14",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-02-15",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-02-16",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-02-17",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-02-18",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-02-19",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-02-20",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-02-21",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-02-22",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-02-23",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-02-24",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-02-25",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-02-26",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-02-27",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-02-28",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-03-01",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-03-02",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-03-03",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-03-04",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-03-05",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-03-06",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-03-07",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-03-08",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-03-09",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-03-10",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-03-11",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-03-12",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-03-13",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-03-14",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-03-15",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-03-16",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-03-17",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-03-18",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-03-19",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-03-20",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-03-21",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-03-22",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-03-23",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-03-24",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-03-25",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-03-26",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-03-27",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-03-28",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-03-29",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-03-30",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-03-31",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-04-01",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-04-02",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-04-03",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-04-04",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-04-05",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-04-06",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-04-07",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-04-08",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-04-09",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-04-10",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-04-11",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-04-12",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-04-13",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-04-14",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-04-15",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-04-16",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-04-17",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-04-18",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-04-19",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-04-20",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-04-21",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-04-22",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-04-23",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-04-24",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-04-25",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-04-26",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-04-27",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-04-28",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-04-29",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-04-30",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-05-01",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-05-02",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-05-03",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-05-04",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-05-05",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-05-06",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-05-07",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-05-08",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-05-09",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-05-10",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-05-11",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-05-12",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-05-13",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-05-14",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-05-15",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-05-16",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-05-17",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-05-18",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-05-19",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-05-20",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-05-21",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-05-22",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-05-23",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-05-24",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-05-25",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-05-26",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-05-27",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-05-28",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-05-29",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-05-30",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-05-31",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-06-01",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-06-02",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-06-03",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-06-04",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-06-05",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-06-06",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-06-07",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-06-08",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-06-09",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-06-10",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-06-11",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-06-12",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-06-13",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-06-14",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-06-15",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-06-16",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-06-17",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-06-18",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-06-19",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-06-20",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-06-21",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-06-22",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-06-23",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-06-24",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-06-25",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-06-26",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-06-27",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-06-28",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-06-29",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-06-30",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-07-01",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-07-02",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-07-03",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-07-04",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-07-05",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-07-06",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-07-07",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-07-08",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-07-09",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-07-10",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-07-11",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-07-12",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-07-13",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-07-14",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-07-15",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-07-16",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-07-17",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-07-18",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-07-19",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-07-20",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-07-21",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-07-22",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-07-23",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-07-24",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-07-25",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-07-26",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-07-27",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-07-28",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-07-29",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-07-30",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-07-31",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-08-01",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-08-02",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-08-03",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-08-04",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-08-05",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-08-06",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-08-07",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-08-08",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-08-09",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-08-10",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-08-11",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-08-12",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-08-13",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-08-14",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-08-15",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-08-16",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-08-17",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-08-18",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-08-19",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-08-20",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-08-21",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-08-22",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-08-23",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-08-24",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-08-25",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-08-26",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-08-27",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-08-28",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-08-29",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-08-30",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-08-31",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-09-01",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-09-02",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-09-03",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-09-04",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-09-05",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-09-06",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-09-07",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-09-08",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-09-09",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-09-10",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-09-11",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-09-12",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-09-13",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-09-14",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-09-15",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-09-16",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-09-17",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-09-18",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-09-19",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-09-20",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-09-21",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-09-22",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 1,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-09-23",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-09-24",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-09-25",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-09-26",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-09-27",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-09-28",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-09-29",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-09-30",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-10-01",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-10-02",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-10-03",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-10-04",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-10-05",
+      "commits": 9,
+      "additions": 387,
+      "deletions": 108,
+      "sessions": 2,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-10-06",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 3,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-10-07",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 1,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-10-08",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 2,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-10-09",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 3,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-10-10",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 1,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-10-11",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-10-12",
+      "commits": 6,
+      "additions": 258,
+      "deletions": 72,
+      "sessions": 3,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-10-13",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-10-14",
+      "commits": 7,
+      "additions": 301,
+      "deletions": 84,
+      "sessions": 2,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-10-15",
+      "commits": 1,
+      "additions": 43,
+      "deletions": 12,
+      "sessions": 3,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-10-16",
+      "commits": 8,
+      "additions": 344,
+      "deletions": 96,
+      "sessions": 1,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-10-17",
+      "commits": 2,
+      "additions": 86,
+      "deletions": 24,
+      "sessions": 2,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-10-18",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-10-19",
+      "commits": 3,
+      "additions": 129,
+      "deletions": 36,
+      "sessions": 1,
+      "projects": [
+        "Observatoire",
+        "Compass"
+      ]
+    },
+    {
+      "day": "2026-10-20",
+      "commits": 10,
+      "additions": 430,
+      "deletions": 120,
+      "sessions": 2,
+      "projects": [
+        "Compass",
+        "Lantern"
+      ]
+    },
+    {
+      "day": "2026-10-21",
+      "commits": 4,
+      "additions": 172,
+      "deletions": 48,
+      "sessions": 3,
+      "projects": [
+        "Lantern",
+        "Harbor"
+      ]
+    },
+    {
+      "day": "2026-10-22",
+      "commits": 11,
+      "additions": 473,
+      "deletions": 132,
+      "sessions": 1,
+      "projects": [
+        "Harbor",
+        "Keel"
+      ]
+    },
+    {
+      "day": "2026-10-23",
+      "commits": 5,
+      "additions": 215,
+      "deletions": 60,
+      "sessions": 2,
+      "projects": [
+        "Keel",
+        "Northwind"
+      ]
+    },
+    {
+      "day": "2026-10-24",
+      "commits": 12,
+      "additions": 516,
+      "deletions": 144,
+      "sessions": 3,
+      "projects": [
+        "Northwind",
+        "Quartz"
+      ]
+    },
+    {
+      "day": "2026-10-25",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    },
+    {
+      "day": "2026-10-26",
+      "commits": 0,
+      "additions": 0,
+      "deletions": 0,
+      "sessions": 0,
+      "projects": []
+    }
+  ],
+  "week": {
+    "commits": 42,
+    "additions": 1806,
+    "deletions": 504,
+    "sessions": 11,
+    "active_projects": 6
+  },
+  "previous_week": {
+    "commits": 21,
+    "additions": 903,
+    "deletions": 252,
+    "sessions": 9,
+    "active_projects": 7
+  },
+  "month": {
+    "commits": 145,
+    "additions": 6235,
+    "deletions": 1740,
+    "sessions": 44,
+    "active_projects": 7
+  },
+  "previous_month": {
+    "commits": 160,
+    "additions": 6880,
+    "deletions": 1920,
+    "sessions": 49,
+    "active_projects": 7
+  },
+  "active": [
+    {
+      "id": 1,
+      "name": "Observatoire",
+      "last_commit": "2026-10-26T14:30:00Z",
+      "commits_30d": 21
+    },
+    {
+      "id": 2,
+      "name": "Compass",
+      "last_commit": "2026-10-25T14:30:00Z",
+      "commits_30d": 24
+    },
+    {
+      "id": 3,
+      "name": "Lantern",
+      "last_commit": "2026-10-24T14:30:00Z",
+      "commits_30d": 27
+    },
+    {
+      "id": 4,
+      "name": "Harbor",
+      "last_commit": "2026-10-23T14:30:00Z",
+      "commits_30d": 30
+    },
+    {
+      "id": 5,
+      "name": "Keel",
+      "last_commit": "2026-10-22T14:30:00Z",
+      "commits_30d": 33
+    },
+    {
+      "id": 6,
+      "name": "Northwind",
+      "last_commit": "2026-10-21T14:30:00Z",
+      "commits_30d": 36
+    },
+    {
+      "id": 7,
+      "name": "Quartz",
+      "last_commit": "2026-10-20T14:30:00Z",
+      "commits_30d": 39
+    }
+  ],
+  "dormant": [
+    {
+      "id": 8,
+      "name": "Sable",
+      "last_commit": "2026-08-19T14:30:00Z",
+      "days": 68
+    },
+    {
+      "id": 9,
+      "name": "Tidepool",
+      "last_commit": "2026-08-15T14:30:00Z",
+      "days": 72
+    }
+  ],
+  "stale_cards": [
+    {
+      "id": 2,
+      "name": "Compass",
+      "verified_commit": "21aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "last_sha": "22aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "commits_since": 6
+    },
+    {
+      "id": 3,
+      "name": "Lantern",
+      "verified_commit": "31aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "last_sha": "32aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "commits_since": 9
+    },
+    {
+      "id": 4,
+      "name": "Harbor",
+      "verified_commit": "41aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "last_sha": "42aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "commits_since": 12
+    }
+  ]
+}

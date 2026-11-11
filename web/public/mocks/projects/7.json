@@ -1,0 +1,1066 @@
+{
+  "project": {
+    "id": 7,
+    "name": "Quartz",
+    "status": "in progress",
+    "commits": 342,
+    "last_commit": "2026-10-20T14:30:00Z",
+    "primary_language": "Rust",
+    "source_path": "C:/dev/Quartz",
+    "technologies": [
+      "Rust",
+      "SQLite",
+      "Git"
+    ]
+  },
+  "timeline": [
+    {
+      "date": "2026-10-20T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "72aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-20",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-20 - Quartz.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-20",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "702",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-19T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "75aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-19",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-19 - Quartz.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-19",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "705",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-18T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "78aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-18",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-18 - Quartz.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-18",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "708",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-17T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "7baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-17",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-17 - Quartz.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-17",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "711",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-16T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "7eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-16",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-16 - Quartz.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-16",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "714",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-15T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "711aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-15",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-15 - Quartz.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-15",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "717",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-14T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "714aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-14",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-14 - Quartz.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-14",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "720",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-13T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "717aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-13",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-13 - Quartz.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-13",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "723",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-12T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "71aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-12",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-12 - Quartz.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-12",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "726",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-11T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "71daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-11",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-11 - Quartz.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-11",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "729",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-10T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "720aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-10",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-10 - Quartz.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-10",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "732",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-09T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "723aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-09",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-09 - Quartz.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-09",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "735",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-08T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "726aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-08",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-08 - Quartz.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-08",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "738",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-07T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "729aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-07",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-07 - Quartz.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-07",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "741",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-06T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "72caaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-06",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-06 - Quartz.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-06",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "744",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-05T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "72faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-05",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-05 - Quartz.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-05",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "747",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-04T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "732aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-04",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-04 - Quartz.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-04",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "750",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-03T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "735aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-03",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-03 - Quartz.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-03",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "753",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-02T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "738aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-02",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-02 - Quartz.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-10-02",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "756",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-01T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "73baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-10-01",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-10-01 - Quartz.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-10-01",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "759",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-09-30T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "73eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-09-30",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-09-30 - Quartz.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-09-30",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "762",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-09-29T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "741aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-09-29",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-09-29 - Quartz.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-09-29",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "765",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-09-28T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "744aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-09-28",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-09-28 - Quartz.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-09-28",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "768",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-09-27T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "747aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-09-27",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-09-27 - Quartz.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-09-27",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "771",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-09-26T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "74aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-09-26",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-09-26 - Quartz.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-09-26",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "774",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-09-25T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "74daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-09-25",
+      "type": "session",
+      "title": "Review and improve Quartz",
+      "ref": "Sessions/2026-09-25 - Quartz.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-09-25",
+      "type": "journal",
+      "title": "Updated the card for Quartz",
+      "ref": "777",
+      "ia": "Codex"
+    }
+  ],
+  "volume": [
+    {
+      "week": "2025-11-03",
+      "commits": 3,
+      "additions": 180,
+      "deletions": 30
+    },
+    {
+      "week": "2025-11-10",
+      "commits": 4,
+      "additions": 192,
+      "deletions": 34
+    },
+    {
+      "week": "2025-11-17",
+      "commits": 5,
+      "additions": 204,
+      "deletions": 38
+    },
+    {
+      "week": "2025-11-24",
+      "commits": 6,
+      "additions": 216,
+      "deletions": 42
+    },
+    {
+      "week": "2025-12-01",
+      "commits": 7,
+      "additions": 228,
+      "deletions": 46
+    },
+    {
+      "week": "2025-12-08",
+      "commits": 8,
+      "additions": 240,
+      "deletions": 50
+    },
+    {
+      "week": "2025-12-15",
+      "commits": 9,
+      "additions": 252,
+      "deletions": 54
+    },
+    {
+      "week": "2025-12-22",
+      "commits": 10,
+      "additions": 264,
+      "deletions": 58
+    },
+    {
+      "week": "2025-12-29",
+      "commits": 11,
+      "additions": 276,
+      "deletions": 62
+    },
+    {
+      "week": "2026-01-05",
+      "commits": 12,
+      "additions": 288,
+      "deletions": 66
+    },
+    {
+      "week": "2026-01-12",
+      "commits": 13,
+      "additions": 300,
+      "deletions": 70
+    },
+    {
+      "week": "2026-01-19",
+      "commits": 3,
+      "additions": 312,
+      "deletions": 74
+    },
+    {
+      "week": "2026-01-26",
+      "commits": 4,
+      "additions": 324,
+      "deletions": 78
+    },
+    {
+      "week": "2026-02-02",
+      "commits": 5,
+      "additions": 336,
+      "deletions": 82
+    },
+    {
+      "week": "2026-02-09",
+      "commits": 6,
+      "additions": 348,
+      "deletions": 86
+    },
+    {
+      "week": "2026-02-16",
+      "commits": 7,
+      "additions": 360,
+      "deletions": 90
+    },
+    {
+      "week": "2026-02-23",
+      "commits": 8,
+      "additions": 372,
+      "deletions": 94
+    },
+    {
+      "week": "2026-03-02",
+      "commits": 9,
+      "additions": 384,
+      "deletions": 98
+    },
+    {
+      "week": "2026-03-09",
+      "commits": 10,
+      "additions": 396,
+      "deletions": 102
+    },
+    {
+      "week": "2026-03-16",
+      "commits": 11,
+      "additions": 408,
+      "deletions": 106
+    },
+    {
+      "week": "2026-03-23",
+      "commits": 12,
+      "additions": 420,
+      "deletions": 110
+    },
+    {
+      "week": "2026-03-30",
+      "commits": 13,
+      "additions": 432,
+      "deletions": 114
+    },
+    {
+      "week": "2026-04-06",
+      "commits": 3,
+      "additions": 444,
+      "deletions": 118
+    },
+    {
+      "week": "2026-04-13",
+      "commits": 4,
+      "additions": 456,
+      "deletions": 122
+    },
+    {
+      "week": "2026-04-20",
+      "commits": 5,
+      "additions": 468,
+      "deletions": 126
+    },
+    {
+      "week": "2026-04-27",
+      "commits": 6,
+      "additions": 480,
+      "deletions": 130
+    },
+    {
+      "week": "2026-05-04",
+      "commits": 7,
+      "additions": 492,
+      "deletions": 134
+    },
+    {
+      "week": "2026-05-11",
+      "commits": 8,
+      "additions": 504,
+      "deletions": 138
+    },
+    {
+      "week": "2026-05-18",
+      "commits": 9,
+      "additions": 516,
+      "deletions": 142
+    },
+    {
+      "week": "2026-05-25",
+      "commits": 10,
+      "additions": 528,
+      "deletions": 146
+    },
+    {
+      "week": "2026-06-01",
+      "commits": 11,
+      "additions": 540,
+      "deletions": 150
+    },
+    {
+      "week": "2026-06-08",
+      "commits": 12,
+      "additions": 552,
+      "deletions": 154
+    },
+    {
+      "week": "2026-06-15",
+      "commits": 13,
+      "additions": 564,
+      "deletions": 158
+    },
+    {
+      "week": "2026-06-22",
+      "commits": 3,
+      "additions": 576,
+      "deletions": 162
+    },
+    {
+      "week": "2026-06-29",
+      "commits": 4,
+      "additions": 588,
+      "deletions": 166
+    },
+    {
+      "week": "2026-07-06",
+      "commits": 5,
+      "additions": 600,
+      "deletions": 170
+    },
+    {
+      "week": "2026-07-13",
+      "commits": 6,
+      "additions": 612,
+      "deletions": 174
+    },
+    {
+      "week": "2026-07-20",
+      "commits": 7,
+      "additions": 624,
+      "deletions": 178
+    },
+    {
+      "week": "2026-07-27",
+      "commits": 8,
+      "additions": 636,
+      "deletions": 182
+    },
+    {
+      "week": "2026-08-03",
+      "commits": 9,
+      "additions": 648,
+      "deletions": 186
+    },
+    {
+      "week": "2026-08-10",
+      "commits": 10,
+      "additions": 660,
+      "deletions": 190
+    },
+    {
+      "week": "2026-08-17",
+      "commits": 11,
+      "additions": 672,
+      "deletions": 194
+    },
+    {
+      "week": "2026-08-24",
+      "commits": 12,
+      "additions": 684,
+      "deletions": 198
+    },
+    {
+      "week": "2026-08-31",
+      "commits": 13,
+      "additions": 696,
+      "deletions": 202
+    },
+    {
+      "week": "2026-09-07",
+      "commits": 3,
+      "additions": 708,
+      "deletions": 206
+    },
+    {
+      "week": "2026-09-14",
+      "commits": 4,
+      "additions": 720,
+      "deletions": 210
+    },
+    {
+      "week": "2026-09-21",
+      "commits": 5,
+      "additions": 732,
+      "deletions": 214
+    },
+    {
+      "week": "2026-09-28",
+      "commits": 6,
+      "additions": 744,
+      "deletions": 218
+    },
+    {
+      "week": "2026-10-05",
+      "commits": 7,
+      "additions": 756,
+      "deletions": 222
+    },
+    {
+      "week": "2026-10-12",
+      "commits": 8,
+      "additions": 768,
+      "deletions": 226
+    },
+    {
+      "week": "2026-10-19",
+      "commits": 9,
+      "additions": 780,
+      "deletions": 230
+    },
+    {
+      "week": "2026-10-26",
+      "commits": 10,
+      "additions": 792,
+      "deletions": 234
+    }
+  ],
+  "languages": [
+    {
+      "language": "Rust",
+      "code_lines": 8400,
+      "share": 0.84
+    },
+    {
+      "language": "CSS",
+      "code_lines": 1600,
+      "share": 0.16
+    }
+  ],
+  "language_evolution": [
+    {
+      "measured_on": "2026-08-01",
+      "language": "Rust",
+      "code_lines": 6720
+    },
+    {
+      "measured_on": "2026-08-01",
+      "language": "CSS",
+      "code_lines": 1280
+    },
+    {
+      "measured_on": "2026-09-01",
+      "language": "Rust",
+      "code_lines": 7560
+    },
+    {
+      "measured_on": "2026-09-01",
+      "language": "CSS",
+      "code_lines": 1440
+    },
+    {
+      "measured_on": "2026-10-26",
+      "language": "Rust",
+      "code_lines": 8400
+    },
+    {
+      "measured_on": "2026-10-26",
+      "language": "CSS",
+      "code_lines": 1600
+    }
+  ],
+  "hotspots": [
+    {
+      "path": "src/main.ts",
+      "modifications": 48,
+      "additions": 760,
+      "deletions": 160
+    },
+    {
+      "path": "src/modules/module-1.ts",
+      "modifications": 46,
+      "additions": 735,
+      "deletions": 155
+    },
+    {
+      "path": "src/modules/module-2.ts",
+      "modifications": 44,
+      "additions": 710,
+      "deletions": 150
+    },
+    {
+      "path": "src/modules/module-3.ts",
+      "modifications": 42,
+      "additions": 685,
+      "deletions": 145
+    },
+    {
+      "path": "src/modules/module-4.ts",
+      "modifications": 40,
+      "additions": 660,
+      "deletions": 140
+    },
+    {
+      "path": "src/modules/module-5.ts",
+      "modifications": 38,
+      "additions": 635,
+      "deletions": 135
+    },
+    {
+      "path": "src/modules/module-6.ts",
+      "modifications": 36,
+      "additions": 610,
+      "deletions": 130
+    },
+    {
+      "path": "src/modules/module-7.ts",
+      "modifications": 34,
+      "additions": 585,
+      "deletions": 125
+    },
+    {
+      "path": "src/modules/module-8.ts",
+      "modifications": 32,
+      "additions": 560,
+      "deletions": 120
+    },
+    {
+      "path": "src/modules/module-9.ts",
+      "modifications": 30,
+      "additions": 535,
+      "deletions": 115
+    },
+    {
+      "path": "src/modules/module-10.ts",
+      "modifications": 28,
+      "additions": 510,
+      "deletions": 110
+    },
+    {
+      "path": "src/modules/module-11.ts",
+      "modifications": 26,
+      "additions": 485,
+      "deletions": 105
+    },
+    {
+      "path": "src/modules/module-12.ts",
+      "modifications": 24,
+      "additions": 460,
+      "deletions": 100
+    },
+    {
+      "path": "src/modules/module-13.ts",
+      "modifications": 22,
+      "additions": 435,
+      "deletions": 95
+    },
+    {
+      "path": "src/modules/module-14.ts",
+      "modifications": 20,
+      "additions": 410,
+      "deletions": 90
+    },
+    {
+      "path": "src/modules/module-15.ts",
+      "modifications": 18,
+      "additions": 385,
+      "deletions": 85
+    },
+    {
+      "path": "src/modules/module-16.ts",
+      "modifications": 16,
+      "additions": 360,
+      "deletions": 80
+    },
+    {
+      "path": "src/modules/module-17.ts",
+      "modifications": 14,
+      "additions": 335,
+      "deletions": 75
+    },
+    {
+      "path": "src/modules/module-18.ts",
+      "modifications": 12,
+      "additions": 310,
+      "deletions": 70
+    },
+    {
+      "path": "src/modules/module-19.ts",
+      "modifications": 10,
+      "additions": 285,
+      "deletions": 65
+    }
+  ],
+  "health": {
+    "verified_commit": "72aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "verified_on": "2026-10-01",
+    "last_sha": "72aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "up_to_date": true,
+    "commits_since": 0,
+    "missing_notes": []
+  },
+  "ia": [
+    {
+      "ia": "Codex",
+      "sessions": 13,
+      "first": "2026-09-25",
+      "last": "2026-10-20"
+    },
+    {
+      "ia": "Claude Code",
+      "sessions": 13,
+      "first": "2026-09-26",
+      "last": "2026-10-20"
+    }
+  ]
+}

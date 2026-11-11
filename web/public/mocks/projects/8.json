@@ -1,0 +1,1066 @@
+{
+  "project": {
+    "id": 8,
+    "name": "Sable",
+    "status": "in progress",
+    "commits": 379,
+    "last_commit": "2026-08-19T14:30:00Z",
+    "primary_language": "Python",
+    "source_path": "C:/dev/Sable",
+    "technologies": [
+      "Python",
+      "SQLite",
+      "Git"
+    ]
+  },
+  "timeline": [
+    {
+      "date": "2026-08-19T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "82aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-19",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-19 - Sable.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-19",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "802",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-18T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "85aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-18",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-18 - Sable.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-18",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "805",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-17T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "88aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-17",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-17 - Sable.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-17",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "808",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-16T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "8baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-16",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-16 - Sable.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-16",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "811",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-15T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "8eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-15",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-15 - Sable.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-15",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "814",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-14T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "811aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-14",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-14 - Sable.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-14",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "817",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-13T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "814aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-13",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-13 - Sable.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-13",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "820",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-12T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "817aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-12",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-12 - Sable.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-12",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "823",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-11T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "81aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-11",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-11 - Sable.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-11",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "826",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-10T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "81daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-10",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-10 - Sable.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-10",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "829",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-09T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-09",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-09 - Sable.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-09",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "832",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-08T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "823aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-08",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-08 - Sable.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-08",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "835",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-07T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "826aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-07",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-07 - Sable.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-07",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "838",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-06T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "829aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-06",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-06 - Sable.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-06",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "841",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-05T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "82caaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-05",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-05 - Sable.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-05",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "844",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-04T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "82faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-04",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-04 - Sable.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-04",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "847",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-03T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "832aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-03",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-03 - Sable.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-03",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "850",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-02T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "835aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-02",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-02 - Sable.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "853",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-01T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "838aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-08-01",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-08-01 - Sable.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-08-01",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "856",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-07-31T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "83baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-07-31",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-07-31 - Sable.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-07-31",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "859",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-07-30T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "83eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-07-30",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-07-30 - Sable.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-07-30",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "862",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-07-29T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "841aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-07-29",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-07-29 - Sable.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-07-29",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "865",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-07-28T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "844aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-07-28",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-07-28 - Sable.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-07-28",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "868",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-07-27T14:30:00Z",
+      "type": "commit",
+      "title": "Improve loading states",
+      "ref": "847aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-07-27",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-07-27 - Sable.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-07-27",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "871",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-07-26T14:30:00Z",
+      "type": "commit",
+      "title": "Fix data validation",
+      "ref": "84aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-07-26",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-07-26 - Sable.md",
+      "ia": "Codex"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "874",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-07-25T14:30:00Z",
+      "type": "commit",
+      "title": "Add search filters",
+      "ref": "84daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ia": null
+    },
+    {
+      "date": "2026-07-25",
+      "type": "session",
+      "title": "Review and improve Sable",
+      "ref": "Sessions/2026-07-25 - Sable.md",
+      "ia": "Claude Code"
+    },
+    {
+      "date": "2026-07-25",
+      "type": "journal",
+      "title": "Updated the card for Sable",
+      "ref": "877",
+      "ia": "Codex"
+    }
+  ],
+  "volume": [
+    {
+      "week": "2025-11-03",
+      "commits": 3,
+      "additions": 180,
+      "deletions": 30
+    },
+    {
+      "week": "2025-11-10",
+      "commits": 4,
+      "additions": 192,
+      "deletions": 34
+    },
+    {
+      "week": "2025-11-17",
+      "commits": 5,
+      "additions": 204,
+      "deletions": 38
+    },
+    {
+      "week": "2025-11-24",
+      "commits": 6,
+      "additions": 216,
+      "deletions": 42
+    },
+    {
+      "week": "2025-12-01",
+      "commits": 7,
+      "additions": 228,
+      "deletions": 46
+    },
+    {
+      "week": "2025-12-08",
+      "commits": 8,
+      "additions": 240,
+      "deletions": 50
+    },
+    {
+      "week": "2025-12-15",
+      "commits": 9,
+      "additions": 252,
+      "deletions": 54
+    },
+    {
+      "week": "2025-12-22",
+      "commits": 10,
+      "additions": 264,
+      "deletions": 58
+    },
+    {
+      "week": "2025-12-29",
+      "commits": 11,
+      "additions": 276,
+      "deletions": 62
+    },
+    {
+      "week": "2026-01-05",
+      "commits": 12,
+      "additions": 288,
+      "deletions": 66
+    },
+    {
+      "week": "2026-01-12",
+      "commits": 13,
+      "additions": 300,
+      "deletions": 70
+    },
+    {
+      "week": "2026-01-19",
+      "commits": 3,
+      "additions": 312,
+      "deletions": 74
+    },
+    {
+      "week": "2026-01-26",
+      "commits": 4,
+      "additions": 324,
+      "deletions": 78
+    },
+    {
+      "week": "2026-02-02",
+      "commits": 5,
+      "additions": 336,
+      "deletions": 82
+    },
+    {
+      "week": "2026-02-09",
+      "commits": 6,
+      "additions": 348,
+      "deletions": 86
+    },
+    {
+      "week": "2026-02-16",
+      "commits": 7,
+      "additions": 360,
+      "deletions": 90
+    },
+    {
+      "week": "2026-02-23",
+      "commits": 8,
+      "additions": 372,
+      "deletions": 94
+    },
+    {
+      "week": "2026-03-02",
+      "commits": 9,
+      "additions": 384,
+      "deletions": 98
+    },
+    {
+      "week": "2026-03-09",
+      "commits": 10,
+      "additions": 396,
+      "deletions": 102
+    },
+    {
+      "week": "2026-03-16",
+      "commits": 11,
+      "additions": 408,
+      "deletions": 106
+    },
+    {
+      "week": "2026-03-23",
+      "commits": 12,
+      "additions": 420,
+      "deletions": 110
+    },
+    {
+      "week": "2026-03-30",
+      "commits": 13,
+      "additions": 432,
+      "deletions": 114
+    },
+    {
+      "week": "2026-04-06",
+      "commits": 3,
+      "additions": 444,
+      "deletions": 118
+    },
+    {
+      "week": "2026-04-13",
+      "commits": 4,
+      "additions": 456,
+      "deletions": 122
+    },
+    {
+      "week": "2026-04-20",
+      "commits": 5,
+      "additions": 468,
+      "deletions": 126
+    },
+    {
+      "week": "2026-04-27",
+      "commits": 6,
+      "additions": 480,
+      "deletions": 130
+    },
+    {
+      "week": "2026-05-04",
+      "commits": 7,
+      "additions": 492,
+      "deletions": 134
+    },
+    {
+      "week": "2026-05-11",
+      "commits": 8,
+      "additions": 504,
+      "deletions": 138
+    },
+    {
+      "week": "2026-05-18",
+      "commits": 9,
+      "additions": 516,
+      "deletions": 142
+    },
+    {
+      "week": "2026-05-25",
+      "commits": 10,
+      "additions": 528,
+      "deletions": 146
+    },
+    {
+      "week": "2026-06-01",
+      "commits": 11,
+      "additions": 540,
+      "deletions": 150
+    },
+    {
+      "week": "2026-06-08",
+      "commits": 12,
+      "additions": 552,
+      "deletions": 154
+    },
+    {
+      "week": "2026-06-15",
+      "commits": 13,
+      "additions": 564,
+      "deletions": 158
+    },
+    {
+      "week": "2026-06-22",
+      "commits": 3,
+      "additions": 576,
+      "deletions": 162
+    },
+    {
+      "week": "2026-06-29",
+      "commits": 4,
+      "additions": 588,
+      "deletions": 166
+    },
+    {
+      "week": "2026-07-06",
+      "commits": 5,
+      "additions": 600,
+      "deletions": 170
+    },
+    {
+      "week": "2026-07-13",
+      "commits": 6,
+      "additions": 612,
+      "deletions": 174
+    },
+    {
+      "week": "2026-07-20",
+      "commits": 7,
+      "additions": 624,
+      "deletions": 178
+    },
+    {
+      "week": "2026-07-27",
+      "commits": 8,
+      "additions": 636,
+      "deletions": 182
+    },
+    {
+      "week": "2026-08-03",
+      "commits": 9,
+      "additions": 648,
+      "deletions": 186
+    },
+    {
+      "week": "2026-08-10",
+      "commits": 10,
+      "additions": 660,
+      "deletions": 190
+    },
+    {
+      "week": "2026-08-17",
+      "commits": 11,
+      "additions": 672,
+      "deletions": 194
+    },
+    {
+      "week": "2026-08-24",
+      "commits": 12,
+      "additions": 684,
+      "deletions": 198
+    },
+    {
+      "week": "2026-08-31",
+      "commits": 13,
+      "additions": 696,
+      "deletions": 202
+    },
+    {
+      "week": "2026-09-07",
+      "commits": 3,
+      "additions": 708,
+      "deletions": 206
+    },
+    {
+      "week": "2026-09-14",
+      "commits": 4,
+      "additions": 720,
+      "deletions": 210
+    },
+    {
+      "week": "2026-09-21",
+      "commits": 5,
+      "additions": 732,
+      "deletions": 214
+    },
+    {
+      "week": "2026-09-28",
+      "commits": 6,
+      "additions": 744,
+      "deletions": 218
+    },
+    {
+      "week": "2026-10-05",
+      "commits": 7,
+      "additions": 756,
+      "deletions": 222
+    },
+    {
+      "week": "2026-10-12",
+      "commits": 8,
+      "additions": 768,
+      "deletions": 226
+    },
+    {
+      "week": "2026-10-19",
+      "commits": 9,
+      "additions": 780,
+      "deletions": 230
+    },
+    {
+      "week": "2026-10-26",
+      "commits": 10,
+      "additions": 792,
+      "deletions": 234
+    }
+  ],
+  "languages": [
+    {
+      "language": "Python",
+      "code_lines": 8400,
+      "share": 0.84
+    },
+    {
+      "language": "CSS",
+      "code_lines": 1600,
+      "share": 0.16
+    }
+  ],
+  "language_evolution": [
+    {
+      "measured_on": "2026-08-01",
+      "language": "Python",
+      "code_lines": 6720
+    },
+    {
+      "measured_on": "2026-08-01",
+      "language": "CSS",
+      "code_lines": 1280
+    },
+    {
+      "measured_on": "2026-09-01",
+      "language": "Python",
+      "code_lines": 7560
+    },
+    {
+      "measured_on": "2026-09-01",
+      "language": "CSS",
+      "code_lines": 1440
+    },
+    {
+      "measured_on": "2026-10-26",
+      "language": "Python",
+      "code_lines": 8400
+    },
+    {
+      "measured_on": "2026-10-26",
+      "language": "CSS",
+      "code_lines": 1600
+    }
+  ],
+  "hotspots": [
+    {
+      "path": "src/main.ts",
+      "modifications": 48,
+      "additions": 760,
+      "deletions": 160
+    },
+    {
+      "path": "src/modules/module-1.ts",
+      "modifications": 46,
+      "additions": 735,
+      "deletions": 155
+    },
+    {
+      "path": "src/modules/module-2.ts",
+      "modifications": 44,
+      "additions": 710,
+      "deletions": 150
+    },
+    {
+      "path": "src/modules/module-3.ts",
+      "modifications": 42,
+      "additions": 685,
+      "deletions": 145
+    },
+    {
+      "path": "src/modules/module-4.ts",
+      "modifications": 40,
+      "additions": 660,
+      "deletions": 140
+    },
+    {
+      "path": "src/modules/module-5.ts",
+      "modifications": 38,
+      "additions": 635,
+      "deletions": 135
+    },
+    {
+      "path": "src/modules/module-6.ts",
+      "modifications": 36,
+      "additions": 610,
+      "deletions": 130
+    },
+    {
+      "path": "src/modules/module-7.ts",
+      "modifications": 34,
+      "additions": 585,
+      "deletions": 125
+    },
+    {
+      "path": "src/modules/module-8.ts",
+      "modifications": 32,
+      "additions": 560,
+      "deletions": 120
+    },
+    {
+      "path": "src/modules/module-9.ts",
+      "modifications": 30,
+      "additions": 535,
+      "deletions": 115
+    },
+    {
+      "path": "src/modules/module-10.ts",
+      "modifications": 28,
+      "additions": 510,
+      "deletions": 110
+    },
+    {
+      "path": "src/modules/module-11.ts",
+      "modifications": 26,
+      "additions": 485,
+      "deletions": 105
+    },
+    {
+      "path": "src/modules/module-12.ts",
+      "modifications": 24,
+      "additions": 460,
+      "deletions": 100
+    },
+    {
+      "path": "src/modules/module-13.ts",
+      "modifications": 22,
+      "additions": 435,
+      "deletions": 95
+    },
+    {
+      "path": "src/modules/module-14.ts",
+      "modifications": 20,
+      "additions": 410,
+      "deletions": 90
+    },
+    {
+      "path": "src/modules/module-15.ts",
+      "modifications": 18,
+      "additions": 385,
+      "deletions": 85
+    },
+    {
+      "path": "src/modules/module-16.ts",
+      "modifications": 16,
+      "additions": 360,
+      "deletions": 80
+    },
+    {
+      "path": "src/modules/module-17.ts",
+      "modifications": 14,
+      "additions": 335,
+      "deletions": 75
+    },
+    {
+      "path": "src/modules/module-18.ts",
+      "modifications": 12,
+      "additions": 310,
+      "deletions": 70
+    },
+    {
+      "path": "src/modules/module-19.ts",
+      "modifications": 10,
+      "additions": 285,
+      "deletions": 65
+    }
+  ],
+  "health": {
+    "verified_commit": "82aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "verified_on": "2026-10-01",
+    "last_sha": "82aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "up_to_date": true,
+    "commits_since": 0,
+    "missing_notes": []
+  },
+  "ia": [
+    {
+      "ia": "Codex",
+      "sessions": 13,
+      "first": "2026-07-25",
+      "last": "2026-08-19"
+    },
+    {
+      "ia": "Claude Code",
+      "sessions": 13,
+      "first": "2026-07-26",
+      "last": "2026-08-19"
+    }
+  ]
+}

@@ -4,7 +4,7 @@ sql:
     schema: migrations
     queries:
       - internal/sql/import
-      - internal/sql/requetes
+      - internal/sql/queries
     gen:
       go:
         package: gen

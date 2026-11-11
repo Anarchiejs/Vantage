@@ -23,7 +23,7 @@ type banc struct {
 	n          atomic.Int32
 	mu         sync.Mutex
 	depotPaths []string
-	traiter    func(context.Context, int) (Changements, error)
+	traiter    func(context.Context, int) (Changes, error)
 	annoncer   func(...string)
 	logs       chan string
 }
@@ -34,9 +34,9 @@ func nouveauBanc(t *testing.T, depots ...string) *banc {
 	ctx, cancel := context.WithCancel(context.Background())
 	b.cancel = cancel
 	opt := Options{
-		Coffre: b.root, Delai: delaiTest,
-		Depots: func() []string { b.mu.Lock(); defer b.mu.Unlock(); return append([]string(nil), b.depotPaths...) },
-		Importer: func(ctx context.Context) (Changements, error) {
+		Vault: b.root, Delay: delaiTest,
+		Repos: func() []string { b.mu.Lock(); defer b.mu.Unlock(); return append([]string(nil), b.depotPaths...) },
+		Import: func(ctx context.Context) (Changes, error) {
 			n := int(b.n.Add(1))
 			b.imports <- n
 			b.mu.Lock()
@@ -45,9 +45,9 @@ func nouveauBanc(t *testing.T, depots ...string) *banc {
 			if f != nil {
 				return f(ctx, n)
 			}
-			return Changements{}, nil
+			return Changes{}, nil
 		},
-		Annoncer: func(tables ...string) {
+		Announce: func(tables ...string) {
 			b.mu.Lock()
 			f := b.annoncer
 			b.mu.Unlock()
@@ -55,14 +55,14 @@ func nouveauBanc(t *testing.T, depots ...string) *banc {
 				f(tables...)
 			}
 		},
-		Journal: func(format string, args ...any) {
+		Log: func(format string, args ...any) {
 			select {
 			case b.logs <- format:
 			default:
 			}
 		},
 	}
-	go func() { b.fini <- Surveiller(ctx, opt) }()
+	go func() { b.fini <- Watch(ctx, opt) }()
 	t.Cleanup(func() {
 		cancel()
 		select {
@@ -71,10 +71,10 @@ func nouveauBanc(t *testing.T, depots ...string) *banc {
 				t.Error(err)
 			}
 		case <-time.After(3 * time.Second):
-			t.Error("annulation bloquée")
+			t.Error("cancellation blocked")
 		}
 	})
-	// Une sonde répétée attend l'installation effective des surveillances.
+	// A repeated probe waits until the watches are actually installed.
 	ticker := time.NewTicker(10 * time.Millisecond)
 	defer ticker.Stop()
 	deadline := time.NewTimer(3 * time.Second)
@@ -83,11 +83,11 @@ func nouveauBanc(t *testing.T, depots ...string) *banc {
 	for !pret {
 		select {
 		case <-ticker.C:
-			b.ecrire(filepath.Join(b.root, "sonde.md"), "prêt")
+			b.ecrire(filepath.Join(b.root, "sonde.md"), "ready")
 		case <-b.imports:
 			pret = true
 		case <-deadline.C:
-			t.Fatal("surveillance non prête")
+			t.Fatal("watch not ready")
 		}
 	}
 	b.silence(3 * delaiTest)
@@ -116,7 +116,7 @@ func (b *banc) attendre(n int) {
 
 func (b *banc) silence(d time.Duration) {
 	b.t.Helper()
-	// La phase d'amorçage peut encore produire un import déjà en attente.
+	// Startup can still produce an import that is already queued.
 	timer := time.NewTimer(d)
 	defer timer.Stop()
 	limite := time.NewTimer(3 * time.Second)
@@ -134,7 +134,7 @@ func (b *banc) silence(d time.Duration) {
 		case <-timer.C:
 			return
 		case <-limite.C:
-			b.t.Fatal("amorçage sans stabilisation")
+			b.t.Fatal("startup did not settle")
 		}
 	}
 }
@@ -155,28 +155,28 @@ func mkdir(t *testing.T, path string) {
 	}
 }
 
-func TestChangements(t *testing.T) {
-	notes := []string{"note", "lien", "session", "journal", "recherche"}
-	commits := []string{"commit_git", "fichier_modifie", "activite_jour", "mesure_langage"}
+func TestChanges(t *testing.T) {
+	notes := []string{"note", "link", "session", "journal", "search_index"}
+	commits := []string{"commit_git", "changed_file", "daily_activity", "language_stat"}
 	for _, tc := range []struct {
-		c      Changements
+		c      Changes
 		tables []string
 	}{
-		{Changements{}, nil}, {Changements{Notes: 1}, notes}, {Changements{Commits: 1}, commits},
-		{Changements{Notes: 2, Commits: 3}, append(append([]string{}, notes...), commits...)},
+		{Changes{}, nil}, {Changes{Notes: 1}, notes}, {Changes{Commits: 1}, commits},
+		{Changes{Notes: 2, Commits: 3}, append(append([]string{}, notes...), commits...)},
 	} {
 		if got := tc.c.Tables(); !reflect.DeepEqual(got, tc.tables) {
 			t.Fatalf("Tables : %v", got)
 		}
-		if tc.c.Vide() != (len(tc.tables) == 0) {
-			t.Fatal("Vide incohérent")
+		if tc.c.Empty() != (len(tc.tables) == 0) {
+			t.Fatal("Empty is inconsistent")
 		}
 	}
 }
 
 func TestNotesEtRegroupement(t *testing.T) {
 	b := nouveauBanc(t)
-	b.ecrire(filepath.Join(b.root, "note.md"), "une note")
+	b.ecrire(filepath.Join(b.root, "note.md"), "a note")
 	b.attendre(1)
 	b.aucun()
 	for i := 0; i < 20; i++ {
@@ -190,17 +190,17 @@ func TestIgnorerEtNouveauxDossiers(t *testing.T) {
 	b := nouveauBanc(t)
 	for _, dir := range []string{".obsidian", ".trash", ".git", ".cache"} {
 		mkdir(t, filepath.Join(b.root, dir))
-		b.ecrire(filepath.Join(b.root, dir, "cache.md"), "ignoré")
+		b.ecrire(filepath.Join(b.root, dir, "cache.md"), "ignored")
 	}
 	b.ecrire(filepath.Join(b.root, ".obsidian", "x.json"), "{}")
-	b.ecrire(filepath.Join(b.root, "note.txt"), "ignoré")
+	b.ecrire(filepath.Join(b.root, "note.txt"), "ignored")
 	b.aucun()
 	sub := filepath.Join(b.root, "nouveau", "profond")
 	mkdir(t, sub)
 	b.ecrire(filepath.Join(sub, "note.md"), "nouvelle note")
 	b.attendre(1)
 	b.aucun()
-	b.ecrire(filepath.Join(sub, "note.md"), "modification ultérieure")
+	b.ecrire(filepath.Join(sub, "note.md"), "later edit")
 	b.attendre(2)
 	b.aucun()
 }
@@ -212,13 +212,13 @@ func TestGit(t *testing.T) {
 	mkdir(t, filepath.Join(git, "objects"))
 	b := nouveauBanc(t, depot)
 	for _, name := range []string{"index.lock", "objects/objet", "refs/heads/main.lock"} {
-		b.ecrire(filepath.Join(git, filepath.FromSlash(name)), "ignoré")
+		b.ecrire(filepath.Join(git, filepath.FromSlash(name)), "ignored")
 	}
 	b.aucun()
 	for i, name := range []string{"refs/heads/main", "HEAD", "packed-refs", "refs/heads/equipe/branche"} {
 		path := filepath.Join(git, filepath.FromSlash(name))
 		mkdir(t, filepath.Dir(path))
-		b.ecrire(path, "nouvelle référence")
+		b.ecrire(path, "new ref")
 		b.attendre(i + 1)
 		b.aucun()
 	}
@@ -229,7 +229,7 @@ func TestImportLent(t *testing.T) {
 	liberer := make(chan struct{})
 	var actifs, maximum atomic.Int32
 	b.mu.Lock()
-	b.traiter = func(ctx context.Context, n int) (Changements, error) {
+	b.traiter = func(ctx context.Context, n int) (Changes, error) {
 		a := actifs.Add(1)
 		defer actifs.Add(-1)
 		if a > maximum.Load() {
@@ -241,7 +241,7 @@ func TestImportLent(t *testing.T) {
 			case <-ctx.Done():
 			}
 		}
-		return Changements{}, nil
+		return Changes{}, nil
 	}
 	b.mu.Unlock()
 	b.ecrire(filepath.Join(b.root, "lent.md"), "premier")
@@ -267,14 +267,14 @@ func TestErreurAnnonceEtDepotsDynamiques(t *testing.T) {
 	annonces := make(chan []string, 4)
 	b.mu.Lock()
 	b.annoncer = func(tables ...string) { annonces <- tables }
-	b.traiter = func(ctx context.Context, n int) (Changements, error) {
+	b.traiter = func(ctx context.Context, n int) (Changes, error) {
 		if n == 1 {
-			return Changements{Notes: 1}, errors.New("échec simulé")
+			return Changes{Notes: 1}, errors.New("simulated failure")
 		}
 		if n == 2 {
-			return Changements{Notes: 1, Commits: 1}, nil
+			return Changes{Notes: 1, Commits: 1}, nil
 		}
-		return Changements{}, nil
+		return Changes{}, nil
 	}
 	b.depotPaths = []string{nouveau}
 	b.mu.Unlock()
@@ -284,11 +284,11 @@ func TestErreurAnnonceEtDepotsDynamiques(t *testing.T) {
 	select {
 	case <-b.logs:
 	case <-time.After(3 * time.Second):
-		t.Fatal("erreur non journalisée")
+		t.Fatal("error was not logged")
 	}
 	select {
 	case <-annonces:
-		t.Fatal("annonce après erreur")
+		t.Fatal("announcement after an error")
 	default:
 	}
 	b.ecrire(filepath.Join(ancien, ".git", "HEAD"), "ancien")
@@ -297,7 +297,7 @@ func TestErreurAnnonceEtDepotsDynamiques(t *testing.T) {
 	b.attendre(2)
 	select {
 	case tables := <-annonces:
-		if !reflect.DeepEqual(tables, (Changements{Notes: 1, Commits: 1}).Tables()) {
+		if !reflect.DeepEqual(tables, (Changes{Notes: 1, Commits: 1}).Tables()) {
 			t.Fatalf("annonce : %v", tables)
 		}
 	case <-time.After(3 * time.Second):
@@ -337,14 +337,14 @@ func TestGitdirEtRepertoireCommun(t *testing.T) {
 func TestAnnulationEtValidation(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
-	if err := Surveiller(ctx, Options{}); err != nil {
+	if err := Watch(ctx, Options{}); err != nil {
 		t.Fatal(err)
 	}
-	if err := Surveiller(context.Background(), Options{}); err == nil {
+	if err := Watch(context.Background(), Options{}); err == nil {
 		t.Fatal("Importer requis")
 	}
-	if err := Surveiller(context.Background(), Options{Delai: -1, Importer: func(context.Context) (Changements, error) { return Changements{}, nil }}); err == nil {
-		t.Fatal("délai négatif accepté")
+	if err := Watch(context.Background(), Options{Delay: -1, Import: func(context.Context) (Changes, error) { return Changes{}, nil }}); err == nil {
+		t.Fatal("negative delay was accepted")
 	}
 	b := nouveauBanc(t)
 	b.ecrire(filepath.Join(b.root, "en-attente.md"), "annulation")
@@ -373,19 +373,19 @@ func TestAnnulationPendantImport(t *testing.T) {
 	b := nouveauBanc(t)
 	arrete := make(chan struct{})
 	b.mu.Lock()
-	b.traiter = func(ctx context.Context, n int) (Changements, error) {
+	b.traiter = func(ctx context.Context, n int) (Changes, error) {
 		<-ctx.Done()
 		close(arrete)
-		return Changements{}, ctx.Err()
+		return Changes{}, ctx.Err()
 	}
 	b.mu.Unlock()
-	b.ecrire(filepath.Join(b.root, "note.md"), "import bloqué")
+	b.ecrire(filepath.Join(b.root, "note.md"), "import blocked")
 	b.attendre(1)
 	b.cancel()
 	select {
 	case <-arrete:
 	case <-time.After(3 * time.Second):
-		t.Fatal("import non annulé")
+		t.Fatal("import was not canceled")
 	}
 }
 
@@ -398,11 +398,11 @@ func TestFenetreDepuisPremierEvenement(t *testing.T) {
 	for {
 		select {
 		case <-ticker.C:
-			b.ecrire(filepath.Join(b.root, "continu.md"), "écritures continues")
+			b.ecrire(filepath.Join(b.root, "continu.md"), "continuous writes")
 		case <-b.imports:
 			return
 		case <-limite.C:
-			t.Fatal("fenêtre repoussée par les écritures suivantes")
+			t.Fatal("window pushed back by later writes")
 		}
 	}
 }

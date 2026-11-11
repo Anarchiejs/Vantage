@@ -4,104 +4,104 @@
 
 package gen
 
-type ActiviteJour struct {
-	Jour         string `json:"jour"`
-	ProjetID     int64  `json:"projet_id"`
-	NbCommits    int64  `json:"nb_commits"`
-	Ajouts       int64  `json:"ajouts"`
-	Suppressions int64  `json:"suppressions"`
+type ChangedFile struct {
+	CommitSha string  `json:"commit_sha"`
+	Path      string  `json:"path"`
+	Language  *string `json:"language"`
+	Additions *int64  `json:"additions"`
+	Deletions *int64  `json:"deletions"`
 }
 
 type CommitGit struct {
-	Sha         string  `json:"sha"`
-	DepotID     int64   `json:"depot_id"`
-	Auteur      string  `json:"auteur"`
-	DateUtc     string  `json:"date_utc"`
-	DecalageMin int64   `json:"decalage_min"`
-	Message     string  `json:"message"`
-	JourLocal   *string `json:"jour_local"`
-	HeureLocale *int64  `json:"heure_locale"`
+	Sha          string  `json:"sha"`
+	RepositoryID int64   `json:"repository_id"`
+	Author       string  `json:"author"`
+	DateUtc      string  `json:"date_utc"`
+	OffsetMin    int64   `json:"offset_min"`
+	Message      string  `json:"message"`
+	LocalDay     *string `json:"local_day"`
+	LocalHour    *int64  `json:"local_hour"`
 }
 
-type Depot struct {
-	ID                int64   `json:"id"`
-	ProjetID          int64   `json:"projet_id"`
-	Chemin            string  `json:"chemin"`
-	Branche           *string `json:"branche"`
-	DernierShaImporte *string `json:"dernier_sha_importe"`
-}
-
-type FichierModifie struct {
-	CommitSha    string  `json:"commit_sha"`
-	Chemin       string  `json:"chemin"`
-	Langage      *string `json:"langage"`
-	Ajouts       *int64  `json:"ajouts"`
-	Suppressions *int64  `json:"suppressions"`
+type DailyActivity struct {
+	Day         string `json:"day"`
+	ProjectID   int64  `json:"project_id"`
+	CommitCount int64  `json:"commit_count"`
+	Additions   int64  `json:"additions"`
+	Deletions   int64  `json:"deletions"`
 }
 
 type Journal struct {
-	ID    int64   `json:"id"`
-	Date  string  `json:"date"`
-	Ia    *string `json:"ia"`
-	Texte string  `json:"texte"`
+	ID   int64   `json:"id"`
+	Date string  `json:"date"`
+	Ai   *string `json:"ai"`
+	Body string  `json:"body"`
 }
 
-type Lien struct {
-	SourceID   int64  `json:"source_id"`
-	CibleTitre string `json:"cible_titre"`
-	CibleID    *int64 `json:"cible_id"`
+type LanguageStat struct {
+	RepositoryID int64  `json:"repository_id"`
+	MeasuredOn   string `json:"measured_on"`
+	Language     string `json:"language"`
+	Files        int64  `json:"files"`
+	CodeLines    int64  `json:"code_lines"`
+	CommentLines int64  `json:"comment_lines"`
 }
 
-type MesureLangage struct {
-	DepotID            int64  `json:"depot_id"`
-	DateMesure         string `json:"date_mesure"`
-	Langage            string `json:"langage"`
-	Fichiers           int64  `json:"fichiers"`
-	LignesCode         int64  `json:"lignes_code"`
-	LignesCommentaires int64  `json:"lignes_commentaires"`
+type Link struct {
+	SourceID    int64  `json:"source_id"`
+	TargetTitle string `json:"target_title"`
+	TargetID    *int64 `json:"target_id"`
 }
 
 type Note struct {
 	ID          int64   `json:"id"`
-	Chemin      string  `json:"chemin"`
-	Dossier     string  `json:"dossier"`
-	Titre       string  `json:"titre"`
+	Path        string  `json:"path"`
+	Folder      string  `json:"folder"`
+	Title       string  `json:"title"`
 	Type        *string `json:"type"`
-	Maj         *string `json:"maj"`
-	ContenuHash string  `json:"contenu_hash"`
+	Updated     *string `json:"updated"`
+	ContentHash string  `json:"content_hash"`
 }
 
-type Projet struct {
-	ID            int64   `json:"id"`
-	Nom           string  `json:"nom"`
-	Statut        *string `json:"statut"`
-	CheminSource  *string `json:"chemin_source"`
-	FicheMaj      *string `json:"fiche_maj"`
-	VerifieCommit *string `json:"verifie_commit"`
-	VerifieLe     *string `json:"verifie_le"`
+type Project struct {
+	ID             int64   `json:"id"`
+	Name           string  `json:"name"`
+	Status         *string `json:"status"`
+	SourcePath     *string `json:"source_path"`
+	CardUpdated    *string `json:"card_updated"`
+	VerifiedCommit *string `json:"verified_commit"`
+	VerifiedOn     *string `json:"verified_on"`
 }
 
-type ProjetTechno struct {
-	ProjetID int64 `json:"projet_id"`
-	TechnoID int64 `json:"techno_id"`
+type ProjectTechnology struct {
+	ProjectID    int64 `json:"project_id"`
+	TechnologyID int64 `json:"technology_id"`
 }
 
-type Recherche struct {
-	Titre   string `json:"titre"`
-	Contenu string `json:"contenu"`
+type Repository struct {
+	ID              int64   `json:"id"`
+	ProjectID       int64   `json:"project_id"`
+	Path            string  `json:"path"`
+	Branch          *string `json:"branch"`
+	LastImportedSha *string `json:"last_imported_sha"`
+}
+
+type SearchIndex struct {
+	Title   string `json:"title"`
+	Content string `json:"content"`
 	Source  string `json:"source"`
 	Ref     string `json:"ref"`
 }
 
 type Session struct {
-	NoteID   int64   `json:"note_id"`
-	Date     string  `json:"date"`
-	ProjetID *int64  `json:"projet_id"`
-	Ia       *string `json:"ia"`
+	NoteID    int64   `json:"note_id"`
+	Date      string  `json:"date"`
+	ProjectID *int64  `json:"project_id"`
+	Ai        *string `json:"ai"`
 }
 
-type Techno struct {
-	ID        int64   `json:"id"`
-	Nom       string  `json:"nom"`
-	Categorie *string `json:"categorie"`
+type Technology struct {
+	ID       int64   `json:"id"`
+	Name     string  `json:"name"`
+	Category *string `json:"category"`
 }

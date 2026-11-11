@@ -1,29 +1,29 @@
 {
   "id": 21,
-  "titre": "React",
-  "dossier": "Technos",
-  "degre": 3,
-  "chemin": "Technos/React.md",
-  "maj": "2026-10-26",
-  "contenu": "# React\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Observatoire]].\nLié à [[Compass]].\nLié à [[Tidepool]].",
-  "voisins": [
+  "title": "React",
+  "folder": "Technologies",
+  "degree": 3,
+  "path": "Technologies/React.md",
+  "updated": "2026-10-26",
+  "content": "# React\n\nDemo note from the Observatoire vault.\n\nLinked to [[Observatoire]].\nLinked to [[Compass]].\nLinked to [[Tidepool]].",
+  "neighbors": [
     {
       "id": 1,
-      "titre": "Observatoire",
-      "dossier": "Projets",
-      "degre": 7
+      "title": "Observatoire",
+      "folder": "Projects",
+      "degree": 7
     },
     {
       "id": 2,
-      "titre": "Compass",
-      "dossier": "Projets",
-      "degre": 4
+      "title": "Compass",
+      "folder": "Projects",
+      "degree": 4
     },
     {
       "id": 7,
-      "titre": "Tidepool",
-      "dossier": "Projets",
-      "degre": 3
+      "title": "Tidepool",
+      "folder": "Projects",
+      "degree": 3
     }
   ]
 }

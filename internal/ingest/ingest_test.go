@@ -11,7 +11,7 @@ import (
 	"github.com/Anarchiejs/Observatoire/internal/db"
 )
 
-// racine renvoie la racine du dépôt Observatoire.
+// root returns the Observatoire repository root.
 func racine(t *testing.T) string {
 	_, f, _, _ := runtime.Caller(0)
 	return filepath.Join(filepath.Dir(f), "..", "..")
@@ -20,23 +20,23 @@ func racine(t *testing.T) string {
 func preparer(t *testing.T) (*sql.DB, Options) {
 	t.Helper()
 	r := racine(t)
-	// Les dépôts sont créés une fois avant `go test ./...` (voir testdata/README.md) : les régénérer ici
-	// casserait les tests des autres packages qui tournent en même temps.
+	// The repositories are created once before `go test ./...` (see testdata/README.md): regenerating them here
+	// would break the other packages' tests running at the same time.
 	if _, err := os.Stat(filepath.Join(r, "testdata", "depots", "alpha", ".git")); err != nil {
-		t.Fatal("fixtures absentes : lancer d'abord go run ./scripts/fixtures/make-repos.go")
+		t.Fatal("fixtures missing: run go run ./scripts/fixtures/make-repos.go first")
 	}
-	base, err := db.Ouvrir(filepath.Join(t.TempDir(), "test.db"))
+	base, err := db.Open(filepath.Join(t.TempDir(), "test.db"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Cleanup(func() { base.Close() })
-	if err := db.Migrer(base); err != nil {
+	if err := db.Migrate(base); err != nil {
 		t.Fatal(err)
 	}
 	return base, Options{
-		Coffre:     filepath.Join(r, "testdata", "coffre"),
-		Depots:     map[string]string{"Atlas": filepath.Join(r, "testdata", "depots", "alpha"), "Boussole": filepath.Join(r, "testdata", "depots", "beta")},
-		Aujourdhui: "2026-10-26",
+		Vault: filepath.Join(r, "testdata", "vault"),
+		Repos: map[string]string{"Atlas": filepath.Join(r, "testdata", "depots", "alpha"), "Compass": filepath.Join(r, "testdata", "depots", "beta")},
+		Today: "2026-10-26",
 	}
 }
 
@@ -53,30 +53,30 @@ func TestImportIdempotent(t *testing.T) {
 	base, opt := preparer(t)
 	ctx := context.Background()
 
-	b1, err := Importer(ctx, base, opt)
+	b1, err := Import(ctx, base, opt)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(b1.Avertissements) > 0 {
-		t.Fatalf("avertissements : %v", b1.Avertissements)
+	if len(b1.Warnings) > 0 {
+		t.Fatalf("avertissements : %v", b1.Warnings)
 	}
-	if b1.Depots != 2 || b1.Commits != 42 {
+	if b1.Repos != 2 || b1.Commits != 42 {
 		t.Fatalf("premier import : %+v", b1)
 	}
 
-	tables := []string{"projet", "depot", "commit_git", "fichier_modifie", "note", "lien", "session", "journal", "techno", "projet_techno", "mesure_langage", "recherche", "activite_jour"}
+	tables := []string{"project", "repository", "commit_git", "changed_file", "note", "link", "session", "journal", "technology", "project_technology", "language_stat", "search_index", "daily_activity"}
 	avant := map[string]int{}
 	for _, tb := range tables {
 		avant[tb] = compter(t, base, "SELECT count(*) FROM "+tb)
 	}
-	totalAvant := compter(t, base, "SELECT sum(nb_commits) FROM activite_jour")
+	totalAvant := compter(t, base, "SELECT sum(commit_count) FROM daily_activity")
 
-	b2, err := Importer(ctx, base, opt)
+	b2, err := Import(ctx, base, opt)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if b2.Commits != 0 || b2.NotesEcrites != 0 {
-		t.Fatalf("deuxième import non vide : %+v", b2)
+	if b2.Commits != 0 || b2.NotesWritten != 0 {
+		t.Fatalf("second import was not empty : %+v", b2)
 	}
 	for _, tb := range tables {
 		if n := compter(t, base, "SELECT count(*) FROM "+tb); n != avant[tb] {
@@ -86,10 +86,10 @@ func TestImportIdempotent(t *testing.T) {
 	if totalAvant != 42 {
 		t.Errorf("activite_jour compte %d commits, 42 attendus", totalAvant)
 	}
-	if n := compter(t, base, "SELECT count(*) FROM lien WHERE cible_id IS NULL"); n == 0 {
-		t.Error("aucun lien cassé trouvé alors que les fixtures en contiennent")
+	if n := compter(t, base, "SELECT count(*) FROM link WHERE target_id IS NULL"); n == 0 {
+		t.Error("no broken link found, but the fixtures contain some")
 	}
-	if n := compter(t, base, "SELECT count(*) FROM recherche WHERE recherche MATCH 'echantillonnage'"); n == 0 {
-		t.Error("recherche sans accents : rien trouvé")
+	if n := compter(t, base, "SELECT count(*) FROM search_index WHERE search_index MATCH 'naive'"); n == 0 {
+		t.Error("accent-insensitive search found nothing")
 	}
 }

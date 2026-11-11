@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Atlas",
+    "verified_commit": "a1b2c3d",
+    "last_sha": "25445d1702b8af7c4a9124cfad7f8f813d7a8e02",
+    "commits_since": -1
+  },
+  {
+    "id": 2,
+    "name": "Compass",
+    "verified_commit": "deadbeef",
+    "last_sha": "c6d8ea838c04f9452ac3fa34a09272eaba79057e",
+    "commits_since": -1
+  }
+]

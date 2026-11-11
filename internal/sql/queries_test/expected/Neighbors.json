@@ -1,0 +1,32 @@
+[
+  {
+    "id": 3,
+    "title": "Mapping",
+    "folder": "Concepts",
+    "degree": 1
+  },
+  {
+    "id": 5,
+    "title": "Journal",
+    "folder": "",
+    "degree": 2
+  },
+  {
+    "id": 6,
+    "title": "Atlas - Detail",
+    "folder": "Projects",
+    "degree": 1
+  },
+  {
+    "id": 7,
+    "title": "Atlas - Summary",
+    "folder": "Projects",
+    "degree": 1
+  },
+  {
+    "id": 14,
+    "title": "2026-10-20 - Atlas - initial import",
+    "folder": "Sessions",
+    "degree": 1
+  }
+]

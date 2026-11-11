@@ -5,88 +5,88 @@ import (
 	"testing"
 )
 
-func TestMigrerEtTriggers(t *testing.T) {
-	chemin := filepath.Join(t.TempDir(), "test.db")
-	base, err := Ouvrir(chemin)
+func TestMigrateAndTriggers(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "test.db")
+	base, err := Open(path)
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer base.Close()
-	if err := Migrer(base); err != nil {
+	if err := Migrate(base); err != nil {
 		t.Fatal(err)
 	}
-	// Deuxième passage : rien à faire, pas d'erreur.
-	if err := Migrer(base); err != nil {
+	// A second pass has nothing to do and returns no error.
+	if err := Migrate(base); err != nil {
 		t.Fatal(err)
 	}
 
 	exec := func(q string, args ...any) {
 		t.Helper()
 		if _, err := base.Exec(q, args...); err != nil {
-			t.Fatalf("%s : %v", q, err)
+			t.Fatalf("%s: %v", q, err)
 		}
 	}
-	exec(`INSERT INTO projet (id, nom) VALUES (1, 'Alpha')`)
-	exec(`INSERT INTO depot (id, projet_id, chemin) VALUES (1, 1, 'C:/alpha')`)
-	// 23:30 UTC à +120 min = le lendemain 01:30 en heure locale.
-	exec(`INSERT INTO commit_git (sha, depot_id, auteur, date_utc, decalage_min, message)
-	      VALUES ('a1', 1, 'moi', '2026-10-25T23:30:00Z', 120, 'premier')`)
-	exec(`INSERT INTO fichier_modifie VALUES ('a1', 'main.go', 'Go', 10, 2)`)
-	exec(`INSERT INTO fichier_modifie VALUES ('a1', 'logo.png', NULL, NULL, NULL)`)
+	exec(`INSERT INTO project (id, name) VALUES (1, 'Alpha')`)
+	exec(`INSERT INTO repository (id, project_id, path) VALUES (1, 1, 'C:/alpha')`)
+	// 23:30 UTC at +120 min is 01:30 the next local day.
+	exec(`INSERT INTO commit_git (sha, repository_id, author, date_utc, offset_min, message)
+	      VALUES ('a1', 1, 'me', '2026-10-25T23:30:00Z', 120, 'first')`)
+	exec(`INSERT INTO changed_file VALUES ('a1', 'main.go', 'Go', 10, 2)`)
+	exec(`INSERT INTO changed_file VALUES ('a1', 'logo.png', NULL, NULL, NULL)`)
 
-	var jour string
-	var heure, n, aj, sup int
-	if err := base.QueryRow(`SELECT jour_local, heure_locale FROM commit_git WHERE sha = 'a1'`).Scan(&jour, &heure); err != nil {
+	var day string
+	var hour, n, additions, deletions int
+	if err := base.QueryRow(`SELECT local_day, local_hour FROM commit_git WHERE sha = 'a1'`).Scan(&day, &hour); err != nil {
 		t.Fatal(err)
 	}
-	if jour != "2026-10-26" || heure != 1 {
-		t.Fatalf("colonnes calculées : jour=%s heure=%d", jour, heure)
+	if day != "2026-10-26" || hour != 1 {
+		t.Fatalf("generated columns: day=%s hour=%d", day, hour)
 	}
-	if err := base.QueryRow(`SELECT nb_commits, ajouts, suppressions FROM activite_jour WHERE jour = '2026-10-26' AND projet_id = 1`).Scan(&n, &aj, &sup); err != nil {
+	if err := base.QueryRow(`SELECT commit_count, additions, deletions FROM daily_activity WHERE day = '2026-10-26' AND project_id = 1`).Scan(&n, &additions, &deletions); err != nil {
 		t.Fatal(err)
 	}
-	if n != 1 || aj != 10 || sup != 2 {
-		t.Fatalf("activite_jour : %d %d %d", n, aj, sup)
+	if n != 1 || additions != 10 || deletions != 2 {
+		t.Fatalf("daily_activity: %d %d %d", n, additions, deletions)
 	}
 
 	exec(`DELETE FROM commit_git WHERE sha = 'a1'`)
-	if err := base.QueryRow(`SELECT nb_commits, ajouts, suppressions FROM activite_jour WHERE jour = '2026-10-26'`).Scan(&n, &aj, &sup); err != nil {
+	if err := base.QueryRow(`SELECT commit_count, additions, deletions FROM daily_activity WHERE day = '2026-10-26'`).Scan(&n, &additions, &deletions); err != nil {
 		t.Fatal(err)
 	}
-	if n != 0 || aj != 0 || sup != 0 {
-		t.Fatalf("après suppression : %d %d %d", n, aj, sup)
+	if n != 0 || additions != 0 || deletions != 0 {
+		t.Fatalf("after delete: %d %d %d", n, additions, deletions)
 	}
 
-	// Recherche plein texte sans accents.
-	exec(`INSERT INTO recherche (titre, contenu, source, ref) VALUES ('Résumé', 'fenêtrage et CTE', 'note', 'x.md')`)
-	if err := base.QueryRow(`SELECT count(*) FROM recherche WHERE recherche MATCH 'fenetrage'`).Scan(&n); err != nil {
+	// Full-text search folds accents.
+	exec(`INSERT INTO search_index (title, content, source, ref) VALUES ('Naïve', 'windowing and CTE', 'note', 'x.md')`)
+	if err := base.QueryRow(`SELECT count(*) FROM search_index WHERE search_index MATCH 'naive'`).Scan(&n); err != nil {
 		t.Fatal(err)
 	}
 	if n != 1 {
-		t.Fatalf("FTS5 sans accents : %d", n)
+		t.Fatalf("FTS5 without accents: %d", n)
 	}
 }
 
-func TestLectureSeule(t *testing.T) {
-	chemin := filepath.Join(t.TempDir(), "test.db")
-	rw, err := Ouvrir(chemin)
+func TestReadOnly(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "test.db")
+	rw, err := Open(path)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := Migrer(rw); err != nil {
+	if err := Migrate(rw); err != nil {
 		t.Fatal(err)
 	}
 	rw.Close()
 
-	ro, err := OuvrirLectureSeule(chemin)
+	ro, err := OpenReadOnly(path)
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer ro.Close()
-	if _, err := ro.Exec(`INSERT INTO projet (nom) VALUES ('x')`); err == nil {
-		t.Fatal("une écriture a réussi en lecture seule")
+	if _, err := ro.Exec(`INSERT INTO project (name) VALUES ('x')`); err == nil {
+		t.Fatal("a write succeeded in read-only mode")
 	}
-	if _, err := ro.Exec(`DROP TABLE projet`); err == nil {
-		t.Fatal("DROP a réussi en lecture seule")
+	if _, err := ro.Exec(`DROP TABLE project`); err == nil {
+		t.Fatal("DROP succeeded in read-only mode")
 	}
 }

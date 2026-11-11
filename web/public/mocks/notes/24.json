@@ -1,17 +1,17 @@
 {
   "id": 24,
-  "titre": "Expo",
-  "dossier": "Technos",
-  "degre": 1,
-  "chemin": "Technos/Expo.md",
-  "maj": "2026-10-26",
-  "contenu": "# Expo\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Compass]].",
-  "voisins": [
+  "title": "Expo",
+  "folder": "Technologies",
+  "degree": 1,
+  "path": "Technologies/Expo.md",
+  "updated": "2026-10-26",
+  "content": "# Expo\n\nDemo note from the Observatoire vault.\n\nLinked to [[Compass]].",
+  "neighbors": [
     {
       "id": 2,
-      "titre": "Compass",
-      "dossier": "Projets",
-      "degre": 4
+      "title": "Compass",
+      "folder": "Projects",
+      "degree": 4
     }
   ]
 }
