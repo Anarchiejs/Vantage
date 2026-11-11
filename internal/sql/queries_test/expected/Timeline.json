@@ -17,147 +17,147 @@
     "date": "2026-03-20T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 20",
-    "ref": "41211e1c9cd99a25a4eaf2d9f8e3dfb6362f52e1",
+    "ref": "25445d1702b8af7c4a9124cfad7f8f813d7a8e02",
     "ai": null
   },
   {
     "date": "2026-03-17T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 19",
-    "ref": "fc7c28e623051aed2dc65708f206ab42badfcd59",
+    "ref": "420aaee5099f56a26dd0af90efa04939bedaa55a",
     "ai": null
   },
   {
     "date": "2026-03-14T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 18",
-    "ref": "2a2fc925d7d207dff983b3225e371c6165a5c673",
+    "ref": "11c9149135a85932a969aba8f4f10c8508245b33",
     "ai": null
   },
   {
     "date": "2026-03-11T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 17",
-    "ref": "fcd94e0906e4163ac72b9760bd882e7bffb6103a",
+    "ref": "76279c794104ab43123a9b65d3dd6ae6495525f4",
     "ai": null
   },
   {
     "date": "2026-03-08T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 16",
-    "ref": "9c56273b260ce7bbe7ff411fff1dd99639e07631",
+    "ref": "09fbfd33472fd5ec06a43e7b969227ee5cc0336d",
     "ai": null
   },
   {
     "date": "2026-03-05T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha multiline subject",
-    "ref": "fb3d1fb0f4692120111091fd7eea4af84ed4141b",
-    "ai": null
-  },
-  {
-    "date": "2026-02-23T12:00:00Z",
-    "type": "commit",
-    "title": "fixture alpha change 14 merge",
-    "ref": "212f06add262db05c58337e327d116c692b9db14",
+    "ref": "21be76edd601bb365944d6a9b392591335d69053",
     "ai": null
   },
   {
     "date": "2026-02-23T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 14 mainline",
-    "ref": "c57a835ff4892c210b8a0315b84be2b34c804f7a",
+    "ref": "42a100826637c36d17f15f9bd3af4d6a87617d17",
+    "ai": null
+  },
+  {
+    "date": "2026-02-23T12:00:00Z",
+    "type": "commit",
+    "title": "fixture alpha change 14 merge",
+    "ref": "e696dd5ca4886d765dacb81bcea62dc92bc532c3",
     "ai": null
   },
   {
     "date": "2026-02-20T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 13",
-    "ref": "608d46d2f855ae267d6569e65605e3c8d93adf50",
+    "ref": "518e1f5e45364052126ada4a32f948bfb3177a78",
     "ai": null
   },
   {
     "date": "2026-02-17T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 12",
-    "ref": "08c62ab156982794ef28e1a26be857fb73e95418",
+    "ref": "bf8813f468e9372c9c62a29cacf4edd1b99ae8f8",
     "ai": null
   },
   {
     "date": "2026-02-14T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 11",
-    "ref": "8b99d1423387b470ba55a73b26b662d79f019fc8",
+    "ref": "33eac61db8e662653c6e9d63e70b88e80c39f4ea",
     "ai": null
   },
   {
     "date": "2026-02-11T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 10",
-    "ref": "eec241e3e565292635ae720eec7bb82abf68b853",
+    "ref": "8986f948cddd13a9aa2dec7299fb6c8a60ab51f0",
     "ai": null
   },
   {
     "date": "2026-02-08T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 09",
-    "ref": "7e38176f2dabb86fe1b7d3f1abfc6d3957939c26",
+    "ref": "efab7eab12d2e68d492ac64ae742243abea16a79",
     "ai": null
   },
   {
     "date": "2026-02-05T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 08",
-    "ref": "022ac19b309e0b41dd186a8e0090dec26e2879d3",
+    "ref": "1b860ccf48ad58a35e91ce0b11d5110f0aa76c95",
     "ai": null
   },
   {
     "date": "2026-01-13T23:30:00Z",
     "type": "commit",
     "title": "fixture alpha change 07",
-    "ref": "04434520401cc41bcfa9f156ab8fe50e15d0c657",
+    "ref": "e8835779ed39f789bc5696be13650751f1a432d3",
     "ai": null
   },
   {
     "date": "2026-01-11T23:30:00Z",
     "type": "commit",
     "title": "fixture alpha change 06",
-    "ref": "eb221bb28fc1977eb8d82b5504d9a8e9d361a73e",
+    "ref": "247f9a2a97d79c913e1e0d293d1e880cd1679999",
     "ai": null
   },
   {
     "date": "2026-01-11T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 03",
-    "ref": "e6959d1ccbc58954e2fa22a498d6315020f24335",
+    "ref": "dd8c24c00c56656fe065617ff4839293eb91f2ff",
     "ai": null
   },
   {
     "date": "2026-01-10T23:30:00Z",
     "type": "commit",
     "title": "fixture alpha change 05",
-    "ref": "d02d4cd5aa0f1ce3fb64198a894ec45db90d3344",
+    "ref": "14420f75a146dee2a65b8e91b81e85be8de84e2b",
     "ai": null
   },
   {
     "date": "2026-01-08T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 02",
-    "ref": "db0cc7dca031a3978197eba8755887d623b7d333",
+    "ref": "99387a8cfec6fa68cb84f6ef7eb99cd6b9493113",
     "ai": null
   },
   {
     "date": "2026-01-07T23:30:00Z",
     "type": "commit",
     "title": "fixture alpha change 04",
-    "ref": "4a5e00f846d5e877b46969a7bd84201458676a7e",
+    "ref": "3959f6a147d82bf9ff951ab4dd49fe4c6efb93ba",
     "ai": null
   },
   {
     "date": "2026-01-05T12:00:00Z",
     "type": "commit",
     "title": "fixture alpha change 01",
-    "ref": "1a987eaae00e23b0524ff35ff6c87114c1c10a1b",
+    "ref": "9257abf8159ddfa0b7e892eebf70210382cfde03",
     "ai": null
   }
 ]

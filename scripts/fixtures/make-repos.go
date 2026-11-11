@@ -183,7 +183,8 @@ func commit(dir, date, author, msg string) error {
 }
 
 func git(dir string, extra []string, args ...string) error {
-	cmd := exec.Command("git", args...)
+	// Ignore commit.gpgsign from the ambient Git config so commit hashes stay stable in CI.
+	cmd := exec.Command("git", append([]string{"-c", "commit.gpgsign=false"}, args...)...)
 	cmd.Dir = dir
 	cmd.Env = os.Environ()
 	for _, item := range extra {

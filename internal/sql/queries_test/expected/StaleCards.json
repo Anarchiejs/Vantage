@@ -3,14 +3,14 @@
     "id": 1,
     "name": "Atlas",
     "verified_commit": "a1b2c3d",
-    "last_sha": "41211e1c9cd99a25a4eaf2d9f8e3dfb6362f52e1",
+    "last_sha": "25445d1702b8af7c4a9124cfad7f8f813d7a8e02",
     "commits_since": -1
   },
   {
     "id": 2,
     "name": "Compass",
     "verified_commit": "deadbeef",
-    "last_sha": "6714f23dd67d736bcfad6fb32a7439b582a431a0",
+    "last_sha": "c6d8ea838c04f9452ac3fa34a09272eaba79057e",
     "commits_since": -1
   }
 ]
