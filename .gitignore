@@ -1,11 +1,16 @@
 .orchestra/
-testdata/depots/
+testdata/repos/
 *.db
 *.db-wal
 *.db-shm
+*.exe
+*.log
+/observatoire
 /observatoire.exe
+node_modules/
 web/node_modules/
 web/dist/
 web/tsconfig.tsbuildinfo
 web/test-results/
 web/playwright-report/
+queries/

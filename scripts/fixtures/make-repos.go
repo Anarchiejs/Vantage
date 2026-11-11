@@ -22,7 +22,7 @@ type change struct {
 }
 
 func main() {
-	root := filepath.Join("testdata", "depots")
+	root := filepath.Join("testdata", "repos")
 	if err := os.RemoveAll(root); err != nil {
 		fatal(err)
 	}

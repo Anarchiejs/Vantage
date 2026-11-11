@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig, devices } from '@playwright/test'
 
 const web = path.dirname(fileURLToPath(import.meta.url))
-const racine = path.resolve(web, '..')
+const root = path.resolve(web, '..')
 
 export default defineConfig({
   testDir: path.join(web, 'e2e'),
@@ -19,7 +19,7 @@ export default defineConfig({
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
     command: 'node web/e2e/preparer.mjs',
-    cwd: racine,
+    cwd: root,
     url: 'http://127.0.0.1:7879',
     timeout: 600_000,
     reuseExistingServer: !process.env.CI,

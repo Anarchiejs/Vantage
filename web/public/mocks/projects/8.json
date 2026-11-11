@@ -19,546 +19,546 @@
       "type": "commit",
       "title": "Fix data validation",
       "ref": "82aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-19",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-19 - Sable.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-19",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "802",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-18T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "85aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-18",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-18 - Sable.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-18",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "805",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-17T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "88aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-17",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-17 - Sable.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-17",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "808",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-16T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "8baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-16",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-16 - Sable.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-16",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "811",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-15T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "8eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-15",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-15 - Sable.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-15",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "814",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-14T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "811aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-14",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-14 - Sable.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-14",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "817",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-13T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "814aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-13",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-13 - Sable.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-13",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "820",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-12T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "817aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-12",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-12 - Sable.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-12",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "823",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-11T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "81aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-11",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-11 - Sable.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-11",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "826",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-10T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "81daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-10",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-10 - Sable.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-10",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "829",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-09T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-09",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-09 - Sable.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-09",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "832",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-08T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "823aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-08",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-08 - Sable.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-08",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "835",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-07T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "826aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-07",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-07 - Sable.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-07",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "838",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-06T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "829aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-06",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-06 - Sable.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-06",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "841",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-05T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "82caaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-05",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-05 - Sable.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-05",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "844",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-04T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "82faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-04",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-04 - Sable.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-04",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "847",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-03T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "832aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-03",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-03 - Sable.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-03",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "850",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-02T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "835aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-02",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-02 - Sable.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-02",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "853",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-01T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "838aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-01",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-08-01 - Sable.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-01",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "856",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-31T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "83baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-31",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-07-31 - Sable.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-31",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "859",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-30T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "83eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-30",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-07-30 - Sable.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-30",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "862",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-29T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "841aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-29",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-07-29 - Sable.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-29",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "865",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-28T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "844aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-28",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-07-28 - Sable.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-28",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "868",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-27T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "847aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-27",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-07-27 - Sable.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-27",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "871",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-26T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "84aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-26",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-07-26 - Sable.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-26",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "874",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-25T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "84daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-25",
       "type": "session",
       "title": "Review and improve Sable",
       "ref": "Sessions/2026-07-25 - Sable.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-25",
       "type": "journal",
       "title": "Updated the card for Sable",
       "ref": "877",
-      "ia": "Codex"
+      "ai": "Codex"
     }
   ],
   "volume": [
@@ -1049,15 +1049,15 @@
     "commits_since": 0,
     "missing_notes": []
   },
-  "ia": [
+  "ai": [
     {
-      "ia": "Codex",
+      "ai": "Codex",
       "sessions": 13,
       "first": "2026-07-25",
       "last": "2026-08-19"
     },
     {
-      "ia": "Claude Code",
+      "ai": "Claude Code",
       "sessions": 13,
       "first": "2026-07-26",
       "last": "2026-08-19"

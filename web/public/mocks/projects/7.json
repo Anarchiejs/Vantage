@@ -19,546 +19,546 @@
       "type": "commit",
       "title": "Fix data validation",
       "ref": "72aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-20",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-20 - Quartz.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-20",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "702",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-19T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "75aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-19",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-19 - Quartz.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-19",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "705",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-18T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "78aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-18",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-18 - Quartz.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-18",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "708",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-17T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "7baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-17",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-17 - Quartz.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-17",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "711",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-16T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "7eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-16",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-16 - Quartz.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-16",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "714",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-15T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "711aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-15",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-15 - Quartz.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-15",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "717",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-14T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "714aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-14",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-14 - Quartz.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-14",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "720",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-13T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "717aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-13",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-13 - Quartz.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-13",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "723",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-12T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "71aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-12",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-12 - Quartz.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-12",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "726",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-11T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "71daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-11",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-11 - Quartz.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-11",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "729",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-10T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "720aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-10",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-10 - Quartz.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-10",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "732",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-09T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "723aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-09",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-09 - Quartz.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-09",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "735",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-08T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "726aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-08",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-08 - Quartz.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-08",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "738",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-07T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "729aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-07",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-07 - Quartz.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-07",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "741",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-06T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "72caaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-06",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-06 - Quartz.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-06",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "744",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-05T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "72faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-05",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-05 - Quartz.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-05",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "747",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-04T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "732aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-04",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-04 - Quartz.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-04",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "750",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-03T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "735aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-03",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-03 - Quartz.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-03",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "753",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-02T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "738aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-02",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-02 - Quartz.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-02",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "756",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-01T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "73baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-01",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-10-01 - Quartz.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-01",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "759",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-09-30T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "73eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-30",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-09-30 - Quartz.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-09-30",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "762",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-29T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "741aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-29",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-09-29 - Quartz.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-29",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "765",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-09-28T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "744aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-28",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-09-28 - Quartz.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-09-28",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "768",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-27T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "747aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-27",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-09-27 - Quartz.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-27",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "771",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-09-26T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "74aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-26",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-09-26 - Quartz.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-09-26",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "774",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-25T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "74daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-25",
       "type": "session",
       "title": "Review and improve Quartz",
       "ref": "Sessions/2026-09-25 - Quartz.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-25",
       "type": "journal",
       "title": "Updated the card for Quartz",
       "ref": "777",
-      "ia": "Codex"
+      "ai": "Codex"
     }
   ],
   "volume": [
@@ -1049,15 +1049,15 @@
     "commits_since": 0,
     "missing_notes": []
   },
-  "ia": [
+  "ai": [
     {
-      "ia": "Codex",
+      "ai": "Codex",
       "sessions": 13,
       "first": "2026-09-25",
       "last": "2026-10-20"
     },
     {
-      "ia": "Claude Code",
+      "ai": "Claude Code",
       "sessions": 13,
       "first": "2026-09-26",
       "last": "2026-10-20"

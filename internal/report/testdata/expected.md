@@ -6,7 +6,6 @@ generated_on: 2026-03-21
 # Statistics — week of 2026-03-16 to 2026-03-21
 
 Note generated automatically by [[Observatoire]]: do not edit it by hand; it is rewritten every week.
-Back to the hub: [[Statistics]]
 
 ## Activity
 

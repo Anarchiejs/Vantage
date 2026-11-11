@@ -1,15 +1,15 @@
 {
   "id": 52,
-  "title": "2026-10-26 - Observatoire",
+  "title": "2026-10-26 - Atlas",
   "folder": "Sessions",
   "degree": 2,
-  "path": "Sessions/2026-10-26 - Observatoire.md",
+  "path": "Sessions/2026-10-26 - Atlas.md",
   "updated": "2026-10-26",
-  "content": "# 2026-10-26 - Observatoire\n\nDemo note from the Observatoire vault.\n\nLinked to [[Observatoire]].\nLinked to [[Codex]].",
+  "content": "# 2026-10-26 - Atlas\n\nDemo note from the Atlas vault.\n\nLinked to [[Atlas]].\nLinked to [[Codex]].",
   "neighbors": [
     {
       "id": 1,
-      "title": "Observatoire",
+      "title": "Atlas",
       "folder": "Projects",
       "degree": 7
     },

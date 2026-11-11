@@ -9,7 +9,7 @@ import (
 )
 
 func TestMeasureFixtureAlpha(t *testing.T) {
-	repo := "../../../testdata/depots/alpha"
+	repo := "../../../testdata/repos/alpha"
 	first, err := Measure(context.Background(), repo)
 	if err != nil {
 		t.Fatal(err)

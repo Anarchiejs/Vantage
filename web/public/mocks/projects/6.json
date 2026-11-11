@@ -19,546 +19,546 @@
       "type": "commit",
       "title": "Fix data validation",
       "ref": "62aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-21",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-21 - Northwind.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-21",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "602",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-20T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "65aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-20",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-20 - Northwind.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-20",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "605",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-19T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "68aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-19",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-19 - Northwind.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-19",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "608",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-18T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "6baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-18",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-18 - Northwind.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-18",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "611",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-17T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "6eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-17",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-17 - Northwind.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-17",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "614",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-16T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "611aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-16",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-16 - Northwind.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-16",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "617",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-15T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "614aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-15",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-15 - Northwind.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-15",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "620",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-14T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "617aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-14",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-14 - Northwind.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-14",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "623",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-13T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "61aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-13",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-13 - Northwind.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-13",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "626",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-12T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "61daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-12",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-12 - Northwind.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-12",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "629",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-11T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "620aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-11",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-11 - Northwind.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-11",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "632",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-10T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "623aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-10",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-10 - Northwind.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-10",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "635",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-09T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "626aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-09",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-09 - Northwind.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-09",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "638",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-08T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "629aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-08",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-08 - Northwind.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-08",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "641",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-07T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "62caaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-07",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-07 - Northwind.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-07",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "644",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-06T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "62faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-06",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-06 - Northwind.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-06",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "647",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-05T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "632aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-05",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-05 - Northwind.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-05",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "650",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-04T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "635aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-04",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-04 - Northwind.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-04",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "653",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-03T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "638aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-03",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-03 - Northwind.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-03",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "656",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-02T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "63baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-02",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-02 - Northwind.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-02",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "659",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-01T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "63eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-01",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-10-01 - Northwind.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-01",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "662",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-30T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "641aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-30",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-09-30 - Northwind.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-30",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "665",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-09-29T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "644aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-29",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-09-29 - Northwind.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-09-29",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "668",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-28T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "647aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-28",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-09-28 - Northwind.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-28",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "671",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-09-27T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "64aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-27",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-09-27 - Northwind.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-09-27",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "674",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-26T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "64daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-26",
       "type": "session",
       "title": "Review and improve Northwind",
       "ref": "Sessions/2026-09-26 - Northwind.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-26",
       "type": "journal",
       "title": "Updated the card for Northwind",
       "ref": "677",
-      "ia": "Codex"
+      "ai": "Codex"
     }
   ],
   "volume": [
@@ -1049,15 +1049,15 @@
     "commits_since": 0,
     "missing_notes": []
   },
-  "ia": [
+  "ai": [
     {
-      "ia": "Codex",
+      "ai": "Codex",
       "sessions": 13,
       "first": "2026-09-26",
       "last": "2026-10-21"
     },
     {
-      "ia": "Claude Code",
+      "ai": "Claude Code",
       "sessions": 13,
       "first": "2026-09-27",
       "last": "2026-10-21"

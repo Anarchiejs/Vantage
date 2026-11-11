@@ -1,9 +1,9 @@
 [
   {
-    "ia": "Claude Code",
+    "ai": "Claude Code",
     "sessions": 43,
     "projects": [
-      "Observatoire",
+      "Atlas",
       "Harbor",
       "Lantern",
       "Tidepool",
@@ -61,10 +61,10 @@
     ]
   },
   {
-    "ia": "Codex",
+    "ai": "Codex",
     "sessions": 48,
     "projects": [
-      "Observatoire",
+      "Atlas",
       "Northwind",
       "Tidepool",
       "Waypoint"
@@ -121,10 +121,10 @@
     ]
   },
   {
-    "ia": "DeepSeek",
+    "ai": "DeepSeek",
     "sessions": 53,
     "projects": [
-      "Observatoire",
+      "Atlas",
       "Lantern",
       "Sable"
     ],
@@ -180,10 +180,10 @@
     ]
   },
   {
-    "ia": "Local AI",
+    "ai": "Local AI",
     "sessions": 51,
     "projects": [
-      "Observatoire",
+      "Atlas",
       "Keel"
     ],
     "by_month": [

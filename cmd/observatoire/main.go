@@ -4,6 +4,7 @@ package main
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"flag"
 	"fmt"
 	"log"
@@ -75,9 +76,12 @@ func migrate(args []string) error {
 func runImport(args []string) error {
 	fs := flag.NewFlagSet("import", flag.ExitOnError)
 	path := fs.String("db", "observatoire.db", "database file")
-	vault := fs.String("vault", `C:\dev\Obsidian Vault`, "Obsidian vault root")
-	repos := fs.String("repos", "", `replaces source_path for named cards: "Atlas=testdata/depots/alpha,Compass=..."`)
+	vault := fs.String("vault", "", "Obsidian vault root (required)")
+	repos := fs.String("repos", "", `replaces source_path for named cards: "Atlas=testdata/repos/alpha,Compass=..."`)
 	fs.Parse(args)
+	if err := requireVault(*vault); err != nil {
+		return err
+	}
 	replacements, err := readRepos(*repos)
 	if err != nil {
 		return err
@@ -95,6 +99,13 @@ func runImport(args []string) error {
 		return err
 	}
 	printSummary(summary)
+	return nil
+}
+
+func requireVault(path string) error {
+	if strings.TrimSpace(path) == "" {
+		return errors.New("-vault is required: pass the Obsidian vault folder (the directory that contains .obsidian)")
+	}
 	return nil
 }
 
@@ -179,10 +190,13 @@ func prepareServer(path string, port int) (*api.Server, *sql.DB, func(), error) 
 func runWatch(args []string) error {
 	fs := flag.NewFlagSet("watch", flag.ExitOnError)
 	path := fs.String("db", "observatoire.db", "database file")
-	vault := fs.String("vault", `C:\dev\Obsidian Vault`, "Obsidian vault root")
-	repos := fs.String("repos", "", `replaces source_path for named cards: "Atlas=testdata/depots/alpha,Compass=..."`)
+	vault := fs.String("vault", "", "Obsidian vault root (required)")
+	repos := fs.String("repos", "", `replaces source_path for named cards: "Atlas=testdata/repos/alpha,Compass=..."`)
 	port := fs.Int("port", 7878, "port on 127.0.0.1")
 	fs.Parse(args)
+	if err := requireVault(*vault); err != nil {
+		return err
+	}
 	replacements, err := readRepos(*repos)
 	if err != nil {
 		return err
@@ -244,9 +258,14 @@ func repositoryPaths(ctx context.Context, base *sql.DB) []string {
 func runReport(args []string) error {
 	fs := flag.NewFlagSet("report", flag.ExitOnError)
 	path := fs.String("db", "observatoire.db", "database file")
-	vault := fs.String("vault", `C:\dev\Obsidian Vault`, "Obsidian vault root")
+	vault := fs.String("vault", "", "Obsidian vault root (required)")
 	stdout := fs.Bool("stdout", false, "print the report instead of writing it into the vault")
 	fs.Parse(args)
+	if !*stdout {
+		if err := requireVault(*vault); err != nil {
+			return err
+		}
+	}
 	base, err := db.Open(*path)
 	if err != nil {
 		return err

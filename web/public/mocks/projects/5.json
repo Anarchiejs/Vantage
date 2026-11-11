@@ -19,546 +19,546 @@
       "type": "commit",
       "title": "Fix data validation",
       "ref": "52aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-22",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-22 - Keel.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-22",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "502",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-21T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "55aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-21",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-21 - Keel.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-21",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "505",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-20T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "58aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-20",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-20 - Keel.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-20",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "508",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-19T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "5baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-19",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-19 - Keel.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-19",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "511",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-18T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "5eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-18",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-18 - Keel.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-18",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "514",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-17T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "511aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-17",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-17 - Keel.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-17",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "517",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-16T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "514aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-16",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-16 - Keel.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-16",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "520",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-15T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "517aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-15",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-15 - Keel.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-15",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "523",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-14T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "51aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-14",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-14 - Keel.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-14",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "526",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-13T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "51daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-13",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-13 - Keel.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-13",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "529",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-12T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "520aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-12",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-12 - Keel.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-12",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "532",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-11T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "523aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-11",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-11 - Keel.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-11",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "535",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-10T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "526aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-10",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-10 - Keel.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-10",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "538",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-09T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "529aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-09",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-09 - Keel.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-09",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "541",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-08T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "52caaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-08",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-08 - Keel.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-08",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "544",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-07T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "52faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-07",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-07 - Keel.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-07",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "547",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-06T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "532aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-06",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-06 - Keel.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-06",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "550",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-05T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "535aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-05",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-05 - Keel.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-05",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "553",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-04T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "538aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-04",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-04 - Keel.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-04",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "556",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-03T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "53baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-03",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-03 - Keel.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-03",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "559",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-02T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "53eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-02",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-02 - Keel.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-02",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "562",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-01T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "541aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-01",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-10-01 - Keel.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-01",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "565",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-09-30T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "544aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-30",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-09-30 - Keel.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-09-30",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "568",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-29T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "547aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-29",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-09-29 - Keel.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-29",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "571",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-09-28T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "54aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-28",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-09-28 - Keel.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-09-28",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "574",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-27T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "54daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-27",
       "type": "session",
       "title": "Review and improve Keel",
       "ref": "Sessions/2026-09-27 - Keel.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-27",
       "type": "journal",
       "title": "Updated the card for Keel",
       "ref": "577",
-      "ia": "Codex"
+      "ai": "Codex"
     }
   ],
   "volume": [
@@ -1049,15 +1049,15 @@
     "commits_since": 0,
     "missing_notes": []
   },
-  "ia": [
+  "ai": [
     {
-      "ia": "Codex",
+      "ai": "Codex",
       "sessions": 13,
       "first": "2026-09-27",
       "last": "2026-10-22"
     },
     {
-      "ia": "Claude Code",
+      "ai": "Claude Code",
       "sessions": 13,
       "first": "2026-09-28",
       "last": "2026-10-22"

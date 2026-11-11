@@ -19,546 +19,546 @@
       "type": "commit",
       "title": "Fix data validation",
       "ref": "22aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-25",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-25 - Compass.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-25",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "202",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-24T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "25aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-24",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-24 - Compass.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-24",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "205",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-23T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "28aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-23",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-23 - Compass.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-23",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "208",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-22T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "2baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-22",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-22 - Compass.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-22",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "211",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-21T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "2eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-21",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-21 - Compass.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-21",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "214",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-20T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "211aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-20",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-20 - Compass.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-20",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "217",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-19T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "214aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-19",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-19 - Compass.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-19",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "220",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-18T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "217aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-18",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-18 - Compass.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-18",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "223",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-17T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "21aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-17",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-17 - Compass.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-17",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "226",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-16T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "21daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-16",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-16 - Compass.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-16",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "229",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-15T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "220aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-15",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-15 - Compass.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-15",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "232",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-14T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "223aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-14",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-14 - Compass.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-14",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "235",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-13T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "226aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-13",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-13 - Compass.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-13",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "238",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-12T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "229aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-12",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-12 - Compass.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-12",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "241",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-11T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "22caaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-11",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-11 - Compass.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-11",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "244",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-10T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "22faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-10",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-10 - Compass.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-10",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "247",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-09T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "232aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-09",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-09 - Compass.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-09",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "250",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-08T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "235aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-08",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-08 - Compass.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-08",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "253",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-07T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "238aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-07",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-07 - Compass.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-07",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "256",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-06T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "23baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-06",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-06 - Compass.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-06",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "259",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-05T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "23eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-05",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-05 - Compass.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-05",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "262",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-04T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "241aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-04",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-04 - Compass.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-04",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "265",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-03T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "244aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-03",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-03 - Compass.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-03",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "268",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-02T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "247aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-02",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-02 - Compass.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-02",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "271",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-01T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "24aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-01",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-10-01 - Compass.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-01",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "274",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-30T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "24daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-09-30",
       "type": "session",
       "title": "Review and improve Compass",
       "ref": "Sessions/2026-09-30 - Compass.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-09-30",
       "type": "journal",
       "title": "Updated the card for Compass",
       "ref": "277",
-      "ia": "Codex"
+      "ai": "Codex"
     }
   ],
   "volume": [
@@ -1049,15 +1049,15 @@
     "commits_since": 6,
     "missing_notes": []
   },
-  "ia": [
+  "ai": [
     {
-      "ia": "Codex",
+      "ai": "Codex",
       "sessions": 13,
       "first": "2026-09-30",
       "last": "2026-10-25"
     },
     {
-      "ia": "Claude Code",
+      "ai": "Claude Code",
       "sessions": 13,
       "first": "2026-10-01",
       "last": "2026-10-25"
