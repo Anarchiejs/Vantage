@@ -1,4 +1,4 @@
-// Package migrations embarque les fichiers SQL de goose dans l'exécutable.
+// Package migrations embeds the goose SQL files in the executable.
 package migrations
 
 import "embed"

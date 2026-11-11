@@ -9,56 +9,106 @@ import (
 	"context"
 )
 
-const dernierShaDepot = `-- name: DernierShaDepot :one
-SELECT dernier_sha_importe FROM depot WHERE chemin = ?
+const deleteNote = `-- name: DeleteNote :exec
+DELETE FROM note WHERE id = ?
 `
 
-func (q *Queries) DernierShaDepot(ctx context.Context, chemin string) (*string, error) {
-	row := q.queryRow(ctx, q.dernierShaDepotStmt, dernierShaDepot, chemin)
-	var dernier_sha_importe *string
-	err := row.Scan(&dernier_sha_importe)
-	return dernier_sha_importe, err
+// Links, the session, and incoming links (target_id -> NULL) follow the foreign keys.
+func (q *Queries) DeleteNote(ctx context.Context, id int64) error {
+	_, err := q.exec(ctx, q.deleteNoteStmt, deleteNote, id)
+	return err
 }
 
-const hashNote = `-- name: HashNote :one
-SELECT id, contenu_hash FROM note WHERE chemin = ?
+const deleteNoteLinks = `-- name: DeleteNoteLinks :exec
+DELETE FROM link WHERE source_id = ?
 `
 
-type HashNoteRow struct {
-	ID          int64  `json:"id"`
-	ContenuHash string `json:"contenu_hash"`
+func (q *Queries) DeleteNoteLinks(ctx context.Context, sourceID int64) error {
+	_, err := q.exec(ctx, q.deleteNoteLinksStmt, deleteNoteLinks, sourceID)
+	return err
 }
 
-func (q *Queries) HashNote(ctx context.Context, chemin string) (HashNoteRow, error) {
-	row := q.queryRow(ctx, q.hashNoteStmt, hashNote, chemin)
-	var i HashNoteRow
-	err := row.Scan(&i.ID, &i.ContenuHash)
-	return i, err
+const deleteRepositoryCommitSearch = `-- name: DeleteRepositoryCommitSearch :exec
+DELETE FROM search_index WHERE source = 'commit' AND ref IN (SELECT sha FROM commit_git WHERE repository_id = ?)
+`
+
+func (q *Queries) DeleteRepositoryCommitSearch(ctx context.Context, repositoryID int64) error {
+	_, err := q.exec(ctx, q.deleteRepositoryCommitSearchStmt, deleteRepositoryCommitSearch, repositoryID)
+	return err
 }
 
-const insererCommit = `-- name: InsererCommit :execrows
-INSERT INTO commit_git (sha, depot_id, auteur, date_utc, decalage_min, message)
+const deleteRepositoryCommits = `-- name: DeleteRepositoryCommits :exec
+DELETE FROM commit_git WHERE repository_id = ?
+`
+
+// Rewritten history (rebase, force-push): start over for this repository. Triggers fix daily_activity.
+func (q *Queries) DeleteRepositoryCommits(ctx context.Context, repositoryID int64) error {
+	_, err := q.exec(ctx, q.deleteRepositoryCommitsStmt, deleteRepositoryCommits, repositoryID)
+	return err
+}
+
+const deleteSearch = `-- name: DeleteSearch :exec
+DELETE FROM search_index WHERE source = ? AND ref = ?
+`
+
+type DeleteSearchParams struct {
+	Source string `json:"source"`
+	Ref    string `json:"ref"`
+}
+
+func (q *Queries) DeleteSearch(ctx context.Context, arg DeleteSearchParams) error {
+	_, err := q.exec(ctx, q.deleteSearchStmt, deleteSearch, arg.Source, arg.Ref)
+	return err
+}
+
+const insertChangedFile = `-- name: InsertChangedFile :exec
+INSERT INTO changed_file (commit_sha, path, language, additions, deletions)
+VALUES (?, ?, ?, ?, ?)
+ON CONFLICT (commit_sha, path) DO NOTHING
+`
+
+type InsertChangedFileParams struct {
+	CommitSha string  `json:"commit_sha"`
+	Path      string  `json:"path"`
+	Language  *string `json:"language"`
+	Additions *int64  `json:"additions"`
+	Deletions *int64  `json:"deletions"`
+}
+
+func (q *Queries) InsertChangedFile(ctx context.Context, arg InsertChangedFileParams) error {
+	_, err := q.exec(ctx, q.insertChangedFileStmt, insertChangedFile,
+		arg.CommitSha,
+		arg.Path,
+		arg.Language,
+		arg.Additions,
+		arg.Deletions,
+	)
+	return err
+}
+
+const insertCommit = `-- name: InsertCommit :execrows
+INSERT INTO commit_git (sha, repository_id, author, date_utc, offset_min, message)
 VALUES (?, ?, ?, ?, ?, ?)
 ON CONFLICT (sha) DO NOTHING
 `
 
-type InsererCommitParams struct {
-	Sha         string `json:"sha"`
-	DepotID     int64  `json:"depot_id"`
-	Auteur      string `json:"auteur"`
-	DateUtc     string `json:"date_utc"`
-	DecalageMin int64  `json:"decalage_min"`
-	Message     string `json:"message"`
+type InsertCommitParams struct {
+	Sha          string `json:"sha"`
+	RepositoryID int64  `json:"repository_id"`
+	Author       string `json:"author"`
+	DateUtc      string `json:"date_utc"`
+	OffsetMin    int64  `json:"offset_min"`
+	Message      string `json:"message"`
 }
 
-// 0 ligne touchee = commit deja connu ; l'appelant saute alors ses fichiers.
-func (q *Queries) InsererCommit(ctx context.Context, arg InsererCommitParams) (int64, error) {
-	result, err := q.exec(ctx, q.insererCommitStmt, insererCommit,
+// 0 rows touched means the commit is already known; the caller then skips its files.
+func (q *Queries) InsertCommit(ctx context.Context, arg InsertCommitParams) (int64, error) {
+	result, err := q.exec(ctx, q.insertCommitStmt, insertCommit,
 		arg.Sha,
-		arg.DepotID,
-		arg.Auteur,
+		arg.RepositoryID,
+		arg.Author,
 		arg.DateUtc,
-		arg.DecalageMin,
+		arg.OffsetMin,
 		arg.Message,
 	)
 	if err != nil {
@@ -67,150 +117,136 @@ func (q *Queries) InsererCommit(ctx context.Context, arg InsererCommitParams) (i
 	return result.RowsAffected()
 }
 
-const insererFichierModifie = `-- name: InsererFichierModifie :exec
-INSERT INTO fichier_modifie (commit_sha, chemin, langage, ajouts, suppressions)
-VALUES (?, ?, ?, ?, ?)
-ON CONFLICT (commit_sha, chemin) DO NOTHING
-`
-
-type InsererFichierModifieParams struct {
-	CommitSha    string  `json:"commit_sha"`
-	Chemin       string  `json:"chemin"`
-	Langage      *string `json:"langage"`
-	Ajouts       *int64  `json:"ajouts"`
-	Suppressions *int64  `json:"suppressions"`
-}
-
-func (q *Queries) InsererFichierModifie(ctx context.Context, arg InsererFichierModifieParams) error {
-	_, err := q.exec(ctx, q.insererFichierModifieStmt, insererFichierModifie,
-		arg.CommitSha,
-		arg.Chemin,
-		arg.Langage,
-		arg.Ajouts,
-		arg.Suppressions,
-	)
-	return err
-}
-
-const insererJournal = `-- name: InsererJournal :exec
-INSERT INTO journal (date, ia, texte)
+const insertJournal = `-- name: InsertJournal :exec
+INSERT INTO journal (date, ai, body)
 VALUES (?, ?, ?)
-ON CONFLICT (date, ia, texte) DO NOTHING
+ON CONFLICT (date, ai, body) DO NOTHING
 `
 
-type InsererJournalParams struct {
-	Date  string  `json:"date"`
-	Ia    *string `json:"ia"`
-	Texte string  `json:"texte"`
+type InsertJournalParams struct {
+	Date string  `json:"date"`
+	Ai   *string `json:"ai"`
+	Body string  `json:"body"`
 }
 
-func (q *Queries) InsererJournal(ctx context.Context, arg InsererJournalParams) error {
-	_, err := q.exec(ctx, q.insererJournalStmt, insererJournal, arg.Date, arg.Ia, arg.Texte)
+func (q *Queries) InsertJournal(ctx context.Context, arg InsertJournalParams) error {
+	_, err := q.exec(ctx, q.insertJournalStmt, insertJournal, arg.Date, arg.Ai, arg.Body)
 	return err
 }
 
-const insererLien = `-- name: InsererLien :exec
-INSERT INTO lien (source_id, cible_titre)
-VALUES (?, ?)
-ON CONFLICT (source_id, cible_titre) DO NOTHING
-`
-
-type InsererLienParams struct {
-	SourceID   int64  `json:"source_id"`
-	CibleTitre string `json:"cible_titre"`
-}
-
-func (q *Queries) InsererLien(ctx context.Context, arg InsererLienParams) error {
-	_, err := q.exec(ctx, q.insererLienStmt, insererLien, arg.SourceID, arg.CibleTitre)
-	return err
-}
-
-const insererMesureLangage = `-- name: InsererMesureLangage :exec
-INSERT INTO mesure_langage (depot_id, date_mesure, langage, fichiers, lignes_code, lignes_commentaires)
+const insertLanguageStat = `-- name: InsertLanguageStat :exec
+INSERT INTO language_stat (repository_id, measured_on, language, files, code_lines, comment_lines)
 VALUES (?, ?, ?, ?, ?, ?)
-ON CONFLICT (depot_id, date_mesure, langage) DO UPDATE SET
-    fichiers = excluded.fichiers,
-    lignes_code = excluded.lignes_code,
-    lignes_commentaires = excluded.lignes_commentaires
+ON CONFLICT (repository_id, measured_on, language) DO UPDATE SET
+    files = excluded.files,
+    code_lines = excluded.code_lines,
+    comment_lines = excluded.comment_lines
 `
 
-type InsererMesureLangageParams struct {
-	DepotID            int64  `json:"depot_id"`
-	DateMesure         string `json:"date_mesure"`
-	Langage            string `json:"langage"`
-	Fichiers           int64  `json:"fichiers"`
-	LignesCode         int64  `json:"lignes_code"`
-	LignesCommentaires int64  `json:"lignes_commentaires"`
+type InsertLanguageStatParams struct {
+	RepositoryID int64  `json:"repository_id"`
+	MeasuredOn   string `json:"measured_on"`
+	Language     string `json:"language"`
+	Files        int64  `json:"files"`
+	CodeLines    int64  `json:"code_lines"`
+	CommentLines int64  `json:"comment_lines"`
 }
 
-func (q *Queries) InsererMesureLangage(ctx context.Context, arg InsererMesureLangageParams) error {
-	_, err := q.exec(ctx, q.insererMesureLangageStmt, insererMesureLangage,
-		arg.DepotID,
-		arg.DateMesure,
-		arg.Langage,
-		arg.Fichiers,
-		arg.LignesCode,
-		arg.LignesCommentaires,
+func (q *Queries) InsertLanguageStat(ctx context.Context, arg InsertLanguageStatParams) error {
+	_, err := q.exec(ctx, q.insertLanguageStatStmt, insertLanguageStat,
+		arg.RepositoryID,
+		arg.MeasuredOn,
+		arg.Language,
+		arg.Files,
+		arg.CodeLines,
+		arg.CommentLines,
 	)
 	return err
 }
 
-const insererRecherche = `-- name: InsererRecherche :exec
-INSERT INTO recherche (titre, contenu, source, ref) VALUES (?, ?, ?, ?)
+const insertLink = `-- name: InsertLink :exec
+INSERT INTO link (source_id, target_title)
+VALUES (?, ?)
+ON CONFLICT (source_id, target_title) DO NOTHING
 `
 
-type InsererRechercheParams struct {
-	Titre   string `json:"titre"`
-	Contenu string `json:"contenu"`
+type InsertLinkParams struct {
+	SourceID    int64  `json:"source_id"`
+	TargetTitle string `json:"target_title"`
+}
+
+func (q *Queries) InsertLink(ctx context.Context, arg InsertLinkParams) error {
+	_, err := q.exec(ctx, q.insertLinkStmt, insertLink, arg.SourceID, arg.TargetTitle)
+	return err
+}
+
+const insertSearch = `-- name: InsertSearch :exec
+INSERT INTO search_index (title, content, source, ref) VALUES (?, ?, ?, ?)
+`
+
+type InsertSearchParams struct {
+	Title   string `json:"title"`
+	Content string `json:"content"`
 	Source  string `json:"source"`
 	Ref     string `json:"ref"`
 }
 
-func (q *Queries) InsererRecherche(ctx context.Context, arg InsererRechercheParams) error {
-	_, err := q.exec(ctx, q.insererRechercheStmt, insererRecherche,
-		arg.Titre,
-		arg.Contenu,
+func (q *Queries) InsertSearch(ctx context.Context, arg InsertSearchParams) error {
+	_, err := q.exec(ctx, q.insertSearchStmt, insertSearch,
+		arg.Title,
+		arg.Content,
 		arg.Source,
 		arg.Ref,
 	)
 	return err
 }
 
-const lierProjetTechno = `-- name: LierProjetTechno :exec
-INSERT INTO projet_techno (projet_id, techno_id)
+const lastRepositorySHA = `-- name: LastRepositorySHA :one
+SELECT last_imported_sha FROM repository WHERE path = ?
+`
+
+func (q *Queries) LastRepositorySHA(ctx context.Context, path string) (*string, error) {
+	row := q.queryRow(ctx, q.lastRepositorySHAStmt, lastRepositorySHA, path)
+	var last_imported_sha *string
+	err := row.Scan(&last_imported_sha)
+	return last_imported_sha, err
+}
+
+const linkProjectTechnology = `-- name: LinkProjectTechnology :exec
+INSERT INTO project_technology (project_id, technology_id)
 VALUES (?, ?)
 ON CONFLICT DO NOTHING
 `
 
-type LierProjetTechnoParams struct {
-	ProjetID int64 `json:"projet_id"`
-	TechnoID int64 `json:"techno_id"`
+type LinkProjectTechnologyParams struct {
+	ProjectID    int64 `json:"project_id"`
+	TechnologyID int64 `json:"technology_id"`
 }
 
-func (q *Queries) LierProjetTechno(ctx context.Context, arg LierProjetTechnoParams) error {
-	_, err := q.exec(ctx, q.lierProjetTechnoStmt, lierProjetTechno, arg.ProjetID, arg.TechnoID)
+func (q *Queries) LinkProjectTechnology(ctx context.Context, arg LinkProjectTechnologyParams) error {
+	_, err := q.exec(ctx, q.linkProjectTechnologyStmt, linkProjectTechnology, arg.ProjectID, arg.TechnologyID)
 	return err
 }
 
-const listerNotes = `-- name: ListerNotes :many
-SELECT id, chemin FROM note
+const listNotes = `-- name: ListNotes :many
+SELECT id, path FROM note
 `
 
-type ListerNotesRow struct {
-	ID     int64  `json:"id"`
-	Chemin string `json:"chemin"`
+type ListNotesRow struct {
+	ID   int64  `json:"id"`
+	Path string `json:"path"`
 }
 
-func (q *Queries) ListerNotes(ctx context.Context) ([]ListerNotesRow, error) {
-	rows, err := q.query(ctx, q.listerNotesStmt, listerNotes)
+func (q *Queries) ListNotes(ctx context.Context) ([]ListNotesRow, error) {
+	rows, err := q.query(ctx, q.listNotesStmt, listNotes)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []ListerNotesRow
+	var items []ListNotesRow
 	for rows.Next() {
-		var i ListerNotesRow
-		if err := rows.Scan(&i.ID, &i.Chemin); err != nil {
+		var i ListNotesRow
+		if err := rows.Scan(&i.ID, &i.Path); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -224,217 +260,181 @@ func (q *Queries) ListerNotes(ctx context.Context) ([]ListerNotesRow, error) {
 	return items, nil
 }
 
-const marquerDepotImporte = `-- name: MarquerDepotImporte :exec
-UPDATE depot SET dernier_sha_importe = ? WHERE id = ?
+const markRepositoryImported = `-- name: MarkRepositoryImported :exec
+UPDATE repository SET last_imported_sha = ? WHERE id = ?
 `
 
-type MarquerDepotImporteParams struct {
-	DernierShaImporte *string `json:"dernier_sha_importe"`
-	ID                int64   `json:"id"`
+type MarkRepositoryImportedParams struct {
+	LastImportedSha *string `json:"last_imported_sha"`
+	ID              int64   `json:"id"`
 }
 
-func (q *Queries) MarquerDepotImporte(ctx context.Context, arg MarquerDepotImporteParams) error {
-	_, err := q.exec(ctx, q.marquerDepotImporteStmt, marquerDepotImporte, arg.DernierShaImporte, arg.ID)
+func (q *Queries) MarkRepositoryImported(ctx context.Context, arg MarkRepositoryImportedParams) error {
+	_, err := q.exec(ctx, q.markRepositoryImportedStmt, markRepositoryImported, arg.LastImportedSha, arg.ID)
 	return err
 }
 
-const resoudreLiens = `-- name: ResoudreLiens :exec
-UPDATE lien SET cible_id = (SELECT n.id FROM note n WHERE n.titre = lien.cible_titre LIMIT 1)
+const noteHash = `-- name: NoteHash :one
+SELECT id, content_hash FROM note WHERE path = ?
 `
 
-// Apres l'import de toutes les notes : relie chaque lien au titre qu'il vise (NULL si casse).
-func (q *Queries) ResoudreLiens(ctx context.Context) error {
-	_, err := q.exec(ctx, q.resoudreLiensStmt, resoudreLiens)
-	return err
+type NoteHashRow struct {
+	ID          int64  `json:"id"`
+	ContentHash string `json:"content_hash"`
 }
 
-const supprimerCommitsDepot = `-- name: SupprimerCommitsDepot :exec
-DELETE FROM commit_git WHERE depot_id = ?
-`
-
-// Historique reecrit (rebase, force-push) : on repart de zero pour ce depot. Les triggers corrigent activite_jour.
-func (q *Queries) SupprimerCommitsDepot(ctx context.Context, depotID int64) error {
-	_, err := q.exec(ctx, q.supprimerCommitsDepotStmt, supprimerCommitsDepot, depotID)
-	return err
-}
-
-const supprimerLiensDeNote = `-- name: SupprimerLiensDeNote :exec
-DELETE FROM lien WHERE source_id = ?
-`
-
-func (q *Queries) SupprimerLiensDeNote(ctx context.Context, sourceID int64) error {
-	_, err := q.exec(ctx, q.supprimerLiensDeNoteStmt, supprimerLiensDeNote, sourceID)
-	return err
-}
-
-const supprimerNote = `-- name: SupprimerNote :exec
-DELETE FROM note WHERE id = ?
-`
-
-// Les liens, la session et les liens entrants (cible_id -> NULL) suivent par les cles etrangeres.
-func (q *Queries) SupprimerNote(ctx context.Context, id int64) error {
-	_, err := q.exec(ctx, q.supprimerNoteStmt, supprimerNote, id)
-	return err
-}
-
-const supprimerRecherche = `-- name: SupprimerRecherche :exec
-DELETE FROM recherche WHERE source = ? AND ref = ?
-`
-
-type SupprimerRechercheParams struct {
-	Source string `json:"source"`
-	Ref    string `json:"ref"`
-}
-
-func (q *Queries) SupprimerRecherche(ctx context.Context, arg SupprimerRechercheParams) error {
-	_, err := q.exec(ctx, q.supprimerRechercheStmt, supprimerRecherche, arg.Source, arg.Ref)
-	return err
-}
-
-const supprimerRechercheCommitsDepot = `-- name: SupprimerRechercheCommitsDepot :exec
-DELETE FROM recherche WHERE source = 'commit' AND ref IN (SELECT sha FROM commit_git WHERE depot_id = ?)
-`
-
-func (q *Queries) SupprimerRechercheCommitsDepot(ctx context.Context, depotID int64) error {
-	_, err := q.exec(ctx, q.supprimerRechercheCommitsDepotStmt, supprimerRechercheCommitsDepot, depotID)
-	return err
-}
-
-const upsertDepot = `-- name: UpsertDepot :one
-INSERT INTO depot (projet_id, chemin, branche)
-VALUES (?, ?, ?)
-ON CONFLICT (chemin) DO UPDATE SET projet_id = excluded.projet_id, branche = excluded.branche
-RETURNING id, dernier_sha_importe
-`
-
-type UpsertDepotParams struct {
-	ProjetID int64   `json:"projet_id"`
-	Chemin   string  `json:"chemin"`
-	Branche  *string `json:"branche"`
-}
-
-type UpsertDepotRow struct {
-	ID                int64   `json:"id"`
-	DernierShaImporte *string `json:"dernier_sha_importe"`
-}
-
-func (q *Queries) UpsertDepot(ctx context.Context, arg UpsertDepotParams) (UpsertDepotRow, error) {
-	row := q.queryRow(ctx, q.upsertDepotStmt, upsertDepot, arg.ProjetID, arg.Chemin, arg.Branche)
-	var i UpsertDepotRow
-	err := row.Scan(&i.ID, &i.DernierShaImporte)
+func (q *Queries) NoteHash(ctx context.Context, path string) (NoteHashRow, error) {
+	row := q.queryRow(ctx, q.noteHashStmt, noteHash, path)
+	var i NoteHashRow
+	err := row.Scan(&i.ID, &i.ContentHash)
 	return i, err
 }
 
+const resolveLinks = `-- name: ResolveLinks :exec
+UPDATE link SET target_id = (SELECT n.id FROM note n WHERE n.title = link.target_title LIMIT 1)
+`
+
+// After every note is imported: point each link at the title it names (NULL if broken).
+func (q *Queries) ResolveLinks(ctx context.Context) error {
+	_, err := q.exec(ctx, q.resolveLinksStmt, resolveLinks)
+	return err
+}
+
 const upsertNote = `-- name: UpsertNote :one
-INSERT INTO note (chemin, dossier, titre, type, maj, contenu_hash)
+INSERT INTO note (path, folder, title, type, updated, content_hash)
 VALUES (?, ?, ?, ?, ?, ?)
-ON CONFLICT (chemin) DO UPDATE SET
-    dossier = excluded.dossier,
-    titre = excluded.titre,
+ON CONFLICT (path) DO UPDATE SET
+    folder = excluded.folder,
+    title = excluded.title,
     type = excluded.type,
-    maj = excluded.maj,
-    contenu_hash = excluded.contenu_hash
+    updated = excluded.updated,
+    content_hash = excluded.content_hash
 RETURNING id
 `
 
 type UpsertNoteParams struct {
-	Chemin      string  `json:"chemin"`
-	Dossier     string  `json:"dossier"`
-	Titre       string  `json:"titre"`
+	Path        string  `json:"path"`
+	Folder      string  `json:"folder"`
+	Title       string  `json:"title"`
 	Type        *string `json:"type"`
-	Maj         *string `json:"maj"`
-	ContenuHash string  `json:"contenu_hash"`
+	Updated     *string `json:"updated"`
+	ContentHash string  `json:"content_hash"`
 }
 
 func (q *Queries) UpsertNote(ctx context.Context, arg UpsertNoteParams) (int64, error) {
 	row := q.queryRow(ctx, q.upsertNoteStmt, upsertNote,
-		arg.Chemin,
-		arg.Dossier,
-		arg.Titre,
+		arg.Path,
+		arg.Folder,
+		arg.Title,
 		arg.Type,
-		arg.Maj,
-		arg.ContenuHash,
+		arg.Updated,
+		arg.ContentHash,
 	)
 	var id int64
 	err := row.Scan(&id)
 	return id, err
 }
 
-const upsertProjet = `-- name: UpsertProjet :one
+const upsertProject = `-- name: UpsertProject :one
 
-INSERT INTO projet (nom, statut, chemin_source, fiche_maj, verifie_commit, verifie_le)
+INSERT INTO project (name, status, source_path, card_updated, verified_commit, verified_on)
 VALUES (?, ?, ?, ?, ?, ?)
-ON CONFLICT (nom) DO UPDATE SET
-    statut = excluded.statut,
-    chemin_source = excluded.chemin_source,
-    fiche_maj = excluded.fiche_maj,
-    verifie_commit = excluded.verifie_commit,
-    verifie_le = excluded.verifie_le
+ON CONFLICT (name) DO UPDATE SET
+    status = excluded.status,
+    source_path = excluded.source_path,
+    card_updated = excluded.card_updated,
+    verified_commit = excluded.verified_commit,
+    verified_on = excluded.verified_on
 RETURNING id
 `
 
-type UpsertProjetParams struct {
-	Nom           string  `json:"nom"`
-	Statut        *string `json:"statut"`
-	CheminSource  *string `json:"chemin_source"`
-	FicheMaj      *string `json:"fiche_maj"`
-	VerifieCommit *string `json:"verifie_commit"`
-	VerifieLe     *string `json:"verifie_le"`
+type UpsertProjectParams struct {
+	Name           string  `json:"name"`
+	Status         *string `json:"status"`
+	SourcePath     *string `json:"source_path"`
+	CardUpdated    *string `json:"card_updated"`
+	VerifiedCommit *string `json:"verified_commit"`
+	VerifiedOn     *string `json:"verified_on"`
 }
 
-// Ecritures de l'import. Toutes sont idempotentes : relancer l'import ne cree aucun doublon.
-// Cree le projet ou met a jour les champs de sa fiche ; renvoie son id dans les deux cas.
-func (q *Queries) UpsertProjet(ctx context.Context, arg UpsertProjetParams) (int64, error) {
-	row := q.queryRow(ctx, q.upsertProjetStmt, upsertProjet,
-		arg.Nom,
-		arg.Statut,
-		arg.CheminSource,
-		arg.FicheMaj,
-		arg.VerifieCommit,
-		arg.VerifieLe,
+// Import writes. All of them are idempotent: running the import again creates no duplicates.
+// Create the project or update its card fields; return its id in both cases.
+func (q *Queries) UpsertProject(ctx context.Context, arg UpsertProjectParams) (int64, error) {
+	row := q.queryRow(ctx, q.upsertProjectStmt, upsertProject,
+		arg.Name,
+		arg.Status,
+		arg.SourcePath,
+		arg.CardUpdated,
+		arg.VerifiedCommit,
+		arg.VerifiedOn,
 	)
 	var id int64
 	err := row.Scan(&id)
 	return id, err
 }
 
+const upsertRepository = `-- name: UpsertRepository :one
+INSERT INTO repository (project_id, path, branch)
+VALUES (?, ?, ?)
+ON CONFLICT (path) DO UPDATE SET project_id = excluded.project_id, branch = excluded.branch
+RETURNING id, last_imported_sha
+`
+
+type UpsertRepositoryParams struct {
+	ProjectID int64   `json:"project_id"`
+	Path      string  `json:"path"`
+	Branch    *string `json:"branch"`
+}
+
+type UpsertRepositoryRow struct {
+	ID              int64   `json:"id"`
+	LastImportedSha *string `json:"last_imported_sha"`
+}
+
+func (q *Queries) UpsertRepository(ctx context.Context, arg UpsertRepositoryParams) (UpsertRepositoryRow, error) {
+	row := q.queryRow(ctx, q.upsertRepositoryStmt, upsertRepository, arg.ProjectID, arg.Path, arg.Branch)
+	var i UpsertRepositoryRow
+	err := row.Scan(&i.ID, &i.LastImportedSha)
+	return i, err
+}
+
 const upsertSession = `-- name: UpsertSession :exec
-INSERT INTO session (note_id, date, projet_id, ia)
+INSERT INTO session (note_id, date, project_id, ai)
 VALUES (?, ?, ?, ?)
-ON CONFLICT (note_id) DO UPDATE SET date = excluded.date, projet_id = excluded.projet_id, ia = excluded.ia
+ON CONFLICT (note_id) DO UPDATE SET date = excluded.date, project_id = excluded.project_id, ai = excluded.ai
 `
 
 type UpsertSessionParams struct {
-	NoteID   int64   `json:"note_id"`
-	Date     string  `json:"date"`
-	ProjetID *int64  `json:"projet_id"`
-	Ia       *string `json:"ia"`
+	NoteID    int64   `json:"note_id"`
+	Date      string  `json:"date"`
+	ProjectID *int64  `json:"project_id"`
+	Ai        *string `json:"ai"`
 }
 
 func (q *Queries) UpsertSession(ctx context.Context, arg UpsertSessionParams) error {
 	_, err := q.exec(ctx, q.upsertSessionStmt, upsertSession,
 		arg.NoteID,
 		arg.Date,
-		arg.ProjetID,
-		arg.Ia,
+		arg.ProjectID,
+		arg.Ai,
 	)
 	return err
 }
 
-const upsertTechno = `-- name: UpsertTechno :one
-INSERT INTO techno (nom, categorie)
+const upsertTechnology = `-- name: UpsertTechnology :one
+INSERT INTO technology (name, category)
 VALUES (?, ?)
-ON CONFLICT (nom) DO UPDATE SET categorie = coalesce(excluded.categorie, techno.categorie)
+ON CONFLICT (name) DO UPDATE SET category = coalesce(excluded.category, technology.category)
 RETURNING id
 `
 
-type UpsertTechnoParams struct {
-	Nom       string  `json:"nom"`
-	Categorie *string `json:"categorie"`
+type UpsertTechnologyParams struct {
+	Name     string  `json:"name"`
+	Category *string `json:"category"`
 }
 
-func (q *Queries) UpsertTechno(ctx context.Context, arg UpsertTechnoParams) (int64, error) {
-	row := q.queryRow(ctx, q.upsertTechnoStmt, upsertTechno, arg.Nom, arg.Categorie)
+func (q *Queries) UpsertTechnology(ctx context.Context, arg UpsertTechnologyParams) (int64, error) {
+	row := q.queryRow(ctx, q.upsertTechnologyStmt, upsertTechnology, arg.Name, arg.Category)
 	var id int64
 	err := row.Scan(&id)
 	return id, err

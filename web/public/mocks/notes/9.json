@@ -1,23 +1,23 @@
 {
   "id": 9,
-  "titre": "Sable",
-  "dossier": "Projets",
-  "degre": 2,
-  "chemin": "Projets/Sable.md",
-  "maj": "2026-10-26",
-  "contenu": "# Sable\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Python]].\nLié à [[Claude Code]].",
-  "voisins": [
+  "title": "Sable",
+  "folder": "Projects",
+  "degree": 2,
+  "path": "Projects/Sable.md",
+  "updated": "2026-10-26",
+  "content": "# Sable\n\nDemo note from the Observatoire vault.\n\nLinked to [[Python]].\nLinked to [[Claude Code]].",
+  "neighbors": [
     {
       "id": 25,
-      "titre": "Python",
-      "dossier": "Technos",
-      "degre": 3
+      "title": "Python",
+      "folder": "Technologies",
+      "degree": 3
     },
     {
       "id": 40,
-      "titre": "Claude Code",
-      "dossier": "IA",
-      "degre": 3
+      "title": "Claude Code",
+      "folder": "IA",
+      "degree": 3
     }
   ]
 }

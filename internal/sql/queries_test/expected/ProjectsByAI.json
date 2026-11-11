@@ -1,0 +1,12 @@
+[
+  {
+    "ai": "Claude Code",
+    "project_id": 1,
+    "name": "Atlas"
+  },
+  {
+    "ai": "Claude Code",
+    "project_id": 2,
+    "name": "Compass"
+  }
+]

@@ -1,5 +1,5 @@
-// Prépare et lance l'Observatoire pour les tests de bout en bout.
-// À lancer depuis n'importe quel répertoire : la racine du dépôt est déduite de ce fichier.
+// Prepare and start Observatoire for the end-to-end tests.
+// Can be launched from any directory: the repository root is derived from this file.
 import { spawn } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { mkdtemp, rm } from 'node:fs/promises'
@@ -19,7 +19,7 @@ function lancer(commande, args) {
     enfant.on('error', reject)
     enfant.on('exit', (code, signal) => {
       if (code === 0) resolve()
-      else reject(new Error(`${commande} ${args.join(' ')} s'est terminé (${code ?? signal})`))
+      else reject(new Error(`${commande} ${args.join(' ')} exited (${code ?? signal})`))
     })
   })
 }
@@ -27,8 +27,8 @@ function lancer(commande, args) {
 const alpha = path.join(racine, 'testdata', 'depots', 'alpha')
 const beta = path.join(racine, 'testdata', 'depots', 'beta')
 if (!existsSync(path.join(alpha, '.git')) || !existsSync(path.join(beta, '.git'))) {
-  console.error('Les dépôts de test sont absents (testdata/depots/alpha et testdata/depots/beta).')
-  console.error('Générez-les depuis la racine du dépôt, puis relancez les tests :')
+  console.error('The test repositories are missing (testdata/depots/alpha and testdata/depots/beta).')
+  console.error('Generate them from the repository root, then run the tests again:')
   console.error('  go run ./scripts/fixtures/make-repos.go')
   process.exit(1)
 }
@@ -40,7 +40,7 @@ if (!existsSync(path.join(racine, 'web', 'dist', 'index.html'))) {
 const tmp = await mkdtemp(path.join(os.tmpdir(), 'observatoire-e2e-'))
 const binaire = path.join(tmp, process.platform === 'win32' ? 'observatoire.exe' : 'observatoire')
 const base = path.join(tmp, 'e2e.db')
-const coffre = path.join(racine, 'testdata', 'coffre')
+const vault = path.join(racine, 'testdata', 'vault')
 
 async function effacerTmp() {
   await rm(tmp, { recursive: true, force: true }).catch(() => {})
@@ -52,10 +52,10 @@ try {
     'import',
     '-db',
     base,
-    '-coffre',
-    coffre,
-    '-depots',
-    `Atlas=${alpha},Boussole=${beta}`,
+    '-vault',
+    vault,
+    '-repos',
+    `Atlas=${alpha},Compass=${beta}`,
   ])
 } catch (err) {
   console.error(err instanceof Error ? err.message : err)

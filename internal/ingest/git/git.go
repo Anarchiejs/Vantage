@@ -1,4 +1,4 @@
-// Package git lit les métadonnées Git sans lire les diffs ni écrire en base.
+// Package git reads Git metadata without reading diffs or writing to the database.
 package git
 
 import (
@@ -16,14 +16,14 @@ import (
 	"github.com/Anarchiejs/Observatoire/internal/model"
 )
 
-var ErrHistoriqueReecrit = errors.New("historique Git réécrit")
+var ErrHistoryRewritten = errors.New("git history was rewritten")
 
-func commande(ctx context.Context, depot string, args ...string) *exec.Cmd {
-	return exec.CommandContext(ctx, "git", append([]string{"-C", depot, "-c", "core.quotepath=false"}, args...)...)
+func command(ctx context.Context, repo string, args ...string) *exec.Cmd {
+	return exec.CommandContext(ctx, "git", append([]string{"-C", repo, "-c", "core.quotepath=false"}, args...)...)
 }
 
-func sortie(ctx context.Context, depot string, args ...string) (string, error) {
-	cmd := commande(ctx, depot, args...)
+func output(ctx context.Context, repo string, args ...string) (string, error) {
+	cmd := command(ctx, repo, args...)
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	b, err := cmd.Output()
@@ -36,51 +36,50 @@ func sortie(ctx context.Context, depot string, args ...string) (string, error) {
 	return strings.TrimSpace(string(b)), nil
 }
 
-// Tete renvoie le SHA de HEAD et sa branche (vide si HEAD est détachée).
-func Tete(ctx context.Context, depot string) (sha string, branche string, err error) {
-	sha, err = sortie(ctx, depot, "rev-parse", "--verify", "HEAD")
+// Head returns the HEAD SHA and its branch (empty when HEAD is detached).
+func Head(ctx context.Context, repo string) (sha string, branch string, err error) {
+	sha, err = output(ctx, repo, "rev-parse", "--verify", "HEAD")
 	if err != nil {
 		return "", "", err
 	}
-	branche, err = sortie(ctx, depot, "symbolic-ref", "--quiet", "--short", "HEAD")
-	var e *exec.ExitError
-	if errors.As(err, &e) && e.ExitCode() == 1 {
+	branch, err = output(ctx, repo, "symbolic-ref", "--quiet", "--short", "HEAD")
+	var exitErr *exec.ExitError
+	if errors.As(err, &exitErr) && exitErr.ExitCode() == 1 {
 		err = nil
 	}
-	return sha, branche, err
+	return sha, branch, err
 }
 
-// Lire renvoie les commits dans l'ordre topologique, parents avant enfants.
-// Un point de reprise inconnu ou devenu inaccessible entraîne une relecture
-// complète accompagnée d'ErrHistoriqueReecrit.
-func Lire(ctx context.Context, depot string, depuisSHA string) ([]model.Commit, error) {
+// Read returns commits in topological order, parents before children.
+// An unknown or unreachable resume point triggers a full reread and ErrHistoryRewritten.
+func Read(ctx context.Context, repo string, sinceSHA string) ([]model.Commit, error) {
 	revision := "HEAD"
-	var avertissement error
-	if depuisSHA != "" {
-		sha, err := sortie(ctx, depot, "rev-parse", "--verify", "--end-of-options", depuisSHA+"^{commit}")
+	var warning error
+	if sinceSHA != "" {
+		sha, err := output(ctx, repo, "rev-parse", "--verify", "--end-of-options", sinceSHA+"^{commit}")
 		if err != nil {
 			if ctx.Err() != nil {
 				return nil, ctx.Err()
 			}
-			var e *exec.ExitError
-			if !errors.As(err, &e) {
+			var exitErr *exec.ExitError
+			if !errors.As(err, &exitErr) {
 				return nil, err
 			}
-			avertissement = fmt.Errorf("%w: %s", ErrHistoriqueReecrit, depuisSHA)
+			warning = fmt.Errorf("%w: %s", ErrHistoryRewritten, sinceSHA)
 		} else {
-			_, err = sortie(ctx, depot, "merge-base", "--is-ancestor", sha, "HEAD")
+			_, err = output(ctx, repo, "merge-base", "--is-ancestor", sha, "HEAD")
 			if err == nil {
 				revision = sha + "..HEAD"
 			} else {
-				var e *exec.ExitError
-				if !errors.As(err, &e) || e.ExitCode() != 1 {
+				var exitErr *exec.ExitError
+				if !errors.As(err, &exitErr) || exitErr.ExitCode() != 1 {
 					return nil, err
 				}
-				avertissement = fmt.Errorf("%w: %s inaccessible depuis HEAD", ErrHistoriqueReecrit, depuisSHA)
+				warning = fmt.Errorf("%w: %s unreachable from HEAD", ErrHistoryRewritten, sinceSHA)
 			}
 		}
 	}
-	cmd := commande(ctx, depot, "log", "--reverse", "--topo-order", "--numstat", "-z", "-M", "--no-ext-diff", "--no-textconv", "--diff-merges=off", "--format=%x00%H%x00%P%x00%an%x00%aI%x00%B%x00", revision, "--")
+	cmd := command(ctx, repo, "log", "--reverse", "--topo-order", "--numstat", "-z", "-M", "--no-ext-diff", "--no-textconv", "--diff-merges=off", "--format=%x00%H%x00%P%x00%an%x00%aI%x00%B%x00", revision, "--")
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	stdout, err := cmd.StdoutPipe()
@@ -90,7 +89,7 @@ func Lire(ctx context.Context, depot string, depuisSHA string) ([]model.Commit, 
 	if err = cmd.Start(); err != nil {
 		return nil, err
 	}
-	commits, parseErr := lireFlux(stdout)
+	commits, parseErr := readStream(stdout)
 	if parseErr != nil {
 		_ = cmd.Process.Kill()
 	}
@@ -104,12 +103,12 @@ func Lire(ctx context.Context, depot string, depuisSHA string) ([]model.Commit, 
 	if err != nil {
 		return nil, fmt.Errorf("git log: %w: %s", err, strings.TrimSpace(stderr.String()))
 	}
-	return commits, avertissement
+	return commits, warning
 }
 
-// Les NUL délimitent les champs et chemins, y compris les deux chemins d'un
-// renommage. Aucun découpage par ligne : messages et noms peuvent en contenir.
-func lireFlux(r io.Reader) ([]model.Commit, error) {
+// NULs separate fields and paths, including both paths of a rename.
+// Nothing is split on lines: messages and names may contain them.
+func readStream(r io.Reader) ([]model.Commit, error) {
 	b := bufio.NewReader(r)
 	token := func() (string, error) {
 		s, err := b.ReadString(0)
@@ -128,7 +127,7 @@ func lireFlux(r io.Reader) ([]model.Commit, error) {
 			return commits, nil
 		}
 		if err != nil {
-			return nil, fmt.Errorf("lecture git: %w", err)
+			return nil, fmt.Errorf("git read: %w", err)
 		}
 		if s == "" || s == "\n" {
 			continue
@@ -139,48 +138,48 @@ func lireFlux(r io.Reader) ([]model.Commit, error) {
 			for i := range fields {
 				fields[i], err = token()
 				if err != nil {
-					return nil, fmt.Errorf("entête git: %w", err)
+					return nil, fmt.Errorf("git header: %w", err)
 				}
 			}
 			date, err := time.Parse(time.RFC3339, fields[2])
 			if err != nil {
-				return nil, fmt.Errorf("date du commit %s: %w", s, err)
+				return nil, fmt.Errorf("commit date %s: %w", s, err)
 			}
-			commits = append(commits, model.Commit{SHA: s, Auteur: fields[1], Date: date, Message: strings.TrimRight(fields[3], " \t\r\n"), EstFusion: len(strings.Fields(fields[0])) > 1})
+			commits = append(commits, model.Commit{SHA: s, Author: fields[1], Date: date, Message: strings.TrimRight(fields[3], " \t\r\n"), IsMerge: len(strings.Fields(fields[0])) > 1})
 			continue
 		}
 		if len(commits) == 0 {
-			return nil, errors.New("numstat sans commit")
+			return nil, errors.New("numstat without a commit")
 		}
 		parts := strings.SplitN(s, "\t", 3)
 		if len(parts) != 3 {
-			return nil, errors.New("numstat invalide")
+			return nil, errors.New("invalid numstat")
 		}
-		chemin := parts[2]
-		if chemin == "" {
+		filePath := parts[2]
+		if filePath == "" {
 			if _, err = token(); err != nil {
-				return nil, fmt.Errorf("ancien chemin: %w", err)
+				return nil, fmt.Errorf("old path: %w", err)
 			}
-			chemin, err = token()
+			filePath, err = token()
 			if err != nil {
-				return nil, fmt.Errorf("nouveau chemin: %w", err)
+				return nil, fmt.Errorf("new path: %w", err)
 			}
 		}
-		f := model.FichierModifie{Chemin: chemin, Langage: langage(chemin)}
+		f := model.ChangedFile{Path: filePath, Language: language(filePath)}
 		if parts[0] != "-" || parts[1] != "-" {
-			a, err := strconv.ParseInt(parts[0], 10, 64)
-			if err != nil || a < 0 {
-				return nil, fmt.Errorf("ajouts invalides: %q", parts[0])
+			additions, err := strconv.ParseInt(parts[0], 10, 64)
+			if err != nil || additions < 0 {
+				return nil, fmt.Errorf("invalid additions: %q", parts[0])
 			}
-			d, err := strconv.ParseInt(parts[1], 10, 64)
-			if err != nil || d < 0 {
-				return nil, fmt.Errorf("suppressions invalides: %q", parts[1])
+			deletions, err := strconv.ParseInt(parts[1], 10, 64)
+			if err != nil || deletions < 0 {
+				return nil, fmt.Errorf("invalid deletions: %q", parts[1])
 			}
-			f.Ajouts, f.Suppressions = &a, &d
+			f.Additions, f.Deletions = &additions, &deletions
 		}
 		c := &commits[len(commits)-1]
-		if !c.EstFusion {
-			c.Fichiers = append(c.Fichiers, f)
+		if !c.IsMerge {
+			c.Files = append(c.Files, f)
 		}
 	}
 }

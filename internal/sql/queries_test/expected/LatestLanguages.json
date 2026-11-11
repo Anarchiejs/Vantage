@@ -1,0 +1,27 @@
+[
+  {
+    "language": "Markdown",
+    "code_lines": 38,
+    "share": 0.8636363636363636
+  },
+  {
+    "language": "Go",
+    "code_lines": 2,
+    "share": 0.045454545454545456
+  },
+  {
+    "language": "Plain Text",
+    "code_lines": 2,
+    "share": 0.045454545454545456
+  },
+  {
+    "language": "SQL",
+    "code_lines": 1,
+    "share": 0.022727272727272728
+  },
+  {
+    "language": "TypeScript",
+    "code_lines": 1,
+    "share": 0.022727272727272728
+  }
+]

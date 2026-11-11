@@ -1,0 +1,27 @@
+[
+  {
+    "measured_on": "2026-03-31",
+    "language": "Go",
+    "code_lines": 2
+  },
+  {
+    "measured_on": "2026-03-31",
+    "language": "Markdown",
+    "code_lines": 38
+  },
+  {
+    "measured_on": "2026-03-31",
+    "language": "Plain Text",
+    "code_lines": 2
+  },
+  {
+    "measured_on": "2026-03-31",
+    "language": "SQL",
+    "code_lines": 1
+  },
+  {
+    "measured_on": "2026-03-31",
+    "language": "TypeScript",
+    "code_lines": 1
+  }
+]

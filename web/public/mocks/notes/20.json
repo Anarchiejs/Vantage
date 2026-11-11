@@ -1,17 +1,17 @@
 {
   "id": 20,
-  "titre": "Go",
-  "dossier": "Technos",
-  "degre": 1,
-  "chemin": "Technos/Go.md",
-  "maj": "2026-10-26",
-  "contenu": "# Go\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Observatoire]].",
-  "voisins": [
+  "title": "Go",
+  "folder": "Technologies",
+  "degree": 1,
+  "path": "Technologies/Go.md",
+  "updated": "2026-10-26",
+  "content": "# Go\n\nDemo note from the Observatoire vault.\n\nLinked to [[Observatoire]].",
+  "neighbors": [
     {
       "id": 1,
-      "titre": "Observatoire",
-      "dossier": "Projets",
-      "degre": 7
+      "title": "Observatoire",
+      "folder": "Projects",
+      "degree": 7
     }
   ]
 }

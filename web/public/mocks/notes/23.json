@@ -1,23 +1,23 @@
 {
   "id": 23,
-  "titre": "SQLite",
-  "dossier": "Technos",
-  "degre": 2,
-  "chemin": "Technos/SQLite.md",
-  "maj": "2026-10-26",
-  "contenu": "# SQLite\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Observatoire]].\nLié à [[Harbor]].",
-  "voisins": [
+  "title": "SQLite",
+  "folder": "Technologies",
+  "degree": 2,
+  "path": "Technologies/SQLite.md",
+  "updated": "2026-10-26",
+  "content": "# SQLite\n\nDemo note from the Observatoire vault.\n\nLinked to [[Observatoire]].\nLinked to [[Harbor]].",
+  "neighbors": [
     {
       "id": 1,
-      "titre": "Observatoire",
-      "dossier": "Projets",
-      "degre": 7
+      "title": "Observatoire",
+      "folder": "Projects",
+      "degree": 7
     },
     {
       "id": 3,
-      "titre": "Harbor",
-      "dossier": "Projets",
-      "degre": 3
+      "title": "Harbor",
+      "folder": "Projects",
+      "degree": 3
     }
   ]
 }

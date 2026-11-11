@@ -1,46 +1,48 @@
 import { useCallback, useEffect, useState } from 'react'
 
-export type Theme = 'clair' | 'sombre'
+export type Theme = 'light' | 'dark'
 
-const CLE = 'observatoire.theme'
+const KEY = 'observatoire.theme'
 
-function themeInitial(): Theme {
+function initialTheme(): Theme {
   try {
-    const t = localStorage.getItem(CLE)
-    if (t === 'clair' || t === 'sombre') return t
+    const stored = localStorage.getItem(KEY)
+    if (stored === 'light' || stored === 'dark') return stored
+    if (stored === 'clair') return 'light'
+    if (stored === 'sombre') return 'dark'
   } catch {
-    /* stockage indisponible */
+    /* storage unavailable */
   }
-  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'sombre' : 'clair'
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
-/** Thème courant, appliqué sur <html data-theme>, mémorisé dans le navigateur. */
+/** Current theme, applied on <html data-theme> and remembered in the browser. */
 export function useTheme(): [Theme, () => void] {
-  const [theme, setTheme] = useState<Theme>(themeInitial)
+  const [theme, setTheme] = useState<Theme>(initialTheme)
   useEffect(() => {
     document.documentElement.dataset.theme = theme
     try {
-      localStorage.setItem(CLE, theme)
+      localStorage.setItem(KEY, theme)
     } catch {
-      /* rien */
+      /* ignore */
     }
     window.dispatchEvent(new CustomEvent('observatoire:theme', { detail: theme }))
   }, [theme])
-  const basculer = useCallback(() => setTheme((t) => (t === 'clair' ? 'sombre' : 'clair')), [])
-  return [theme, basculer]
+  const toggle = useCallback(() => setTheme((current) => (current === 'light' ? 'dark' : 'light')), [])
+  return [theme, toggle]
 }
 
-/** Valeur actuelle d'un jeton CSS (ex. jeton('serie-1')). */
-export function jeton(nom: string): string {
-  return getComputedStyle(document.documentElement).getPropertyValue(`--${nom}`).trim()
+/** Current value of a CSS token (for example token('series-1')). */
+export function token(name: string): string {
+  return getComputedStyle(document.documentElement).getPropertyValue(`--${name}`).trim()
 }
 
-/** Couleurs des séries de graphiques, dans l'ordre. */
+/** Chart series colors, in order. */
 export function series(): string[] {
-  return [1, 2, 3, 4, 5, 6, 7, 8].map((i) => jeton(`serie-${i}`))
+  return [1, 2, 3, 4, 5, 6, 7, 8].map((i) => token(`series-${i}`))
 }
 
-/** Échelle du calendrier d'activité, de 0 à 4. */
-export function chaleur(): string[] {
-  return [0, 1, 2, 3, 4].map((i) => jeton(`chaleur-${i}`))
+/** Activity calendar scale, from 0 to 4. */
+export function heat(): string[] {
+  return [0, 1, 2, 3, 4].map((i) => token(`heat-${i}`))
 }

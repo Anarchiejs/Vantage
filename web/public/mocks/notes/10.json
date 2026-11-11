@@ -1,29 +1,29 @@
 {
   "id": 10,
-  "titre": "Waypoint",
-  "dossier": "Projets",
-  "degre": 3,
-  "chemin": "Projets/Waypoint.md",
-  "maj": "2026-10-26",
-  "contenu": "# Waypoint\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Python]].\nLié à [[TypeScript]].\nLié à [[Codex]].",
-  "voisins": [
+  "title": "Waypoint",
+  "folder": "Projects",
+  "degree": 3,
+  "path": "Projects/Waypoint.md",
+  "updated": "2026-10-26",
+  "content": "# Waypoint\n\nDemo note from the Observatoire vault.\n\nLinked to [[Python]].\nLinked to [[TypeScript]].\nLinked to [[Codex]].",
+  "neighbors": [
     {
       "id": 25,
-      "titre": "Python",
-      "dossier": "Technos",
-      "degre": 3
+      "title": "Python",
+      "folder": "Technologies",
+      "degree": 3
     },
     {
       "id": 22,
-      "titre": "TypeScript",
-      "dossier": "Technos",
-      "degre": 5
+      "title": "TypeScript",
+      "folder": "Technologies",
+      "degree": 5
     },
     {
       "id": 41,
-      "titre": "Codex",
-      "dossier": "IA",
-      "degre": 4
+      "title": "Codex",
+      "folder": "IA",
+      "degree": 4
     }
   ]
 }

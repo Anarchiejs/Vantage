@@ -9,106 +9,106 @@ import (
 )
 
 const (
-	maxAbonnes    = 32               // onglets ouverts en même temps
-	delaiEcriture = 10 * time.Second // une page qui ne lit plus est déconnectée
+	maxSubscribers = 32               // tabs open at the same time
+	writeTimeout   = 10 * time.Second // a page that stops reading is disconnected
 )
 
-// Diffuseur envoie l'événement SSE « maj » à toutes les pages ouvertes.
-type Diffuseur struct {
-	mu      sync.Mutex
-	abonnes map[chan EvenementMaj]struct{}
-	ferme   bool
+// Broadcaster sends the SSE "update" event to every open page.
+type Broadcaster struct {
+	mu          sync.Mutex
+	subscribers map[chan UpdateEvent]struct{}
+	closed      bool
 }
 
-func NouveauDiffuseur() *Diffuseur {
-	return &Diffuseur{abonnes: map[chan EvenementMaj]struct{}{}}
+func NewBroadcaster() *Broadcaster {
+	return &Broadcaster{subscribers: map[chan UpdateEvent]struct{}{}}
 }
 
-// Annoncer prévient les abonnés que ces tables ont changé. Un abonné trop lent perd l'événement
-// plutôt que de bloquer l'import.
-func (d *Diffuseur) Annoncer(tables ...string) {
-	d.mu.Lock()
-	defer d.mu.Unlock()
-	e := EvenementMaj{Tables: tables}
-	for c := range d.abonnes {
+// Announce tells subscribers that these tables changed. A subscriber that is too slow
+// drops the event instead of blocking the import.
+func (b *Broadcaster) Announce(tables ...string) {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	event := UpdateEvent{Tables: tables}
+	for subscriber := range b.subscribers {
 		select {
-		case c <- e:
+		case subscriber <- event:
 		default:
 		}
 	}
 }
 
-// Fermer termine toutes les connexions (arrêt du serveur).
-func (d *Diffuseur) Fermer() {
-	d.mu.Lock()
-	defer d.mu.Unlock()
-	d.ferme = true
-	for c := range d.abonnes {
-		close(c)
-		delete(d.abonnes, c)
+// Close ends every connection (server shutdown).
+func (b *Broadcaster) Close() {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	b.closed = true
+	for subscriber := range b.subscribers {
+		close(subscriber)
+		delete(b.subscribers, subscriber)
 	}
 }
 
-func (d *Diffuseur) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (b *Broadcaster) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	_, ok := w.(http.Flusher)
 	if !ok {
-		erreur(w, http.StatusInternalServerError, "flux non pris en charge")
+		writeError(w, http.StatusInternalServerError, "streaming is not supported")
 		return
 	}
-	c := make(chan EvenementMaj, 4)
-	d.mu.Lock()
-	if d.ferme {
-		d.mu.Unlock()
-		erreur(w, http.StatusServiceUnavailable, "arrêt en cours")
+	events := make(chan UpdateEvent, 4)
+	b.mu.Lock()
+	if b.closed {
+		b.mu.Unlock()
+		writeError(w, http.StatusServiceUnavailable, "shutting down")
 		return
 	}
-	if len(d.abonnes) >= maxAbonnes {
-		d.mu.Unlock()
-		erreur(w, http.StatusTooManyRequests, "trop de pages abonnées aux mises à jour")
+	if len(b.subscribers) >= maxSubscribers {
+		b.mu.Unlock()
+		writeError(w, http.StatusTooManyRequests, "too many pages subscribed to updates")
 		return
 	}
-	d.abonnes[c] = struct{}{}
-	d.mu.Unlock()
+	b.subscribers[events] = struct{}{}
+	b.mu.Unlock()
 	defer func() {
-		d.mu.Lock()
-		if _, ok := d.abonnes[c]; ok {
-			delete(d.abonnes, c)
-			close(c)
+		b.mu.Lock()
+		if _, ok := b.subscribers[events]; ok {
+			delete(b.subscribers, events)
+			close(events)
 		}
-		d.mu.Unlock()
+		b.mu.Unlock()
 	}()
 
 	w.Header().Set("Content-Type", "text/event-stream")
 	w.Header().Set("Cache-Control", "no-cache")
 	w.Header().Set("Connection", "keep-alive")
 	rc := http.NewResponseController(w)
-	envoyer := func(texte string) bool {
-		rc.SetWriteDeadline(time.Now().Add(delaiEcriture))
-		if _, err := fmt.Fprint(w, texte); err != nil {
+	send := func(text string) bool {
+		rc.SetWriteDeadline(time.Now().Add(writeTimeout))
+		if _, err := fmt.Fprint(w, text); err != nil {
 			return false
 		}
 		return rc.Flush() == nil
 	}
-	if !envoyer("retry: 3000\n\n") {
+	if !send("retry: 3000\n\n") {
 		return
 	}
 
-	battement := time.NewTicker(25 * time.Second)
-	defer battement.Stop()
+	heartbeat := time.NewTicker(25 * time.Second)
+	defer heartbeat.Stop()
 	for {
 		select {
 		case <-r.Context().Done():
 			return
-		case <-battement.C:
-			if !envoyer(": battement\n\n") {
+		case <-heartbeat.C:
+			if !send(": heartbeat\n\n") {
 				return
 			}
-		case e, ok := <-c:
+		case event, ok := <-events:
 			if !ok {
 				return
 			}
-			b, _ := json.Marshal(e)
-			if !envoyer(fmt.Sprintf("event: maj\ndata: %s\n\n", b)) {
+			body, _ := json.Marshal(event)
+			if !send(fmt.Sprintf("event: update\ndata: %s\n\n", body)) {
 				return
 			}
 		}

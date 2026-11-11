@@ -12,57 +12,57 @@ import (
 	"github.com/Anarchiejs/Observatoire/internal/model"
 )
 
-func TestLireFixture(t *testing.T) {
-	root := filepath.Join("..", "..", "..", "testdata", "coffre")
-	r, err := Lire(root)
+func TestReadFixture(t *testing.T) {
+	root := filepath.Join("..", "..", "..", "testdata", "vault")
+	r, err := Read(root)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(r.Notes) != 14 || len(r.Fiches) != 2 || len(r.Sessions) != 2 || len(r.Journal) != 2 {
-		t.Fatalf("counts notes/fiches/sessions/journal = %d/%d/%d/%d", len(r.Notes), len(r.Fiches), len(r.Sessions), len(r.Journal))
+	if len(r.Notes) != 14 || len(r.Cards) != 2 || len(r.Sessions) != 2 || len(r.Journal) != 2 {
+		t.Fatalf("counts notes/cards/sessions/journal = %d/%d/%d/%d", len(r.Notes), len(r.Cards), len(r.Sessions), len(r.Journal))
 	}
-	want := []model.Fiche{
-		{Nom: "Atlas", Statut: "actif", Maj: "2026-10-26", VerifieLe: "2026-10-26", VerifieCommit: "a1b2c3d", Technos: []string{"Go", "TypeScript"}},
-		{Nom: "Boussole", Statut: "archive", CheminSource: "C:/Fixtures/Boussole", Maj: "2026-07-01", VerifieLe: "2026-07-01", VerifieCommit: "deadbeef", Technos: []string{"Markdown"}},
+	want := []model.ProjectCard{
+		{Name: "Atlas", Status: "active", Updated: "2026-10-26", VerifiedOn: "2026-10-26", VerifiedCommit: "a1b2c3d", Technologies: []string{"Go", "TypeScript"}},
+		{Name: "Compass", Status: "archived", SourcePath: "C:/Fixtures/Compass", Updated: "2026-07-01", VerifiedOn: "2026-07-01", VerifiedCommit: "deadbeef", Technologies: []string{"Markdown"}},
 	}
-	if !reflect.DeepEqual(r.Fiches, want) {
-		t.Fatalf("fiches: %#v", r.Fiches)
+	if !reflect.DeepEqual(r.Cards, want) {
+		t.Fatalf("cards: %#v", r.Cards)
 	}
 	for _, s := range r.Sessions {
-		if s.IA != "Claude Code" || (s.Projet != "Atlas" && s.Projet != "Boussole") || !strings.HasPrefix(s.CheminNote, "Sessions/") || s.Date == "" {
+		if s.AI != "Claude Code" || (s.Project != "Atlas" && s.Project != "Compass") || !strings.HasPrefix(s.NotePath, "Sessions/") || s.Date == "" {
 			t.Fatalf("session: %#v", s)
 		}
 	}
-	if r.Journal[0] != (model.EntreeJournal{Date: "2026-10-26", IA: "Claude Code", Texte: "préparation des fixtures fictives avec [[Atlas]]."}) {
+	if r.Journal[0] != (model.JournalEntry{Date: "2026-10-26", AI: "Claude Code", Text: "preparing the fictional fixtures with [[Atlas]]."}) {
 		t.Fatalf("journal: %#v", r.Journal)
 	}
 	foundOrphan, foundInvalid := false, false
 	for _, n := range r.Notes {
-		if strings.Contains(n.Chemin, "\\") {
-			t.Fatalf("path: %s", n.Chemin)
+		if strings.Contains(n.Path, "\\") {
+			t.Fatalf("path: %s", n.Path)
 		}
-		raw, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(n.Chemin)))
+		raw, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(n.Path)))
 		if err != nil {
 			t.Fatal(err)
 		}
 		if n.Hash != fmt.Sprintf("%x", sha256.Sum256(raw)) {
 			t.Fatal("incorrect raw hash")
 		}
-		single, err := LireNote(root, n.Chemin)
+		single, err := ReadNote(root, n.Path)
 		if err != nil || !reflect.DeepEqual(n, single) {
-			t.Fatalf("LireNote mismatch: %v", err)
+			t.Fatalf("ReadNote mismatch: %v", err)
 		}
-		switch n.Titre {
-		case "Échantillonnage":
+		switch n.Title {
+		case "Naïve":
 			foundOrphan = true
-		case "Brouillon":
+		case "Draft":
 			foundInvalid = true
-			if n.Type != "" || n.Maj != "" || !strings.HasPrefix(n.Contenu, "# Brouillon") {
+			if n.Type != "" || n.Updated != "" || !strings.HasPrefix(n.Content, "# Draft") {
 				t.Fatalf("invalid YAML: %#v", n)
 			}
 		case "Atlas":
-			links := []string{"Atlas - Resume", "Atlas - Detaille", "2026-10-20 - Atlas - import initial", "Cartographie", "Note absente", "Note"}
-			if !reflect.DeepEqual(n.Liens, links) || n.Dossier != "Projets" {
+			links := []string{"Atlas - Summary", "Atlas - Detail", "2026-10-20 - Atlas - initial import", "Mapping", "Missing note", "Note"}
+			if !reflect.DeepEqual(n.Links, links) || n.Folder != "Projects" {
 				t.Fatalf("Atlas: %#v", n)
 			}
 		}
@@ -72,60 +72,60 @@ func TestLireFixture(t *testing.T) {
 	}
 }
 
-func TestLiens(t *testing.T) {
-	body := "[[ Dossier/Titre.md#section|alias ]] [[Titre]] ![[image.png]] ![[Sous/Note.md]] [[Fichier.pdf]]\n" +
+func TestLinks(t *testing.T) {
+	body := "[[ Folder/Title.md#section|alias ]] [[Title]] ![[image.png]] ![[Sub/Note.md]] [[File.pdf]]\n" +
 		"`[[inline]]` ``[[double]] ` code`` [[Visible]]\n```md\n[[fenced]]\n````\n" +
 		"~~~\n[[tilde]]\n~~~\n`multiline\n[[hidden]]` [[Final]] \\[[escaped]]"
-	want := []string{"Titre", "Note", "Visible", "Final"}
-	if got := liens(body); !reflect.DeepEqual(got, want) {
+	want := []string{"Title", "Note", "Visible", "Final"}
+	if got := links(body); !reflect.DeepEqual(got, want) {
 		t.Fatalf("got %q, want %q", got, want)
 	}
 }
 
 func TestJournal(t *testing.T) {
-	body := "# Journal\r\n- 2026-10-20 - [[IA/Claude Code|Claude]] - texte [[Projet]] - suite  \r\n" +
-		"- 2026-02-30 - [[IA]] - invalide\n- autre ligne\n"
-	want := []model.EntreeJournal{{Date: "2026-10-20", IA: "Claude Code", Texte: "texte [[Projet]] - suite  "}}
+	body := "# Journal\r\n- 2026-10-20 - [[AI/Claude Code|Claude]] - text [[Project]] - more  \r\n" +
+		"- 2026-02-30 - [[AI]] - invalid\n- other line\n"
+	want := []model.JournalEntry{{Date: "2026-10-20", AI: "Claude Code", Text: "text [[Project]] - more  "}}
 	if got := journal(body); !reflect.DeepEqual(got, want) {
 		t.Fatalf("got %#v", got)
 	}
 }
 
-func TestLireNoteBOMAndLists(t *testing.T) {
+func TestReadNoteBOMAndLists(t *testing.T) {
 	root := t.TempDir()
 	if err := os.Mkdir(filepath.Join(root, "Sessions"), 0700); err != nil {
 		t.Fatal(err)
 	}
-	raw := "\ufeff---\r\ntype: session\r\ndate: 2026-10-26\r\nprojet: ['[[Dossier/Atlas|A]]', '[[Autre]]']\r\nia: ['[[Claude Code|Claude]]']\r\n---\r\n# Corps\r\n[[Atlas]]\r\n"
+	raw := "\ufeff---\r\ntype: session\r\ndate: 2026-10-26\r\nproject: ['[[Folder/Atlas|A]]', '[[Other]]']\r\nai: ['[[Claude Code|Claude]]']\r\n---\r\n# Body\r\n[[Atlas]]\r\n"
 	file := filepath.Join(root, "Sessions", "test.md")
 	if err := os.WriteFile(file, []byte(raw), 0600); err != nil {
 		t.Fatal(err)
 	}
-	r, err := Lire(root)
+	r, err := Read(root)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(r.Sessions) != 1 || r.Sessions[0].Projet != "Atlas" || r.Sessions[0].IA != "Claude Code" || r.Notes[0].Contenu != "# Corps\r\n[[Atlas]]\r\n" {
+	if len(r.Sessions) != 1 || r.Sessions[0].Project != "Atlas" || r.Sessions[0].AI != "Claude Code" || r.Notes[0].Content != "# Body\r\n[[Atlas]]\r\n" {
 		t.Fatalf("result: %#v", r)
 	}
-	if _, err := LireNote(root, file); err != nil {
+	if _, err := ReadNote(root, file); err != nil {
 		t.Fatal(err)
 	}
 	for _, name := range []string{"../outside.md", "other.txt"} {
-		if _, err := LireNote(root, name); err == nil {
+		if _, err := ReadNote(root, name); err == nil {
 			t.Fatalf("accepted %s", name)
 		}
 	}
 }
 
 func TestFrontMatter(t *testing.T) {
-	for _, text := range []string{"", "# Sans YAML\r\n", "---\ntype: projet\n"} {
+	for _, text := range []string{"", "# No YAML\r\n", "---\ntype: project\n"} {
 		body, meta := frontMatter(text)
 		if body != text || len(meta) != 0 {
 			t.Fatalf("unexpected parse of %q", text)
 		}
 	}
-	for _, header := range []string{"type: [broken", "- list", "type: projet\ntype: session"} {
+	for _, header := range []string{"type: [broken", "- list", "type: project\ntype: session"} {
 		body, meta := frontMatter("---\n" + header + "\n---\nbody")
 		if body != "body" || len(meta) != 0 {
 			t.Fatalf("invalid YAML not tolerated: %q", header)
@@ -139,7 +139,7 @@ func TestAbsolutePath(t *testing.T) {
 			t.Fatalf("rejected %q", value)
 		}
 	}
-	for _, value := range []string{"", "aucun (pas encore créé)", "C:relative", "relative/path"} {
+	for _, value := range []string{"", "none (not created yet)", "C:relative", "relative/path"} {
 		if absolutePath(value) {
 			t.Fatalf("accepted %q", value)
 		}
@@ -148,7 +148,7 @@ func TestAbsolutePath(t *testing.T) {
 
 func TestHiddenDirectoriesAndNonMarkdown(t *testing.T) {
 	root := t.TempDir()
-	for _, dir := range []string{".obsidian", ".cerveau", ".trash", "Visible/.hidden"} {
+	for _, dir := range []string{".obsidian", ".drafts", ".trash", "Visible/.hidden"} {
 		if err := os.MkdirAll(filepath.Join(root, dir), 0700); err != nil {
 			t.Fatal(err)
 		}
@@ -162,26 +162,26 @@ func TestHiddenDirectoriesAndNonMarkdown(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(root, "ignore.txt"), []byte("ignored"), 0600); err != nil {
 		t.Fatal(err)
 	}
-	r, err := Lire(root)
-	if err != nil || len(r.Notes) != 1 || r.Notes[0].Titre != "keep" {
+	r, err := Read(root)
+	if err != nil || len(r.Notes) != 1 || r.Notes[0].Title != "keep" {
 		t.Fatalf("result: %#v, %v", r, err)
 	}
-	if _, err := Lire(filepath.Join(root, "missing")); err == nil {
+	if _, err := Read(filepath.Join(root, "missing")); err == nil {
 		t.Fatal("missing root accepted")
 	}
 }
 
-func TestShaEnTete(t *testing.T) {
-	for entree, attendu := range map[string]string{
-		"0df64eb2 (ComfyUI officiel, non modifié)": "0df64eb2",
-		"E5843FE":   "e5843fe",
-		"aucun":     "",
-		"abc":       "",
-		"deadbeefz": "",
-		" 0f085ad ": "0f085ad",
+func TestLeadingSHA(t *testing.T) {
+	for input, want := range map[string]string{
+		"0df64eb2 (official, unmodified)": "0df64eb2",
+		"E5843FE":                         "e5843fe",
+		"none":                            "",
+		"abc":                             "",
+		"deadbeefz":                       "",
+		" 0f085ad ":                       "0f085ad",
 	} {
-		if got := shaEnTete(entree); got != attendu {
-			t.Errorf("shaEnTete(%q) = %q, attendu %q", entree, got, attendu)
+		if got := leadingSHA(input); got != want {
+			t.Errorf("leadingSHA(%q) = %q, want %q", input, got, want)
 		}
 	}
 }

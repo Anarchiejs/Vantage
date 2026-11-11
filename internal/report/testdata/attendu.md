@@ -1,42 +1,42 @@
 ---
-type: statistiques
-genere_par: observatoire
-genere_le: 2026-03-21
+type: statistics
+generated_by: observatoire
+generated_on: 2026-03-21
 ---
-# Statistiques — semaine du 2026-03-16 au 2026-03-21
+# Statistics — week of 2026-03-16 to 2026-03-21
 
-Note générée automatiquement par [[Observatoire]] : ne pas modifier à la main, elle est réécrite chaque semaine.
-Retour au centre : [[Statistics]]
+Note generated automatically by [[Observatoire]]: do not edit it by hand; it is rewritten every week.
+Back to the hub: [[Statistics]]
 
-## Activité
+## Activity
 
-| | Cette semaine | Semaine précédente |
+| | This week | Previous week |
 |---|---:|---:|
 | Commits | 4 | 4 |
-| Lignes ajoutées | 12 | 12 |
-| Lignes supprimées | 0 | 0 |
+| Lines added | 12 | 12 |
+| Lines deleted | 0 | 0 |
 | Sessions | 0 | 0 |
-| Projets actifs | 2 | 2 |
+| Active projects | 2 | 2 |
 
-## Projets actifs
+## Active projects
 
-- [[Atlas]] — 9 commits, dernier commit le 2026-03-20
-- [[Boussole]] — 9 commits, dernier commit le 2026-03-20
+- [[Atlas]] — 9 commits, last commit on 2026-03-20
+- [[Compass]] — 9 commits, last commit on 2026-03-20
 
-## Projets qui dorment
+## Dormant projects
 
-Aucun.
+None.
 
-## Fiches périmées
+## Stale cards
 
-- [[Atlas]] — vérifiée à a1b2c3d, commit vérifié introuvable dans le dépôt
-- [[Boussole]] — vérifiée à deadbeef, commit vérifié introuvable dans le dépôt
+- [[Atlas]] — verified at a1b2c3d, verified commit not found in the repository
+- [[Compass]] — verified at deadbeef, verified commit not found in the repository
 
-## IA de la semaine
+## AI this week
 
-Aucune.
+None.
 
-## Jours les plus actifs
+## Most active days
 
 - 2026-03-17 — 2 commits
 - 2026-03-20 — 2 commits

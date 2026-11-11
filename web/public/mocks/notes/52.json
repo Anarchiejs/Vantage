@@ -1,23 +1,23 @@
 {
   "id": 52,
-  "titre": "2026-10-26 - Observatoire",
-  "dossier": "Sessions",
-  "degre": 2,
-  "chemin": "Sessions/2026-10-26 - Observatoire.md",
-  "maj": "2026-10-26",
-  "contenu": "# 2026-10-26 - Observatoire\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Observatoire]].\nLié à [[Codex]].",
-  "voisins": [
+  "title": "2026-10-26 - Observatoire",
+  "folder": "Sessions",
+  "degree": 2,
+  "path": "Sessions/2026-10-26 - Observatoire.md",
+  "updated": "2026-10-26",
+  "content": "# 2026-10-26 - Observatoire\n\nDemo note from the Observatoire vault.\n\nLinked to [[Observatoire]].\nLinked to [[Codex]].",
+  "neighbors": [
     {
       "id": 1,
-      "titre": "Observatoire",
-      "dossier": "Projets",
-      "degre": 7
+      "title": "Observatoire",
+      "folder": "Projects",
+      "degree": 7
     },
     {
       "id": 41,
-      "titre": "Codex",
-      "dossier": "IA",
-      "degre": 4
+      "title": "Codex",
+      "folder": "IA",
+      "degree": 4
     }
   ]
 }

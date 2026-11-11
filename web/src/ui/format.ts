@@ -1,24 +1,24 @@
-const nf = new Intl.NumberFormat('fr-FR')
-const df = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
-const rf = new Intl.RelativeTimeFormat('fr-FR', { numeric: 'auto' })
+const nf = new Intl.NumberFormat('en-US')
+const df = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'short', year: 'numeric' })
+const rf = new Intl.RelativeTimeFormat('en-US', { numeric: 'auto' })
 
-export const nombre = (n: number) => nf.format(n)
+export const number = (n: number) => nf.format(n)
 
-/** « 26 oct. 2026 » depuis « 2026-10-26 » ou un instant ISO. */
-export function date(s: string | null | undefined): string {
-  if (!s) return '—'
-  const d = new Date(s.length === 10 ? `${s}T12:00:00` : s)
-  return Number.isNaN(d.getTime()) ? s : df.format(d)
+/** "Oct 26, 2026" from "2026-10-26" or an ISO instant. */
+export function date(value: string | null | undefined): string {
+  if (!value) return '—'
+  const parsed = new Date(value.length === 10 ? `${value}T12:00:00` : value)
+  return Number.isNaN(parsed.getTime()) ? value : df.format(parsed)
 }
 
-/** « il y a 3 jours ». */
-export function depuis(s: string | null | undefined, maintenant = new Date()): string {
-  if (!s) return 'jamais'
-  const instant = new Date(s.length === 10 ? `${s}T12:00:00` : s)
-  if (Number.isNaN(instant.getTime())) return 'date inconnue'
-  const jour = (d: Date) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())
-  const jours = Math.round((jour(instant) - jour(maintenant)) / 86_400_000)
-  return rf.format(jours, 'day')
+/** "3 days ago". */
+export function ago(value: string | null | undefined, now = new Date()): string {
+  if (!value) return 'never'
+  const instant = new Date(value.length === 10 ? `${value}T12:00:00` : value)
+  if (Number.isNaN(instant.getTime())) return 'unknown date'
+  const day = (d: Date) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())
+  const days = Math.round((day(instant) - day(now)) / 86_400_000)
+  return rf.format(days, 'day')
 }
 
-export const shaCourt = (sha: string | null | undefined) => (sha ? sha.slice(0, 7) : '—')
+export const shortSha = (sha: string | null | undefined) => (sha ? sha.slice(0, 7) : '—')

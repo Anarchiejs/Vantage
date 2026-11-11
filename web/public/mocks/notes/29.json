@@ -1,17 +1,17 @@
 {
   "id": 29,
-  "titre": "Rust",
-  "dossier": "Technos",
-  "degre": 1,
-  "chemin": "Technos/Rust.md",
-  "maj": "2026-10-26",
-  "contenu": "# Rust\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Quartz]].",
-  "voisins": [
+  "title": "Rust",
+  "folder": "Technologies",
+  "degree": 1,
+  "path": "Technologies/Rust.md",
+  "updated": "2026-10-26",
+  "content": "# Rust\n\nDemo note from the Observatoire vault.\n\nLinked to [[Quartz]].",
+  "neighbors": [
     {
       "id": 8,
-      "titre": "Quartz",
-      "dossier": "Projets",
-      "degre": 2
+      "title": "Quartz",
+      "folder": "Projects",
+      "degree": 2
     }
   ]
 }

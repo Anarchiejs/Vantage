@@ -15,20 +15,20 @@ import (
 	"github.com/boyter/scc/v3/processor"
 )
 
-// initScc charge une seule fois la base des langages de scc (globale au package processor).
-var initScc sync.Once
+// initSCC loads scc's language database once (global to the processor package).
+var initSCC sync.Once
 
-// Mesurer compte les lignes par langage des fichiers suivis par Git dans depot.
-// Les fichiers d'environnement sont toujours exclus, même s'ils sont suivis.
-func Mesurer(ctx context.Context, depot string) ([]model.MesureLangage, error) {
-	initScc.Do(processor.ProcessConstants)
-	cmd := exec.CommandContext(ctx, "git", "-C", depot, "ls-files", "-z")
+// Measure counts lines per language for files tracked by Git in repo.
+// Environment files are always excluded, even when they are tracked.
+func Measure(ctx context.Context, repo string) ([]model.LanguageStat, error) {
+	initSCC.Do(processor.ProcessConstants)
+	cmd := exec.CommandContext(ctx, "git", "-C", repo, "ls-files", "-z")
 	out, err := cmd.Output()
 	if err != nil {
-		return nil, fmt.Errorf("git ls-files dans %q: %w", depot, err)
+		return nil, fmt.Errorf("git ls-files in %q: %w", repo, err)
 	}
 
-	stats := make(map[string]*model.MesureLangage)
+	stats := make(map[string]*model.LanguageStat)
 	for _, rawPath := range bytes.Split(out, []byte{0}) {
 		if len(rawPath) == 0 {
 			continue
@@ -39,15 +39,15 @@ func Mesurer(ctx context.Context, depot string) ([]model.MesureLangage, error) {
 			continue
 		}
 
-		languages, _ := processor.DetectLanguage(base)
-		if len(languages) == 0 || languages[0] == "" {
+		detected, _ := processor.DetectLanguage(base)
+		if len(detected) == 0 || detected[0] == "" {
 			continue
 		}
-		language := languages[0]
-		path := filepath.Join(depot, rel)
+		language := detected[0]
+		path := filepath.Join(repo, rel)
 		content, err := os.ReadFile(path)
 		if err != nil {
-			return nil, fmt.Errorf("lire le fichier suivi %q: %w", string(rawPath), err)
+			return nil, fmt.Errorf("read tracked file %q: %w", string(rawPath), err)
 		}
 		job := &processor.FileJob{Language: language, Filename: base, Location: path, Content: content, Bytes: int64(len(content))}
 		processor.LoadLanguageFeature(language)
@@ -55,23 +55,23 @@ func Mesurer(ctx context.Context, depot string) ([]model.MesureLangage, error) {
 
 		measurement := stats[language]
 		if measurement == nil {
-			measurement = &model.MesureLangage{Langage: language}
+			measurement = &model.LanguageStat{Language: language}
 			stats[language] = measurement
 		}
-		measurement.Fichiers++
-		measurement.LignesCode += job.Code
-		measurement.LignesCommentaires += job.Comment
+		measurement.Files++
+		measurement.CodeLines += job.Code
+		measurement.CommentLines += job.Comment
 	}
 
-	result := make([]model.MesureLangage, 0, len(stats))
+	result := make([]model.LanguageStat, 0, len(stats))
 	for _, measurement := range stats {
 		result = append(result, *measurement)
 	}
 	sort.Slice(result, func(i, j int) bool {
-		if result[i].LignesCode == result[j].LignesCode {
-			return result[i].Langage < result[j].Langage
+		if result[i].CodeLines == result[j].CodeLines {
+			return result[i].Language < result[j].Language
 		}
-		return result[i].LignesCode > result[j].LignesCode
+		return result[i].CodeLines > result[j].CodeLines
 	})
 	return result, nil
 }
