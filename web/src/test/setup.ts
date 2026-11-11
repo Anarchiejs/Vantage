@@ -1,8 +1,8 @@
-// ECharts a besoin d'un canvas, absent de jsdom : les tests vérifient les options passées, pas le rendu.
+// ECharts needs a canvas, which jsdom does not provide: tests check the options passed, not the drawing.
 HTMLCanvasElement.prototype.getContext = (() => null) as never
-class ResizeObserverFactice {
+class FakeResizeObserver {
   observe() {}
   unobserve() {}
   disconnect() {}
 }
-globalThis.ResizeObserver ??= ResizeObserverFactice as never
+globalThis.ResizeObserver ??= FakeResizeObserver as never

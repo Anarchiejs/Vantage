@@ -1,41 +1,41 @@
 {
   "id": 22,
-  "titre": "TypeScript",
-  "dossier": "Technos",
-  "degre": 5,
-  "chemin": "Technos/TypeScript.md",
-  "maj": "2026-10-26",
-  "contenu": "# TypeScript\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Observatoire]].\nLié à [[Compass]].\nLié à [[Northwind]].\nLié à [[Lantern]].\nLié à [[Waypoint]].",
-  "voisins": [
+  "title": "TypeScript",
+  "folder": "Technologies",
+  "degree": 5,
+  "path": "Technologies/TypeScript.md",
+  "updated": "2026-10-26",
+  "content": "# TypeScript\n\nDemo note from the Observatoire vault.\n\nLinked to [[Observatoire]].\nLinked to [[Compass]].\nLinked to [[Northwind]].\nLinked to [[Lantern]].\nLinked to [[Waypoint]].",
+  "neighbors": [
     {
       "id": 1,
-      "titre": "Observatoire",
-      "dossier": "Projets",
-      "degre": 7
+      "title": "Observatoire",
+      "folder": "Projects",
+      "degree": 7
     },
     {
       "id": 2,
-      "titre": "Compass",
-      "dossier": "Projets",
-      "degre": 4
+      "title": "Compass",
+      "folder": "Projects",
+      "degree": 4
     },
     {
       "id": 4,
-      "titre": "Northwind",
-      "dossier": "Projets",
-      "degre": 3
+      "title": "Northwind",
+      "folder": "Projects",
+      "degree": 3
     },
     {
       "id": 5,
-      "titre": "Lantern",
-      "dossier": "Projets",
-      "degre": 2
+      "title": "Lantern",
+      "folder": "Projects",
+      "degree": 2
     },
     {
       "id": 10,
-      "titre": "Waypoint",
-      "dossier": "Projets",
-      "degre": 3
+      "title": "Waypoint",
+      "folder": "Projects",
+      "degree": 3
     }
   ]
 }

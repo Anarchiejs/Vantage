@@ -1,25 +1,25 @@
 import { test as base, expect } from '@playwright/test'
 
-/** Échoue le parcours si le navigateur signale une erreur pendant le test. */
+/** Fail the flow if the browser reports an error during the test. */
 export const test = base.extend({
   page: async ({ page }, use, info) => {
-    const erreurs: string[] = []
-    page.on('pageerror', (err) => erreurs.push(`exception: ${err.message}`))
+    const errors: string[] = []
+    page.on('pageerror', (err) => errors.push(`exception: ${err.message}`))
     page.on('console', (msg) => {
       if (msg.type() !== 'error') return
-      const texte = msg.text()
-      // Chromium journalise tout seul le 403 renvoyé pour ATTACH. Le parcours vérifie
-      // le message affiché ; ce n'est pas un console.error de l'application.
+      const text = msg.text()
+      // Chromium logs the 403 returned for ATTACH on its own. The flow checks
+      // the message shown in the page; that is not an application console.error.
       if (
         info.title.includes('ATTACH') &&
-        texte.startsWith('Failed to load resource: the server responded with a status of 403')
+        text.startsWith('Failed to load resource: the server responded with a status of 403')
       ) {
         return
       }
-      erreurs.push(texte)
+      errors.push(text)
     })
     await use(page)
-    expect(erreurs, `Console du navigateur (${info.title}):\n${erreurs.join('\n')}`).toEqual([])
+    expect(errors, `Browser console (${info.title}):\n${errors.join('\n')}`).toEqual([])
   },
 })
 

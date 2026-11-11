@@ -24,395 +24,395 @@ func New(db DBTX) *Queries {
 func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	q := Queries{db: db}
 	var err error
-	if q.activiteIAStmt, err = db.PrepareContext(ctx, activiteIA); err != nil {
-		return nil, fmt.Errorf("error preparing query ActiviteIA: %w", err)
+	if q.aIActivityStmt, err = db.PrepareContext(ctx, aIActivity); err != nil {
+		return nil, fmt.Errorf("error preparing query AIActivity: %w", err)
 	}
-	if q.calendrierStmt, err = db.PrepareContext(ctx, calendrier); err != nil {
-		return nil, fmt.Errorf("error preparing query Calendrier: %w", err)
+	if q.aISessionsByMonthStmt, err = db.PrepareContext(ctx, aISessionsByMonth); err != nil {
+		return nil, fmt.Errorf("error preparing query AISessionsByMonth: %w", err)
 	}
-	if q.chiffresPeriodeStmt, err = db.PrepareContext(ctx, chiffresPeriode); err != nil {
-		return nil, fmt.Errorf("error preparing query ChiffresPeriode: %w", err)
+	if q.aISessionsInPeriodStmt, err = db.PrepareContext(ctx, aISessionsInPeriod); err != nil {
+		return nil, fmt.Errorf("error preparing query AISessionsInPeriod: %w", err)
 	}
-	if q.depotsDuProjetStmt, err = db.PrepareContext(ctx, depotsDuProjet); err != nil {
-		return nil, fmt.Errorf("error preparing query DepotsDuProjet: %w", err)
+	if q.activeProjectsStmt, err = db.PrepareContext(ctx, activeProjects); err != nil {
+		return nil, fmt.Errorf("error preparing query ActiveProjects: %w", err)
 	}
-	if q.dernierShaDepotStmt, err = db.PrepareContext(ctx, dernierShaDepot); err != nil {
-		return nil, fmt.Errorf("error preparing query DernierShaDepot: %w", err)
+	if q.brokenLinksStmt, err = db.PrepareContext(ctx, brokenLinks); err != nil {
+		return nil, fmt.Errorf("error preparing query BrokenLinks: %w", err)
 	}
-	if q.fichesPerimeesStmt, err = db.PrepareContext(ctx, fichesPerimees); err != nil {
-		return nil, fmt.Errorf("error preparing query FichesPerimees: %w", err)
+	if q.calendarStmt, err = db.PrepareContext(ctx, calendar); err != nil {
+		return nil, fmt.Errorf("error preparing query Calendar: %w", err)
 	}
-	if q.friseStmt, err = db.PrepareContext(ctx, frise); err != nil {
-		return nil, fmt.Errorf("error preparing query Frise: %w", err)
+	if q.deleteNoteStmt, err = db.PrepareContext(ctx, deleteNote); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteNote: %w", err)
 	}
-	if q.hashNoteStmt, err = db.PrepareContext(ctx, hashNote); err != nil {
-		return nil, fmt.Errorf("error preparing query HashNote: %w", err)
+	if q.deleteNoteLinksStmt, err = db.PrepareContext(ctx, deleteNoteLinks); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteNoteLinks: %w", err)
 	}
-	if q.iAduProjetStmt, err = db.PrepareContext(ctx, iAduProjet); err != nil {
-		return nil, fmt.Errorf("error preparing query IAduProjet: %w", err)
+	if q.deleteRepositoryCommitSearchStmt, err = db.PrepareContext(ctx, deleteRepositoryCommitSearch); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteRepositoryCommitSearch: %w", err)
 	}
-	if q.insererCommitStmt, err = db.PrepareContext(ctx, insererCommit); err != nil {
-		return nil, fmt.Errorf("error preparing query InsererCommit: %w", err)
+	if q.deleteRepositoryCommitsStmt, err = db.PrepareContext(ctx, deleteRepositoryCommits); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteRepositoryCommits: %w", err)
 	}
-	if q.insererFichierModifieStmt, err = db.PrepareContext(ctx, insererFichierModifie); err != nil {
-		return nil, fmt.Errorf("error preparing query InsererFichierModifie: %w", err)
+	if q.deleteSearchStmt, err = db.PrepareContext(ctx, deleteSearch); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteSearch: %w", err)
 	}
-	if q.insererJournalStmt, err = db.PrepareContext(ctx, insererJournal); err != nil {
-		return nil, fmt.Errorf("error preparing query InsererJournal: %w", err)
+	if q.dormantProjectsStmt, err = db.PrepareContext(ctx, dormantProjects); err != nil {
+		return nil, fmt.Errorf("error preparing query DormantProjects: %w", err)
 	}
-	if q.insererLienStmt, err = db.PrepareContext(ctx, insererLien); err != nil {
-		return nil, fmt.Errorf("error preparing query InsererLien: %w", err)
+	if q.graphLinksStmt, err = db.PrepareContext(ctx, graphLinks); err != nil {
+		return nil, fmt.Errorf("error preparing query GraphLinks: %w", err)
 	}
-	if q.insererMesureLangageStmt, err = db.PrepareContext(ctx, insererMesureLangage); err != nil {
-		return nil, fmt.Errorf("error preparing query InsererMesureLangage: %w", err)
+	if q.graphNodesStmt, err = db.PrepareContext(ctx, graphNodes); err != nil {
+		return nil, fmt.Errorf("error preparing query GraphNodes: %w", err)
 	}
-	if q.insererRechercheStmt, err = db.PrepareContext(ctx, insererRecherche); err != nil {
-		return nil, fmt.Errorf("error preparing query InsererRecherche: %w", err)
+	if q.hotspotsStmt, err = db.PrepareContext(ctx, hotspots); err != nil {
+		return nil, fmt.Errorf("error preparing query Hotspots: %w", err)
 	}
-	if q.langagesDerniereMesureStmt, err = db.PrepareContext(ctx, langagesDerniereMesure); err != nil {
-		return nil, fmt.Errorf("error preparing query LangagesDerniereMesure: %w", err)
+	if q.insertChangedFileStmt, err = db.PrepareContext(ctx, insertChangedFile); err != nil {
+		return nil, fmt.Errorf("error preparing query InsertChangedFile: %w", err)
 	}
-	if q.langagesEvolutionStmt, err = db.PrepareContext(ctx, langagesEvolution); err != nil {
-		return nil, fmt.Errorf("error preparing query LangagesEvolution: %w", err)
+	if q.insertCommitStmt, err = db.PrepareContext(ctx, insertCommit); err != nil {
+		return nil, fmt.Errorf("error preparing query InsertCommit: %w", err)
 	}
-	if q.liensCassesStmt, err = db.PrepareContext(ctx, liensCasses); err != nil {
-		return nil, fmt.Errorf("error preparing query LiensCasses: %w", err)
+	if q.insertJournalStmt, err = db.PrepareContext(ctx, insertJournal); err != nil {
+		return nil, fmt.Errorf("error preparing query InsertJournal: %w", err)
 	}
-	if q.liensGrapheStmt, err = db.PrepareContext(ctx, liensGraphe); err != nil {
-		return nil, fmt.Errorf("error preparing query LiensGraphe: %w", err)
+	if q.insertLanguageStatStmt, err = db.PrepareContext(ctx, insertLanguageStat); err != nil {
+		return nil, fmt.Errorf("error preparing query InsertLanguageStat: %w", err)
 	}
-	if q.lierProjetTechnoStmt, err = db.PrepareContext(ctx, lierProjetTechno); err != nil {
-		return nil, fmt.Errorf("error preparing query LierProjetTechno: %w", err)
+	if q.insertLinkStmt, err = db.PrepareContext(ctx, insertLink); err != nil {
+		return nil, fmt.Errorf("error preparing query InsertLink: %w", err)
 	}
-	if q.listerNotesStmt, err = db.PrepareContext(ctx, listerNotes); err != nil {
-		return nil, fmt.Errorf("error preparing query ListerNotes: %w", err)
+	if q.insertSearchStmt, err = db.PrepareContext(ctx, insertSearch); err != nil {
+		return nil, fmt.Errorf("error preparing query InsertSearch: %w", err)
 	}
-	if q.listerProjetsStmt, err = db.PrepareContext(ctx, listerProjets); err != nil {
-		return nil, fmt.Errorf("error preparing query ListerProjets: %w", err)
+	if q.languageEvolutionStmt, err = db.PrepareContext(ctx, languageEvolution); err != nil {
+		return nil, fmt.Errorf("error preparing query LanguageEvolution: %w", err)
 	}
-	if q.marquerDepotImporteStmt, err = db.PrepareContext(ctx, marquerDepotImporte); err != nil {
-		return nil, fmt.Errorf("error preparing query MarquerDepotImporte: %w", err)
+	if q.lastRepositorySHAStmt, err = db.PrepareContext(ctx, lastRepositorySHA); err != nil {
+		return nil, fmt.Errorf("error preparing query LastRepositorySHA: %w", err)
 	}
-	if q.noeudsGrapheStmt, err = db.PrepareContext(ctx, noeudsGraphe); err != nil {
-		return nil, fmt.Errorf("error preparing query NoeudsGraphe: %w", err)
+	if q.latestLanguagesStmt, err = db.PrepareContext(ctx, latestLanguages); err != nil {
+		return nil, fmt.Errorf("error preparing query LatestLanguages: %w", err)
 	}
-	if q.noteParIDStmt, err = db.PrepareContext(ctx, noteParID); err != nil {
-		return nil, fmt.Errorf("error preparing query NoteParID: %w", err)
+	if q.linkProjectTechnologyStmt, err = db.PrepareContext(ctx, linkProjectTechnology); err != nil {
+		return nil, fmt.Errorf("error preparing query LinkProjectTechnology: %w", err)
 	}
-	if q.notesDuProjetStmt, err = db.PrepareContext(ctx, notesDuProjet); err != nil {
-		return nil, fmt.Errorf("error preparing query NotesDuProjet: %w", err)
+	if q.listNotesStmt, err = db.PrepareContext(ctx, listNotes); err != nil {
+		return nil, fmt.Errorf("error preparing query ListNotes: %w", err)
 	}
-	if q.plusCourtCheminStmt, err = db.PrepareContext(ctx, plusCourtChemin); err != nil {
-		return nil, fmt.Errorf("error preparing query PlusCourtChemin: %w", err)
+	if q.listProjectsStmt, err = db.PrepareContext(ctx, listProjects); err != nil {
+		return nil, fmt.Errorf("error preparing query ListProjects: %w", err)
 	}
-	if q.pointsChaudsStmt, err = db.PrepareContext(ctx, pointsChauds); err != nil {
-		return nil, fmt.Errorf("error preparing query PointsChauds: %w", err)
+	if q.markRepositoryImportedStmt, err = db.PrepareContext(ctx, markRepositoryImported); err != nil {
+		return nil, fmt.Errorf("error preparing query MarkRepositoryImported: %w", err)
 	}
-	if q.projetParIDStmt, err = db.PrepareContext(ctx, projetParID); err != nil {
-		return nil, fmt.Errorf("error preparing query ProjetParID: %w", err)
+	if q.neighborsStmt, err = db.PrepareContext(ctx, neighbors); err != nil {
+		return nil, fmt.Errorf("error preparing query Neighbors: %w", err)
 	}
-	if q.projetsActifsStmt, err = db.PrepareContext(ctx, projetsActifs); err != nil {
-		return nil, fmt.Errorf("error preparing query ProjetsActifs: %w", err)
+	if q.noteByIDStmt, err = db.PrepareContext(ctx, noteByID); err != nil {
+		return nil, fmt.Errorf("error preparing query NoteByID: %w", err)
 	}
-	if q.projetsDormantsStmt, err = db.PrepareContext(ctx, projetsDormants); err != nil {
-		return nil, fmt.Errorf("error preparing query ProjetsDormants: %w", err)
+	if q.noteHashStmt, err = db.PrepareContext(ctx, noteHash); err != nil {
+		return nil, fmt.Errorf("error preparing query NoteHash: %w", err)
 	}
-	if q.projetsParIAStmt, err = db.PrepareContext(ctx, projetsParIA); err != nil {
-		return nil, fmt.Errorf("error preparing query ProjetsParIA: %w", err)
+	if q.periodStatsStmt, err = db.PrepareContext(ctx, periodStats); err != nil {
+		return nil, fmt.Errorf("error preparing query PeriodStats: %w", err)
 	}
-	if q.rechercherStmt, err = db.PrepareContext(ctx, rechercher); err != nil {
-		return nil, fmt.Errorf("error preparing query Rechercher: %w", err)
+	if q.projectAIStmt, err = db.PrepareContext(ctx, projectAI); err != nil {
+		return nil, fmt.Errorf("error preparing query ProjectAI: %w", err)
 	}
-	if q.resoudreLiensStmt, err = db.PrepareContext(ctx, resoudreLiens); err != nil {
-		return nil, fmt.Errorf("error preparing query ResoudreLiens: %w", err)
+	if q.projectByIDStmt, err = db.PrepareContext(ctx, projectByID); err != nil {
+		return nil, fmt.Errorf("error preparing query ProjectByID: %w", err)
 	}
-	if q.sankeyLiensStmt, err = db.PrepareContext(ctx, sankeyLiens); err != nil {
-		return nil, fmt.Errorf("error preparing query SankeyLiens: %w", err)
+	if q.projectNotesStmt, err = db.PrepareContext(ctx, projectNotes); err != nil {
+		return nil, fmt.Errorf("error preparing query ProjectNotes: %w", err)
 	}
-	if q.sessionsIAParMoisStmt, err = db.PrepareContext(ctx, sessionsIAParMois); err != nil {
-		return nil, fmt.Errorf("error preparing query SessionsIAParMois: %w", err)
+	if q.projectRepositoriesStmt, err = db.PrepareContext(ctx, projectRepositories); err != nil {
+		return nil, fmt.Errorf("error preparing query ProjectRepositories: %w", err)
 	}
-	if q.sessionsIAPeriodeStmt, err = db.PrepareContext(ctx, sessionsIAPeriode); err != nil {
-		return nil, fmt.Errorf("error preparing query SessionsIAPeriode: %w", err)
+	if q.projectTechnologiesStmt, err = db.PrepareContext(ctx, projectTechnologies); err != nil {
+		return nil, fmt.Errorf("error preparing query ProjectTechnologies: %w", err)
 	}
-	if q.supprimerCommitsDepotStmt, err = db.PrepareContext(ctx, supprimerCommitsDepot); err != nil {
-		return nil, fmt.Errorf("error preparing query SupprimerCommitsDepot: %w", err)
+	if q.projectsByAIStmt, err = db.PrepareContext(ctx, projectsByAI); err != nil {
+		return nil, fmt.Errorf("error preparing query ProjectsByAI: %w", err)
 	}
-	if q.supprimerLiensDeNoteStmt, err = db.PrepareContext(ctx, supprimerLiensDeNote); err != nil {
-		return nil, fmt.Errorf("error preparing query SupprimerLiensDeNote: %w", err)
+	if q.resolveLinksStmt, err = db.PrepareContext(ctx, resolveLinks); err != nil {
+		return nil, fmt.Errorf("error preparing query ResolveLinks: %w", err)
 	}
-	if q.supprimerNoteStmt, err = db.PrepareContext(ctx, supprimerNote); err != nil {
-		return nil, fmt.Errorf("error preparing query SupprimerNote: %w", err)
+	if q.sankeyLinksStmt, err = db.PrepareContext(ctx, sankeyLinks); err != nil {
+		return nil, fmt.Errorf("error preparing query SankeyLinks: %w", err)
 	}
-	if q.supprimerRechercheStmt, err = db.PrepareContext(ctx, supprimerRecherche); err != nil {
-		return nil, fmt.Errorf("error preparing query SupprimerRecherche: %w", err)
+	if q.searchStmt, err = db.PrepareContext(ctx, search); err != nil {
+		return nil, fmt.Errorf("error preparing query Search: %w", err)
 	}
-	if q.supprimerRechercheCommitsDepotStmt, err = db.PrepareContext(ctx, supprimerRechercheCommitsDepot); err != nil {
-		return nil, fmt.Errorf("error preparing query SupprimerRechercheCommitsDepot: %w", err)
+	if q.shortestPathStmt, err = db.PrepareContext(ctx, shortestPath); err != nil {
+		return nil, fmt.Errorf("error preparing query ShortestPath: %w", err)
 	}
-	if q.technosDuProjetStmt, err = db.PrepareContext(ctx, technosDuProjet); err != nil {
-		return nil, fmt.Errorf("error preparing query TechnosDuProjet: %w", err)
+	if q.staleCardsStmt, err = db.PrepareContext(ctx, staleCards); err != nil {
+		return nil, fmt.Errorf("error preparing query StaleCards: %w", err)
 	}
-	if q.technosSansProjetStmt, err = db.PrepareContext(ctx, technosSansProjet); err != nil {
-		return nil, fmt.Errorf("error preparing query TechnosSansProjet: %w", err)
+	if q.technologyTrendStmt, err = db.PrepareContext(ctx, technologyTrend); err != nil {
+		return nil, fmt.Errorf("error preparing query TechnologyTrend: %w", err)
 	}
-	if q.tendanceTechnosStmt, err = db.PrepareContext(ctx, tendanceTechnos); err != nil {
-		return nil, fmt.Errorf("error preparing query TendanceTechnos: %w", err)
+	if q.timelineStmt, err = db.PrepareContext(ctx, timeline); err != nil {
+		return nil, fmt.Errorf("error preparing query Timeline: %w", err)
 	}
-	if q.upsertDepotStmt, err = db.PrepareContext(ctx, upsertDepot); err != nil {
-		return nil, fmt.Errorf("error preparing query UpsertDepot: %w", err)
+	if q.unassignedTechnologiesStmt, err = db.PrepareContext(ctx, unassignedTechnologies); err != nil {
+		return nil, fmt.Errorf("error preparing query UnassignedTechnologies: %w", err)
 	}
 	if q.upsertNoteStmt, err = db.PrepareContext(ctx, upsertNote); err != nil {
 		return nil, fmt.Errorf("error preparing query UpsertNote: %w", err)
 	}
-	if q.upsertProjetStmt, err = db.PrepareContext(ctx, upsertProjet); err != nil {
-		return nil, fmt.Errorf("error preparing query UpsertProjet: %w", err)
+	if q.upsertProjectStmt, err = db.PrepareContext(ctx, upsertProject); err != nil {
+		return nil, fmt.Errorf("error preparing query UpsertProject: %w", err)
+	}
+	if q.upsertRepositoryStmt, err = db.PrepareContext(ctx, upsertRepository); err != nil {
+		return nil, fmt.Errorf("error preparing query UpsertRepository: %w", err)
 	}
 	if q.upsertSessionStmt, err = db.PrepareContext(ctx, upsertSession); err != nil {
 		return nil, fmt.Errorf("error preparing query UpsertSession: %w", err)
 	}
-	if q.upsertTechnoStmt, err = db.PrepareContext(ctx, upsertTechno); err != nil {
-		return nil, fmt.Errorf("error preparing query UpsertTechno: %w", err)
+	if q.upsertTechnologyStmt, err = db.PrepareContext(ctx, upsertTechnology); err != nil {
+		return nil, fmt.Errorf("error preparing query UpsertTechnology: %w", err)
 	}
-	if q.voisinsStmt, err = db.PrepareContext(ctx, voisins); err != nil {
-		return nil, fmt.Errorf("error preparing query Voisins: %w", err)
-	}
-	if q.volumeHebdoStmt, err = db.PrepareContext(ctx, volumeHebdo); err != nil {
-		return nil, fmt.Errorf("error preparing query VolumeHebdo: %w", err)
+	if q.weeklyVolumeStmt, err = db.PrepareContext(ctx, weeklyVolume); err != nil {
+		return nil, fmt.Errorf("error preparing query WeeklyVolume: %w", err)
 	}
 	return &q, nil
 }
 
 func (q *Queries) Close() error {
 	var err error
-	if q.activiteIAStmt != nil {
-		if cerr := q.activiteIAStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing activiteIAStmt: %w", cerr)
+	if q.aIActivityStmt != nil {
+		if cerr := q.aIActivityStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing aIActivityStmt: %w", cerr)
 		}
 	}
-	if q.calendrierStmt != nil {
-		if cerr := q.calendrierStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing calendrierStmt: %w", cerr)
+	if q.aISessionsByMonthStmt != nil {
+		if cerr := q.aISessionsByMonthStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing aISessionsByMonthStmt: %w", cerr)
 		}
 	}
-	if q.chiffresPeriodeStmt != nil {
-		if cerr := q.chiffresPeriodeStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing chiffresPeriodeStmt: %w", cerr)
+	if q.aISessionsInPeriodStmt != nil {
+		if cerr := q.aISessionsInPeriodStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing aISessionsInPeriodStmt: %w", cerr)
 		}
 	}
-	if q.depotsDuProjetStmt != nil {
-		if cerr := q.depotsDuProjetStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing depotsDuProjetStmt: %w", cerr)
+	if q.activeProjectsStmt != nil {
+		if cerr := q.activeProjectsStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing activeProjectsStmt: %w", cerr)
 		}
 	}
-	if q.dernierShaDepotStmt != nil {
-		if cerr := q.dernierShaDepotStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing dernierShaDepotStmt: %w", cerr)
+	if q.brokenLinksStmt != nil {
+		if cerr := q.brokenLinksStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing brokenLinksStmt: %w", cerr)
 		}
 	}
-	if q.fichesPerimeesStmt != nil {
-		if cerr := q.fichesPerimeesStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing fichesPerimeesStmt: %w", cerr)
+	if q.calendarStmt != nil {
+		if cerr := q.calendarStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing calendarStmt: %w", cerr)
 		}
 	}
-	if q.friseStmt != nil {
-		if cerr := q.friseStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing friseStmt: %w", cerr)
+	if q.deleteNoteStmt != nil {
+		if cerr := q.deleteNoteStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteNoteStmt: %w", cerr)
 		}
 	}
-	if q.hashNoteStmt != nil {
-		if cerr := q.hashNoteStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing hashNoteStmt: %w", cerr)
+	if q.deleteNoteLinksStmt != nil {
+		if cerr := q.deleteNoteLinksStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteNoteLinksStmt: %w", cerr)
 		}
 	}
-	if q.iAduProjetStmt != nil {
-		if cerr := q.iAduProjetStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing iAduProjetStmt: %w", cerr)
+	if q.deleteRepositoryCommitSearchStmt != nil {
+		if cerr := q.deleteRepositoryCommitSearchStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteRepositoryCommitSearchStmt: %w", cerr)
 		}
 	}
-	if q.insererCommitStmt != nil {
-		if cerr := q.insererCommitStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing insererCommitStmt: %w", cerr)
+	if q.deleteRepositoryCommitsStmt != nil {
+		if cerr := q.deleteRepositoryCommitsStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteRepositoryCommitsStmt: %w", cerr)
 		}
 	}
-	if q.insererFichierModifieStmt != nil {
-		if cerr := q.insererFichierModifieStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing insererFichierModifieStmt: %w", cerr)
+	if q.deleteSearchStmt != nil {
+		if cerr := q.deleteSearchStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteSearchStmt: %w", cerr)
 		}
 	}
-	if q.insererJournalStmt != nil {
-		if cerr := q.insererJournalStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing insererJournalStmt: %w", cerr)
+	if q.dormantProjectsStmt != nil {
+		if cerr := q.dormantProjectsStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing dormantProjectsStmt: %w", cerr)
 		}
 	}
-	if q.insererLienStmt != nil {
-		if cerr := q.insererLienStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing insererLienStmt: %w", cerr)
+	if q.graphLinksStmt != nil {
+		if cerr := q.graphLinksStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing graphLinksStmt: %w", cerr)
 		}
 	}
-	if q.insererMesureLangageStmt != nil {
-		if cerr := q.insererMesureLangageStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing insererMesureLangageStmt: %w", cerr)
+	if q.graphNodesStmt != nil {
+		if cerr := q.graphNodesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing graphNodesStmt: %w", cerr)
 		}
 	}
-	if q.insererRechercheStmt != nil {
-		if cerr := q.insererRechercheStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing insererRechercheStmt: %w", cerr)
+	if q.hotspotsStmt != nil {
+		if cerr := q.hotspotsStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing hotspotsStmt: %w", cerr)
 		}
 	}
-	if q.langagesDerniereMesureStmt != nil {
-		if cerr := q.langagesDerniereMesureStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing langagesDerniereMesureStmt: %w", cerr)
+	if q.insertChangedFileStmt != nil {
+		if cerr := q.insertChangedFileStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing insertChangedFileStmt: %w", cerr)
 		}
 	}
-	if q.langagesEvolutionStmt != nil {
-		if cerr := q.langagesEvolutionStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing langagesEvolutionStmt: %w", cerr)
+	if q.insertCommitStmt != nil {
+		if cerr := q.insertCommitStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing insertCommitStmt: %w", cerr)
 		}
 	}
-	if q.liensCassesStmt != nil {
-		if cerr := q.liensCassesStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing liensCassesStmt: %w", cerr)
+	if q.insertJournalStmt != nil {
+		if cerr := q.insertJournalStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing insertJournalStmt: %w", cerr)
 		}
 	}
-	if q.liensGrapheStmt != nil {
-		if cerr := q.liensGrapheStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing liensGrapheStmt: %w", cerr)
+	if q.insertLanguageStatStmt != nil {
+		if cerr := q.insertLanguageStatStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing insertLanguageStatStmt: %w", cerr)
 		}
 	}
-	if q.lierProjetTechnoStmt != nil {
-		if cerr := q.lierProjetTechnoStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing lierProjetTechnoStmt: %w", cerr)
+	if q.insertLinkStmt != nil {
+		if cerr := q.insertLinkStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing insertLinkStmt: %w", cerr)
 		}
 	}
-	if q.listerNotesStmt != nil {
-		if cerr := q.listerNotesStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing listerNotesStmt: %w", cerr)
+	if q.insertSearchStmt != nil {
+		if cerr := q.insertSearchStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing insertSearchStmt: %w", cerr)
 		}
 	}
-	if q.listerProjetsStmt != nil {
-		if cerr := q.listerProjetsStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing listerProjetsStmt: %w", cerr)
+	if q.languageEvolutionStmt != nil {
+		if cerr := q.languageEvolutionStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing languageEvolutionStmt: %w", cerr)
 		}
 	}
-	if q.marquerDepotImporteStmt != nil {
-		if cerr := q.marquerDepotImporteStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing marquerDepotImporteStmt: %w", cerr)
+	if q.lastRepositorySHAStmt != nil {
+		if cerr := q.lastRepositorySHAStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing lastRepositorySHAStmt: %w", cerr)
 		}
 	}
-	if q.noeudsGrapheStmt != nil {
-		if cerr := q.noeudsGrapheStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing noeudsGrapheStmt: %w", cerr)
+	if q.latestLanguagesStmt != nil {
+		if cerr := q.latestLanguagesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing latestLanguagesStmt: %w", cerr)
 		}
 	}
-	if q.noteParIDStmt != nil {
-		if cerr := q.noteParIDStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing noteParIDStmt: %w", cerr)
+	if q.linkProjectTechnologyStmt != nil {
+		if cerr := q.linkProjectTechnologyStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing linkProjectTechnologyStmt: %w", cerr)
 		}
 	}
-	if q.notesDuProjetStmt != nil {
-		if cerr := q.notesDuProjetStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing notesDuProjetStmt: %w", cerr)
+	if q.listNotesStmt != nil {
+		if cerr := q.listNotesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing listNotesStmt: %w", cerr)
 		}
 	}
-	if q.plusCourtCheminStmt != nil {
-		if cerr := q.plusCourtCheminStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing plusCourtCheminStmt: %w", cerr)
+	if q.listProjectsStmt != nil {
+		if cerr := q.listProjectsStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing listProjectsStmt: %w", cerr)
 		}
 	}
-	if q.pointsChaudsStmt != nil {
-		if cerr := q.pointsChaudsStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing pointsChaudsStmt: %w", cerr)
+	if q.markRepositoryImportedStmt != nil {
+		if cerr := q.markRepositoryImportedStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing markRepositoryImportedStmt: %w", cerr)
 		}
 	}
-	if q.projetParIDStmt != nil {
-		if cerr := q.projetParIDStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing projetParIDStmt: %w", cerr)
+	if q.neighborsStmt != nil {
+		if cerr := q.neighborsStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing neighborsStmt: %w", cerr)
 		}
 	}
-	if q.projetsActifsStmt != nil {
-		if cerr := q.projetsActifsStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing projetsActifsStmt: %w", cerr)
+	if q.noteByIDStmt != nil {
+		if cerr := q.noteByIDStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing noteByIDStmt: %w", cerr)
 		}
 	}
-	if q.projetsDormantsStmt != nil {
-		if cerr := q.projetsDormantsStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing projetsDormantsStmt: %w", cerr)
+	if q.noteHashStmt != nil {
+		if cerr := q.noteHashStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing noteHashStmt: %w", cerr)
 		}
 	}
-	if q.projetsParIAStmt != nil {
-		if cerr := q.projetsParIAStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing projetsParIAStmt: %w", cerr)
+	if q.periodStatsStmt != nil {
+		if cerr := q.periodStatsStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing periodStatsStmt: %w", cerr)
 		}
 	}
-	if q.rechercherStmt != nil {
-		if cerr := q.rechercherStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing rechercherStmt: %w", cerr)
+	if q.projectAIStmt != nil {
+		if cerr := q.projectAIStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing projectAIStmt: %w", cerr)
 		}
 	}
-	if q.resoudreLiensStmt != nil {
-		if cerr := q.resoudreLiensStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing resoudreLiensStmt: %w", cerr)
+	if q.projectByIDStmt != nil {
+		if cerr := q.projectByIDStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing projectByIDStmt: %w", cerr)
 		}
 	}
-	if q.sankeyLiensStmt != nil {
-		if cerr := q.sankeyLiensStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing sankeyLiensStmt: %w", cerr)
+	if q.projectNotesStmt != nil {
+		if cerr := q.projectNotesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing projectNotesStmt: %w", cerr)
 		}
 	}
-	if q.sessionsIAParMoisStmt != nil {
-		if cerr := q.sessionsIAParMoisStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing sessionsIAParMoisStmt: %w", cerr)
+	if q.projectRepositoriesStmt != nil {
+		if cerr := q.projectRepositoriesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing projectRepositoriesStmt: %w", cerr)
 		}
 	}
-	if q.sessionsIAPeriodeStmt != nil {
-		if cerr := q.sessionsIAPeriodeStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing sessionsIAPeriodeStmt: %w", cerr)
+	if q.projectTechnologiesStmt != nil {
+		if cerr := q.projectTechnologiesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing projectTechnologiesStmt: %w", cerr)
 		}
 	}
-	if q.supprimerCommitsDepotStmt != nil {
-		if cerr := q.supprimerCommitsDepotStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing supprimerCommitsDepotStmt: %w", cerr)
+	if q.projectsByAIStmt != nil {
+		if cerr := q.projectsByAIStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing projectsByAIStmt: %w", cerr)
 		}
 	}
-	if q.supprimerLiensDeNoteStmt != nil {
-		if cerr := q.supprimerLiensDeNoteStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing supprimerLiensDeNoteStmt: %w", cerr)
+	if q.resolveLinksStmt != nil {
+		if cerr := q.resolveLinksStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing resolveLinksStmt: %w", cerr)
 		}
 	}
-	if q.supprimerNoteStmt != nil {
-		if cerr := q.supprimerNoteStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing supprimerNoteStmt: %w", cerr)
+	if q.sankeyLinksStmt != nil {
+		if cerr := q.sankeyLinksStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing sankeyLinksStmt: %w", cerr)
 		}
 	}
-	if q.supprimerRechercheStmt != nil {
-		if cerr := q.supprimerRechercheStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing supprimerRechercheStmt: %w", cerr)
+	if q.searchStmt != nil {
+		if cerr := q.searchStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing searchStmt: %w", cerr)
 		}
 	}
-	if q.supprimerRechercheCommitsDepotStmt != nil {
-		if cerr := q.supprimerRechercheCommitsDepotStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing supprimerRechercheCommitsDepotStmt: %w", cerr)
+	if q.shortestPathStmt != nil {
+		if cerr := q.shortestPathStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing shortestPathStmt: %w", cerr)
 		}
 	}
-	if q.technosDuProjetStmt != nil {
-		if cerr := q.technosDuProjetStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing technosDuProjetStmt: %w", cerr)
+	if q.staleCardsStmt != nil {
+		if cerr := q.staleCardsStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing staleCardsStmt: %w", cerr)
 		}
 	}
-	if q.technosSansProjetStmt != nil {
-		if cerr := q.technosSansProjetStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing technosSansProjetStmt: %w", cerr)
+	if q.technologyTrendStmt != nil {
+		if cerr := q.technologyTrendStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing technologyTrendStmt: %w", cerr)
 		}
 	}
-	if q.tendanceTechnosStmt != nil {
-		if cerr := q.tendanceTechnosStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing tendanceTechnosStmt: %w", cerr)
+	if q.timelineStmt != nil {
+		if cerr := q.timelineStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing timelineStmt: %w", cerr)
 		}
 	}
-	if q.upsertDepotStmt != nil {
-		if cerr := q.upsertDepotStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing upsertDepotStmt: %w", cerr)
+	if q.unassignedTechnologiesStmt != nil {
+		if cerr := q.unassignedTechnologiesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing unassignedTechnologiesStmt: %w", cerr)
 		}
 	}
 	if q.upsertNoteStmt != nil {
@@ -420,9 +420,14 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing upsertNoteStmt: %w", cerr)
 		}
 	}
-	if q.upsertProjetStmt != nil {
-		if cerr := q.upsertProjetStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing upsertProjetStmt: %w", cerr)
+	if q.upsertProjectStmt != nil {
+		if cerr := q.upsertProjectStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing upsertProjectStmt: %w", cerr)
+		}
+	}
+	if q.upsertRepositoryStmt != nil {
+		if cerr := q.upsertRepositoryStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing upsertRepositoryStmt: %w", cerr)
 		}
 	}
 	if q.upsertSessionStmt != nil {
@@ -430,19 +435,14 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing upsertSessionStmt: %w", cerr)
 		}
 	}
-	if q.upsertTechnoStmt != nil {
-		if cerr := q.upsertTechnoStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing upsertTechnoStmt: %w", cerr)
+	if q.upsertTechnologyStmt != nil {
+		if cerr := q.upsertTechnologyStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing upsertTechnologyStmt: %w", cerr)
 		}
 	}
-	if q.voisinsStmt != nil {
-		if cerr := q.voisinsStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing voisinsStmt: %w", cerr)
-		}
-	}
-	if q.volumeHebdoStmt != nil {
-		if cerr := q.volumeHebdoStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing volumeHebdoStmt: %w", cerr)
+	if q.weeklyVolumeStmt != nil {
+		if cerr := q.weeklyVolumeStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing weeklyVolumeStmt: %w", cerr)
 		}
 	}
 	return err
@@ -482,117 +482,117 @@ func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, ar
 }
 
 type Queries struct {
-	db                                 DBTX
-	tx                                 *sql.Tx
-	activiteIAStmt                     *sql.Stmt
-	calendrierStmt                     *sql.Stmt
-	chiffresPeriodeStmt                *sql.Stmt
-	depotsDuProjetStmt                 *sql.Stmt
-	dernierShaDepotStmt                *sql.Stmt
-	fichesPerimeesStmt                 *sql.Stmt
-	friseStmt                          *sql.Stmt
-	hashNoteStmt                       *sql.Stmt
-	iAduProjetStmt                     *sql.Stmt
-	insererCommitStmt                  *sql.Stmt
-	insererFichierModifieStmt          *sql.Stmt
-	insererJournalStmt                 *sql.Stmt
-	insererLienStmt                    *sql.Stmt
-	insererMesureLangageStmt           *sql.Stmt
-	insererRechercheStmt               *sql.Stmt
-	langagesDerniereMesureStmt         *sql.Stmt
-	langagesEvolutionStmt              *sql.Stmt
-	liensCassesStmt                    *sql.Stmt
-	liensGrapheStmt                    *sql.Stmt
-	lierProjetTechnoStmt               *sql.Stmt
-	listerNotesStmt                    *sql.Stmt
-	listerProjetsStmt                  *sql.Stmt
-	marquerDepotImporteStmt            *sql.Stmt
-	noeudsGrapheStmt                   *sql.Stmt
-	noteParIDStmt                      *sql.Stmt
-	notesDuProjetStmt                  *sql.Stmt
-	plusCourtCheminStmt                *sql.Stmt
-	pointsChaudsStmt                   *sql.Stmt
-	projetParIDStmt                    *sql.Stmt
-	projetsActifsStmt                  *sql.Stmt
-	projetsDormantsStmt                *sql.Stmt
-	projetsParIAStmt                   *sql.Stmt
-	rechercherStmt                     *sql.Stmt
-	resoudreLiensStmt                  *sql.Stmt
-	sankeyLiensStmt                    *sql.Stmt
-	sessionsIAParMoisStmt              *sql.Stmt
-	sessionsIAPeriodeStmt              *sql.Stmt
-	supprimerCommitsDepotStmt          *sql.Stmt
-	supprimerLiensDeNoteStmt           *sql.Stmt
-	supprimerNoteStmt                  *sql.Stmt
-	supprimerRechercheStmt             *sql.Stmt
-	supprimerRechercheCommitsDepotStmt *sql.Stmt
-	technosDuProjetStmt                *sql.Stmt
-	technosSansProjetStmt              *sql.Stmt
-	tendanceTechnosStmt                *sql.Stmt
-	upsertDepotStmt                    *sql.Stmt
-	upsertNoteStmt                     *sql.Stmt
-	upsertProjetStmt                   *sql.Stmt
-	upsertSessionStmt                  *sql.Stmt
-	upsertTechnoStmt                   *sql.Stmt
-	voisinsStmt                        *sql.Stmt
-	volumeHebdoStmt                    *sql.Stmt
+	db                               DBTX
+	tx                               *sql.Tx
+	aIActivityStmt                   *sql.Stmt
+	aISessionsByMonthStmt            *sql.Stmt
+	aISessionsInPeriodStmt           *sql.Stmt
+	activeProjectsStmt               *sql.Stmt
+	brokenLinksStmt                  *sql.Stmt
+	calendarStmt                     *sql.Stmt
+	deleteNoteStmt                   *sql.Stmt
+	deleteNoteLinksStmt              *sql.Stmt
+	deleteRepositoryCommitSearchStmt *sql.Stmt
+	deleteRepositoryCommitsStmt      *sql.Stmt
+	deleteSearchStmt                 *sql.Stmt
+	dormantProjectsStmt              *sql.Stmt
+	graphLinksStmt                   *sql.Stmt
+	graphNodesStmt                   *sql.Stmt
+	hotspotsStmt                     *sql.Stmt
+	insertChangedFileStmt            *sql.Stmt
+	insertCommitStmt                 *sql.Stmt
+	insertJournalStmt                *sql.Stmt
+	insertLanguageStatStmt           *sql.Stmt
+	insertLinkStmt                   *sql.Stmt
+	insertSearchStmt                 *sql.Stmt
+	languageEvolutionStmt            *sql.Stmt
+	lastRepositorySHAStmt            *sql.Stmt
+	latestLanguagesStmt              *sql.Stmt
+	linkProjectTechnologyStmt        *sql.Stmt
+	listNotesStmt                    *sql.Stmt
+	listProjectsStmt                 *sql.Stmt
+	markRepositoryImportedStmt       *sql.Stmt
+	neighborsStmt                    *sql.Stmt
+	noteByIDStmt                     *sql.Stmt
+	noteHashStmt                     *sql.Stmt
+	periodStatsStmt                  *sql.Stmt
+	projectAIStmt                    *sql.Stmt
+	projectByIDStmt                  *sql.Stmt
+	projectNotesStmt                 *sql.Stmt
+	projectRepositoriesStmt          *sql.Stmt
+	projectTechnologiesStmt          *sql.Stmt
+	projectsByAIStmt                 *sql.Stmt
+	resolveLinksStmt                 *sql.Stmt
+	sankeyLinksStmt                  *sql.Stmt
+	searchStmt                       *sql.Stmt
+	shortestPathStmt                 *sql.Stmt
+	staleCardsStmt                   *sql.Stmt
+	technologyTrendStmt              *sql.Stmt
+	timelineStmt                     *sql.Stmt
+	unassignedTechnologiesStmt       *sql.Stmt
+	upsertNoteStmt                   *sql.Stmt
+	upsertProjectStmt                *sql.Stmt
+	upsertRepositoryStmt             *sql.Stmt
+	upsertSessionStmt                *sql.Stmt
+	upsertTechnologyStmt             *sql.Stmt
+	weeklyVolumeStmt                 *sql.Stmt
 }
 
 func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 	return &Queries{
-		db:                                 tx,
-		tx:                                 tx,
-		activiteIAStmt:                     q.activiteIAStmt,
-		calendrierStmt:                     q.calendrierStmt,
-		chiffresPeriodeStmt:                q.chiffresPeriodeStmt,
-		depotsDuProjetStmt:                 q.depotsDuProjetStmt,
-		dernierShaDepotStmt:                q.dernierShaDepotStmt,
-		fichesPerimeesStmt:                 q.fichesPerimeesStmt,
-		friseStmt:                          q.friseStmt,
-		hashNoteStmt:                       q.hashNoteStmt,
-		iAduProjetStmt:                     q.iAduProjetStmt,
-		insererCommitStmt:                  q.insererCommitStmt,
-		insererFichierModifieStmt:          q.insererFichierModifieStmt,
-		insererJournalStmt:                 q.insererJournalStmt,
-		insererLienStmt:                    q.insererLienStmt,
-		insererMesureLangageStmt:           q.insererMesureLangageStmt,
-		insererRechercheStmt:               q.insererRechercheStmt,
-		langagesDerniereMesureStmt:         q.langagesDerniereMesureStmt,
-		langagesEvolutionStmt:              q.langagesEvolutionStmt,
-		liensCassesStmt:                    q.liensCassesStmt,
-		liensGrapheStmt:                    q.liensGrapheStmt,
-		lierProjetTechnoStmt:               q.lierProjetTechnoStmt,
-		listerNotesStmt:                    q.listerNotesStmt,
-		listerProjetsStmt:                  q.listerProjetsStmt,
-		marquerDepotImporteStmt:            q.marquerDepotImporteStmt,
-		noeudsGrapheStmt:                   q.noeudsGrapheStmt,
-		noteParIDStmt:                      q.noteParIDStmt,
-		notesDuProjetStmt:                  q.notesDuProjetStmt,
-		plusCourtCheminStmt:                q.plusCourtCheminStmt,
-		pointsChaudsStmt:                   q.pointsChaudsStmt,
-		projetParIDStmt:                    q.projetParIDStmt,
-		projetsActifsStmt:                  q.projetsActifsStmt,
-		projetsDormantsStmt:                q.projetsDormantsStmt,
-		projetsParIAStmt:                   q.projetsParIAStmt,
-		rechercherStmt:                     q.rechercherStmt,
-		resoudreLiensStmt:                  q.resoudreLiensStmt,
-		sankeyLiensStmt:                    q.sankeyLiensStmt,
-		sessionsIAParMoisStmt:              q.sessionsIAParMoisStmt,
-		sessionsIAPeriodeStmt:              q.sessionsIAPeriodeStmt,
-		supprimerCommitsDepotStmt:          q.supprimerCommitsDepotStmt,
-		supprimerLiensDeNoteStmt:           q.supprimerLiensDeNoteStmt,
-		supprimerNoteStmt:                  q.supprimerNoteStmt,
-		supprimerRechercheStmt:             q.supprimerRechercheStmt,
-		supprimerRechercheCommitsDepotStmt: q.supprimerRechercheCommitsDepotStmt,
-		technosDuProjetStmt:                q.technosDuProjetStmt,
-		technosSansProjetStmt:              q.technosSansProjetStmt,
-		tendanceTechnosStmt:                q.tendanceTechnosStmt,
-		upsertDepotStmt:                    q.upsertDepotStmt,
-		upsertNoteStmt:                     q.upsertNoteStmt,
-		upsertProjetStmt:                   q.upsertProjetStmt,
-		upsertSessionStmt:                  q.upsertSessionStmt,
-		upsertTechnoStmt:                   q.upsertTechnoStmt,
-		voisinsStmt:                        q.voisinsStmt,
-		volumeHebdoStmt:                    q.volumeHebdoStmt,
+		db:                               tx,
+		tx:                               tx,
+		aIActivityStmt:                   q.aIActivityStmt,
+		aISessionsByMonthStmt:            q.aISessionsByMonthStmt,
+		aISessionsInPeriodStmt:           q.aISessionsInPeriodStmt,
+		activeProjectsStmt:               q.activeProjectsStmt,
+		brokenLinksStmt:                  q.brokenLinksStmt,
+		calendarStmt:                     q.calendarStmt,
+		deleteNoteStmt:                   q.deleteNoteStmt,
+		deleteNoteLinksStmt:              q.deleteNoteLinksStmt,
+		deleteRepositoryCommitSearchStmt: q.deleteRepositoryCommitSearchStmt,
+		deleteRepositoryCommitsStmt:      q.deleteRepositoryCommitsStmt,
+		deleteSearchStmt:                 q.deleteSearchStmt,
+		dormantProjectsStmt:              q.dormantProjectsStmt,
+		graphLinksStmt:                   q.graphLinksStmt,
+		graphNodesStmt:                   q.graphNodesStmt,
+		hotspotsStmt:                     q.hotspotsStmt,
+		insertChangedFileStmt:            q.insertChangedFileStmt,
+		insertCommitStmt:                 q.insertCommitStmt,
+		insertJournalStmt:                q.insertJournalStmt,
+		insertLanguageStatStmt:           q.insertLanguageStatStmt,
+		insertLinkStmt:                   q.insertLinkStmt,
+		insertSearchStmt:                 q.insertSearchStmt,
+		languageEvolutionStmt:            q.languageEvolutionStmt,
+		lastRepositorySHAStmt:            q.lastRepositorySHAStmt,
+		latestLanguagesStmt:              q.latestLanguagesStmt,
+		linkProjectTechnologyStmt:        q.linkProjectTechnologyStmt,
+		listNotesStmt:                    q.listNotesStmt,
+		listProjectsStmt:                 q.listProjectsStmt,
+		markRepositoryImportedStmt:       q.markRepositoryImportedStmt,
+		neighborsStmt:                    q.neighborsStmt,
+		noteByIDStmt:                     q.noteByIDStmt,
+		noteHashStmt:                     q.noteHashStmt,
+		periodStatsStmt:                  q.periodStatsStmt,
+		projectAIStmt:                    q.projectAIStmt,
+		projectByIDStmt:                  q.projectByIDStmt,
+		projectNotesStmt:                 q.projectNotesStmt,
+		projectRepositoriesStmt:          q.projectRepositoriesStmt,
+		projectTechnologiesStmt:          q.projectTechnologiesStmt,
+		projectsByAIStmt:                 q.projectsByAIStmt,
+		resolveLinksStmt:                 q.resolveLinksStmt,
+		sankeyLinksStmt:                  q.sankeyLinksStmt,
+		searchStmt:                       q.searchStmt,
+		shortestPathStmt:                 q.shortestPathStmt,
+		staleCardsStmt:                   q.staleCardsStmt,
+		technologyTrendStmt:              q.technologyTrendStmt,
+		timelineStmt:                     q.timelineStmt,
+		unassignedTechnologiesStmt:       q.unassignedTechnologiesStmt,
+		upsertNoteStmt:                   q.upsertNoteStmt,
+		upsertProjectStmt:                q.upsertProjectStmt,
+		upsertRepositoryStmt:             q.upsertRepositoryStmt,
+		upsertSessionStmt:                q.upsertSessionStmt,
+		upsertTechnologyStmt:             q.upsertTechnologyStmt,
+		weeklyVolumeStmt:                 q.weeklyVolumeStmt,
 	}
 }

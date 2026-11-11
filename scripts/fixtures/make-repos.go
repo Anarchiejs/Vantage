@@ -68,11 +68,11 @@ func build(dir, project string) error {
 			c.data = []byte{0, 1, 2, 255, 0, 127}
 		case 8:
 			c.remove = "docs/guide.md"
-			c.name = "docs/manuel.md"
-			c.data = []byte("# Guide de fixture\n\n" + strings.Repeat("Ligne stable de documentation.\n", 10))
+			c.name = "docs/manual.md"
+			c.data = []byte("# Fixture guide\n\n" + strings.Repeat("Stable documentation line.\n", 10))
 		case 9:
 			c.name = "docs/note é.md"
-			c.data = []byte("# Note accentuée\n\nChemin avec espace et accent.\n")
+			c.data = []byte("# Accented note\n\nPath with a space and an accent.\n")
 		case 12:
 			c.branch = true
 			c.name = "branch.txt"
@@ -88,7 +88,7 @@ func build(dir, project string) error {
 			if err := os.MkdirAll(filepath.Dir(p), 0755); err != nil {
 				return err
 			}
-			if err := os.WriteFile(p, []byte("# Guide de fixture\n\n"+strings.Repeat("Ligne stable de documentation.\n", 10)), 0644); err != nil {
+			if err := os.WriteFile(p, []byte("# Fixture guide\n\n"+strings.Repeat("Stable documentation line.\n", 10)), 0644); err != nil {
 				return err
 			}
 		}

@@ -1,0 +1,122 @@
+[
+  {
+    "path": "README.md",
+    "modifications": 1,
+    "additions": 1,
+    "deletions": 0
+  },
+  {
+    "path": "assets/sample.bin",
+    "modifications": 1,
+    "additions": 0,
+    "deletions": 0
+  },
+  {
+    "path": "branch.txt",
+    "modifications": 1,
+    "additions": 1,
+    "deletions": 0
+  },
+  {
+    "path": "db/schema.sql",
+    "modifications": 1,
+    "additions": 1,
+    "deletions": 0
+  },
+  {
+    "path": "docs/guide.md",
+    "modifications": 1,
+    "additions": 12,
+    "deletions": 0
+  },
+  {
+    "path": "docs/manual.md",
+    "modifications": 1,
+    "additions": 0,
+    "deletions": 0
+  },
+  {
+    "path": "docs/note é.md",
+    "modifications": 1,
+    "additions": 3,
+    "deletions": 0
+  },
+  {
+    "path": "main.go",
+    "modifications": 1,
+    "additions": 3,
+    "deletions": 0
+  },
+  {
+    "path": "mainline.txt",
+    "modifications": 1,
+    "additions": 1,
+    "deletions": 0
+  },
+  {
+    "path": "notes/alpha-01.md",
+    "modifications": 1,
+    "additions": 3,
+    "deletions": 0
+  },
+  {
+    "path": "notes/alpha-06.md",
+    "modifications": 1,
+    "additions": 3,
+    "deletions": 0
+  },
+  {
+    "path": "notes/alpha-08.md",
+    "modifications": 1,
+    "additions": 3,
+    "deletions": 0
+  },
+  {
+    "path": "notes/alpha-11.md",
+    "modifications": 1,
+    "additions": 3,
+    "deletions": 0
+  },
+  {
+    "path": "notes/alpha-12.md",
+    "modifications": 1,
+    "additions": 3,
+    "deletions": 0
+  },
+  {
+    "path": "notes/alpha-14.md",
+    "modifications": 1,
+    "additions": 3,
+    "deletions": 0
+  },
+  {
+    "path": "notes/alpha-15.md",
+    "modifications": 1,
+    "additions": 3,
+    "deletions": 0
+  },
+  {
+    "path": "notes/alpha-16.md",
+    "modifications": 1,
+    "additions": 3,
+    "deletions": 0
+  },
+  {
+    "path": "notes/alpha-17.md",
+    "modifications": 1,
+    "additions": 3,
+    "deletions": 0
+  },
+  {
+    "path": "notes/alpha-18.md",
+    "modifications": 1,
+    "additions": 3,
+    "deletions": 0
+  },
+  {
+    "path": "notes/alpha-19.md",
+    "modifications": 1,
+    "additions": 3,
+    "deletions": 0
+  }
+]

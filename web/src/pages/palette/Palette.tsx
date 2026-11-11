@@ -1,178 +1,101 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { useNavigate } from 'react-router'
-import type { ProjetResume } from '../../api/types'
+import type { ProjectSummary } from '../../api/types'
 import { useApi } from '../../api/useApi'
-import { Vide } from '../../ui/Etat'
-import { ordonner, type Libelle } from './flou'
+import { Empty } from '../../ui/Status'
+import { rank, type Labeled } from './fuzzy'
 
-interface Commande extends Libelle {
-  agir: () => void
+interface Command extends Labeled {
+  run: () => void
 }
 
-const PAGES: { id: string; libelle: string; detail: string; vers: string }[] = [
-  { id: 'accueil', libelle: 'Accueil', detail: 'Tableau de bord', vers: '/' },
-  { id: 'projets', libelle: 'Projets', detail: 'Liste des projets', vers: '/projets' },
-  { id: 'technos', libelle: 'Technos & IA', detail: 'Technologies', vers: '/technos' },
-  { id: 'graphe', libelle: 'Graphe', detail: 'Notes liées', vers: '/graphe' },
-  { id: 'recherche', libelle: 'Recherche', detail: 'Notes et commits', vers: '/recherche' },
-  { id: 'console', libelle: 'Console SQL', detail: 'Requêtes SQLite', vers: '/console' },
+const PAGES: { id: string; label: string; detail: string; to: string }[] = [
+  { id: 'home', label: 'Home', detail: 'Dashboard', to: '/' },
+  { id: 'projects', label: 'Projects', detail: 'Project list', to: '/projects' },
+  { id: 'tech', label: 'Tech & AI', detail: 'Technologies', to: '/tech' },
+  { id: 'graph', label: 'Graph', detail: 'Linked notes', to: '/graph' },
+  { id: 'search', label: 'Search', detail: 'Notes and commits', to: '/search' },
+  { id: 'console', label: 'SQL console', detail: 'SQLite queries', to: '/console' },
 ]
 
-function focusables(racine: HTMLElement): HTMLElement[] {
-  return [...racine.querySelectorAll<HTMLElement>('button, [href], input, select, textarea')].filter(
+function focusable(root: HTMLElement): HTMLElement[] {
+  return [...root.querySelectorAll<HTMLElement>('button, [href], input, select, textarea')].filter(
     (el) => !el.hasAttribute('disabled') && el.tabIndex >= 0 && !el.hidden,
   )
 }
 
-export default function Palette({ fermer }: { fermer: () => void }) {
-  const naviguer = useNavigate()
-  const projets = useApi<ProjetResume[]>('/api/projets')
-  const donneesProjets = projets.statut === 'ok' ? projets.donnees : null
-  const [q, setQ] = useState('')
+export default function Palette({ close }: { close: () => void }) {
+  const navigate = useNavigate()
+  const projects = useApi<ProjectSummary[]>('/api/projects')
+  const projectData = projects.status === 'ok' ? projects.data : null
+  const [query, setQuery] = useState('')
   const [index, setIndex] = useState(0)
-  const champ = useRef<HTMLInputElement>(null)
+  const field = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    champ.current?.focus()
-  }, [])
+  useEffect(() => { field.current?.focus() }, [])
+  useEffect(() => { setIndex(0) }, [query])
 
-  useEffect(() => {
-    setIndex(0)
-  }, [q])
-
-  const commandes = useMemo(() => {
-    const vers = (chemin: string) => {
-      naviguer(chemin)
-      fermer()
-    }
-    const pages: Commande[] = PAGES.map((page) => ({
-      id: `page-${page.id}`,
-      libelle: page.libelle,
-      detail: page.detail,
-      agir: () => vers(page.vers),
+  const commands = useMemo(() => {
+    const go = (path: string) => { navigate(path); close() }
+    const pages: Command[] = PAGES.map((page) => ({ id: `page-${page.id}`, label: page.label, detail: page.detail, run: () => go(page.to) }))
+    const openProjects: Command[] = (projectData ?? []).map((project) => ({
+      id: `project-${project.id}`, label: project.name, detail: 'Open the project', run: () => go(`/projects/${project.id}`),
     }))
-    const ouvris: Commande[] = (donneesProjets ?? []).map((projet) => ({
-      id: `projet-${projet.id}`,
-      libelle: projet.nom,
-      detail: 'Ouvrir le projet',
-      agir: () => vers(`/projets/${projet.id}`),
-    }))
-    const theme: Commande = {
-      id: 'theme',
-      libelle: 'Basculer le thème',
-      detail: 'Clair ou sombre',
-      agir: () => {
-        window.dispatchEvent(new Event('observatoire:basculer-theme'))
-        fermer()
-      },
+    const theme: Command = {
+      id: 'theme', label: 'Toggle theme', detail: 'Light or dark',
+      run: () => { window.dispatchEvent(new Event('observatoire:toggle-theme')); close() },
     }
-    return [...pages, ...ouvris, theme]
-  }, [donneesProjets, naviguer, fermer])
+    return [...pages, ...openProjects, theme]
+  }, [projectData, navigate, close])
 
-  const visibles = useMemo(() => {
-    const tries = ordonner(commandes, q)
-    const texte = q.trim()
-    if (!texte) return tries
-    const chercher: Commande = {
-      id: 'chercher',
-      libelle: `Rechercher « ${texte} »`,
-      detail: 'Notes et commits',
-      agir: () => {
-        naviguer(`/recherche?q=${encodeURIComponent(texte)}`)
-        fermer()
-      },
+  const visible = useMemo(() => {
+    const ranked = rank(commands, query)
+    const text = query.trim()
+    if (!text) return ranked
+    const search: Command = {
+      id: 'search', label: `Search “${text}”`, detail: 'Notes and commits',
+      run: () => { navigate(`/search?q=${encodeURIComponent(text)}`); close() },
     }
-    return [...tries, chercher]
-  }, [commandes, q, naviguer, fermer])
+    return [...ranked, search]
+  }, [commands, query, navigate, close])
 
-  const courant = visibles.length === 0 ? -1 : Math.min(index, visibles.length - 1)
+  const current = visible.length === 0 ? -1 : Math.min(index, visible.length - 1)
 
   useEffect(() => {
-    if (courant < 0) return
-    const el = document.getElementById(`palette-${visibles[courant].id}`)
-    try {
-      el?.scrollIntoView?.({ block: 'nearest' })
-    } catch {
-      /* jsdom sans défilement */
-    }
-  }, [courant, visibles])
+    if (current < 0) return
+    const el = document.getElementById(`palette-${visible[current].id}`)
+    try { el?.scrollIntoView?.({ block: 'nearest' }) } catch { /* jsdom has no scrolling */ }
+  }, [current, visible])
 
-  function surClavier(e: KeyboardEvent<HTMLDivElement>) {
-    if (e.key === 'Escape') {
-      e.preventDefault()
-      fermer()
+  function onKey(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.key === 'Escape') { event.preventDefault(); close(); return }
+    if (event.key === 'Tab') {
+      const items = focusable(event.currentTarget)
+      if (items.length === 0) return
+      const first = items[0]
+      const last = items[items.length - 1]
+      const active = document.activeElement
+      if (event.shiftKey && (active === first || !event.currentTarget.contains(active))) { event.preventDefault(); last.focus() }
+      else if (!event.shiftKey && active === last) { event.preventDefault(); first.focus() }
       return
     }
-    if (e.key === 'Tab') {
-      const els = focusables(e.currentTarget)
-      if (els.length === 0) return
-      const premier = els[0]
-      const dernier = els[els.length - 1]
-      const actif = document.activeElement
-      if (e.shiftKey && (actif === premier || !e.currentTarget.contains(actif))) {
-        e.preventDefault()
-        dernier.focus()
-      } else if (!e.shiftKey && actif === dernier) {
-        e.preventDefault()
-        premier.focus()
-      }
-      return
-    }
-    if (visibles.length === 0) return
-    if (e.key === 'ArrowDown') {
-      e.preventDefault()
-      setIndex((i) => Math.min(Math.min(Math.max(i, 0), visibles.length - 1) + 1, visibles.length - 1))
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault()
-      setIndex((i) => Math.max(Math.min(i, visibles.length - 1) - 1, 0))
-    } else if (e.key === 'Enter' && (e.target as HTMLElement).tagName !== 'BUTTON') {
-      e.preventDefault()
-      if (courant >= 0) visibles[courant].agir()
-    }
+    if (visible.length === 0) return
+    if (event.key === 'ArrowDown') { event.preventDefault(); setIndex((i) => Math.min(Math.min(Math.max(i, 0), visible.length - 1) + 1, visible.length - 1)) }
+    else if (event.key === 'ArrowUp') { event.preventDefault(); setIndex((i) => Math.max(Math.min(i, visible.length - 1) - 1, 0)) }
+    else if (event.key === 'Enter' && (event.target as HTMLElement).tagName !== 'BUTTON') { event.preventDefault(); if (current >= 0) visible[current].run() }
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-fond/80 px-4 pt-[12vh]" onClick={fermer}>
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label="Palette de commandes"
-        onClick={(e) => e.stopPropagation()}
-        onKeyDown={surClavier}
-        className="flex max-h-[70vh] w-full max-w-xl flex-col overflow-hidden rounded-xl border border-bordure bg-surface"
-      >
-        <input
-          ref={champ}
-          autoFocus
-          aria-label="Commande"
-          aria-expanded="true"
-          aria-controls="palette-liste"
-          aria-activedescendant={courant >= 0 ? `palette-${visibles[courant].id}` : undefined}
-          autoComplete="off"
-          placeholder="Aller à une page, un projet, une recherche…"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          className="w-full border-b border-bordure bg-transparent px-4 py-3 text-texte outline-none"
-        />
-        {visibles.length === 0 ? (
-          <Vide>Aucune commande.</Vide>
-        ) : (
-          <ul id="palette-liste" role="listbox" aria-label="Commandes" className="overflow-auto">
-            {visibles.map((commande, i) => (
-              <li key={commande.id}>
-                <button
-                  id={`palette-${commande.id}`}
-                  type="button"
-                  role="option"
-                  aria-selected={i === courant}
-                  onMouseEnter={() => setIndex(i)}
-                  onClick={commande.agir}
-                  className={`flex w-full items-baseline justify-between gap-3 px-4 py-2 text-left text-sm ${
-                    i === courant ? 'bg-accent-doux text-texte' : 'hover:bg-surface-2'
-                  }`}
-                >
-                  <span>{commande.libelle}</span>
-                  <span className="shrink-0 text-xs text-doux">{commande.detail}</span>
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-canvas/80 px-4 pt-[12vh]" onClick={close}>
+      <div role="dialog" aria-modal="true" aria-label="Command palette" onClick={(e) => e.stopPropagation()} onKeyDown={onKey} className="flex max-h-[70vh] w-full max-w-xl flex-col overflow-hidden rounded-xl border border-line bg-surface">
+        <input ref={field} autoFocus aria-label="Command" aria-expanded="true" aria-controls="palette-list" aria-activedescendant={current >= 0 ? `palette-${visible[current].id}` : undefined} autoComplete="off" placeholder="Go to a page, a project, a search…" value={query} onChange={(e) => setQuery(e.target.value)} className="w-full border-b border-line bg-transparent px-4 py-3 text-ink outline-none" />
+        {visible.length === 0 ? <Empty>No command.</Empty> : (
+          <ul id="palette-list" role="listbox" aria-label="Commands" className="overflow-auto">
+            {visible.map((command, i) => (
+              <li key={command.id}>
+                <button id={`palette-${command.id}`} type="button" role="option" aria-selected={i === current} onMouseEnter={() => setIndex(i)} onClick={command.run} className={`flex w-full items-baseline justify-between gap-3 px-4 py-2 text-left text-sm ${i === current ? 'bg-accent-soft text-ink' : 'hover:bg-surface-2'}`}>
+                  <span>{command.label}</span>
+                  <span className="shrink-0 text-xs text-muted">{command.detail}</span>
                 </button>
               </li>
             ))}

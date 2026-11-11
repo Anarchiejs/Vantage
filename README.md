@@ -1,127 +1,127 @@
 # Observatoire
 
-Un tableau de bord **local** de ton travail de développement : il lit ton coffre Obsidian et les dépôts Git de tes projets, puis affiche tout sur **http://127.0.0.1:7878** (historique, langages, graphe des notes, recherche, console SQL). Rien ne quitte ta machine.
+A **local** dashboard for your development work: it reads your Obsidian vault and your projects' Git repositories, then shows everything at **http://127.0.0.1:7878** (history, languages, note graph, search, SQL console). Nothing leaves your machine.
 
-## Démarrage rapide (Windows)
+## Quick start (Windows)
 
-Ouvre **PowerShell** et lance ces commandes une par une.
+Open **PowerShell** and run these commands one by one.
 
-**0. Récupérer le projet** (une seule fois)
+**0. Get the project** (once)
 
 ```powershell
 git clone https://github.com/Anarchiejs/Observatoire.git
 cd Observatoire
 ```
 
-> Pas encore Git ? `winget install --id Git.Git -e`, puis ferme et rouvre PowerShell.
-> Toutes les commandes suivantes se lancent **depuis ce dossier `Observatoire`**.
+> No Git yet? `winget install --id Git.Git -e`, then close and reopen PowerShell.
+> Every command below runs **from this `Observatoire` folder**.
 
-**1. Installer** — git, Go et Node (via winget s'ils manquent), puis les dépendances
-
-```powershell
-.\installer.cmd
-```
-
-→ `Installation terminée.`
-
-**2. Construire** — l'interface puis `observatoire.exe`
+**1. Install** — git, Go, and Node (via winget if they are missing), then the dependencies
 
 ```powershell
-.\construire.cmd
+.\install.cmd
 ```
 
-→ `Build terminé : observatoire.exe`
+→ `Installation complete.`
 
-Si l'*Accès contrôlé aux dossiers* de Windows Defender est actif (fréquent quand le dépôt est dans `Documents`), une fenêtre administrateur s'ouvre pour autoriser `observatoire.exe` : **accepte-la**, sinon il ne pourra pas créer sa base.
-
-**3. Lancer** — importe ton coffre Obsidian puis ouvre l'interface dans le navigateur. Remplace le chemin par celui de **ton** coffre (le dossier que tu ouvres dans Obsidian, pas celui du projet), entre guillemets
+**2. Build** — the UI, then `observatoire.exe`
 
 ```powershell
-.\lancer.cmd "C:\Users\toi\Documents\Mon Coffre"
+.\build.cmd
 ```
 
-→ le navigateur s'ouvre sur **http://127.0.0.1:7878**. `Ctrl+C` arrête le serveur. Le chemin est mémorisé : les fois suivantes, `.\lancer.cmd` suffit.
+→ `Build complete: observatoire.exe`
 
-**Ensuite**
+If Windows Defender **Controlled folder access** is on (common when the repository is under `Documents`), an administrator window opens to allow `observatoire.exe`: **accept it**, or the program cannot create its database.
 
-- Tant que `lancer.cmd` tourne, une note modifiée ou un nouveau commit apparaît dans l'interface en quelques secondes, sans recharger la page.
-- Relancer plus tard : `.\lancer.cmd` (seuls les nouveaux commits et les notes modifiées sont relus).
-- Après un `git pull` : `.\construire.cmd`.
+**3. Start** — import your Obsidian vault, then open the UI in the browser. Replace the path with **your** vault (the folder you open in Obsidian, not the project folder), in quotes
 
-## Préparer ton coffre
+```powershell
+.\start.cmd "C:\Users\you\Documents\My Vault"
+```
 
-Toutes les notes `.md` sont importées (recherche, graphe, liens cassés). Le coffre n'est **jamais modifié** par l'import.
+→ the browser opens **http://127.0.0.1:7878**. `Ctrl+C` stops the server. The path is remembered: next time, `.\start.cmd` is enough.
 
-Un **projet** est une fiche placée exactement en `Projets\<Nom>\<Nom>.md`. Pour qu'il ait ses commits, elle doit contenir `type: projet` et **`chemin_source` avec le chemin absolu de son dépôt Git** :
+**After that**
+
+- While `start.cmd` is running, an edited note or a new commit shows up in the UI within a few seconds, without reloading the page.
+- Start it again later: `.\start.cmd` (only new commits and edited notes are reread).
+- After a `git pull`: `.\build.cmd`.
+
+## Prepare your vault
+
+Every `.md` note is imported (search, graph, broken links). The import **never modifies** the vault.
+
+A **project** is a card placed exactly at `Projects\<Name>\<Name>.md`. For it to have commits, the card must contain `type: project` and **`source_path` with the absolute path of its Git repository**:
 
 ```markdown
 ---
-type: projet
-statut: en cours
-chemin_source: C:\dev\mon-projet
-technos:
+type: project
+status: in progress
+source_path: C:\dev\my-project
+technologies:
   - "[[Go]]"
 ---
-# Mon projet
+# My project
 ```
 
-Facultatif : `verifie_commit` / `verifie_le` (repérer les fiches périmées), des sessions (notes du dossier `Sessions\` avec `type: session`, `projet: "[[Nom]]"`, `date: AAAA-MM-JJ`, `ia: "[[Nom]]"`) et un `Journal.md` à la racine (lignes `- AAAA-MM-JJ - [[IA]] - texte`). Exemple complet : `testdata\coffre`.
+Optional: `verified_commit` / `verified_on` (spot stale cards), sessions (notes in `Sessions\` with `type: session`, `project: "[[Name]]"`, `date: YYYY-MM-DD`, `ai: "[[Name]]"`), and a `Journal.md` at the vault root (lines `- YYYY-MM-DD - [[AI]] - text`). Full example: `testdata\vault`.
 
-## Problèmes fréquents
+## Common problems
 
-| Message | Solution |
+| Message | What to do |
 |---|---|
-| `unable to open database file (14)`, ou le serveur s'arrête aussitôt | Defender bloque `observatoire.exe` : relance `construire.ps1` et accepte la fenêtre administrateur, ou autorise-le dans *Sécurité Windows › Protection contre les virus et menaces › Gérer la protection contre les ransomware › Autoriser une application*. Autre solution : mettre le dépôt hors de `Documents` (ex. `C:\dev`). |
-| `… est introuvable` / `vient d'être installé mais reste introuvable` | Ferme et rouvre PowerShell, puis relance le script. |
-| `winget est introuvable` | Installe « App Installer » depuis le Microsoft Store. |
-| `Some chunks are larger than 500 kB` | Simple avertissement de Vite, à ignorer. |
-| `dossier introuvable : …` | Vérifie le chemin du coffre et mets-le entre guillemets. |
-| `aucun dépôt Git importé` / `0 dépôts` | Aucune fiche `Projets\<Nom>\<Nom>.md` avec `type: projet` et un `chemin_source` absolu. |
-| `attention : <Projet> (<chemin>) : git rev-parse: …` | Ce `chemin_source` n'est pas un dépôt Git : corrige la fiche. Les autres projets sont quand même importés. |
-| `erreur : listen tcp 127.0.0.1:7878: bind: …` | Le port est pris (un autre `serve` tourne ?) : ferme-le, ou `.\observatoire.exe serve -port 8080`. |
+| `unable to open database file (14)`, or the server stops immediately | Defender is blocking `observatoire.exe`: run `build.ps1` again and accept the administrator window, or allow it in *Windows Security › Virus & threat protection › Manage ransomware protection › Allow an app*. Or move the repository out of `Documents` (for example `C:\dev`). |
+| `… was not found` / `was just installed but is still not found` | Close and reopen PowerShell, then run the script again. |
+| `winget was not found` | Install "App Installer" from the Microsoft Store. |
+| `Some chunks are larger than 500 kB` | A Vite warning. Ignore it. |
+| `folder not found: …` | Check the vault path and put it in quotes. |
+| `no Git repository imported` / `0 repositories` | No `Projects\<Name>\<Name>.md` card with `type: project` and an absolute `source_path`. |
+| `warning: <Project> (<path>): git rev-parse: …` | That `source_path` is not a Git repository: fix the card. The other projects are still imported. |
+| `error: listen tcp 127.0.0.1:7878: bind: …` | The port is taken (another `serve` running?): close it, or `.\observatoire.exe serve -port 8080`. |
 
 ---
 
-## Référence
+## Reference
 
-### Commandes de `observatoire.exe`
+### `observatoire.exe` commands
 
-| Commande | Rôle |
+| Command | Role |
 |---|---|
-| `import` | importe le coffre et les dépôts Git (ce que fait `lancer.cmd`) |
-| `serve` | lance l'interface sur 127.0.0.1 |
-| `rapport` | écrit `Statistiques.md` (bilan de la semaine) à la racine du coffre |
-| `migrate` | crée ou met à jour le schéma (fait aussi automatiquement par les autres commandes) |
-| `watch` | importe, lance l'interface et réimporte dès qu'une note ou un dépôt change ; la page ouverte se met à jour seule (ce que fait `lancer.cmd`) |
+| `import` | import the vault and the Git repositories (what `start.cmd` does first) |
+| `serve` | serve the UI on 127.0.0.1 |
+| `report` | write `Statistics.md` (the week's summary) at the vault root |
+| `migrate` | create or update the schema (also done automatically by the other commands) |
+| `watch` | import, serve the UI, and reimport when a note or a repository changes; the open page updates itself (what `start.cmd` does) |
 
-| Option | Commandes | Défaut |
+| Option | Commands | Default |
 |---|---|---|
-| `-db <fichier>` | toutes | `observatoire.db` (dossier courant) |
-| `-coffre <dossier>` | `import`, `watch`, `rapport` | `C:\dev\Obsidian Vault` |
-| `-depots "Nom=dossier,…"` | `import`, `watch` | remplace le `chemin_source` des fiches nommées |
+| `-db <file>` | all | `observatoire.db` (current directory) |
+| `-vault <folder>` | `import`, `watch`, `report` | `C:\dev\Obsidian Vault` |
+| `-repos "Name=folder,…"` | `import`, `watch` | replaces `source_path` for the named cards |
 | `-port <n>` | `serve`, `watch` | `7878` |
-| `-stdout` | `rapport` | affiche le rapport au lieu de l'écrire |
+| `-stdout` | `report` | print the report instead of writing it |
 
-Exemple : `.\observatoire.exe rapport -coffre "C:\Users\toi\Documents\Mon Coffre"`. Le rapport refuse d'écraser un `Statistiques.md` qui n'a pas été généré par Observatoire.
+Example: `.\observatoire.exe report -vault "C:\Users\you\Documents\My Vault"`. The report refuses to overwrite a `Statistics.md` that was not generated by Observatoire.
 
-**Données** : la base `observatoire.db` (+ `-wal`, `-shm`) et les requêtes enregistrées de la console (`requetes\`) sont à la racine du dépôt. Tu peux supprimer la base : `lancer.cmd` la reconstruit.
+**Data**: the `observatoire.db` database (plus `-wal` and `-shm`) and the console's saved queries (`queries\`) live at the repository root. You can delete the database: `start.cmd` rebuilds it.
 
-**Console SQL** : lecture seule (pas d'écriture, d'`ATTACH`, de `PRAGMA` d'écriture ni de transaction), 5 s, 1000 lignes et 2 requêtes simultanées au maximum. Le serveur n'accepte que les requêtes locales.
+**SQL console**: read-only (no writes, no `ATTACH`, no write `PRAGMA`, no transaction), 5 s, 1000 rows, and at most 2 queries at once. The server accepts only local requests.
 
-### Développer le front
+### Develop the UI
 
 ```powershell
-npm --prefix web run dev        # Vite ; /api relayé vers http://127.0.0.1:7878 (laisse « serve » tourner)
-npm --prefix web run dev:mock   # sans serveur Go : réponses lues dans web\public\mocks
+npm --prefix web run dev        # Vite; /api is proxied to http://127.0.0.1:7878 (leave "serve" running)
+npm --prefix web run dev:mock   # no Go server: responses are read from web\public\mocks
 npm --prefix web run typecheck
 ```
 
-`construire.ps1` compile avec `-tags embed` : l'interface est dans l'exécutable. Un `go build ./cmd/observatoire` sans ce tag lit `web\dist` sur le disque et ne marche que lancé depuis la racine du dépôt.
+`build.ps1` compiles with `-tags embed`: the UI is inside the executable. A `go build ./cmd/observatoire` without that tag reads `web\dist` from disk and only works when launched from the repository root.
 
-### Migrations et sqlc
+### Migrations and sqlc
 
-- **Migrations** (goose) : `migrations\*.sql`, embarquées et appliquées automatiquement. Nouveau changement de schéma : `0003_….sql` avec `-- +goose Up` / `-- +goose Down`, puis `construire.ps1`.
-- **Code SQL** : les requêtes de `internal\sql\import` et `internal\sql\requetes` sont compilées par sqlc 1.31.1 (`sqlc.yaml`) vers `internal\sql\gen` (ne pas modifier à la main) :
+- **Migrations** (goose): `migrations\*.sql`, embedded and applied automatically. For a new schema change: `0003_….sql` with `-- +goose Up` / `-- +goose Down`, then `build.ps1`.
+- **SQL code**: queries in `internal\sql\import` and `internal\sql\queries` are compiled by sqlc 1.31.1 (`sqlc.yaml`) into `internal\sql\gen` (do not edit by hand):
 
   ```powershell
   go install github.com/sqlc-dev/sqlc/cmd/sqlc@v1.31.1
@@ -130,29 +130,29 @@ npm --prefix web run typecheck
 
 ### Tests
 
-Les tests Go ont besoin de deux petits dépôts Git générés dans `testdata\depots` :
+Go tests need two small Git repositories generated in `testdata\depots`:
 
 ```powershell
-go build -o make-repos.exe ./scripts/fixtures   # hors Windows : go run ./scripts/fixtures/make-repos.go
-.\make-repos.exe                                # dans Documents, à autoriser dans Defender comme observatoire.exe
+go build -o make-repos.exe ./scripts/fixtures   # not on Windows: go run ./scripts/fixtures/make-repos.go
+.\make-repos.exe                                # under Documents, allow it in Defender like observatoire.exe
 go test ./...
-npm --prefix web test                           # Node 22.12 ou plus
+npm --prefix web test                           # Node 22.12 or newer
 ```
 
-Mise à jour des résultats attendus des requêtes, après relecture : `go test ./internal/sql/requetes_test -count=1 -args -maj`. `make-repos.exe` n'est pas dans `.gitignore` (contrairement à `observatoire.exe` et `*.db`).
+To refresh reviewed query results after reading them: `go test ./internal/sql/queries_test -count=1 -args -update`. `make-repos.exe` is not in `.gitignore` (unlike `observatoire.exe` and `*.db`).
 
-### Architecture
+### Layout
 
 ```
-cmd/observatoire/   point d'entrée (import, serve, watch, rapport, migrate)
-internal/api/       serveur HTTP : vues JSON, console SQL, SSE, interface
-internal/db/        SQLite et migrations
-internal/ingest/    import : git/, code/ (langages via scc), vault/ (coffre)
-internal/report/    Statistiques.md
-internal/sql/       requêtes sqlc et code généré (gen/)
-internal/watch/     surveillance du coffre et des dépôts (fsnotify)
-migrations/         schéma SQL (goose)
-scripts/            installer.ps1, construire.ps1, lancer.ps1 (appelés par les .cmd de la racine), fixtures/
-testdata/           coffre fictif et dépôts de test
-web/                interface React + Vite
+cmd/observatoire/   entry point (import, serve, watch, report, migrate)
+internal/api/       HTTP server: JSON views, SQL console, SSE, UI
+internal/db/        SQLite and migrations
+internal/ingest/    import: git/, code/ (languages via scc), vault/
+internal/report/    Statistics.md
+internal/sql/       sqlc queries and generated code (gen/)
+internal/watch/     vault and repository watching (fsnotify)
+migrations/         SQL schema (goose)
+scripts/            install.ps1, build.ps1, start.ps1 (called by the root .cmd files), fixtures/
+testdata/           fictional vault and test repositories
+web/                React + Vite UI
 ```

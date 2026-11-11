@@ -1,17 +1,17 @@
 {
   "id": 26,
-  "titre": "MongoDB",
-  "dossier": "Technos",
-  "degre": 1,
-  "chemin": "Technos/MongoDB.md",
-  "maj": "2026-10-26",
-  "contenu": "# MongoDB\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Northwind]].",
-  "voisins": [
+  "title": "MongoDB",
+  "folder": "Technologies",
+  "degree": 1,
+  "path": "Technologies/MongoDB.md",
+  "updated": "2026-10-26",
+  "content": "# MongoDB\n\nDemo note from the Observatoire vault.\n\nLinked to [[Northwind]].",
+  "neighbors": [
     {
       "id": 4,
-      "titre": "Northwind",
-      "dossier": "Projets",
-      "degre": 3
+      "title": "Northwind",
+      "folder": "Projects",
+      "degree": 3
     }
   ]
 }

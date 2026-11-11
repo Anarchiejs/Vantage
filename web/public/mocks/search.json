@@ -1,0 +1,74 @@
+[
+  {
+    "source": "note",
+    "ref": "Projects/Observatoire.md",
+    "title": "<mark>Observatoire</mark>",
+    "excerpt": "The repository tracks commits and the vault. Base <mark>SQLite</mark>.",
+    "project": "Observatoire",
+    "date": "2026-10-26",
+    "note_id": 1
+  },
+  {
+    "source": "note",
+    "ref": "Technologies/SQLite.md",
+    "title": "<mark>SQLite</mark>",
+    "excerpt": "… <mark>FTS5</mark> index of notes and commits …",
+    "project": null,
+    "date": "2026-10-20",
+    "note_id": 4
+  },
+  {
+    "source": "commit",
+    "ref": "c0ffee00a1b2c3d4e5f678901234567890abcd",
+    "title": "Index notes with <mark>FTS5</mark>",
+    "excerpt": "… <mark>FTS5</mark> on title and content …",
+    "project": "Observatoire",
+    "date": "2026-10-26T14:30:00Z",
+    "note_id": null
+  },
+  {
+    "source": "commit",
+    "ref": "b7e1a09c88d24f0190aa11bb22cc33dd44ee55ff",
+    "title": "Add the project timeline for <mark>Compass</mark>",
+    "excerpt": "… weekly volume and languages …",
+    "project": "Compass",
+    "date": "2026-10-25T14:30:00Z",
+    "note_id": null
+  },
+  {
+    "source": "note",
+    "ref": "Projects/Harbor.md",
+    "title": "<mark>Harbor</mark>",
+    "excerpt": "… local models, nothing leaves the machine …",
+    "project": "Harbor",
+    "date": "2026-10-23",
+    "note_id": 5
+  },
+  {
+    "source": "note",
+    "ref": "Sessions/2026-10-22.md",
+    "title": "Session du 22 octobre",
+    "excerpt": "Review of the note <mark>graph</mark> in the vault.",
+    "project": "Observatoire",
+    "date": "2026-10-22",
+    "note_id": 6
+  },
+  {
+    "source": "commit",
+    "ref": "de4d10c0de4d10c0de4d10c0de4d10c0de4d10c0",
+    "title": "Fix the commit import for <mark>Luau</mark>",
+    "excerpt": "… Keel: .lua files counted separately …",
+    "project": "Keel",
+    "date": "2026-10-22T09:00:00Z",
+    "note_id": null
+  },
+  {
+    "source": "note",
+    "ref": "Projects/Quartz.md",
+    "title": "<mark>Quartz</mark>",
+    "excerpt": "… walking repositories and measuring languages …",
+    "project": "Quartz",
+    "date": "2026-10-20",
+    "note_id": 7
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "name": "commits-by-project",
+    "sql": "SELECT p.name, COUNT(*) AS commits\nFROM commit_git c\nJOIN repository d ON d.id = c.repository_id\nJOIN project p ON p.id = d.project_id\nGROUP BY p.name\nORDER BY commits DESC"
+  },
+  {
+    "name": "notes-by-folder",
+    "sql": "SELECT folder, COUNT(*) AS notes\nFROM note\nGROUP BY folder\nORDER BY notes DESC"
+  },
+  {
+    "name": "broken-links",
+    "sql": "SELECT source_id, target_title\nFROM link\nWHERE target_id IS NULL\nORDER BY target_title"
+  }
+]

@@ -1,0 +1,270 @@
+// Package api serves the UI and the JSON API.
+//
+// contract.go is the exact mirror of web/src/api/types.ts: every change is made on both sides.
+// Nullable fields are pointers; lists are never nil (return []T{}) so JSON contains [] rather than null.
+package api
+
+// APIError is the body of every error response.
+type APIError struct {
+	Error string `json:"error"`
+}
+
+// ---- GET /api/home
+
+type ActivityDay struct {
+	Day       string   `json:"day"`
+	Commits   int64    `json:"commits"`
+	Additions int64    `json:"additions"`
+	Deletions int64    `json:"deletions"`
+	Sessions  int64    `json:"sessions"`
+	Projects  []string `json:"projects"`
+}
+
+type Stats struct {
+	Commits        int64 `json:"commits"`
+	Additions      int64 `json:"additions"`
+	Deletions      int64 `json:"deletions"`
+	Sessions       int64 `json:"sessions"`
+	ActiveProjects int64 `json:"active_projects"`
+}
+
+type ActiveProject struct {
+	ID         int64   `json:"id"`
+	Name       string  `json:"name"`
+	LastCommit *string `json:"last_commit"`
+	Commits30d int64   `json:"commits_30d"`
+}
+
+type DormantProject struct {
+	ID         int64   `json:"id"`
+	Name       string  `json:"name"`
+	LastCommit *string `json:"last_commit"`
+	Days       int64   `json:"days"`
+}
+
+type StaleCard struct {
+	ID             int64   `json:"id"`
+	Name           string  `json:"name"`
+	VerifiedCommit *string `json:"verified_commit"`
+	LastSHA        *string `json:"last_sha"`
+	CommitsSince   int64   `json:"commits_since"`
+}
+
+type Home struct {
+	Calendar      []ActivityDay    `json:"calendar"`
+	Week          Stats            `json:"week"`
+	PreviousWeek  Stats            `json:"previous_week"`
+	Month         Stats            `json:"month"`
+	PreviousMonth Stats            `json:"previous_month"`
+	Active        []ActiveProject  `json:"active"`
+	Dormant       []DormantProject `json:"dormant"`
+	StaleCards    []StaleCard      `json:"stale_cards"`
+}
+
+// ---- GET /api/projects and /api/projects/{id}
+
+type ProjectSummary struct {
+	ID              int64   `json:"id"`
+	Name            string  `json:"name"`
+	Status          *string `json:"status"`
+	Commits         int64   `json:"commits"`
+	LastCommit      *string `json:"last_commit"`
+	PrimaryLanguage *string `json:"primary_language"`
+}
+
+type TimelineEvent struct {
+	Date  string  `json:"date"`
+	Type  string  `json:"type"` // commit | session | journal
+	Title string  `json:"title"`
+	Ref   string  `json:"ref"`
+	AI    *string `json:"ai"`
+}
+
+type WeeklyVolume struct {
+	Week      string `json:"week"`
+	Commits   int64  `json:"commits"`
+	Additions int64  `json:"additions"`
+	Deletions int64  `json:"deletions"`
+}
+
+type LanguageShare struct {
+	Language  string  `json:"language"`
+	CodeLines int64   `json:"code_lines"`
+	Share     float64 `json:"share"`
+}
+
+type LanguagePoint struct {
+	MeasuredOn string `json:"measured_on"`
+	Language   string `json:"language"`
+	CodeLines  int64  `json:"code_lines"`
+}
+
+type Hotspot struct {
+	Path          string `json:"path"`
+	Modifications int64  `json:"modifications"`
+	Additions     int64  `json:"additions"`
+	Deletions     int64  `json:"deletions"`
+}
+
+type Health struct {
+	VerifiedCommit *string  `json:"verified_commit"`
+	VerifiedOn     *string  `json:"verified_on"`
+	LastSHA        *string  `json:"last_sha"`
+	UpToDate       bool     `json:"up_to_date"`
+	CommitsSince   int64    `json:"commits_since"`
+	MissingNotes   []string `json:"missing_notes"`
+}
+
+type AIActivity struct {
+	AI       string `json:"ai"`
+	Sessions int64  `json:"sessions"`
+	First    string `json:"first"`
+	Last     string `json:"last"`
+}
+
+type ProjectFull struct {
+	ProjectSummary
+	SourcePath   *string  `json:"source_path"`
+	Technologies []string `json:"technologies"`
+}
+
+type ProjectDetail struct {
+	Project           ProjectFull     `json:"project"`
+	Timeline          []TimelineEvent `json:"timeline"`
+	Volume            []WeeklyVolume  `json:"volume"`
+	Languages         []LanguageShare `json:"languages"`
+	LanguageEvolution []LanguagePoint `json:"language_evolution"`
+	Hotspots          []Hotspot       `json:"hotspots"`
+	Health            Health          `json:"health"`
+	AI                []AIActivity    `json:"ai"`
+}
+
+// ---- GET /api/technologies and /api/ai
+
+type SankeyNode struct {
+	Name string `json:"name"`
+	Type string `json:"type"` // project | technology
+}
+
+type SankeyLink struct {
+	Source string `json:"source"`
+	Target string `json:"target"`
+	Value  int64  `json:"value"` // 1 per project -> technology link
+}
+
+type Sankey struct {
+	Nodes []SankeyNode `json:"nodes"`
+	Links []SankeyLink `json:"links"`
+}
+
+type TechTrend struct {
+	Month      string `json:"month"`
+	Technology string `json:"technology"`
+	Commits    int64  `json:"commits"`
+}
+
+type Technologies struct {
+	Sankey     Sankey      `json:"sankey"`
+	Trend      []TechTrend `json:"trend"`
+	Unassigned []string    `json:"unassigned"`
+}
+
+type SessionsMonth struct {
+	Month    string `json:"month"`
+	Sessions int64  `json:"sessions"`
+}
+
+type Assistant struct {
+	AI       string          `json:"ai"`
+	Sessions int64           `json:"sessions"`
+	Projects []string        `json:"projects"`
+	ByMonth  []SessionsMonth `json:"by_month"`
+}
+
+// ---- GET /api/graph, /api/graph/path, /api/notes/{id}
+
+type GraphNode struct {
+	ID     int64  `json:"id"`
+	Title  string `json:"title"`
+	Folder string `json:"folder"`
+	Degree int64  `json:"degree"`
+}
+
+type GraphLink struct {
+	Source int64 `json:"source"`
+	Target int64 `json:"target"`
+}
+
+type BrokenLink struct {
+	Source      int64  `json:"source"`
+	SourceTitle string `json:"source_title"`
+	TargetTitle string `json:"target_title"`
+}
+
+type Graph struct {
+	Nodes   []GraphNode  `json:"nodes"`
+	Links   []GraphLink  `json:"links"`
+	Orphans []GraphNode  `json:"orphans"`
+	Central []GraphNode  `json:"central"`
+	Broken  []BrokenLink `json:"broken"`
+}
+
+type GraphPath struct {
+	Path []GraphNode `json:"path"`
+}
+
+type NoteDetail struct {
+	ID        int64       `json:"id"`
+	Title     string      `json:"title"`
+	Path      string      `json:"path"`
+	Folder    string      `json:"folder"`
+	Updated   *string     `json:"updated"`
+	Content   string      `json:"content"`
+	Neighbors []GraphNode `json:"neighbors"`
+}
+
+// ---- GET /api/search
+
+type SearchHit struct {
+	Source  string  `json:"source"` // note | commit
+	Ref     string  `json:"ref"`
+	Title   string  `json:"title"`
+	Excerpt string  `json:"excerpt"`
+	Project *string `json:"project"`
+	Date    *string `json:"date"`
+	NoteID  *int64  `json:"note_id"`
+}
+
+// ---- SQL console
+
+type SQLRequest struct {
+	SQL string `json:"sql"`
+}
+
+type SQLResult struct {
+	Columns   []string `json:"columns"`
+	Rows      [][]any  `json:"rows"`
+	Duration  float64  `json:"duration_ms"`
+	Truncated bool     `json:"truncated"`
+}
+
+type SchemaColumn struct {
+	Name string `json:"name"`
+	Type string `json:"type"`
+}
+
+type SchemaTable struct {
+	Table   string         `json:"table"`
+	Columns []SchemaColumn `json:"columns"`
+}
+
+type SavedQuery struct {
+	Name string `json:"name"`
+	SQL  string `json:"sql"`
+}
+
+// ---- GET /api/events (SSE), event "update"
+
+type UpdateEvent struct {
+	Tables []string `json:"tables"`
+}

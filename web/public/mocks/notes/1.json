@@ -1,53 +1,53 @@
 {
   "id": 1,
-  "titre": "Observatoire",
-  "dossier": "Projets",
-  "degre": 7,
-  "chemin": "Projets/Observatoire.md",
-  "maj": "2026-10-26",
-  "contenu": "# Observatoire\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Go]].\nLié à [[React]].\nLié à [[TypeScript]].\nLié à [[SQLite]].\nLié à [[Claude Code]].\nLié à [[Architecture Observatoire]].\nLié à [[2026-10-26 - Observatoire]].",
-  "voisins": [
+  "title": "Observatoire",
+  "folder": "Projects",
+  "degree": 7,
+  "path": "Projects/Observatoire.md",
+  "updated": "2026-10-26",
+  "content": "# Observatoire\n\nDemo note from the Observatoire vault.\n\nLinked to [[Go]].\nLinked to [[React]].\nLinked to [[TypeScript]].\nLinked to [[SQLite]].\nLinked to [[Claude Code]].\nLinked to [[Architecture Observatoire]].\nLinked to [[2026-10-26 - Observatoire]].",
+  "neighbors": [
     {
       "id": 20,
-      "titre": "Go",
-      "dossier": "Technos",
-      "degre": 1
+      "title": "Go",
+      "folder": "Technologies",
+      "degree": 1
     },
     {
       "id": 21,
-      "titre": "React",
-      "dossier": "Technos",
-      "degre": 3
+      "title": "React",
+      "folder": "Technologies",
+      "degree": 3
     },
     {
       "id": 22,
-      "titre": "TypeScript",
-      "dossier": "Technos",
-      "degre": 5
+      "title": "TypeScript",
+      "folder": "Technologies",
+      "degree": 5
     },
     {
       "id": 23,
-      "titre": "SQLite",
-      "dossier": "Technos",
-      "degre": 2
+      "title": "SQLite",
+      "folder": "Technologies",
+      "degree": 2
     },
     {
       "id": 40,
-      "titre": "Claude Code",
-      "dossier": "IA",
-      "degre": 3
+      "title": "Claude Code",
+      "folder": "IA",
+      "degree": 3
     },
     {
       "id": 50,
-      "titre": "Architecture Observatoire",
-      "dossier": "Concepts",
-      "degre": 1
+      "title": "Architecture Observatoire",
+      "folder": "Concepts",
+      "degree": 1
     },
     {
       "id": 52,
-      "titre": "2026-10-26 - Observatoire",
-      "dossier": "Sessions",
-      "degre": 2
+      "title": "2026-10-26 - Observatoire",
+      "folder": "Sessions",
+      "degree": 2
     }
   ]
 }

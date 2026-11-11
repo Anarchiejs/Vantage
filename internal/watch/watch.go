@@ -1,4 +1,4 @@
-// Package watch surveille les notes et les références des dépôts Git.
+// Package watch watches notes and Git repository refs.
 package watch
 
 import (
@@ -13,28 +13,28 @@ import (
 	"github.com/fsnotify/fsnotify"
 )
 
-// Options définit les sources et les rappels de la surveillance.
+// Options defines the sources and callbacks for watching.
 type Options struct {
-	Coffre   string
-	Depots   func() []string
-	Delai    time.Duration
-	Importer func(ctx context.Context) (Changements, error)
-	Annoncer func(tables ...string)
-	Journal  func(format string, args ...any)
+	Vault    string
+	Repos    func() []string
+	Delay    time.Duration
+	Import   func(ctx context.Context) (Changes, error)
+	Announce func(tables ...string)
+	Log      func(format string, args ...any)
 }
 
-// Changements compte les notes et les commits modifiés par un import.
-type Changements struct{ Notes, Commits int }
+// Changes counts the notes and commits modified by an import.
+type Changes struct{ Notes, Commits int }
 
-func (c Changements) Vide() bool { return c.Notes <= 0 && c.Commits <= 0 }
+func (c Changes) Empty() bool { return c.Notes <= 0 && c.Commits <= 0 }
 
-func (c Changements) Tables() []string {
+func (c Changes) Tables() []string {
 	var tables []string
 	if c.Notes > 0 {
-		tables = append(tables, "note", "lien", "session", "journal", "recherche")
+		tables = append(tables, "note", "link", "session", "journal", "search_index")
 	}
 	if c.Commits > 0 {
-		tables = append(tables, "commit_git", "fichier_modifie", "activite_jour", "mesure_langage")
+		tables = append(tables, "commit_git", "changed_file", "daily_activity", "language_stat")
 	}
 	return tables
 }
@@ -42,14 +42,14 @@ func (c Changements) Tables() []string {
 type surveillance struct {
 	w      *fsnotify.Watcher
 	opt    Options
-	coffre string
+	vault  string
 	git    []string
 	actifs map[string]bool
 }
 
 func (s *surveillance) log(format string, args ...any) {
-	if s.opt.Journal != nil {
-		s.opt.Journal(format, args...)
+	if s.opt.Log != nil {
+		s.opt.Log(format, args...)
 	}
 }
 
@@ -78,7 +78,7 @@ func visible(path string) bool {
 func (s *surveillance) arbre(root string, cible map[string]bool, cache bool) {
 	err := filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
-			s.log("Parcours de %s : %v", path, err)
+			s.log("walk %s: %v", path, err)
 			return nil
 		}
 		if !d.IsDir() {
@@ -88,12 +88,12 @@ func (s *surveillance) arbre(root string, cible map[string]bool, cache bool) {
 			return filepath.SkipDir
 		}
 		cible[path] = true
-		// Poser la surveillance avant de parcourir les enfants ferme la fenêtre de création.
+		// Watching before walking children closes the creation window.
 		s.ajouter(path)
 		return nil
 	})
 	if err != nil {
-		s.log("Surveillance de %s : %v", root, err)
+		s.log("watch %s: %v", root, err)
 	}
 }
 
@@ -102,38 +102,38 @@ func (s *surveillance) ajouter(path string) {
 		return
 	}
 	if err := s.w.Add(path); err != nil {
-		s.log("Surveillance de %s : %v", path, err)
+		s.log("watch %s: %v", path, err)
 	} else {
 		s.actifs[path] = true
 	}
 }
 
-func (s *surveillance) depots() {
+func (s *surveillance) repos() {
 	s.git = nil
-	if s.opt.Depots == nil {
+	if s.opt.Repos == nil {
 		return
 	}
-	for _, depot := range s.opt.Depots() {
-		git := filepath.Join(absolu(depot), ".git")
+	for _, repo := range s.opt.Repos() {
+		git := filepath.Join(absolu(repo), ".git")
 		info, err := os.Stat(git)
 		if err != nil {
-			s.log("Dépôt %s : %v", depot, err)
+			s.log("repository %s: %v", repo, err)
 			continue
 		}
 		if !info.IsDir() {
 			data, err := os.ReadFile(git)
 			if err != nil {
-				s.log("Lecture de %s : %v", git, err)
+				s.log("read %s: %v", git, err)
 				continue
 			}
 			line := strings.TrimSpace(strings.SplitN(string(data), "\n", 2)[0])
 			if !strings.HasPrefix(line, "gitdir:") {
-				s.log("Fichier gitdir invalide : %s", git)
+				s.log("invalid gitdir file: %s", git)
 				continue
 			}
 			dir := strings.TrimSpace(strings.TrimPrefix(line, "gitdir:"))
 			if dir == "" {
-				s.log("Fichier gitdir vide : %s", git)
+				s.log("empty gitdir file: %s", git)
 				continue
 			}
 			if !filepath.IsAbs(dir) {
@@ -142,7 +142,7 @@ func (s *surveillance) depots() {
 			git = absolu(dir)
 		}
 		s.git = append(s.git, git)
-		// Les worktrees partagent les branches dans le répertoire commun.
+		// Worktrees share branches in the common directory.
 		if data, err := os.ReadFile(filepath.Join(git, "commondir")); err == nil {
 			common := strings.TrimSpace(string(data))
 			if common != "" {
@@ -157,8 +157,8 @@ func (s *surveillance) depots() {
 
 func (s *surveillance) ajuster() {
 	cible := make(map[string]bool)
-	if s.coffre != "" {
-		s.arbre(s.coffre, cible, true)
+	if s.vault != "" {
+		s.arbre(s.vault, cible, true)
 	}
 	for _, git := range s.git {
 		cible[git] = true
@@ -189,18 +189,18 @@ func (s *surveillance) pertinent(event fsnotify.Event) bool {
 	info, statErr := os.Stat(path)
 	dossier := (statErr == nil && info.IsDir()) || s.actifs[path]
 	if dossier && !event.Has(fsnotify.Create|fsnotify.Remove|fsnotify.Rename) {
-		// Windows signale aussi l'écriture du dossier parent : seul son contenu compte.
+		// Windows also reports writes to the parent directory: only its contents matter.
 		return false
 	}
-	if s.coffre != "" {
-		rel, ok := relatif(s.coffre, path)
+	if s.vault != "" {
+		rel, ok := relatif(s.vault, path)
 		parents := filepath.Dir(rel)
 		if dossier {
 			parents = rel
 		}
 		if ok && visible(parents) {
 			if statErr == nil && info.IsDir() {
-				// Un fichier peut précéder l'installation de la surveillance du dossier.
+				// A file can appear before the directory watch is installed.
 				found := false
 				_ = filepath.WalkDir(path, func(p string, d fs.DirEntry, err error) error {
 					if err != nil {
@@ -235,19 +235,19 @@ func (s *surveillance) pertinent(event fsnotify.Event) bool {
 	return false
 }
 
-// Surveiller bloque jusqu'à l'annulation du contexte, sans import concurrent.
-func Surveiller(ctx context.Context, opt Options) error {
+// Watch blocks until the context is canceled, without a concurrent import.
+func Watch(ctx context.Context, opt Options) error {
 	if ctx.Err() != nil {
 		return nil
 	}
-	if opt.Importer == nil {
-		return fmt.Errorf("watch : Importer est requis")
+	if opt.Import == nil {
+		return fmt.Errorf("watch: Import is required")
 	}
-	if opt.Delai < 0 {
-		return fmt.Errorf("watch : Delai doit être positif")
+	if opt.Delay < 0 {
+		return fmt.Errorf("watch: Delay must be positive")
 	}
-	if opt.Delai == 0 {
-		opt.Delai = 1500 * time.Millisecond
+	if opt.Delay == 0 {
+		opt.Delay = 1500 * time.Millisecond
 	}
 	w, err := fsnotify.NewWatcher()
 	if err != nil {
@@ -255,13 +255,13 @@ func Surveiller(ctx context.Context, opt Options) error {
 	}
 	defer w.Close()
 	s := &surveillance{w: w, opt: opt, actifs: make(map[string]bool)}
-	if opt.Coffre != "" {
-		s.coffre = absolu(opt.Coffre)
+	if opt.Vault != "" {
+		s.vault = absolu(opt.Vault)
 	}
-	s.depots()
+	s.repos()
 	s.ajuster()
 	type resultat struct {
-		c   Changements
+		c   Changes
 		err error
 	}
 	fin := make(chan resultat, 1)
@@ -273,9 +273,9 @@ func Surveiller(ctx context.Context, opt Options) error {
 			timer.Stop()
 		}
 	}()
-	lancer := func() {
+	startImport := func() {
 		enCours = true
-		go func() { c, err := opt.Importer(ctx); fin <- resultat{c, err} }()
+		go func() { c, err := opt.Import(ctx); fin <- resultat{c, err} }()
 	}
 	for {
 		if ctx.Err() != nil {
@@ -288,12 +288,12 @@ func Surveiller(ctx context.Context, opt Options) error {
 			if !ok {
 				return nil
 			}
-			// Les suppressions se reconnaissent encore dans l'ancienne liste.
+			// Deletes are still recognizable in the previous list.
 			supprime := s.actifs[event.Name] && event.Has(fsnotify.Remove|fsnotify.Rename)
 			pertinent := false
 			if supprime {
 				pertinent = s.pertinent(event)
-				// fsnotify retire automatiquement les dossiers supprimés ou renommés.
+				// fsnotify automatically drops deleted or renamed directories.
 				for path := range s.actifs {
 					if _, ok := relatif(event.Name, path); ok {
 						_ = s.w.Remove(path)
@@ -312,31 +312,31 @@ func Surveiller(ctx context.Context, opt Options) error {
 			if enCours {
 				suivant = true
 			} else if attente == nil {
-				timer = time.NewTimer(opt.Delai)
+				timer = time.NewTimer(opt.Delay)
 				attente = timer.C
 			}
 		case err, ok := <-w.Errors:
 			if !ok {
 				return nil
 			}
-			s.log("Erreur fsnotify : %v", err)
+			s.log("fsnotify error: %v", err)
 		case <-attente:
 			attente = nil
 			if ctx.Err() == nil {
-				lancer()
+				startImport()
 			}
 		case result := <-fin:
 			enCours = false
 			if result.err != nil {
-				s.log("Erreur d'import : %v", result.err)
-			} else if !result.c.Vide() && opt.Annoncer != nil {
-				opt.Annoncer(result.c.Tables()...)
+				s.log("import error: %v", result.err)
+			} else if !result.c.Empty() && opt.Announce != nil {
+				opt.Announce(result.c.Tables()...)
 			}
-			s.depots()
+			s.repos()
 			s.ajuster()
 			if suivant && ctx.Err() == nil {
 				suivant = false
-				lancer()
+				startImport()
 			}
 		}
 	}

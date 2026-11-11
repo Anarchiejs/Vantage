@@ -1,4 +1,4 @@
-// Package db ouvre la base SQLite et applique les migrations.
+// Package db opens the SQLite database and applies migrations.
 package db
 
 import (
@@ -13,25 +13,25 @@ import (
 	"github.com/Anarchiejs/Observatoire/migrations"
 )
 
-// Ouvrir ouvre la base en lecture-écriture avec les PRAGMA du projet.
-func Ouvrir(chemin string) (*sql.DB, error) {
-	return ouvrir(chemin, false)
+// Open opens the database read-write with the project's PRAGMAs.
+func Open(path string) (*sql.DB, error) {
+	return open(path, false)
 }
 
-// OuvrirLectureSeule ouvre la base en mode=ro : toute écriture échoue (console SQL).
-func OuvrirLectureSeule(chemin string) (*sql.DB, error) {
-	return ouvrir(chemin, true)
+// OpenReadOnly opens the database with mode=ro: every write fails (SQL console).
+func OpenReadOnly(path string) (*sql.DB, error) {
+	return open(path, true)
 }
 
-func ouvrir(chemin string, lectureSeule bool) (*sql.DB, error) {
-	abs, err := filepath.Abs(chemin)
+func open(path string, readOnly bool) (*sql.DB, error) {
+	abs, err := filepath.Abs(path)
 	if err != nil {
 		return nil, err
 	}
 	q := url.Values{}
 	q.Add("_pragma", "foreign_keys(1)")
 	q.Add("_pragma", "busy_timeout(5000)")
-	if lectureSeule {
+	if readOnly {
 		q.Set("mode", "ro")
 		q.Add("_pragma", "query_only(1)")
 	} else {
@@ -45,13 +45,13 @@ func ouvrir(chemin string, lectureSeule bool) (*sql.DB, error) {
 	}
 	if err := base.Ping(); err != nil {
 		base.Close()
-		return nil, fmt.Errorf("ouverture de %s : %w", chemin, err)
+		return nil, fmt.Errorf("open %s: %w", path, err)
 	}
 	return base, nil
 }
 
-// Migrer amène le schéma à la dernière version.
-func Migrer(base *sql.DB) error {
+// Migrate brings the schema up to the latest version.
+func Migrate(base *sql.DB) error {
 	goose.SetBaseFS(migrations.FS)
 	goose.SetLogger(goose.NopLogger())
 	if err := goose.SetDialect("sqlite3"); err != nil {

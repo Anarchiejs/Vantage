@@ -3,8 +3,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-// En développement, /api est relayé vers le serveur Go (`observatoire serve`).
-// `npm run dev:mock` sert à la place les fichiers de public/mocks (voir src/api/client.ts).
+// In development, /api is proxied to the Go server (`observatoire serve`).
+// `npm run dev:mock` serves the files in public/mocks instead (see src/api/client.ts).
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {

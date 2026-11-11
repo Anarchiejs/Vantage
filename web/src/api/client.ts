@@ -1,60 +1,60 @@
-// Client de l'API. En mode maquette (`npm run dev:mock`, VITE_MOCK=1), les GET lisent public/mocks/<chemin>.json :
-//   /api/accueil            → /mocks/accueil.json
-//   /api/projets/3          → /mocks/projets/3.json
-//   /api/recherche?q=x      → /mocks/recherche.json (paramètres ignorés)
-// et les POST lisent /mocks/<chemin>.post.json.
+// API client. In mock mode (`npm run dev:mock`, VITE_MOCK=1), GETs read public/mocks/<path>.json:
+//   /api/home            → /mocks/home.json
+//   /api/projects/3      → /mocks/projects/3.json
+//   /api/search?q=x      → /mocks/search.json (parameters ignored)
+// and POSTs read /mocks/<path>.post.json.
 
-export class ErreurApi extends Error {
+export class ApiError extends Error {
   constructor(
     message: string,
-    readonly statut: number,
+    readonly status: number,
   ) {
     super(message)
   }
 }
 
-const MAQUETTE = import.meta.env.VITE_MOCK === '1'
+const MOCK = import.meta.env.VITE_MOCK === '1'
 
-function urlMaquette(chemin: string, post: boolean): string {
-  const sansParams = chemin.split('?')[0].replace(/^\/api\//, '')
-  return `/mocks/${sansParams}${post ? '.post' : ''}.json`
+function mockUrl(path: string, post: boolean): string {
+  const withoutParams = path.split('?')[0].replace(/^\/api\//, '')
+  return `/mocks/${withoutParams}${post ? '.post' : ''}.json`
 }
 
-async function lire<T>(r: Response): Promise<T> {
-  if (!r.ok) {
-    let message = `${r.status} ${r.statusText}`
+async function read<T>(response: Response): Promise<T> {
+  if (!response.ok) {
+    let message = `${response.status} ${response.statusText}`
     try {
-      const corps = await r.json()
-      if (corps?.erreur) message = corps.erreur
+      const body = await response.json()
+      if (body?.error) message = body.error
     } catch {
-      /* corps non JSON */
+      /* body is not JSON */
     }
-    throw new ErreurApi(message, r.status)
+    throw new ApiError(message, response.status)
   }
-  return r.json() as Promise<T>
+  return response.json() as Promise<T>
 }
 
-export async function get<T>(chemin: string, signal?: AbortSignal): Promise<T> {
-  const url = MAQUETTE ? urlMaquette(chemin, false) : chemin
-  return lire<T>(await fetch(url, { signal }))
+export async function get<T>(path: string, signal?: AbortSignal): Promise<T> {
+  const url = MOCK ? mockUrl(path, false) : path
+  return read<T>(await fetch(url, { signal }))
 }
 
-export async function post<T>(chemin: string, corps: unknown, signal?: AbortSignal): Promise<T> {
-  if (MAQUETTE) return lire<T>(await fetch(urlMaquette(chemin, true), { signal }))
-  return lire<T>(
-    await fetch(chemin, {
+export async function post<T>(path: string, body: unknown, signal?: AbortSignal): Promise<T> {
+  if (MOCK) return read<T>(await fetch(mockUrl(path, true), { signal }))
+  return read<T>(
+    await fetch(path, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(corps),
+      body: JSON.stringify(body),
       signal,
     }),
   )
 }
 
-/** Construit « /api/x?a=1&b=2 » en omettant les valeurs vides. */
-export function avecParams(chemin: string, params: Record<string, string | number | undefined | null>): string {
-  const p = new URLSearchParams()
-  for (const [k, v] of Object.entries(params)) if (v !== undefined && v !== null && v !== '') p.set(k, String(v))
-  const s = p.toString()
-  return s ? `${chemin}?${s}` : chemin
+/** Builds "/api/x?a=1&b=2", omitting empty values. */
+export function withParams(path: string, params: Record<string, string | number | undefined | null>): string {
+  const search = new URLSearchParams()
+  for (const [key, value] of Object.entries(params)) if (value !== undefined && value !== null && value !== '') search.set(key, String(value))
+  const text = search.toString()
+  return text ? `${path}?${text}` : path
 }

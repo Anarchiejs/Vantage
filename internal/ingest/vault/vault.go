@@ -16,22 +16,22 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type Resultat struct {
+type Result struct {
 	Notes    []model.Note
-	Fiches   []model.Fiche
+	Cards    []model.ProjectCard
 	Sessions []model.Session
-	Journal  []model.EntreeJournal
+	Journal  []model.JournalEntry
 }
 
-// Lire walks Markdown files in lexical order, skipping hidden directories.
-func Lire(racine string) (Resultat, error) {
-	var result Resultat
-	err := filepath.WalkDir(racine, func(file string, entry fs.DirEntry, err error) error {
+// Read walks Markdown files in lexical order, skipping hidden directories.
+func Read(root string) (Result, error) {
+	var result Result
+	err := filepath.WalkDir(root, func(file string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
 		if entry.IsDir() {
-			if file != racine && strings.HasPrefix(entry.Name(), ".") {
+			if file != root && strings.HasPrefix(entry.Name(), ".") {
 				return filepath.SkipDir
 			}
 			return nil
@@ -39,71 +39,71 @@ func Lire(racine string) (Resultat, error) {
 		if !entry.Type().IsRegular() || filepath.Ext(file) != ".md" {
 			return nil
 		}
-		rel, err := filepath.Rel(racine, file)
+		rel, err := filepath.Rel(root, file)
 		if err != nil {
 			return err
 		}
-		note, meta, err := lire(racine, rel)
+		note, meta, err := read(root, rel)
 		if err != nil {
 			return err
 		}
 		result.Notes = append(result.Notes, note)
-		parts := strings.Split(note.Chemin, "/")
-		if len(parts) == 3 && parts[0] == "Projets" && parts[2] == parts[1]+".md" && note.Type == "projet" {
-			source := meta.first("chemin_source")
+		parts := strings.Split(note.Path, "/")
+		if len(parts) == 3 && parts[0] == "Projects" && parts[2] == parts[1]+".md" && note.Type == "project" {
+			source := meta.first("source_path")
 			if !absolutePath(source) {
 				source = ""
 			}
-			fiche := model.Fiche{Nom: note.Titre, Statut: meta.first("statut"), CheminSource: source,
-				Maj: note.Maj, VerifieLe: meta.first("verifie_le"), VerifieCommit: shaEnTete(meta.first("verifie_commit"))}
-			for _, techno := range meta.values("technos") {
-				if target := cible(techno); target != "" {
-					fiche.Technos = append(fiche.Technos, target)
+			card := model.ProjectCard{Name: note.Title, Status: meta.first("status"), SourcePath: source,
+				Updated: note.Updated, VerifiedOn: meta.first("verified_on"), VerifiedCommit: leadingSHA(meta.first("verified_commit"))}
+			for _, technology := range meta.values("technologies") {
+				if target := linkTarget(technology); target != "" {
+					card.Technologies = append(card.Technologies, target)
 				}
 			}
-			result.Fiches = append(result.Fiches, fiche)
+			result.Cards = append(result.Cards, card)
 		}
-		if note.Dossier == "Sessions" && note.Type == "session" {
-			result.Sessions = append(result.Sessions, model.Session{CheminNote: note.Chemin,
-				Date: meta.first("date"), Projet: cible(meta.first("projet")), IA: cible(meta.first("ia"))})
+		if note.Folder == "Sessions" && note.Type == "session" {
+			result.Sessions = append(result.Sessions, model.Session{NotePath: note.Path,
+				Date: meta.first("date"), Project: linkTarget(meta.first("project")), AI: linkTarget(meta.first("ai"))})
 		}
-		if note.Chemin == "Journal.md" {
-			result.Journal = journal(note.Contenu)
+		if note.Path == "Journal.md" {
+			result.Journal = journal(note.Content)
 		}
 		return nil
 	})
 	return result, err
 }
 
-// LireNote accepts either a vault-relative path or an absolute path within it.
-func LireNote(racine, chemin string) (model.Note, error) {
-	note, _, err := lire(racine, chemin)
+// ReadNote accepts either a vault-relative path or an absolute path within it.
+func ReadNote(root, notePath string) (model.Note, error) {
+	note, _, err := read(root, notePath)
 	return note, err
 }
 
-func lire(racine, chemin string) (model.Note, metadata, error) {
+func read(root, notePath string) (model.Note, metadata, error) {
 	var note model.Note
-	root, err := filepath.Abs(racine)
+	absRoot, err := filepath.Abs(root)
 	if err != nil {
 		return note, nil, err
 	}
-	file := filepath.FromSlash(chemin)
+	file := filepath.FromSlash(notePath)
 	if !filepath.IsAbs(file) {
-		file = filepath.Join(root, file)
+		file = filepath.Join(absRoot, file)
 	}
-	rel, err := filepath.Rel(root, file)
+	rel, err := filepath.Rel(absRoot, file)
 	if err != nil {
 		return note, nil, err
 	}
 	if rel == ".." || strings.HasPrefix(rel, ".."+string(filepath.Separator)) || filepath.Ext(rel) != ".md" {
-		return note, nil, fmt.Errorf("note outside vault or not Markdown: %s", chemin)
+		return note, nil, fmt.Errorf("note outside vault or not Markdown: %s", notePath)
 	}
 	// Do not follow symlinks, including intermediate directory symlinks.
-	current := root
+	current := absRoot
 	segments := strings.Split(rel, string(filepath.Separator))
 	for i, segment := range segments {
 		if i < len(segments)-1 && strings.HasPrefix(segment, ".") {
-			return note, nil, fmt.Errorf("hidden directory: %s", chemin)
+			return note, nil, fmt.Errorf("hidden directory: %s", notePath)
 		}
 		current = filepath.Join(current, segment)
 		info, err := os.Lstat(current)
@@ -111,7 +111,7 @@ func lire(racine, chemin string) (model.Note, metadata, error) {
 			return note, nil, err
 		}
 		if info.Mode()&os.ModeSymlink != 0 {
-			return note, nil, fmt.Errorf("symlink note: %s", chemin)
+			return note, nil, fmt.Errorf("symlink note: %s", notePath)
 		}
 	}
 	raw, err := os.ReadFile(file)
@@ -119,10 +119,10 @@ func lire(racine, chemin string) (model.Note, metadata, error) {
 		return note, nil, err
 	}
 	body, meta := frontMatter(strings.TrimPrefix(string(raw), "\ufeff"))
-	note = model.Note{Chemin: filepath.ToSlash(rel), Titre: strings.TrimSuffix(filepath.Base(rel), ".md"),
-		Type: meta.first("type"), Maj: meta.first("maj"), Hash: fmt.Sprintf("%x", sha256.Sum256(raw)), Contenu: body, Liens: liens(body)}
+	note = model.Note{Path: filepath.ToSlash(rel), Title: strings.TrimSuffix(filepath.Base(rel), ".md"),
+		Type: meta.first("type"), Updated: meta.first("updated"), Hash: fmt.Sprintf("%x", sha256.Sum256(raw)), Content: body, Links: links(body)}
 	if len(segments) > 1 {
-		note.Dossier = segments[0]
+		note.Folder = segments[0]
 	}
 	return note, meta, nil
 }
@@ -180,7 +180,7 @@ func absolutePath(value string) bool {
 	return strings.HasPrefix(value, "/") || (len(value) >= 3 && ((value[0] >= 'A' && value[0] <= 'Z') || (value[0] >= 'a' && value[0] <= 'z')) && value[1] == ':' && (value[2] == '/' || value[2] == '\\'))
 }
 
-func cible(value string) string {
+func linkTarget(value string) string {
 	value = strings.TrimSpace(value)
 	value = strings.TrimPrefix(value, "!")
 	value = strings.TrimPrefix(value, "[[")
@@ -198,8 +198,8 @@ func cible(value string) string {
 	return strings.TrimSpace(strings.TrimSuffix(value, ".md"))
 }
 
-// liens ignores fenced code and backtick spans (including multiline spans).
-func liens(body string) []string {
+// links ignores fenced code and backtick spans (including multiline spans).
+func links(body string) []string {
 	var result []string
 	seen := map[string]bool{}
 	var fence byte
@@ -247,7 +247,7 @@ func liens(body string) []string {
 			if inline == 0 && strings.HasPrefix(line[i:], "[[") {
 				end := strings.Index(line[i+2:], "]]")
 				if end >= 0 {
-					target := cible(line[i+2 : i+2+end])
+					target := linkTarget(line[i+2 : i+2+end])
 					if target != "" && !seen[target] {
 						seen[target] = true
 						result = append(result, target)
@@ -262,18 +262,18 @@ func liens(body string) []string {
 	return result
 }
 
-// shaEnTete garde le sha en tête de verifie_commit (« 0df64eb2 (ComfyUI officiel) » → « 0df64eb2 ») ;
-// "" si la valeur ne commence pas par un sha (« aucun », « non vérifié »).
-func shaEnTete(v string) string {
-	return strings.ToLower(shaDebut.FindString(strings.TrimSpace(v)))
+// leadingSHA keeps the sha at the start of verified_commit ("0df64eb2 (official upstream)" -> "0df64eb2");
+// "" when the value does not start with a sha ("none", "not verified").
+func leadingSHA(value string) string {
+	return strings.ToLower(shaStart.FindString(strings.TrimSpace(value)))
 }
 
-var shaDebut = regexp.MustCompile(`(?i)^[0-9a-f]{7,40}\b`)
+var shaStart = regexp.MustCompile(`(?i)^[0-9a-f]{7,40}\b`)
 
 var journalLine = regexp.MustCompile(`^- (\d{4}-\d{2}-\d{2}) - \[\[([^\]]+)\]\] - (.*)$`)
 
-func journal(body string) []model.EntreeJournal {
-	var result []model.EntreeJournal
+func journal(body string) []model.JournalEntry {
+	var result []model.JournalEntry
 	for _, line := range strings.Split(body, "\n") {
 		match := journalLine.FindStringSubmatch(strings.TrimSuffix(line, "\r"))
 		if match == nil {
@@ -282,7 +282,7 @@ func journal(body string) []model.EntreeJournal {
 		if _, err := time.Parse("2006-01-02", match[1]); err != nil {
 			continue
 		}
-		result = append(result, model.EntreeJournal{Date: match[1], IA: cible(match[2]), Texte: match[3]})
+		result = append(result, model.JournalEntry{Date: match[1], AI: linkTarget(match[2]), Text: match[3]})
 	}
 	return result
 }

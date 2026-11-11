@@ -1,23 +1,23 @@
 {
   "id": 42,
-  "titre": "DeepSeek",
-  "dossier": "IA",
-  "degre": 2,
-  "chemin": "IA/DeepSeek.md",
-  "maj": "2026-10-26",
-  "contenu": "# DeepSeek\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Harbor]].\nLié à [[Tidepool]].",
-  "voisins": [
+  "title": "DeepSeek",
+  "folder": "IA",
+  "degree": 2,
+  "path": "IA/DeepSeek.md",
+  "updated": "2026-10-26",
+  "content": "# DeepSeek\n\nDemo note from the Observatoire vault.\n\nLinked to [[Harbor]].\nLinked to [[Tidepool]].",
+  "neighbors": [
     {
       "id": 3,
-      "titre": "Harbor",
-      "dossier": "Projets",
-      "degre": 3
+      "title": "Harbor",
+      "folder": "Projects",
+      "degree": 3
     },
     {
       "id": 7,
-      "titre": "Tidepool",
-      "dossier": "Projets",
-      "degre": 3
+      "title": "Tidepool",
+      "folder": "Projects",
+      "degree": 3
     }
   ]
 }

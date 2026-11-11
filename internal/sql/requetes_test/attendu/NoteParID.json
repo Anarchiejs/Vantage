@@ -1,8 +1,0 @@
-{
-  "id": 8,
-  "titre": "Atlas",
-  "chemin": "Projets/Atlas/Atlas.md",
-  "dossier": "Projets",
-  "maj": "2026-10-26",
-  "contenu": "# Atlas — cartographie des sentiers\n\nProjet fictif de démonstration.\n\nVoir [[Atlas - Resume]] et [[Atlas - Detaille]]. Session : [[Sessions/2026-10-20 - Atlas - import initial]]. Concept : [[Cartographie|cartes]]. Lien volontairement cassé : [[Note absente]]. Autre lien : [[Note#Section]]. Image embarquée : ![[image.png]].\n\n```md\nLien de code à ignorer : [[Lien dans le code]]\n```\n"
-}

@@ -1,0 +1,8 @@
+{
+  "id": 8,
+  "title": "Atlas",
+  "path": "Projects/Atlas/Atlas.md",
+  "folder": "Projects",
+  "updated": "2026-10-26",
+  "content": "# Atlas — trail map\n\nFictional demo project.\n\nSee [[Atlas - Summary]] and [[Atlas - Detail]]. Session: [[Sessions/2026-10-20 - Atlas - initial import]]. Concept: [[Mapping|maps]]. Broken link on purpose: [[Missing note]]. Other link: [[Note#Section]]. Embedded image: ![[image.png]].\n\n```md\nCode link to ignore: [[Link in code]]\n```\n"
+}
