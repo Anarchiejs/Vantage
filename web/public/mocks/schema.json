@@ -1,130 +1,319 @@
 [
   {
-    "table": "projet",
-    "colonnes": [
-      { "nom": "id", "type": "INTEGER" },
-      { "nom": "nom", "type": "TEXT" },
-      { "nom": "statut", "type": "TEXT" },
-      { "nom": "chemin_source", "type": "TEXT" },
-      { "nom": "fiche_maj", "type": "TEXT" },
-      { "nom": "verifie_commit", "type": "TEXT" },
-      { "nom": "verifie_le", "type": "TEXT" }
+    "table": "project",
+    "columns": [
+      {
+        "name": "id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "name",
+        "type": "TEXT"
+      },
+      {
+        "name": "status",
+        "type": "TEXT"
+      },
+      {
+        "name": "source_path",
+        "type": "TEXT"
+      },
+      {
+        "name": "card_updated",
+        "type": "TEXT"
+      },
+      {
+        "name": "verified_commit",
+        "type": "TEXT"
+      },
+      {
+        "name": "verified_on",
+        "type": "TEXT"
+      }
     ]
   },
   {
-    "table": "depot",
-    "colonnes": [
-      { "nom": "id", "type": "INTEGER" },
-      { "nom": "projet_id", "type": "INTEGER" },
-      { "nom": "chemin", "type": "TEXT" },
-      { "nom": "branche", "type": "TEXT" },
-      { "nom": "dernier_sha_importe", "type": "TEXT" }
+    "table": "repository",
+    "columns": [
+      {
+        "name": "id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "project_id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "path",
+        "type": "TEXT"
+      },
+      {
+        "name": "branch",
+        "type": "TEXT"
+      },
+      {
+        "name": "last_imported_sha",
+        "type": "TEXT"
+      }
     ]
   },
   {
     "table": "commit_git",
-    "colonnes": [
-      { "nom": "sha", "type": "TEXT" },
-      { "nom": "depot_id", "type": "INTEGER" },
-      { "nom": "auteur", "type": "TEXT" },
-      { "nom": "date_utc", "type": "TEXT" },
-      { "nom": "decalage_min", "type": "INTEGER" },
-      { "nom": "message", "type": "TEXT" },
-      { "nom": "jour_local", "type": "TEXT" },
-      { "nom": "heure_locale", "type": "INTEGER" }
+    "columns": [
+      {
+        "name": "sha",
+        "type": "TEXT"
+      },
+      {
+        "name": "repository_id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "author",
+        "type": "TEXT"
+      },
+      {
+        "name": "date_utc",
+        "type": "TEXT"
+      },
+      {
+        "name": "offset_min",
+        "type": "INTEGER"
+      },
+      {
+        "name": "message",
+        "type": "TEXT"
+      },
+      {
+        "name": "local_day",
+        "type": "TEXT"
+      },
+      {
+        "name": "local_hour",
+        "type": "INTEGER"
+      }
     ]
   },
   {
-    "table": "fichier_modifie",
-    "colonnes": [
-      { "nom": "commit_sha", "type": "TEXT" },
-      { "nom": "chemin", "type": "TEXT" },
-      { "nom": "langage", "type": "TEXT" },
-      { "nom": "ajouts", "type": "INTEGER" },
-      { "nom": "suppressions", "type": "INTEGER" }
+    "table": "changed_file",
+    "columns": [
+      {
+        "name": "commit_sha",
+        "type": "TEXT"
+      },
+      {
+        "name": "path",
+        "type": "TEXT"
+      },
+      {
+        "name": "language",
+        "type": "TEXT"
+      },
+      {
+        "name": "additions",
+        "type": "INTEGER"
+      },
+      {
+        "name": "deletions",
+        "type": "INTEGER"
+      }
     ]
   },
   {
     "table": "note",
-    "colonnes": [
-      { "nom": "id", "type": "INTEGER" },
-      { "nom": "chemin", "type": "TEXT" },
-      { "nom": "dossier", "type": "TEXT" },
-      { "nom": "titre", "type": "TEXT" },
-      { "nom": "type", "type": "TEXT" },
-      { "nom": "maj", "type": "TEXT" },
-      { "nom": "contenu_hash", "type": "TEXT" }
+    "columns": [
+      {
+        "name": "id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "path",
+        "type": "TEXT"
+      },
+      {
+        "name": "folder",
+        "type": "TEXT"
+      },
+      {
+        "name": "title",
+        "type": "TEXT"
+      },
+      {
+        "name": "type",
+        "type": "TEXT"
+      },
+      {
+        "name": "updated",
+        "type": "TEXT"
+      },
+      {
+        "name": "content_hash",
+        "type": "TEXT"
+      }
     ]
   },
   {
-    "table": "lien",
-    "colonnes": [
-      { "nom": "source_id", "type": "INTEGER" },
-      { "nom": "cible_titre", "type": "TEXT" },
-      { "nom": "cible_id", "type": "INTEGER" }
+    "table": "link",
+    "columns": [
+      {
+        "name": "source_id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "target_title",
+        "type": "TEXT"
+      },
+      {
+        "name": "target_id",
+        "type": "INTEGER"
+      }
     ]
   },
   {
     "table": "session",
-    "colonnes": [
-      { "nom": "note_id", "type": "INTEGER" },
-      { "nom": "date", "type": "TEXT" },
-      { "nom": "projet_id", "type": "INTEGER" },
-      { "nom": "ia", "type": "TEXT" }
+    "columns": [
+      {
+        "name": "note_id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "date",
+        "type": "TEXT"
+      },
+      {
+        "name": "project_id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "ai",
+        "type": "TEXT"
+      }
     ]
   },
   {
     "table": "journal",
-    "colonnes": [
-      { "nom": "id", "type": "INTEGER" },
-      { "nom": "date", "type": "TEXT" },
-      { "nom": "ia", "type": "TEXT" },
-      { "nom": "texte", "type": "TEXT" }
+    "columns": [
+      {
+        "name": "id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "date",
+        "type": "TEXT"
+      },
+      {
+        "name": "ai",
+        "type": "TEXT"
+      },
+      {
+        "name": "body",
+        "type": "TEXT"
+      }
     ]
   },
   {
-    "table": "techno",
-    "colonnes": [
-      { "nom": "id", "type": "INTEGER" },
-      { "nom": "nom", "type": "TEXT" },
-      { "nom": "categorie", "type": "TEXT" }
+    "table": "technology",
+    "columns": [
+      {
+        "name": "id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "name",
+        "type": "TEXT"
+      },
+      {
+        "name": "category",
+        "type": "TEXT"
+      }
     ]
   },
   {
-    "table": "projet_techno",
-    "colonnes": [
-      { "nom": "projet_id", "type": "INTEGER" },
-      { "nom": "techno_id", "type": "INTEGER" }
+    "table": "project_technology",
+    "columns": [
+      {
+        "name": "project_id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "technology_id",
+        "type": "INTEGER"
+      }
     ]
   },
   {
-    "table": "mesure_langage",
-    "colonnes": [
-      { "nom": "depot_id", "type": "INTEGER" },
-      { "nom": "date_mesure", "type": "TEXT" },
-      { "nom": "langage", "type": "TEXT" },
-      { "nom": "fichiers", "type": "INTEGER" },
-      { "nom": "lignes_code", "type": "INTEGER" },
-      { "nom": "lignes_commentaires", "type": "INTEGER" }
+    "table": "language_stat",
+    "columns": [
+      {
+        "name": "repository_id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "measured_on",
+        "type": "TEXT"
+      },
+      {
+        "name": "language",
+        "type": "TEXT"
+      },
+      {
+        "name": "files",
+        "type": "INTEGER"
+      },
+      {
+        "name": "code_lines",
+        "type": "INTEGER"
+      },
+      {
+        "name": "comment_lines",
+        "type": "INTEGER"
+      }
     ]
   },
   {
-    "table": "activite_jour",
-    "colonnes": [
-      { "nom": "jour", "type": "TEXT" },
-      { "nom": "projet_id", "type": "INTEGER" },
-      { "nom": "nb_commits", "type": "INTEGER" },
-      { "nom": "ajouts", "type": "INTEGER" },
-      { "nom": "suppressions", "type": "INTEGER" }
+    "table": "daily_activity",
+    "columns": [
+      {
+        "name": "day",
+        "type": "TEXT"
+      },
+      {
+        "name": "project_id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "commit_count",
+        "type": "INTEGER"
+      },
+      {
+        "name": "additions",
+        "type": "INTEGER"
+      },
+      {
+        "name": "deletions",
+        "type": "INTEGER"
+      }
     ]
   },
   {
-    "table": "recherche",
-    "colonnes": [
-      { "nom": "titre", "type": "TEXT" },
-      { "nom": "contenu", "type": "TEXT" },
-      { "nom": "source", "type": "TEXT" },
-      { "nom": "ref", "type": "TEXT" }
+    "table": "search_index",
+    "columns": [
+      {
+        "name": "title",
+        "type": "TEXT"
+      },
+      {
+        "name": "content",
+        "type": "TEXT"
+      },
+      {
+        "name": "source",
+        "type": "TEXT"
+      },
+      {
+        "name": "ref",
+        "type": "TEXT"
+      }
     ]
   }
 ]

@@ -1,29 +1,29 @@
 {
   "id": 3,
-  "titre": "Harbor",
-  "dossier": "Projets",
-  "degre": 3,
-  "chemin": "Projets/Harbor.md",
-  "maj": "2026-10-26",
-  "contenu": "# Harbor\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Python]].\nLié à [[SQLite]].\nLié à [[DeepSeek]].",
-  "voisins": [
+  "title": "Harbor",
+  "folder": "Projects",
+  "degree": 3,
+  "path": "Projects/Harbor.md",
+  "updated": "2026-10-26",
+  "content": "# Harbor\n\nDemo note from the Observatoire vault.\n\nLinked to [[Python]].\nLinked to [[SQLite]].\nLinked to [[DeepSeek]].",
+  "neighbors": [
     {
       "id": 25,
-      "titre": "Python",
-      "dossier": "Technos",
-      "degre": 3
+      "title": "Python",
+      "folder": "Technologies",
+      "degree": 3
     },
     {
       "id": 23,
-      "titre": "SQLite",
-      "dossier": "Technos",
-      "degre": 2
+      "title": "SQLite",
+      "folder": "Technologies",
+      "degree": 2
     },
     {
       "id": 42,
-      "titre": "DeepSeek",
-      "dossier": "IA",
-      "degre": 2
+      "title": "DeepSeek",
+      "folder": "IA",
+      "degree": 2
     }
   ]
 }

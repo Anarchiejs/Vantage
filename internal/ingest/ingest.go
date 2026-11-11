@@ -1,5 +1,5 @@
-// Package ingest écrit en base ce que lisent les lecteurs git, vault et code.
-// Une transaction pour le coffre, puis une par dépôt ; tout est idempotent.
+// Package ingest writes to the database what the git, vault, and code readers produce.
+// One transaction for the vault, then one per repository; everything is idempotent.
 package ingest
 
 import (
@@ -19,252 +19,252 @@ import (
 	"github.com/Anarchiejs/Observatoire/internal/sql/gen"
 )
 
-// Options de l'import.
+// Options for an import.
 type Options struct {
-	Coffre string
-	// Depots remplace le chemin_source d'une fiche (nom du projet → dossier) ; sert aux tests.
-	Depots map[string]string
-	// Aujourdhui date les mesures de langage ; vide = date du jour.
-	Aujourdhui string
+	Vault string
+	// Repos replaces a card's source_path (project name to directory); used by tests.
+	Repos map[string]string
+	// Today dates language measurements; empty means today's date.
+	Today string
 }
 
-// Bilan de l'import.
-type Bilan struct {
-	NotesEcrites    int
-	NotesInchangees int
-	NotesSupprimees int
-	Depots          int
-	Commits         int
-	Duree           time.Duration
-	Avertissements  []string
+// Summary of an import.
+type Summary struct {
+	NotesWritten   int
+	NotesUnchanged int
+	NotesDeleted   int
+	Repos          int
+	Commits        int
+	Duration       time.Duration
+	Warnings       []string
 }
 
-// Importer lit le coffre puis chaque dépôt cité par une fiche et met la base à jour.
-func Importer(ctx context.Context, base *sql.DB, opt Options) (Bilan, error) {
-	debut := time.Now()
-	var b Bilan
-	if opt.Aujourdhui == "" {
-		opt.Aujourdhui = time.Now().Format("2006-01-02")
+// Import reads the vault, then each repository named by a card, and updates the database.
+func Import(ctx context.Context, base *sql.DB, opt Options) (Summary, error) {
+	started := time.Now()
+	var summary Summary
+	if opt.Today == "" {
+		opt.Today = time.Now().Format("2006-01-02")
 	}
 
-	res, err := ivault.Lire(opt.Coffre)
+	res, err := ivault.Read(opt.Vault)
 	if err != nil {
-		return b, fmt.Errorf("lecture du coffre : %w", err)
+		return summary, fmt.Errorf("read vault: %w", err)
 	}
-	projets, err := ecrireCoffre(ctx, base, res, &b)
+	projects, err := writeVault(ctx, base, res, &summary)
 	if err != nil {
-		return b, fmt.Errorf("écriture du coffre : %w", err)
+		return summary, fmt.Errorf("write vault: %w", err)
 	}
 
-	// Lecture des dépôts en parallèle (git et scc dominent le temps), écriture une par une :
-	// SQLite n'accepte qu'un écrivain à la fois.
-	var lectures []*lecture
-	for _, f := range res.Fiches {
-		chemin := f.CheminSource
-		if c, ok := opt.Depots[f.Nom]; ok {
-			chemin = c
+	// Read repositories in parallel (git and scc dominate the time), write one by one:
+	// SQLite accepts only one writer at a time.
+	var reads []*repoRead
+	for _, card := range res.Cards {
+		path := card.SourcePath
+		if replacement, ok := opt.Repos[card.Name]; ok {
+			path = replacement
 		}
-		if chemin != "" {
-			lectures = append(lectures, &lecture{projet: f.Nom, chemin: chemin})
+		if path != "" {
+			reads = append(reads, &repoRead{project: card.Name, path: path})
 		}
 	}
 	q := gen.New(base)
 	var wg sync.WaitGroup
-	place := make(chan struct{}, runtime.NumCPU())
-	for _, l := range lectures {
+	slots := make(chan struct{}, runtime.NumCPU())
+	for _, read := range reads {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			place <- struct{}{}
-			defer func() { <-place }()
-			l.lire(ctx, q)
+			slots <- struct{}{}
+			defer func() { <-slots }()
+			read.load(ctx, q)
 		}()
 	}
 	wg.Wait()
 
-	for _, l := range lectures {
-		ajoutes, err := 0, l.err
+	for _, read := range reads {
+		added, err := 0, read.err
 		if err == nil {
-			ajoutes, err = ecrireDepot(ctx, base, projets[l.projet], l, opt.Aujourdhui)
+			added, err = writeRepository(ctx, base, projects[read.project], read, opt.Today)
 		}
 		if err != nil {
-			// Un dépôt absent ou cassé ne doit pas bloquer les autres.
-			b.Avertissements = append(b.Avertissements, fmt.Sprintf("%s (%s) : %v", l.projet, l.chemin, err))
+			// A missing or broken repository must not block the others.
+			summary.Warnings = append(summary.Warnings, fmt.Sprintf("%s (%s): %v", read.project, read.path, err))
 			continue
 		}
-		b.Depots++
-		b.Commits += ajoutes
+		summary.Repos++
+		summary.Commits += added
 	}
-	b.Duree = time.Since(debut)
-	return b, nil
+	summary.Duration = time.Since(started)
+	return summary, nil
 }
 
-func ecrireCoffre(ctx context.Context, base *sql.DB, res ivault.Resultat, b *Bilan) (map[string]int64, error) {
+func writeVault(ctx context.Context, base *sql.DB, res ivault.Result, summary *Summary) (map[string]int64, error) {
 	tx, err := base.BeginTx(ctx, nil)
 	if err != nil {
 		return nil, err
 	}
 	defer tx.Rollback()
-	// Requêtes préparées une fois par transaction : SQLite ne recompile pas le SQL à chaque ligne.
+	// Prepared once per transaction: SQLite does not recompile the SQL on every row.
 	q, err := gen.Prepare(ctx, tx)
 	if err != nil {
 		return nil, err
 	}
 	defer q.Close()
 
-	projets := map[string]int64{}
-	for _, f := range res.Fiches {
-		id, err := q.UpsertProjet(ctx, gen.UpsertProjetParams{
-			Nom:           f.Nom,
-			Statut:        vide(f.Statut),
-			CheminSource:  vide(f.CheminSource),
-			FicheMaj:      vide(f.Maj),
-			VerifieCommit: vide(f.VerifieCommit),
-			VerifieLe:     vide(f.VerifieLe),
+	projects := map[string]int64{}
+	for _, card := range res.Cards {
+		id, err := q.UpsertProject(ctx, gen.UpsertProjectParams{
+			Name:           card.Name,
+			Status:         empty(card.Status),
+			SourcePath:     empty(card.SourcePath),
+			CardUpdated:    empty(card.Updated),
+			VerifiedCommit: empty(card.VerifiedCommit),
+			VerifiedOn:     empty(card.VerifiedOn),
 		})
 		if err != nil {
-			return nil, fmt.Errorf("projet %s : %w", f.Nom, err)
+			return nil, fmt.Errorf("project %s: %w", card.Name, err)
 		}
-		projets[f.Nom] = id
-		for _, t := range f.Technos {
-			tid, err := q.UpsertTechno(ctx, gen.UpsertTechnoParams{Nom: t})
+		projects[card.Name] = id
+		for _, technology := range card.Technologies {
+			technologyID, err := q.UpsertTechnology(ctx, gen.UpsertTechnologyParams{Name: technology})
 			if err != nil {
 				return nil, err
 			}
-			if err := q.LierProjetTechno(ctx, gen.LierProjetTechnoParams{ProjetID: id, TechnoID: tid}); err != nil {
+			if err := q.LinkProjectTechnology(ctx, gen.LinkProjectTechnologyParams{ProjectID: id, TechnologyID: technologyID}); err != nil {
 				return nil, err
 			}
 		}
 	}
 
-	existantes, err := q.ListerNotes(ctx)
+	existing, err := q.ListNotes(ctx)
 	if err != nil {
 		return nil, err
 	}
-	ids := make(map[string]int64, len(existantes))
-	for _, n := range existantes {
-		ids[n.Chemin] = n.ID
+	ids := make(map[string]int64, len(existing))
+	for _, note := range existing {
+		ids[note.Path] = note.ID
 	}
-	vues := make(map[string]bool, len(res.Notes))
-	for _, n := range res.Notes {
-		vues[n.Chemin] = true
-		id, err := ecrireNote(ctx, q, n)
+	seen := make(map[string]bool, len(res.Notes))
+	for _, note := range res.Notes {
+		seen[note.Path] = true
+		id, err := writeNote(ctx, q, note)
 		if err != nil {
-			return nil, fmt.Errorf("note %s : %w", n.Chemin, err)
+			return nil, fmt.Errorf("note %s: %w", note.Path, err)
 		}
 		if id == 0 {
-			b.NotesInchangees++
+			summary.NotesUnchanged++
 			continue
 		}
-		ids[n.Chemin] = id
-		b.NotesEcrites++
+		ids[note.Path] = id
+		summary.NotesWritten++
 	}
-	for _, n := range existantes {
-		if vues[n.Chemin] {
+	for _, note := range existing {
+		if seen[note.Path] {
 			continue
 		}
-		if err := q.SupprimerRecherche(ctx, gen.SupprimerRechercheParams{Source: "note", Ref: n.Chemin}); err != nil {
+		if err := q.DeleteSearch(ctx, gen.DeleteSearchParams{Source: "note", Ref: note.Path}); err != nil {
 			return nil, err
 		}
-		if err := q.SupprimerNote(ctx, n.ID); err != nil {
+		if err := q.DeleteNote(ctx, note.ID); err != nil {
 			return nil, err
 		}
-		b.NotesSupprimees++
+		summary.NotesDeleted++
 	}
-	if err := q.ResoudreLiens(ctx); err != nil {
+	if err := q.ResolveLinks(ctx); err != nil {
 		return nil, err
 	}
 
-	for _, s := range res.Sessions {
-		id, ok := ids[s.CheminNote]
+	for _, session := range res.Sessions {
+		id, ok := ids[session.NotePath]
 		if !ok {
 			continue
 		}
-		var projet *int64
-		if p, ok := projets[s.Projet]; ok {
-			projet = &p
+		var projectID *int64
+		if id, ok := projects[session.Project]; ok {
+			projectID = &id
 		}
-		if err := q.UpsertSession(ctx, gen.UpsertSessionParams{NoteID: id, Date: s.Date, ProjetID: projet, Ia: vide(s.IA)}); err != nil {
+		if err := q.UpsertSession(ctx, gen.UpsertSessionParams{NoteID: id, Date: session.Date, ProjectID: projectID, Ai: empty(session.AI)}); err != nil {
 			return nil, err
 		}
 	}
-	for _, e := range res.Journal {
-		if err := q.InsererJournal(ctx, gen.InsererJournalParams{Date: e.Date, Ia: vide(e.IA), Texte: e.Texte}); err != nil {
+	for _, entry := range res.Journal {
+		if err := q.InsertJournal(ctx, gen.InsertJournalParams{Date: entry.Date, Ai: empty(entry.AI), Body: entry.Text}); err != nil {
 			return nil, err
 		}
 	}
-	return projets, tx.Commit()
+	return projects, tx.Commit()
 }
 
-// ecrireNote renvoie 0 si la note est inchangée depuis le dernier import.
-func ecrireNote(ctx context.Context, q *gen.Queries, n model.Note) (int64, error) {
-	if ancien, err := q.HashNote(ctx, n.Chemin); err == nil && ancien.ContenuHash == n.Hash {
+// writeNote returns 0 when the note is unchanged since the last import.
+func writeNote(ctx context.Context, q *gen.Queries, note model.Note) (int64, error) {
+	if previous, err := q.NoteHash(ctx, note.Path); err == nil && previous.ContentHash == note.Hash {
 		return 0, nil
 	} else if err != nil && !errors.Is(err, sql.ErrNoRows) {
 		return 0, err
 	}
 	id, err := q.UpsertNote(ctx, gen.UpsertNoteParams{
-		Chemin: n.Chemin, Dossier: n.Dossier, Titre: n.Titre,
-		Type: vide(n.Type), Maj: vide(n.Maj), ContenuHash: n.Hash,
+		Path: note.Path, Folder: note.Folder, Title: note.Title,
+		Type: empty(note.Type), Updated: empty(note.Updated), ContentHash: note.Hash,
 	})
 	if err != nil {
 		return 0, err
 	}
-	if err := q.SupprimerLiensDeNote(ctx, id); err != nil {
+	if err := q.DeleteNoteLinks(ctx, id); err != nil {
 		return 0, err
 	}
-	for _, l := range n.Liens {
-		if err := q.InsererLien(ctx, gen.InsererLienParams{SourceID: id, CibleTitre: l}); err != nil {
+	for _, link := range note.Links {
+		if err := q.InsertLink(ctx, gen.InsertLinkParams{SourceID: id, TargetTitle: link}); err != nil {
 			return 0, err
 		}
 	}
-	if err := q.SupprimerRecherche(ctx, gen.SupprimerRechercheParams{Source: "note", Ref: n.Chemin}); err != nil {
+	if err := q.DeleteSearch(ctx, gen.DeleteSearchParams{Source: "note", Ref: note.Path}); err != nil {
 		return 0, err
 	}
-	err = q.InsererRecherche(ctx, gen.InsererRechercheParams{Titre: n.Titre, Contenu: n.Contenu, Source: "note", Ref: n.Chemin})
+	err = q.InsertSearch(ctx, gen.InsertSearchParams{Title: note.Title, Content: note.Content, Source: "note", Ref: note.Path})
 	return id, err
 }
 
-// lecture est ce qu'on sait d'un dépôt avant de l'écrire.
-type lecture struct {
-	projet, chemin string
-	tete, branche  string
-	inchange       bool // HEAD est déjà importé : rien à écrire
-	reecrit        bool // l'historique a changé sous dernier_sha_importe
-	commits        []model.Commit
-	mesures        []model.MesureLangage
-	err            error
+// repoRead is what we know about a repository before writing it.
+type repoRead struct {
+	project, path string
+	head, branch  string
+	unchanged     bool // HEAD is already imported: nothing to write
+	rewritten     bool // history changed under last_imported_sha
+	commits       []model.Commit
+	stats         []model.LanguageStat
+	err           error
 }
 
-func (l *lecture) lire(ctx context.Context, q *gen.Queries) {
-	l.tete, l.branche, l.err = igit.Tete(ctx, l.chemin)
-	if l.err != nil {
+func (r *repoRead) load(ctx context.Context, q *gen.Queries) {
+	r.head, r.branch, r.err = igit.Head(ctx, r.path)
+	if r.err != nil {
 		return
 	}
-	depuis := ""
-	if sha, err := q.DernierShaDepot(ctx, l.chemin); err == nil && sha != nil {
-		depuis = *sha
+	since := ""
+	if sha, err := q.LastRepositorySHA(ctx, r.path); err == nil && sha != nil {
+		since = *sha
 	} else if err != nil && !errors.Is(err, sql.ErrNoRows) {
-		l.err = err
+		r.err = err
 		return
 	}
-	if depuis == l.tete {
-		l.inchange = true
+	if since == r.head {
+		r.unchanged = true
 		return
 	}
-	l.commits, l.err = igit.Lire(ctx, l.chemin, depuis)
-	if errors.Is(l.err, igit.ErrHistoriqueReecrit) {
-		l.reecrit, l.err = true, nil
+	r.commits, r.err = igit.Read(ctx, r.path, since)
+	if errors.Is(r.err, igit.ErrHistoryRewritten) {
+		r.rewritten, r.err = true, nil
 	}
-	if l.err != nil {
+	if r.err != nil {
 		return
 	}
-	if l.mesures, l.err = icode.Mesurer(ctx, l.chemin); l.err != nil {
-		l.err = fmt.Errorf("mesure des langages : %w", l.err)
+	if r.stats, r.err = icode.Measure(ctx, r.path); r.err != nil {
+		r.err = fmt.Errorf("language measurement: %w", r.err)
 	}
 }
 
-func ecrireDepot(ctx context.Context, base *sql.DB, projetID int64, l *lecture, aujourdhui string) (int, error) {
+func writeRepository(ctx context.Context, base *sql.DB, projectID int64, read *repoRead, today string) (int, error) {
 	tx, err := base.BeginTx(ctx, nil)
 	if err != nil {
 		return 0, err
@@ -276,65 +276,65 @@ func ecrireDepot(ctx context.Context, base *sql.DB, projetID int64, l *lecture, 
 	}
 	defer q.Close()
 
-	d, err := q.UpsertDepot(ctx, gen.UpsertDepotParams{ProjetID: projetID, Chemin: l.chemin, Branche: vide(l.branche)})
+	repository, err := q.UpsertRepository(ctx, gen.UpsertRepositoryParams{ProjectID: projectID, Path: read.path, Branch: empty(read.branch)})
 	if err != nil {
 		return 0, err
 	}
-	if l.inchange {
+	if read.unchanged {
 		return 0, tx.Commit()
 	}
-	if l.reecrit {
-		if err := q.SupprimerRechercheCommitsDepot(ctx, d.ID); err != nil {
+	if read.rewritten {
+		if err := q.DeleteRepositoryCommitSearch(ctx, repository.ID); err != nil {
 			return 0, err
 		}
-		if err := q.SupprimerCommitsDepot(ctx, d.ID); err != nil {
+		if err := q.DeleteRepositoryCommits(ctx, repository.ID); err != nil {
 			return 0, err
 		}
 	}
 
-	n := 0
-	for _, c := range l.commits {
-		ajoute, err := q.InsererCommit(ctx, gen.InsererCommitParams{
-			Sha: c.SHA, DepotID: d.ID, Auteur: c.Auteur,
-			DateUtc: c.DateUTC(), DecalageMin: c.DecalageMin(), Message: c.Message,
+	added := 0
+	for _, commit := range read.commits {
+		inserted, err := q.InsertCommit(ctx, gen.InsertCommitParams{
+			Sha: commit.SHA, RepositoryID: repository.ID, Author: commit.Author,
+			DateUtc: commit.DateUTC(), OffsetMin: commit.OffsetMin(), Message: commit.Message,
 		})
 		if err != nil {
-			return 0, fmt.Errorf("commit %s : %w", c.SHA, err)
+			return 0, fmt.Errorf("commit %s: %w", commit.SHA, err)
 		}
-		if ajoute == 0 {
-			continue // déjà connu (même commit dans un autre dépôt)
+		if inserted == 0 {
+			continue // already known (same commit in another repository)
 		}
-		n++
-		for _, f := range c.Fichiers {
-			if err := q.InsererFichierModifie(ctx, gen.InsererFichierModifieParams{
-				CommitSha: c.SHA, Chemin: f.Chemin, Langage: vide(f.Langage),
-				Ajouts: f.Ajouts, Suppressions: f.Suppressions,
+		added++
+		for _, file := range commit.Files {
+			if err := q.InsertChangedFile(ctx, gen.InsertChangedFileParams{
+				CommitSha: commit.SHA, Path: file.Path, Language: empty(file.Language),
+				Additions: file.Additions, Deletions: file.Deletions,
 			}); err != nil {
 				return 0, err
 			}
 		}
-		titre, _, _ := strings.Cut(c.Message, "\n")
-		if err := q.InsererRecherche(ctx, gen.InsererRechercheParams{Titre: titre, Contenu: c.Message, Source: "commit", Ref: c.SHA}); err != nil {
+		title, _, _ := strings.Cut(commit.Message, "\n")
+		if err := q.InsertSearch(ctx, gen.InsertSearchParams{Title: title, Content: commit.Message, Source: "commit", Ref: commit.SHA}); err != nil {
 			return 0, err
 		}
 	}
 
-	for _, m := range l.mesures {
-		if err := q.InsererMesureLangage(ctx, gen.InsererMesureLangageParams{
-			DepotID: d.ID, DateMesure: aujourdhui, Langage: m.Langage,
-			Fichiers: m.Fichiers, LignesCode: m.LignesCode, LignesCommentaires: m.LignesCommentaires,
+	for _, stat := range read.stats {
+		if err := q.InsertLanguageStat(ctx, gen.InsertLanguageStatParams{
+			RepositoryID: repository.ID, MeasuredOn: today, Language: stat.Language,
+			Files: stat.Files, CodeLines: stat.CodeLines, CommentLines: stat.CommentLines,
 		}); err != nil {
 			return 0, err
 		}
 	}
 
-	if err := q.MarquerDepotImporte(ctx, gen.MarquerDepotImporteParams{DernierShaImporte: &l.tete, ID: d.ID}); err != nil {
+	if err := q.MarkRepositoryImported(ctx, gen.MarkRepositoryImportedParams{LastImportedSha: &read.head, ID: repository.ID}); err != nil {
 		return 0, err
 	}
-	return n, tx.Commit()
+	return added, tx.Commit()
 }
 
-func vide(s string) *string {
+func empty(s string) *string {
 	if s == "" {
 		return nil
 	}

@@ -1,23 +1,23 @@
 {
   "id": 43,
-  "titre": "IA locale",
-  "dossier": "IA",
-  "degre": 2,
-  "chemin": "IA/IA locale.md",
-  "maj": "2026-10-26",
-  "contenu": "# IA locale\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Northwind]].\nLié à [[Quartz]].",
-  "voisins": [
+  "title": "Local AI",
+  "folder": "IA",
+  "degree": 2,
+  "path": "IA/Local AI.md",
+  "updated": "2026-10-26",
+  "content": "# Local AI\n\nDemo note from the Observatoire vault.\n\nLinked to [[Northwind]].\nLinked to [[Quartz]].",
+  "neighbors": [
     {
       "id": 4,
-      "titre": "Northwind",
-      "dossier": "Projets",
-      "degre": 3
+      "title": "Northwind",
+      "folder": "Projects",
+      "degree": 3
     },
     {
       "id": 8,
-      "titre": "Quartz",
-      "dossier": "Projets",
-      "degre": 2
+      "title": "Quartz",
+      "folder": "Projects",
+      "degree": 2
     }
   ]
 }

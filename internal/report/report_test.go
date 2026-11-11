@@ -14,9 +14,9 @@ import (
 	"github.com/Anarchiejs/Observatoire/internal/sql/gen"
 )
 
-var maj = flag.Bool("maj", false, "rewrite the reviewed Markdown expectation")
+var maj = flag.Bool("update", false, "rewrite the reviewed Markdown expectation")
 
-const dateRapport = "2026-03-21" // semaine du 16 au 21 mars : 2 commits par dépôt dans les fixtures
+const dateRapport = "2026-03-21" // week of March 16-21: 2 commits per repository in the fixtures
 
 func racineProjet() string {
 	_, fichier, _, _ := runtime.Caller(0)
@@ -27,25 +27,25 @@ func baseFixture(t *testing.T) *sql.DB {
 	t.Helper()
 	racine := racineProjet()
 	if _, err := os.Stat(filepath.Join(racine, "testdata/depots/alpha/.git")); err != nil {
-		t.Fatalf("fixtures Git absentes (ne pas les regenerer automatiquement): %v", err)
+		t.Fatalf("Git fixtures are missing (do not regenerate them automatically): %v", err)
 	}
-	b, err := db.Ouvrir(filepath.Join(t.TempDir(), "report.db"))
+	b, err := db.Open(filepath.Join(t.TempDir(), "report.db"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Cleanup(func() { _ = b.Close() })
-	if err := db.Migrer(b); err != nil {
+	if err := db.Migrate(b); err != nil {
 		t.Fatal(err)
 	}
-	resultat, err := ingest.Importer(context.Background(), b, ingest.Options{
-		Coffre:     filepath.Join(racine, "testdata/coffre"),
-		Depots:     map[string]string{"Atlas": filepath.Join(racine, "testdata/depots/alpha"), "Boussole": filepath.Join(racine, "testdata/depots/beta")},
-		Aujourdhui: dateRapport,
+	resultat, err := ingest.Import(context.Background(), b, ingest.Options{
+		Vault: filepath.Join(racine, "testdata/vault"),
+		Repos: map[string]string{"Atlas": filepath.Join(racine, "testdata/depots/alpha"), "Compass": filepath.Join(racine, "testdata/depots/beta")},
+		Today: dateRapport,
 	})
 	if err != nil {
 		t.Fatal(err)
 	}
-	if resultat.Commits != 42 || len(resultat.Avertissements) != 0 {
+	if resultat.Commits != 42 || len(resultat.Warnings) != 0 {
 		t.Fatalf("import: %+v", resultat)
 	}
 	return b
@@ -53,7 +53,7 @@ func baseFixture(t *testing.T) *sql.DB {
 
 func TestGenererAttendu(t *testing.T) {
 	b := baseFixture(t)
-	contenu, err := Generer(context.Background(), gen.New(b), dateRapport)
+	contenu, err := Generate(context.Background(), gen.New(b), dateRapport)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -71,51 +71,51 @@ func TestGenererAttendu(t *testing.T) {
 		t.Fatal(err)
 	}
 	if string(contenu) != string(attendu) {
-		t.Fatalf("rapport différent de %s; relire avant -maj", chemin)
+		t.Fatalf("report differs from %s; review before -update", chemin)
 	}
 }
 
 func TestEcrireProtegeNoteEtrangere(t *testing.T) {
-	coffre := t.TempDir()
-	path := filepath.Join(coffre, "Statistiques.md")
-	original := []byte("---\ntype: note\n---\nContenu manuel\n")
+	dir := t.TempDir()
+	path := filepath.Join(dir, "Statistics.md")
+	original := []byte("---\ntype: note\n---\nManual content\n")
 	if err := os.WriteFile(path, original, 0644); err != nil {
 		t.Fatal(err)
 	}
-	if err := Ecrire(coffre, []byte("nouveau")); err == nil {
-		t.Fatal("Ecrire a remplace une note sans marqueur propriétaire")
+	if err := Write(dir, []byte("new")); err == nil {
+		t.Fatal("Write replaced a note without the owner marker")
 	}
 	actuel, err := os.ReadFile(path)
 	if err != nil {
 		t.Fatal(err)
 	}
 	if string(actuel) != string(original) {
-		t.Fatal("la note manuelle a été modifiée")
+		t.Fatal("the manual note was modified")
 	}
 }
 
 func TestEcrireRemplaceEtNettoieTemporaire(t *testing.T) {
-	coffre := t.TempDir()
-	path := filepath.Join(coffre, "Statistiques.md")
-	if err := os.WriteFile(path, []byte("---\ngenere_par: observatoire\n---\nancien\n"), 0644); err != nil {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "Statistics.md")
+	if err := os.WriteFile(path, []byte("---\ngenerated_by: observatoire\n---\nold\n"), 0644); err != nil {
 		t.Fatal(err)
 	}
-	nouveau := []byte("---\ngenere_par: observatoire\n---\nnouveau\n")
-	if err := Ecrire(coffre, nouveau); err != nil {
+	new := []byte("---\ngenerated_by: observatoire\n---\nnew\n")
+	if err := Write(dir, new); err != nil {
 		t.Fatal(err)
 	}
 	actuel, err := os.ReadFile(path)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if string(actuel) != string(nouveau) {
-		t.Fatal("contenu généré non remplacé")
+	if string(actuel) != string(new) {
+		t.Fatal("generated content was not replaced")
 	}
-	entrees, err := os.ReadDir(coffre)
+	entrees, err := os.ReadDir(dir)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(entrees) != 1 || entrees[0].Name() != "Statistiques.md" {
-		t.Fatalf("fichier temporaire restant: %v", entrees)
+	if len(entrees) != 1 || entrees[0].Name() != "Statistics.md" {
+		t.Fatalf("temporary file left behind: %v", entrees)
 	}
 }

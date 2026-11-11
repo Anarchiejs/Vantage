@@ -1,11 +1,11 @@
--- Index proposés par le lot S2 après lecture des plans (internal/sql/requetes/INDEX_PROPOSES.md).
+-- Indexes proposed after reading the plans (internal/sql/queries/INDEX_PROPOSED.md).
 
 -- +goose Up
--- Calendrier et ChiffresPeriode filtrent les sessions par plage de dates.
-CREATE INDEX session_date_projet ON session(date, projet_id);
--- ActiviteIA, ProjetsParIA, SessionsIAParMois groupent par IA puis par date (index couvrant : la table n'est pas lue).
-CREATE INDEX session_ia_date_projet ON session(ia, date, projet_id);
+-- Calendar and PeriodStats filter sessions by date range.
+CREATE INDEX session_date_project ON session(date, project_id);
+-- AIActivity, ProjectsByAI, and AISessionsByMonth group by AI then date (covering index: the table is not read).
+CREATE INDEX session_ai_date_project ON session(ai, date, project_id);
 
 -- +goose Down
-DROP INDEX session_ia_date_projet;
-DROP INDEX session_date_projet;
+DROP INDEX session_ai_date_project;
+DROP INDEX session_date_project;

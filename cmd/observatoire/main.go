@@ -1,4 +1,4 @@
-// Commande observatoire : tableau de bord local du travail de développement.
+// Command observatoire: a local dashboard for development work.
 package main
 
 import (
@@ -22,14 +22,14 @@ import (
 	"github.com/Anarchiejs/Observatoire/web"
 )
 
-const usage = `usage : observatoire <commande> [options]
+const usage = `usage: observatoire <command> [options]
 
-commandes :
-  migrate   crée ou met à jour le schéma de la base
-  import    importe les dépôts Git et le coffre
-  serve     lance l'interface sur http://127.0.0.1
-  rapport   écrit Statistiques.md dans le coffre
-  watch     importe, lance l'interface et réimporte à chaque changement
+commands:
+  migrate   create or update the database schema
+  import    import Git repositories and the vault
+  serve     serve the UI on http://127.0.0.1
+  report    write Statistics.md in the vault
+  watch     import, serve the UI, and reimport on every change
 `
 
 func main() {
@@ -37,235 +37,235 @@ func main() {
 		fmt.Fprint(os.Stderr, usage)
 		os.Exit(2)
 	}
-	cmd, args := os.Args[1], os.Args[2:]
+	command, args := os.Args[1], os.Args[2:]
 	var err error
-	switch cmd {
+	switch command {
 	case "migrate":
-		err = migrer(args)
+		err = migrate(args)
 	case "import":
-		err = importer(args)
+		err = runImport(args)
 	case "serve":
-		err = servir(args)
-	case "rapport":
-		err = rapport(args)
+		err = serve(args)
+	case "report":
+		err = runReport(args)
 	case "watch":
-		err = surveiller(args)
+		err = runWatch(args)
 	default:
 		fmt.Fprint(os.Stderr, usage)
 		os.Exit(2)
 	}
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "erreur :", err)
+		fmt.Fprintln(os.Stderr, "error:", err)
 		os.Exit(1)
 	}
 }
 
-func migrer(args []string) error {
+func migrate(args []string) error {
 	fs := flag.NewFlagSet("migrate", flag.ExitOnError)
-	chemin := fs.String("db", "observatoire.db", "fichier de la base")
+	path := fs.String("db", "observatoire.db", "database file")
 	fs.Parse(args)
-	base, err := db.Ouvrir(*chemin)
+	base, err := db.Open(*path)
 	if err != nil {
 		return err
 	}
 	defer base.Close()
-	return db.Migrer(base)
+	return db.Migrate(base)
 }
 
-func importer(args []string) error {
+func runImport(args []string) error {
 	fs := flag.NewFlagSet("import", flag.ExitOnError)
-	chemin := fs.String("db", "observatoire.db", "fichier de la base")
-	coffre := fs.String("coffre", `C:\dev\Obsidian Vault`, "racine du coffre Obsidian")
-	depots := fs.String("depots", "", `remplace le chemin_source de fiches : "Atlas=testdata/depots/alpha,Boussole=..."`)
+	path := fs.String("db", "observatoire.db", "database file")
+	vault := fs.String("vault", `C:\dev\Obsidian Vault`, "Obsidian vault root")
+	repos := fs.String("repos", "", `replaces source_path for named cards: "Atlas=testdata/depots/alpha,Compass=..."`)
 	fs.Parse(args)
-	remplacements, err := lireDepots(*depots)
+	replacements, err := readRepos(*repos)
 	if err != nil {
 		return err
 	}
-	base, err := db.Ouvrir(*chemin)
+	base, err := db.Open(*path)
 	if err != nil {
 		return err
 	}
 	defer base.Close()
-	if err := db.Migrer(base); err != nil {
+	if err := db.Migrate(base); err != nil {
 		return err
 	}
-	b, err := ingest.Importer(context.Background(), base, ingest.Options{Coffre: *coffre, Depots: remplacements})
+	summary, err := ingest.Import(context.Background(), base, ingest.Options{Vault: *vault, Repos: replacements})
 	if err != nil {
 		return err
 	}
-	afficherBilan(b)
+	printSummary(summary)
 	return nil
 }
 
-func lireDepots(depots string) (map[string]string, error) {
-	remplacements := map[string]string{}
-	for _, paire := range strings.Split(depots, ",") {
-		if nom, dossier, ok := strings.Cut(strings.TrimSpace(paire), "="); ok {
-			abs, err := filepath.Abs(dossier)
+func readRepos(repos string) (map[string]string, error) {
+	replacements := map[string]string{}
+	for _, pair := range strings.Split(repos, ",") {
+		if name, dir, ok := strings.Cut(strings.TrimSpace(pair), "="); ok {
+			abs, err := filepath.Abs(dir)
 			if err != nil {
 				return nil, err
 			}
-			remplacements[nom] = abs
+			replacements[name] = abs
 		}
 	}
-	return remplacements, nil
+	return replacements, nil
 }
 
-func afficherBilan(b ingest.Bilan) {
-	for _, a := range b.Avertissements {
-		fmt.Fprintln(os.Stderr, "attention :", a)
+func printSummary(summary ingest.Summary) {
+	for _, warning := range summary.Warnings {
+		fmt.Fprintln(os.Stderr, "warning:", warning)
 	}
-	fmt.Printf("%d dépôts, %d commits ajoutés ; notes : %d écrites, %d inchangées, %d supprimées ; %s\n",
-		b.Depots, b.Commits, b.NotesEcrites, b.NotesInchangees, b.NotesSupprimees, b.Duree.Round(time.Millisecond))
+	fmt.Printf("%d repositories, %d commits added; notes: %d written, %d unchanged, %d deleted; %s\n",
+		summary.Repos, summary.Commits, summary.NotesWritten, summary.NotesUnchanged, summary.NotesDeleted, summary.Duration.Round(time.Millisecond))
 }
 
-func servir(args []string) error {
+func serve(args []string) error {
 	fs := flag.NewFlagSet("serve", flag.ExitOnError)
-	chemin := fs.String("db", "observatoire.db", "fichier de la base")
-	port := fs.Int("port", 7878, "port sur 127.0.0.1")
+	path := fs.String("db", "observatoire.db", "database file")
+	port := fs.Int("port", 7878, "port on 127.0.0.1")
 	fs.Parse(args)
 
-	s, _, fermer, err := preparerServeur(*chemin, *port)
+	server, _, closeDBs, err := prepareServer(*path, *port)
 	if err != nil {
 		return err
 	}
-	defer fermer()
-	ctx, fin := signal.NotifyContext(context.Background(), os.Interrupt)
-	defer fin()
-	return s.Ecouter(ctx)
+	defer closeDBs()
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer stop()
+	return server.Listen(ctx)
 }
 
-// preparerServeur ouvre la base (lecture-écriture et lecture seule) et construit le serveur.
-func preparerServeur(chemin string, port int) (*api.Serveur, *sql.DB, func(), error) {
-	base, err := db.Ouvrir(chemin)
+// prepareServer opens the database (read-write and read-only) and builds the server.
+func prepareServer(path string, port int) (*api.Server, *sql.DB, func(), error) {
+	base, err := db.Open(path)
 	if err != nil {
 		return nil, nil, nil, err
 	}
-	if err := db.Migrer(base); err != nil {
+	if err := db.Migrate(base); err != nil {
 		base.Close()
 		return nil, nil, nil, err
 	}
-	lecture, err := db.OuvrirLectureSeule(chemin)
+	readDB, err := db.OpenReadOnly(path)
 	if err != nil {
 		base.Close()
 		return nil, nil, nil, err
 	}
-	fermer := func() { lecture.Close(); base.Close() }
+	closeDBs := func() { readDB.Close(); base.Close() }
 	ui, err := web.Interface()
 	if err != nil {
-		fermer()
+		closeDBs()
 		return nil, nil, nil, err
 	}
 	if ui == nil {
-		fmt.Fprintln(os.Stderr, "interface absente : API seule (construire avec npm --prefix web run build)")
+		fmt.Fprintln(os.Stderr, "UI missing: API only (build it with npm --prefix web run build)")
 	}
-	s, err := api.Nouveau(api.Config{
-		Adresse:     fmt.Sprintf("127.0.0.1:%d", port),
-		Base:        base,
-		BaseLecture: lecture,
-		Interface:   ui,
-		Requetes:    filepath.Join(filepath.Dir(chemin), "requetes"),
+	server, err := api.New(api.Config{
+		Address: fmt.Sprintf("127.0.0.1:%d", port),
+		DB:      base,
+		ReadDB:  readDB,
+		UI:      ui,
+		Queries: filepath.Join(filepath.Dir(path), "queries"),
 	})
 	if err != nil {
-		fermer()
+		closeDBs()
 		return nil, nil, nil, err
 	}
-	return s, base, fermer, nil
+	return server, base, closeDBs, nil
 }
 
-// surveiller importe, sert l'interface et réimporte à chaque changement du coffre ou d'un dépôt ;
-// l'interface est prévenue par l'événement SSE « maj ».
-func surveiller(args []string) error {
+// runWatch imports, serves the UI, and reimports whenever the vault or a repository changes.
+// The UI is notified by the SSE "update" event.
+func runWatch(args []string) error {
 	fs := flag.NewFlagSet("watch", flag.ExitOnError)
-	chemin := fs.String("db", "observatoire.db", "fichier de la base")
-	coffre := fs.String("coffre", `C:\dev\Obsidian Vault`, "racine du coffre Obsidian")
-	depots := fs.String("depots", "", `remplace le chemin_source de fiches : "Atlas=testdata/depots/alpha,Boussole=..."`)
-	port := fs.Int("port", 7878, "port sur 127.0.0.1")
+	path := fs.String("db", "observatoire.db", "database file")
+	vault := fs.String("vault", `C:\dev\Obsidian Vault`, "Obsidian vault root")
+	repos := fs.String("repos", "", `replaces source_path for named cards: "Atlas=testdata/depots/alpha,Compass=..."`)
+	port := fs.Int("port", 7878, "port on 127.0.0.1")
 	fs.Parse(args)
-	remplacements, err := lireDepots(*depots)
+	replacements, err := readRepos(*repos)
 	if err != nil {
 		return err
 	}
 
-	s, base, fermer, err := preparerServeur(*chemin, *port)
+	server, base, closeDBs, err := prepareServer(*path, *port)
 	if err != nil {
 		return err
 	}
-	defer fermer()
-	ctx, fin := signal.NotifyContext(context.Background(), os.Interrupt)
-	defer fin()
+	defer closeDBs()
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer stop()
 
-	opt := ingest.Options{Coffre: *coffre, Depots: remplacements}
-	b, err := ingest.Importer(ctx, base, opt)
+	opt := ingest.Options{Vault: *vault, Repos: replacements}
+	summary, err := ingest.Import(ctx, base, opt)
 	if err != nil {
 		return err
 	}
-	afficherBilan(b)
+	printSummary(summary)
 
 	go func() {
-		err := watch.Surveiller(ctx, watch.Options{
-			Coffre: *coffre,
-			Depots: func() []string { return cheminsDepots(ctx, base) },
-			Importer: func(ctx context.Context) (watch.Changements, error) {
-				b, err := ingest.Importer(ctx, base, opt)
+		err := watch.Watch(ctx, watch.Options{
+			Vault: *vault,
+			Repos: func() []string { return repositoryPaths(ctx, base) },
+			Import: func(ctx context.Context) (watch.Changes, error) {
+				summary, err := ingest.Import(ctx, base, opt)
 				if err != nil {
-					return watch.Changements{}, err
+					return watch.Changes{}, err
 				}
-				afficherBilan(b)
-				return watch.Changements{Notes: b.NotesEcrites + b.NotesSupprimees, Commits: b.Commits}, nil
+				printSummary(summary)
+				return watch.Changes{Notes: summary.NotesWritten + summary.NotesDeleted, Commits: summary.Commits}, nil
 			},
-			Annoncer: s.Diffuseur().Annoncer,
-			Journal:  log.Printf,
+			Announce: server.Broadcaster().Announce,
+			Log:      log.Printf,
 		})
 		if err != nil && ctx.Err() == nil {
-			log.Printf("surveillance arrêtée : %v", err)
+			log.Printf("watch stopped: %v", err)
 		}
 	}()
-	return s.Ecouter(ctx)
+	return server.Listen(ctx)
 }
 
-func cheminsDepots(ctx context.Context, base *sql.DB) []string {
-	lignes, err := base.QueryContext(ctx, `SELECT chemin FROM depot ORDER BY chemin`)
+func repositoryPaths(ctx context.Context, base *sql.DB) []string {
+	rows, err := base.QueryContext(ctx, `SELECT path FROM repository ORDER BY path`)
 	if err != nil {
 		return nil
 	}
-	defer lignes.Close()
-	var res []string
-	for lignes.Next() {
-		var c string
-		if lignes.Scan(&c) == nil {
-			res = append(res, c)
+	defer rows.Close()
+	var paths []string
+	for rows.Next() {
+		var path string
+		if rows.Scan(&path) == nil {
+			paths = append(paths, path)
 		}
 	}
-	return res
+	return paths
 }
 
-func rapport(args []string) error {
-	fs := flag.NewFlagSet("rapport", flag.ExitOnError)
-	chemin := fs.String("db", "observatoire.db", "fichier de la base")
-	coffre := fs.String("coffre", `C:\dev\Obsidian Vault`, "racine du coffre Obsidian")
-	sortie := fs.Bool("stdout", false, "afficher le rapport au lieu de l'écrire dans le coffre")
+func runReport(args []string) error {
+	fs := flag.NewFlagSet("report", flag.ExitOnError)
+	path := fs.String("db", "observatoire.db", "database file")
+	vault := fs.String("vault", `C:\dev\Obsidian Vault`, "Obsidian vault root")
+	stdout := fs.Bool("stdout", false, "print the report instead of writing it into the vault")
 	fs.Parse(args)
-	base, err := db.Ouvrir(*chemin)
+	base, err := db.Open(*path)
 	if err != nil {
 		return err
 	}
 	defer base.Close()
-	if err := db.Migrer(base); err != nil {
+	if err := db.Migrate(base); err != nil {
 		return err
 	}
-	contenu, err := report.Generer(context.Background(), gen.New(base), time.Now().Format("2006-01-02"))
+	content, err := report.Generate(context.Background(), gen.New(base), time.Now().Format("2006-01-02"))
 	if err != nil {
 		return err
 	}
-	if *sortie {
-		_, err = os.Stdout.Write(contenu)
+	if *stdout {
+		_, err = os.Stdout.Write(content)
 		return err
 	}
-	if err := report.Ecrire(*coffre, contenu); err != nil {
+	if err := report.Write(*vault, content); err != nil {
 		return err
 	}
-	fmt.Println("Statistiques.md écrit dans", *coffre)
+	fmt.Println("Statistics.md written in", *vault)
 	return nil
 }

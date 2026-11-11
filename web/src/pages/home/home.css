@@ -1,0 +1,7 @@
+.home-stats > div { min-width:0; padding:12px 18px; border-left:1px solid var(--line); }
+.home-stats > div:first-child { border-left:0; padding-left:0; }
+.home-stats > div > span:first-child { font-size:11px; }
+.home-stats > div > span:last-child { flex-direction:column; align-items:flex-start; gap:8px; }
+.home-stats > div > span:last-child > span { white-space:nowrap; }
+.home-stats > div > span:last-child > span:first-child { font-size:clamp(23px,2.4vw,36px); font-weight:600; letter-spacing:-1px; }
+@media(max-width:760px) { .home-stats > div { border-left:0; padding:10px 0; } }

@@ -1,35 +1,35 @@
 {
   "id": 41,
-  "titre": "Codex",
-  "dossier": "IA",
-  "degre": 4,
-  "chemin": "IA/Codex.md",
-  "maj": "2026-10-26",
-  "contenu": "# Codex\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Compass]].\nLié à [[Keel]].\nLié à [[Waypoint]].\nLié à [[2026-10-26 - Observatoire]].",
-  "voisins": [
+  "title": "Codex",
+  "folder": "IA",
+  "degree": 4,
+  "path": "IA/Codex.md",
+  "updated": "2026-10-26",
+  "content": "# Codex\n\nDemo note from the Observatoire vault.\n\nLinked to [[Compass]].\nLinked to [[Keel]].\nLinked to [[Waypoint]].\nLinked to [[2026-10-26 - Observatoire]].",
+  "neighbors": [
     {
       "id": 2,
-      "titre": "Compass",
-      "dossier": "Projets",
-      "degre": 4
+      "title": "Compass",
+      "folder": "Projects",
+      "degree": 4
     },
     {
       "id": 6,
-      "titre": "Keel",
-      "dossier": "Projets",
-      "degre": 2
+      "title": "Keel",
+      "folder": "Projects",
+      "degree": 2
     },
     {
       "id": 10,
-      "titre": "Waypoint",
-      "dossier": "Projets",
-      "degre": 3
+      "title": "Waypoint",
+      "folder": "Projects",
+      "degree": 3
     },
     {
       "id": 52,
-      "titre": "2026-10-26 - Observatoire",
-      "dossier": "Sessions",
-      "degre": 2
+      "title": "2026-10-26 - Observatoire",
+      "folder": "Sessions",
+      "degree": 2
     }
   ]
 }

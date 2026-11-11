@@ -1,12 +1,12 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
-# Les fixtures et les résultats attendus sont comparés octet par octet : ils restent en LF
-# sous Windows aussi, sinon core.autocrlf les convertit en CRLF au checkout et les tests échouent.
+# Fixtures and expected results are compared byte for byte: they stay LF
+# on Windows too, otherwise core.autocrlf turns them into CRLF at checkout and tests fail.
 **/testdata/** text=auto eol=lf
-internal/sql/requetes_test/attendu/** text=auto eol=lf
-internal/sql/requetes/PLANS.md text eol=lf
+internal/sql/queries_test/expected/** text=auto eol=lf
+internal/sql/queries/PLANS.md text eol=lf
 
-# Scripts Windows : CRLF, attendu par cmd.exe et PowerShell 5.1.
+# Windows scripts: CRLF, required by cmd.exe and PowerShell 5.1.
 *.cmd text eol=crlf
 *.ps1 text eol=crlf

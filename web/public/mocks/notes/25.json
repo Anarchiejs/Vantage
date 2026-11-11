@@ -1,29 +1,29 @@
 {
   "id": 25,
-  "titre": "Python",
-  "dossier": "Technos",
-  "degre": 3,
-  "chemin": "Technos/Python.md",
-  "maj": "2026-10-26",
-  "contenu": "# Python\n\nNote de démonstration du coffre Observatoire.\n\nLié à [[Harbor]].\nLié à [[Sable]].\nLié à [[Waypoint]].",
-  "voisins": [
+  "title": "Python",
+  "folder": "Technologies",
+  "degree": 3,
+  "path": "Technologies/Python.md",
+  "updated": "2026-10-26",
+  "content": "# Python\n\nDemo note from the Observatoire vault.\n\nLinked to [[Harbor]].\nLinked to [[Sable]].\nLinked to [[Waypoint]].",
+  "neighbors": [
     {
       "id": 3,
-      "titre": "Harbor",
-      "dossier": "Projets",
-      "degre": 3
+      "title": "Harbor",
+      "folder": "Projects",
+      "degree": 3
     },
     {
       "id": 9,
-      "titre": "Sable",
-      "dossier": "Projets",
-      "degre": 2
+      "title": "Sable",
+      "folder": "Projects",
+      "degree": 2
     },
     {
       "id": 10,
-      "titre": "Waypoint",
-      "dossier": "Projets",
-      "degre": 3
+      "title": "Waypoint",
+      "folder": "Projects",
+      "degree": 3
     }
   ]
 }

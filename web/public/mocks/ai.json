@@ -1,0 +1,240 @@
+[
+  {
+    "ia": "Claude Code",
+    "sessions": 43,
+    "projects": [
+      "Observatoire",
+      "Harbor",
+      "Lantern",
+      "Tidepool",
+      "Sable"
+    ],
+    "by_month": [
+      {
+        "month": "2025-11",
+        "sessions": 1
+      },
+      {
+        "month": "2025-12",
+        "sessions": 2
+      },
+      {
+        "month": "2026-01",
+        "sessions": 3
+      },
+      {
+        "month": "2026-02",
+        "sessions": 4
+      },
+      {
+        "month": "2026-03",
+        "sessions": 5
+      },
+      {
+        "month": "2026-04",
+        "sessions": 6
+      },
+      {
+        "month": "2026-05",
+        "sessions": 7
+      },
+      {
+        "month": "2026-06",
+        "sessions": 1
+      },
+      {
+        "month": "2026-07",
+        "sessions": 2
+      },
+      {
+        "month": "2026-08",
+        "sessions": 3
+      },
+      {
+        "month": "2026-09",
+        "sessions": 4
+      },
+      {
+        "month": "2026-10",
+        "sessions": 5
+      }
+    ]
+  },
+  {
+    "ia": "Codex",
+    "sessions": 48,
+    "projects": [
+      "Observatoire",
+      "Northwind",
+      "Tidepool",
+      "Waypoint"
+    ],
+    "by_month": [
+      {
+        "month": "2025-11",
+        "sessions": 2
+      },
+      {
+        "month": "2025-12",
+        "sessions": 3
+      },
+      {
+        "month": "2026-01",
+        "sessions": 4
+      },
+      {
+        "month": "2026-02",
+        "sessions": 5
+      },
+      {
+        "month": "2026-03",
+        "sessions": 6
+      },
+      {
+        "month": "2026-04",
+        "sessions": 7
+      },
+      {
+        "month": "2026-05",
+        "sessions": 1
+      },
+      {
+        "month": "2026-06",
+        "sessions": 2
+      },
+      {
+        "month": "2026-07",
+        "sessions": 3
+      },
+      {
+        "month": "2026-08",
+        "sessions": 4
+      },
+      {
+        "month": "2026-09",
+        "sessions": 5
+      },
+      {
+        "month": "2026-10",
+        "sessions": 6
+      }
+    ]
+  },
+  {
+    "ia": "DeepSeek",
+    "sessions": 53,
+    "projects": [
+      "Observatoire",
+      "Lantern",
+      "Sable"
+    ],
+    "by_month": [
+      {
+        "month": "2025-11",
+        "sessions": 3
+      },
+      {
+        "month": "2025-12",
+        "sessions": 4
+      },
+      {
+        "month": "2026-01",
+        "sessions": 5
+      },
+      {
+        "month": "2026-02",
+        "sessions": 6
+      },
+      {
+        "month": "2026-03",
+        "sessions": 7
+      },
+      {
+        "month": "2026-04",
+        "sessions": 1
+      },
+      {
+        "month": "2026-05",
+        "sessions": 2
+      },
+      {
+        "month": "2026-06",
+        "sessions": 3
+      },
+      {
+        "month": "2026-07",
+        "sessions": 4
+      },
+      {
+        "month": "2026-08",
+        "sessions": 5
+      },
+      {
+        "month": "2026-09",
+        "sessions": 6
+      },
+      {
+        "month": "2026-10",
+        "sessions": 7
+      }
+    ]
+  },
+  {
+    "ia": "Local AI",
+    "sessions": 51,
+    "projects": [
+      "Observatoire",
+      "Keel"
+    ],
+    "by_month": [
+      {
+        "month": "2025-11",
+        "sessions": 4
+      },
+      {
+        "month": "2025-12",
+        "sessions": 5
+      },
+      {
+        "month": "2026-01",
+        "sessions": 6
+      },
+      {
+        "month": "2026-02",
+        "sessions": 7
+      },
+      {
+        "month": "2026-03",
+        "sessions": 1
+      },
+      {
+        "month": "2026-04",
+        "sessions": 2
+      },
+      {
+        "month": "2026-05",
+        "sessions": 3
+      },
+      {
+        "month": "2026-06",
+        "sessions": 4
+      },
+      {
+        "month": "2026-07",
+        "sessions": 5
+      },
+      {
+        "month": "2026-08",
+        "sessions": 6
+      },
+      {
+        "month": "2026-09",
+        "sessions": 7
+      },
+      {
+        "month": "2026-10",
+        "sessions": 1
+      }
+    ]
+  }
+]

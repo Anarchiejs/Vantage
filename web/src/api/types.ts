@@ -1,239 +1,239 @@
-// Contrat de l'API JSON. Miroir exact de internal/api/contrat.go : toute modification se fait des deux côtés.
-// Dates : « AAAA-MM-JJ » ; instants : ISO 8601 UTC « 2026-10-26T14:03:00Z » ; mois : « AAAA-MM » ; semaine : lundi « AAAA-MM-JJ ».
+// JSON API contract. Exact mirror of internal/api/contract.go: every change is made on both sides.
+// Dates: "YYYY-MM-DD"; instants: ISO 8601 UTC "2026-10-26T14:03:00Z"; months: "YYYY-MM"; weeks: Monday "YYYY-MM-DD".
 
-export interface Erreur {
-  erreur: string
+export interface APIError {
+  error: string
 }
 
-// ---- GET /api/accueil -------------------------------------------------------
+// ---- GET /api/home ----------------------------------------------------------
 
-export interface JourActivite {
-  jour: string
+export interface ActivityDay {
+  day: string
   commits: number
-  ajouts: number
-  suppressions: number
+  additions: number
+  deletions: number
   sessions: number
-  projets: string[] // noms des projets touchés ce jour
+  projects: string[] // names of projects touched that day
 }
 
-export interface Chiffres {
+export interface Stats {
   commits: number
-  ajouts: number
-  suppressions: number
+  additions: number
+  deletions: number
   sessions: number
-  projets_actifs: number
+  active_projects: number
 }
 
-export interface ProjetActif {
+export interface ActiveProject {
   id: number
-  nom: string
-  dernier_commit: string | null // instant
-  commits_30j: number
+  name: string
+  last_commit: string | null // instant
+  commits_30d: number
 }
 
-export interface ProjetDormant {
+export interface DormantProject {
   id: number
-  nom: string
-  dernier_commit: string | null
-  jours: number // depuis le dernier commit
+  name: string
+  last_commit: string | null
+  days: number // since the last commit
 }
 
-export interface FichePerimee {
+export interface StaleCard {
   id: number
-  nom: string
-  verifie_commit: string | null
-  dernier_sha: string | null
-  commits_depuis: number // commits arrivés après verifie_commit (-1 si verifie_commit inconnu du dépôt)
+  name: string
+  verified_commit: string | null
+  last_sha: string | null
+  commits_since: number // commits after verified_commit (-1 if verified_commit is unknown in the repository)
 }
 
-export interface Accueil {
-  calendrier: JourActivite[] // 365 jours finissant aujourd'hui, jours vides compris, ordre chronologique
-  semaine: Chiffres // 7 derniers jours
-  semaine_precedente: Chiffres
-  mois: Chiffres // 30 derniers jours
-  mois_precedent: Chiffres
-  actifs: ProjetActif[]
-  dormants: ProjetDormant[] // statut « en cours » sans commit depuis plus de 30 jours
-  fiches_perimees: FichePerimee[]
+export interface Home {
+  calendar: ActivityDay[] // 365 days ending today, including empty days, chronological
+  week: Stats // last 7 days
+  previous_week: Stats
+  month: Stats // last 30 days
+  previous_month: Stats
+  active: ActiveProject[]
+  dormant: DormantProject[] // status "in progress" with no commit for more than 30 days
+  stale_cards: StaleCard[]
 }
 
-// ---- GET /api/projets et /api/projets/{id} --------------------------------
+// ---- GET /api/projects and /api/projects/{id} ------------------------------
 
-export interface ProjetResume {
+export interface ProjectSummary {
   id: number
-  nom: string
-  statut: string | null
+  name: string
+  status: string | null
   commits: number
-  dernier_commit: string | null
-  langage_principal: string | null
+  last_commit: string | null
+  primary_language: string | null
 }
 
-export type TypeEvenement = 'commit' | 'session' | 'journal'
+export type EventType = 'commit' | 'session' | 'journal'
 
-export interface EvenementFrise {
-  date: string // instant pour un commit, date sinon
-  type: TypeEvenement
-  titre: string // sujet du commit, titre de la session, texte du journal
-  ref: string // sha, chemin de note, ou id de journal
-  ia: string | null
+export interface TimelineEvent {
+  date: string // instant for a commit, date otherwise
+  type: EventType
+  title: string // commit subject, session title, or journal text
+  ref: string // sha, note path, or journal id
+  ai: string | null
 }
 
-export interface VolumeSemaine {
-  semaine: string
+export interface WeeklyVolume {
+  week: string
   commits: number
-  ajouts: number
-  suppressions: number
+  additions: number
+  deletions: number
 }
 
-export interface PartLangage {
-  langage: string
-  lignes_code: number
-  part: number // 0..1
+export interface LanguageShare {
+  language: string
+  code_lines: number
+  share: number // 0..1
 }
 
-export interface PointLangage {
-  date_mesure: string
-  langage: string
-  lignes_code: number
+export interface LanguagePoint {
+  measured_on: string
+  language: string
+  code_lines: number
 }
 
-export interface PointChaud {
-  chemin: string
+export interface Hotspot {
+  path: string
   modifications: number
-  ajouts: number
-  suppressions: number
+  additions: number
+  deletions: number
 }
 
-export interface Sante {
-  verifie_commit: string | null
-  verifie_le: string | null
-  dernier_sha: string | null
-  a_jour: boolean
-  commits_depuis: number
-  notes_manquantes: string[] // parmi « <Nom> - Resume », « <Nom> - Detaille »
+export interface Health {
+  verified_commit: string | null
+  verified_on: string | null
+  last_sha: string | null
+  up_to_date: boolean
+  commits_since: number
+  missing_notes: string[] // among "<Name> - Summary", "<Name> - Detail"
 }
 
-export interface ActiviteIA {
-  ia: string
+export interface AIActivity {
+  ai: string
   sessions: number
-  premiere: string
-  derniere: string
+  first: string
+  last: string
 }
 
-export interface ProjetDetail {
-  projet: ProjetResume & { chemin_source: string | null; technos: string[] }
-  frise: EvenementFrise[] // plus récent d'abord, 500 au plus
-  volume: VolumeSemaine[] // 52 dernières semaines, semaines vides comprises
-  langages: PartLangage[] // dernière mesure
-  langages_evolution: PointLangage[]
-  points_chauds: PointChaud[] // 20 fichiers les plus modifiés
-  sante: Sante
-  ia: ActiviteIA[]
+export interface ProjectDetail {
+  project: ProjectSummary & { source_path: string | null; technologies: string[] }
+  timeline: TimelineEvent[] // newest first, at most 500
+  volume: WeeklyVolume[] // last 52 weeks, including empty weeks
+  languages: LanguageShare[] // latest measurement
+  language_evolution: LanguagePoint[]
+  hotspots: Hotspot[] // 20 most modified files
+  health: Health
+  ai: AIActivity[]
 }
 
-// ---- GET /api/technos et /api/ia -------------------------------------------
+// ---- GET /api/technologies and /api/ai -------------------------------------
 
-export interface NoeudSankey {
-  nom: string
-  type: 'projet' | 'techno'
+export interface SankeyNode {
+  name: string
+  type: 'project' | 'technology'
 }
 
-export interface LienSankey {
+export interface SankeyLink {
   source: string
-  cible: string
-  valeur: number // 1 par lien projet → techno
+  target: string
+  value: number // 1 per project -> technology link
 }
 
-export interface TendanceTechno {
-  mois: string
-  techno: string
-  commits: number // commits des projets qui utilisent la techno, ce mois
+export interface TechTrend {
+  month: string
+  technology: string
+  commits: number // commits of projects that use the technology, that month
 }
 
-export interface Technos {
-  sankey: { noeuds: NoeudSankey[]; liens: LienSankey[] }
-  tendance: TendanceTechno[] // 12 derniers mois
-  sans_projet: string[]
+export interface Technologies {
+  sankey: { nodes: SankeyNode[]; links: SankeyLink[] }
+  trend: TechTrend[] // last 12 months
+  unassigned: string[]
 }
 
-export interface IA {
-  ia: string
+export interface Assistant {
+  ai: string
   sessions: number
-  projets: string[]
-  par_mois: { mois: string; sessions: number }[]
+  projects: string[]
+  by_month: { month: string; sessions: number }[]
 }
 
-// ---- GET /api/graphe, /api/graphe/chemin, /api/notes/{id} -----------------
+// ---- GET /api/graph, /api/graph/path, /api/notes/{id} ----------------------
 
-export interface NoeudGraphe {
+export interface GraphNode {
   id: number
-  titre: string
-  dossier: string
-  degre: number // liens entrants + sortants résolus
+  title: string
+  folder: string
+  degree: number // resolved incoming + outgoing links
 }
 
-export interface Graphe {
-  noeuds: NoeudGraphe[]
-  liens: { source: number; cible: number }[]
-  orphelines: NoeudGraphe[] // degre = 0
-  centrales: NoeudGraphe[] // 10 plus grands degrés
-  casses: { source: number; source_titre: string; cible_titre: string }[]
+export interface Graph {
+  nodes: GraphNode[]
+  links: { source: number; target: number }[]
+  orphans: GraphNode[] // degree = 0
+  central: GraphNode[] // 10 highest degrees
+  broken: { source: number; source_title: string; target_title: string }[]
 }
 
-export interface Chemin {
-  chemin: NoeudGraphe[] // vide si aucun chemin ; liens suivis dans les deux sens
+export interface GraphPath {
+  path: GraphNode[] // empty when there is no path; links are followed in both directions
 }
 
 export interface NoteDetail {
   id: number
-  titre: string
-  chemin: string
-  dossier: string
-  maj: string | null
-  contenu: string
-  voisins: NoeudGraphe[]
+  title: string
+  path: string
+  folder: string
+  updated: string | null
+  content: string
+  neighbors: GraphNode[]
 }
 
-// ---- GET /api/recherche ------------------------------------------------------
+// ---- GET /api/search ---------------------------------------------------------
 
-export interface ResultatRecherche {
+export interface SearchHit {
   source: 'note' | 'commit'
-  ref: string // chemin de note ou sha
-  titre: string // avec <mark>…</mark> autour des termes trouvés
-  extrait: string // idem, avec « … » aux coupures
-  projet: string | null
+  ref: string // note path or sha
+  title: string // with <mark>…</mark> around matched terms
+  excerpt: string // same, with "…" at cuts
+  project: string | null
   date: string | null
-  id_note: number | null
+  note_id: number | null
 }
 
-// Paramètres : q (obligatoire), source, projet, dossier, depuis, jusqua, limite (défaut 50)
+// Parameters: q (required), source, project, folder, since, until, limit (default 50)
 
-// ---- Console SQL -------------------------------------------------------------
+// ---- SQL console -------------------------------------------------------------
 
-export interface DemandeSQL {
+export interface SQLRequest {
   sql: string
 }
 
-export interface ResultatSQL {
-  colonnes: string[]
-  lignes: (string | number | null)[][]
-  duree_ms: number
-  tronque: boolean // plus de 1000 lignes : seules les 1000 premières sont renvoyées
+export interface SQLResult {
+  columns: string[]
+  rows: (string | number | null)[][]
+  duration_ms: number
+  truncated: boolean // more than 1000 rows: only the first 1000 are returned
 }
 
-export interface TableSchema {
+export interface SchemaTable {
   table: string
-  colonnes: { nom: string; type: string }[]
+  columns: { name: string; type: string }[]
 }
 
-export interface RequeteEnregistree {
-  nom: string // nom de fichier sans « .sql », [a-z0-9-] uniquement
+export interface SavedQuery {
+  name: string // file name without ".sql", [a-z0-9-] only
   sql: string
 }
 
-// ---- GET /api/evenements (Server-Sent Events) -----------------------------
-// événement « maj » : { "tables": ["commit_git", "note", ...] } après chaque import.
+// ---- GET /api/events (Server-Sent Events) ----------------------------------
+// event "update": { "tables": ["commit_git", "note", ...] } after each import.
 
-export interface EvenementMaj {
+export interface UpdateEvent {
   tables: string[]
 }

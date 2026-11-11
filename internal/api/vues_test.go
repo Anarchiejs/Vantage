@@ -23,43 +23,43 @@ func racine() string {
 	return filepath.Join(filepath.Dir(f), "..", "..")
 }
 
-// serveurFixtures : base remplie par l'import des fixtures, « aujourd'hui » figé au 2026-03-31.
+// serverFixtures: database filled by importing the fixtures, with "today" fixed at 2026-03-31.
 func serveurFixtures(t *testing.T) http.Handler {
 	t.Helper()
 	r := racine()
 	if _, err := os.Stat(filepath.Join(r, "testdata", "depots", "alpha", ".git")); err != nil {
-		t.Fatal("fixtures absentes : lancer d'abord go run ./scripts/fixtures/make-repos.go")
+		t.Fatal("fixtures missing: run go run ./scripts/fixtures/make-repos.go first")
 	}
 	chemin := filepath.Join(t.TempDir(), "test.db")
-	rw, err := db.Ouvrir(chemin)
+	rw, err := db.Open(chemin)
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Cleanup(func() { rw.Close() })
-	if err := db.Migrer(rw); err != nil {
+	if err := db.Migrate(rw); err != nil {
 		t.Fatal(err)
 	}
-	b, err := ingest.Importer(context.Background(), rw, ingest.Options{
-		Coffre:     filepath.Join(r, "testdata", "coffre"),
-		Depots:     map[string]string{"Atlas": filepath.Join(r, "testdata", "depots", "alpha"), "Boussole": filepath.Join(r, "testdata", "depots", "beta")},
-		Aujourdhui: "2026-03-31",
+	b, err := ingest.Import(context.Background(), rw, ingest.Options{
+		Vault: filepath.Join(r, "testdata", "vault"),
+		Repos: map[string]string{"Atlas": filepath.Join(r, "testdata", "depots", "alpha"), "Compass": filepath.Join(r, "testdata", "depots", "beta")},
+		Today: "2026-03-31",
 	})
-	if err != nil || len(b.Avertissements) > 0 {
-		t.Fatalf("import : %v %v", err, b.Avertissements)
+	if err != nil || len(b.Warnings) > 0 {
+		t.Fatalf("import : %v %v", err, b.Warnings)
 	}
-	ro, err := db.OuvrirLectureSeule(chemin)
+	ro, err := db.OpenReadOnly(chemin)
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Cleanup(func() { ro.Close() })
-	s, err := Nouveau(Config{Adresse: "127.0.0.1:0", Base: rw, BaseLecture: ro, Aujourdhui: func() string { return "2026-03-31" }})
+	s, err := New(Config{Address: "127.0.0.1:0", DB: rw, ReadDB: ro, Today: func() string { return "2026-03-31" }})
 	if err != nil {
 		t.Fatal(err)
 	}
 	return s.Handler()
 }
 
-// lire appelle la route et décode strictement : un champ hors contrat fait échouer le test.
+// read calls the route and decodes strictly: a field outside the contract fails the test.
 func lire[T any](t *testing.T, h http.Handler, url string, statut int) T {
 	t.Helper()
 	w := appeler(h, "GET", url, "127.0.0.1", "")
@@ -90,7 +90,7 @@ func pasDeListeNulle(t *testing.T, url string, v any) {
 			}
 		case reflect.Slice:
 			if x.IsNil() {
-				t.Errorf("%s : liste nulle %s (doit être [])", url, chemin)
+				t.Errorf("%s : nil list %s (must be [])", url, chemin)
 			}
 			for i := 0; i < x.Len(); i++ {
 				visiter(chemin, x.Index(i))
@@ -103,88 +103,88 @@ func pasDeListeNulle(t *testing.T, url string, v any) {
 func TestVues(t *testing.T) {
 	h := serveurFixtures(t)
 
-	acc := lire[Accueil](t, h, "/api/accueil", 200)
-	pasDeListeNulle(t, "accueil", acc)
-	if len(acc.Calendrier) != 365 || acc.Calendrier[364].Jour != "2026-03-31" {
-		t.Fatalf("calendrier : %d jours, dernier %v", len(acc.Calendrier), acc.Calendrier[len(acc.Calendrier)-1])
+	acc := lire[Home](t, h, "/api/home", 200)
+	pasDeListeNulle(t, "home", acc)
+	if len(acc.Calendar) != 365 || acc.Calendar[364].Day != "2026-03-31" {
+		t.Fatalf("calendrier : %d jours, dernier %v", len(acc.Calendar), acc.Calendar[len(acc.Calendar)-1])
 	}
 	var total int64
-	for _, j := range acc.Calendrier {
+	for _, j := range acc.Calendar {
 		total += j.Commits
 	}
 	if total != 42 {
 		t.Errorf("calendrier : %d commits, 42 attendus", total)
 	}
-	if acc.Mois.Commits != 12 { // 6 commits en mars par dépôt (voir internal/sql/requetes/README.md)
-		t.Errorf("mois : %d commits", acc.Mois.Commits)
+	if acc.Month.Commits != 12 { // 6 commits in March per repository (see internal/sql/queries/README.md)
+		t.Errorf("month: %d commits", acc.Month.Commits)
 	}
 
-	projets := lire[[]ProjetResume](t, h, "/api/projets", 200)
+	projets := lire[[]ProjectSummary](t, h, "/api/projects", 200)
 	if len(projets) < 2 {
 		t.Fatalf("projets : %+v", projets)
 	}
 	var atlas int64
 	for _, p := range projets {
-		if p.Nom == "Atlas" {
+		if p.Name == "Atlas" {
 			atlas = p.ID
 		}
 	}
-	det := lire[ProjetDetail](t, h, "/api/projets/"+itoa(atlas), 200)
+	det := lire[ProjectDetail](t, h, "/api/projects/"+itoa(atlas), 200)
 	pasDeListeNulle(t, "projet", det)
-	if det.Projet.Commits != 21 || len(det.Volume) != 52 || len(det.Langages) == 0 || len(det.Projet.Technos) == 0 {
-		t.Errorf("projet Atlas : commits=%d semaines=%d langages=%d technos=%v", det.Projet.Commits, len(det.Volume), len(det.Langages), det.Projet.Technos)
+	if det.Project.Commits != 21 || len(det.Volume) != 52 || len(det.Languages) == 0 || len(det.Project.Technologies) == 0 {
+		t.Errorf("projet Atlas : commits=%d semaines=%d languages=%d technos=%v", det.Project.Commits, len(det.Volume), len(det.Languages), det.Project.Technologies)
 	}
-	if det.Sante.DernierSHA == nil || det.Sante.AJour {
-		t.Errorf("santé Atlas (verifie_commit fictif a1b2c3d) : %+v", det.Sante)
+	if det.Health.LastSHA == nil || det.Health.UpToDate {
+		t.Errorf("Atlas health (fictional verified_commit a1b2c3d) : %+v", det.Health)
 	}
-	lire[Erreur](t, h, "/api/projets/999999", 404)
-	lire[Erreur](t, h, "/api/projets/abc", 400)
+	lire[APIError](t, h, "/api/projects/999999", 404)
+	lire[APIError](t, h, "/api/projects/abc", 400)
 
-	tech := lire[Technos](t, h, "/api/technos", 200)
+	tech := lire[Technologies](t, h, "/api/technologies", 200)
 	pasDeListeNulle(t, "technos", tech)
 	noms := map[string]bool{}
-	for _, n := range tech.Sankey.Noeuds {
-		if noms[n.Nom] {
-			t.Errorf("nœud Sankey en double : %s", n.Nom)
+	for _, n := range tech.Sankey.Nodes {
+		if noms[n.Name] {
+			t.Errorf("duplicate Sankey node : %s", n.Name)
 		}
-		noms[n.Nom] = true
+		noms[n.Name] = true
 	}
-	for _, l := range tech.Sankey.Liens {
-		if !noms[l.Source] || !noms[l.Cible] {
-			t.Errorf("lien Sankey vers un nœud absent : %+v", l)
+	for _, l := range tech.Sankey.Links {
+		if !noms[l.Source] || !noms[l.Target] {
+			t.Errorf("Sankey link to a missing node : %+v", l)
 		}
 	}
-	ias := lire[[]IA](t, h, "/api/ia", 200)
+	ias := lire[[]Assistant](t, h, "/api/ai", 200)
 	pasDeListeNulle(t, "ia", ias)
 
-	g := lire[Graphe](t, h, "/api/graphe", 200)
-	pasDeListeNulle(t, "graphe", g)
-	if len(g.Noeuds) == 0 || len(g.Liens) == 0 || len(g.Casses) != 3 {
-		t.Errorf("graphe : %d nœuds, %d liens, %d cassés", len(g.Noeuds), len(g.Liens), len(g.Casses))
+	g := lire[Graph](t, h, "/api/graph", 200)
+	pasDeListeNulle(t, "graph", g)
+	if len(g.Nodes) == 0 || len(g.Links) == 0 || len(g.Broken) != 3 {
+		t.Errorf("graph: %d nodes, %d links, %d broken", len(g.Nodes), len(g.Links), len(g.Broken))
 	}
-	n := lire[NoteDetail](t, h, "/api/notes/"+itoa(g.Noeuds[0].ID), 200)
+	n := lire[NoteDetail](t, h, "/api/notes/"+itoa(g.Nodes[0].ID), 200)
 	pasDeListeNulle(t, "note", n)
-	ch := lire[Chemin](t, h, "/api/graphe/chemin?de="+itoa(g.Liens[0].Source)+"&a="+itoa(g.Liens[0].Cible), 200)
-	if len(ch.Chemin) != 2 {
+	ch := lire[GraphPath](t, h, "/api/graph/path?from="+itoa(g.Links[0].Source)+"&to="+itoa(g.Links[0].Target), 200)
+	if len(ch.Path) != 2 {
 		t.Errorf("chemin direct : %+v", ch)
 	}
-	lire[Erreur](t, h, "/api/graphe/chemin?de=x", 400)
+	lire[APIError](t, h, "/api/graph/path?from=x", 400)
 
-	rech := lire[[]ResultatRecherche](t, h, "/api/recherche?q=echantillonnage", 200)
-	if len(rech) == 0 || !strings.Contains(rech[0].Titre+rech[0].Extrait, "<mark>") {
+	rech := lire[[]SearchHit](t, h, "/api/search?q=naive", 200)
+	if len(rech) == 0 || !strings.Contains(rech[0].Title+rech[0].Excerpt, "<mark>") {
 		t.Errorf("recherche : %+v", rech)
 	}
-	if v := lire[[]ResultatRecherche](t, h, "/api/recherche?q=", 200); len(v) != 0 {
+	if v := lire[[]SearchHit](t, h, "/api/search?q=", 200); len(v) != 0 {
 		t.Errorf("recherche vide : %+v", v)
 	}
-	lire[Erreur](t, h, `/api/recherche?q=%22non+ferme`, 400)
-	lire[[]ResultatRecherche](t, h, "/api/recherche?q=fixture&source=commit&limite=5", 200)
+	lire[APIError](t, h, `/api/search?q=%22unclosed`, 400)
+	lire[[]SearchHit](t, h, "/api/search?q=fixture&source=commit&limit=5", 200)
 }
 
 func itoa(i int64) string { return strconv.FormatInt(i, 10) }
 
-// TestContratMiroir vérifie que chaque interface de web/src/api/types.ts a exactement les champs JSON
-// du struct Go du même nom (contrat.go).
+// TestContractMirror checks that every interface in web/src/api/types.ts has exactly the JSON fields
+// of the Go struct with the same name (contract.go).
 func TestContratMiroir(t *testing.T) {
 	src, err := os.ReadFile(filepath.Join(racine(), "web", "src", "api", "types.ts"))
 	if err != nil {
@@ -193,10 +193,10 @@ func TestContratMiroir(t *testing.T) {
 	blocs := regexp.MustCompile(`(?s)export interface (\w+)(?: extends [^{]+)? \{(.*?)\n\}`).FindAllStringSubmatch(string(src), -1)
 	champTS := regexp.MustCompile(`(?m)^  (\w+)\??:`)
 	types := map[string]reflect.Type{}
-	for _, v := range []any{Erreur{}, JourActivite{}, Chiffres{}, ProjetActif{}, ProjetDormant{}, FichePerimee{}, Accueil{},
-		ProjetResume{}, EvenementFrise{}, VolumeSemaine{}, PartLangage{}, PointLangage{}, PointChaud{}, Sante{}, ActiviteIA{},
-		ProjetDetail{}, NoeudSankey{}, LienSankey{}, TendanceTechno{}, Technos{}, IA{}, NoeudGraphe{}, Graphe{}, Chemin{},
-		NoteDetail{}, ResultatRecherche{}, DemandeSQL{}, ResultatSQL{}, TableSchema{}, RequeteEnregistree{}, EvenementMaj{}} {
+	for _, v := range []any{APIError{}, ActivityDay{}, Stats{}, ActiveProject{}, DormantProject{}, StaleCard{}, Home{},
+		ProjectSummary{}, TimelineEvent{}, WeeklyVolume{}, LanguageShare{}, LanguagePoint{}, Hotspot{}, Health{}, AIActivity{},
+		ProjectDetail{}, SankeyNode{}, SankeyLink{}, TechTrend{}, Technologies{}, Assistant{}, GraphNode{}, Graph{}, GraphPath{},
+		NoteDetail{}, SearchHit{}, SQLRequest{}, SQLResult{}, SchemaTable{}, SavedQuery{}, UpdateEvent{}} {
 		types[reflect.TypeOf(v).Name()] = reflect.TypeOf(v)
 	}
 	if len(blocs) < 25 {

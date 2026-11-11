@@ -1,0 +1,22 @@
+{
+  "path": [
+    {
+      "id": 1,
+      "title": "Observatoire",
+      "folder": "Projects",
+      "degree": 7
+    },
+    {
+      "id": 22,
+      "title": "TypeScript",
+      "folder": "Technologies",
+      "degree": 5
+    },
+    {
+      "id": 2,
+      "title": "Compass",
+      "folder": "Projects",
+      "degree": 4
+    }
+  ]
+}
