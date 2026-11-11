@@ -19,546 +19,546 @@
       "type": "commit",
       "title": "Fix data validation",
       "ref": "92aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-15",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-15 - Tidepool.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-15",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "902",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-14T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "95aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-14",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-14 - Tidepool.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-14",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "905",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-13T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "98aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-13",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-13 - Tidepool.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-13",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "908",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-12T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "9baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-12",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-12 - Tidepool.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-12",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "911",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-11T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "9eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-11",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-11 - Tidepool.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-11",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "914",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-10T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "911aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-10",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-10 - Tidepool.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-10",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "917",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-09T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "914aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-09",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-09 - Tidepool.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-09",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "920",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-08T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "917aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-08",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-08 - Tidepool.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-08",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "923",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-07T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "91aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-07",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-07 - Tidepool.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-07",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "926",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-06T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "91daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-06",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-06 - Tidepool.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-06",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "929",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-05T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "920aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-05",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-05 - Tidepool.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-05",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "932",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-04T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "923aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-04",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-04 - Tidepool.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-04",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "935",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-03T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "926aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-03",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-03 - Tidepool.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-03",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "938",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-02T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "929aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-02",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-02 - Tidepool.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-08-02",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "941",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-01T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "92caaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-08-01",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-08-01 - Tidepool.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-08-01",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "944",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-31T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "92faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-31",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-07-31 - Tidepool.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-31",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "947",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-30T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "932aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-30",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-07-30 - Tidepool.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-30",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "950",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-29T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "935aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-29",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-07-29 - Tidepool.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-29",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "953",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-28T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "938aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-28",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-07-28 - Tidepool.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-28",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "956",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-27T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "93baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-27",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-07-27 - Tidepool.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-27",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "959",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-26T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "93eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-26",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-07-26 - Tidepool.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-26",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "962",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-25T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "941aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-25",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-07-25 - Tidepool.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-25",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "965",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-24T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "944aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-24",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-07-24 - Tidepool.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-24",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "968",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-23T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "947aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-23",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-07-23 - Tidepool.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-23",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "971",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-22T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "94aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-22",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-07-22 - Tidepool.md",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-07-22",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "974",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-21T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "94daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-07-21",
       "type": "session",
       "title": "Review and improve Tidepool",
       "ref": "Sessions/2026-07-21 - Tidepool.md",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-07-21",
       "type": "journal",
       "title": "Updated the card for Tidepool",
       "ref": "977",
-      "ia": "Codex"
+      "ai": "Codex"
     }
   ],
   "volume": [
@@ -1049,15 +1049,15 @@
     "commits_since": 0,
     "missing_notes": []
   },
-  "ia": [
+  "ai": [
     {
-      "ia": "Codex",
+      "ai": "Codex",
       "sessions": 13,
       "first": "2026-07-21",
       "last": "2026-08-15"
     },
     {
-      "ia": "Claude Code",
+      "ai": "Claude Code",
       "sessions": 13,
       "first": "2026-07-22",
       "last": "2026-08-15"

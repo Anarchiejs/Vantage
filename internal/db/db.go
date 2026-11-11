@@ -3,6 +3,7 @@ package db
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"net/url"
 	"path/filepath"
@@ -50,12 +51,32 @@ func open(path string, readOnly bool) (*sql.DB, error) {
 	return base, nil
 }
 
+// ErrLegacySchema means the file was created before the English schema rename.
+// Goose will not rebuild tables that version 1 already applied, so the database
+// has to be deleted and imported again.
+var ErrLegacySchema = errors.New("this database uses the retired French schema (table projet): delete the database file and its -wal and -shm companions, then import the vault again (see CHANGELOG.md)")
+
 // Migrate brings the schema up to the latest version.
 func Migrate(base *sql.DB) error {
+	if err := refuseLegacySchema(base); err != nil {
+		return err
+	}
 	goose.SetBaseFS(migrations.FS)
 	goose.SetLogger(goose.NopLogger())
 	if err := goose.SetDialect("sqlite3"); err != nil {
 		return err
 	}
 	return goose.Up(base, ".")
+}
+
+func refuseLegacySchema(base *sql.DB) error {
+	var name string
+	err := base.QueryRow(`SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'projet'`).Scan(&name)
+	if errors.Is(err, sql.ErrNoRows) {
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+	return ErrLegacySchema
 }

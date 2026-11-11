@@ -12,17 +12,17 @@ import (
 )
 
 // root returns the Observatoire repository root.
-func racine(t *testing.T) string {
+func root(t *testing.T) string {
 	_, f, _, _ := runtime.Caller(0)
 	return filepath.Join(filepath.Dir(f), "..", "..")
 }
 
-func preparer(t *testing.T) (*sql.DB, Options) {
+func prepare(t *testing.T) (*sql.DB, Options) {
 	t.Helper()
-	r := racine(t)
+	r := root(t)
 	// The repositories are created once before `go test ./...` (see testdata/README.md): regenerating them here
 	// would break the other packages' tests running at the same time.
-	if _, err := os.Stat(filepath.Join(r, "testdata", "depots", "alpha", ".git")); err != nil {
+	if _, err := os.Stat(filepath.Join(r, "testdata", "repos", "alpha", ".git")); err != nil {
 		t.Fatal("fixtures missing: run go run ./scripts/fixtures/make-repos.go first")
 	}
 	base, err := db.Open(filepath.Join(t.TempDir(), "test.db"))
@@ -35,12 +35,12 @@ func preparer(t *testing.T) (*sql.DB, Options) {
 	}
 	return base, Options{
 		Vault: filepath.Join(r, "testdata", "vault"),
-		Repos: map[string]string{"Atlas": filepath.Join(r, "testdata", "depots", "alpha"), "Compass": filepath.Join(r, "testdata", "depots", "beta")},
+		Repos: map[string]string{"Atlas": filepath.Join(r, "testdata", "repos", "alpha"), "Compass": filepath.Join(r, "testdata", "repos", "beta")},
 		Today: "2026-10-26",
 	}
 }
 
-func compter(t *testing.T, base *sql.DB, q string) int {
+func countRows(t *testing.T, base *sql.DB, q string) int {
 	t.Helper()
 	var n int
 	if err := base.QueryRow(q).Scan(&n); err != nil {
@@ -50,7 +50,7 @@ func compter(t *testing.T, base *sql.DB, q string) int {
 }
 
 func TestImportIdempotent(t *testing.T) {
-	base, opt := preparer(t)
+	base, opt := prepare(t)
 	ctx := context.Background()
 
 	b1, err := Import(ctx, base, opt)
@@ -58,18 +58,18 @@ func TestImportIdempotent(t *testing.T) {
 		t.Fatal(err)
 	}
 	if len(b1.Warnings) > 0 {
-		t.Fatalf("avertissements : %v", b1.Warnings)
+		t.Fatalf("warnings: %v", b1.Warnings)
 	}
 	if b1.Repos != 2 || b1.Commits != 42 {
-		t.Fatalf("premier import : %+v", b1)
+		t.Fatalf("first import: %+v", b1)
 	}
 
 	tables := []string{"project", "repository", "commit_git", "changed_file", "note", "link", "session", "journal", "technology", "project_technology", "language_stat", "search_index", "daily_activity"}
-	avant := map[string]int{}
+	before := map[string]int{}
 	for _, tb := range tables {
-		avant[tb] = compter(t, base, "SELECT count(*) FROM "+tb)
+		before[tb] = countRows(t, base, "SELECT count(*) FROM "+tb)
 	}
-	totalAvant := compter(t, base, "SELECT sum(commit_count) FROM daily_activity")
+	totalBefore := countRows(t, base, "SELECT sum(commit_count) FROM daily_activity")
 
 	b2, err := Import(ctx, base, opt)
 	if err != nil {
@@ -79,17 +79,17 @@ func TestImportIdempotent(t *testing.T) {
 		t.Fatalf("second import was not empty : %+v", b2)
 	}
 	for _, tb := range tables {
-		if n := compter(t, base, "SELECT count(*) FROM "+tb); n != avant[tb] {
-			t.Errorf("%s : %d puis %d lignes", tb, avant[tb], n)
+		if n := countRows(t, base, "SELECT count(*) FROM "+tb); n != before[tb] {
+			t.Errorf("%s: %d then %d rows", tb, before[tb], n)
 		}
 	}
-	if totalAvant != 42 {
-		t.Errorf("activite_jour compte %d commits, 42 attendus", totalAvant)
+	if totalBefore != 42 {
+		t.Errorf("daily_activity has %d commits, expected 42", totalBefore)
 	}
-	if n := compter(t, base, "SELECT count(*) FROM link WHERE target_id IS NULL"); n == 0 {
+	if n := countRows(t, base, "SELECT count(*) FROM link WHERE target_id IS NULL"); n == 0 {
 		t.Error("no broken link found, but the fixtures contain some")
 	}
-	if n := compter(t, base, "SELECT count(*) FROM search_index WHERE search_index MATCH 'naive'"); n == 0 {
+	if n := countRows(t, base, "SELECT count(*) FROM search_index WHERE search_index MATCH 'naive'"); n == 0 {
 		t.Error("accent-insensitive search found nothing")
 	}
 }

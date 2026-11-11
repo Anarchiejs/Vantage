@@ -2,7 +2,7 @@
   "nodes": [
     {
       "id": 1,
-      "title": "Observatoire",
+      "title": "Atlas",
       "folder": "Projects",
       "degree": 7
     },
@@ -146,7 +146,7 @@
     },
     {
       "id": 50,
-      "title": "Architecture Observatoire",
+      "title": "Architecture Atlas",
       "folder": "Concepts",
       "degree": 2
     },
@@ -158,7 +158,7 @@
     },
     {
       "id": 52,
-      "title": "2026-10-26 - Observatoire",
+      "title": "2026-10-26 - Atlas",
       "folder": "Sessions",
       "degree": 2
     },
@@ -5124,7 +5124,7 @@
   "broken": [
     {
       "source": 50,
-      "source_title": "Architecture Observatoire",
+      "source_title": "Architecture Atlas",
       "target_title": "Deployment plan"
     }
   ]

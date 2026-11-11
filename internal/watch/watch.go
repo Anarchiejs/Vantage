@@ -39,21 +39,21 @@ func (c Changes) Tables() []string {
 	return tables
 }
 
-type surveillance struct {
-	w      *fsnotify.Watcher
-	opt    Options
-	vault  string
-	git    []string
-	actifs map[string]bool
+type watcher struct {
+	w       *fsnotify.Watcher
+	opt     Options
+	vault   string
+	git     []string
+	watched map[string]bool
 }
 
-func (s *surveillance) log(format string, args ...any) {
+func (s *watcher) log(format string, args ...any) {
 	if s.opt.Log != nil {
 		s.opt.Log(format, args...)
 	}
 }
 
-func absolu(path string) string {
+func absolute(path string) string {
 	p, err := filepath.Abs(path)
 	if err != nil {
 		return filepath.Clean(path)
@@ -61,7 +61,7 @@ func absolu(path string) string {
 	return p
 }
 
-func relatif(root, path string) (string, bool) {
+func relativeTo(root, path string) (string, bool) {
 	r, err := filepath.Rel(root, path)
 	return r, err == nil && r != ".." && !strings.HasPrefix(r, ".."+string(filepath.Separator))
 }
@@ -75,7 +75,7 @@ func visible(path string) bool {
 	return true
 }
 
-func (s *surveillance) arbre(root string, cible map[string]bool, cache bool) {
+func (s *watcher) walkTree(root string, wanted map[string]bool, cache bool) {
 	err := filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			s.log("walk %s: %v", path, err)
@@ -87,9 +87,9 @@ func (s *surveillance) arbre(root string, cible map[string]bool, cache bool) {
 		if cache && path != root && strings.HasPrefix(d.Name(), ".") {
 			return filepath.SkipDir
 		}
-		cible[path] = true
+		wanted[path] = true
 		// Watching before walking children closes the creation window.
-		s.ajouter(path)
+		s.addWatch(path)
 		return nil
 	})
 	if err != nil {
@@ -97,24 +97,24 @@ func (s *surveillance) arbre(root string, cible map[string]bool, cache bool) {
 	}
 }
 
-func (s *surveillance) ajouter(path string) {
-	if s.actifs[path] {
+func (s *watcher) addWatch(path string) {
+	if s.watched[path] {
 		return
 	}
 	if err := s.w.Add(path); err != nil {
 		s.log("watch %s: %v", path, err)
 	} else {
-		s.actifs[path] = true
+		s.watched[path] = true
 	}
 }
 
-func (s *surveillance) repos() {
+func (s *watcher) repos() {
 	s.git = nil
 	if s.opt.Repos == nil {
 		return
 	}
 	for _, repo := range s.opt.Repos() {
-		git := filepath.Join(absolu(repo), ".git")
+		git := filepath.Join(absolute(repo), ".git")
 		info, err := os.Stat(git)
 		if err != nil {
 			s.log("repository %s: %v", repo, err)
@@ -139,7 +139,7 @@ func (s *surveillance) repos() {
 			if !filepath.IsAbs(dir) {
 				dir = filepath.Join(filepath.Dir(git), dir)
 			}
-			git = absolu(dir)
+			git = absolute(dir)
 		}
 		s.git = append(s.git, git)
 		// Worktrees share branches in the common directory.
@@ -149,53 +149,53 @@ func (s *surveillance) repos() {
 				if !filepath.IsAbs(common) {
 					common = filepath.Join(git, common)
 				}
-				s.git = append(s.git, absolu(common))
+				s.git = append(s.git, absolute(common))
 			}
 		}
 	}
 }
 
-func (s *surveillance) ajuster() {
-	cible := make(map[string]bool)
+func (s *watcher) refresh() {
+	wanted := make(map[string]bool)
 	if s.vault != "" {
-		s.arbre(s.vault, cible, true)
+		s.walkTree(s.vault, wanted, true)
 	}
 	for _, git := range s.git {
-		cible[git] = true
-		s.ajouter(git)
+		wanted[git] = true
+		s.addWatch(git)
 		refs := filepath.Join(git, "refs")
 		if info, err := os.Stat(refs); err == nil && info.IsDir() {
-			cible[refs] = true
-			s.ajouter(refs)
+			wanted[refs] = true
+			s.addWatch(refs)
 		}
 		heads := filepath.Join(refs, "heads")
 		if _, err := os.Stat(heads); err == nil {
-			s.arbre(heads, cible, false)
+			s.walkTree(heads, wanted, false)
 		}
 	}
-	for path := range s.actifs {
-		if !cible[path] {
+	for path := range s.watched {
+		if !wanted[path] {
 			_ = s.w.Remove(path)
-			delete(s.actifs, path)
+			delete(s.watched, path)
 		}
 	}
-	for path := range cible {
-		s.ajouter(path)
+	for path := range wanted {
+		s.addWatch(path)
 	}
 }
 
-func (s *surveillance) pertinent(event fsnotify.Event) bool {
+func (s *watcher) relevant(event fsnotify.Event) bool {
 	path := filepath.Clean(event.Name)
 	info, statErr := os.Stat(path)
-	dossier := (statErr == nil && info.IsDir()) || s.actifs[path]
-	if dossier && !event.Has(fsnotify.Create|fsnotify.Remove|fsnotify.Rename) {
+	directory := (statErr == nil && info.IsDir()) || s.watched[path]
+	if directory && !event.Has(fsnotify.Create|fsnotify.Remove|fsnotify.Rename) {
 		// Windows also reports writes to the parent directory: only its contents matter.
 		return false
 	}
 	if s.vault != "" {
-		rel, ok := relatif(s.vault, path)
+		rel, ok := relativeTo(s.vault, path)
 		parents := filepath.Dir(rel)
-		if dossier {
+		if directory {
 			parents = rel
 		}
 		if ok && visible(parents) {
@@ -216,7 +216,7 @@ func (s *surveillance) pertinent(event fsnotify.Event) bool {
 				})
 				return found
 			}
-			return strings.EqualFold(filepath.Ext(path), ".md") || (s.actifs[path] && event.Has(fsnotify.Remove|fsnotify.Rename))
+			return strings.EqualFold(filepath.Ext(path), ".md") || (s.watched[path] && event.Has(fsnotify.Remove|fsnotify.Rename))
 		}
 	}
 	for _, git := range s.git {
@@ -228,7 +228,7 @@ func (s *surveillance) pertinent(event fsnotify.Event) bool {
 				return true
 			}
 		}
-		if rel, ok := relatif(filepath.Join(git, "refs", "heads"), path); ok {
+		if rel, ok := relativeTo(filepath.Join(git, "refs", "heads"), path); ok {
 			return !strings.HasSuffix(rel, ".lock")
 		}
 	}
@@ -254,17 +254,17 @@ func Watch(ctx context.Context, opt Options) error {
 		return err
 	}
 	defer w.Close()
-	s := &surveillance{w: w, opt: opt, actifs: make(map[string]bool)}
+	s := &watcher{w: w, opt: opt, watched: make(map[string]bool)}
 	if opt.Vault != "" {
-		s.vault = absolu(opt.Vault)
+		s.vault = absolute(opt.Vault)
 	}
 	s.repos()
-	s.ajuster()
-	type resultat struct {
+	s.refresh()
+	type outcome struct {
 		c   Changes
 		err error
 	}
-	fin := make(chan resultat, 1)
+	fin := make(chan outcome, 1)
 	var timer *time.Timer
 	var attente <-chan time.Time
 	enCours, suivant := false, false
@@ -275,7 +275,7 @@ func Watch(ctx context.Context, opt Options) error {
 	}()
 	startImport := func() {
 		enCours = true
-		go func() { c, err := opt.Import(ctx); fin <- resultat{c, err} }()
+		go func() { c, err := opt.Import(ctx); fin <- outcome{c, err} }()
 	}
 	for {
 		if ctx.Err() != nil {
@@ -289,24 +289,24 @@ func Watch(ctx context.Context, opt Options) error {
 				return nil
 			}
 			// Deletes are still recognizable in the previous list.
-			supprime := s.actifs[event.Name] && event.Has(fsnotify.Remove|fsnotify.Rename)
-			pertinent := false
-			if supprime {
-				pertinent = s.pertinent(event)
+			removed := s.watched[event.Name] && event.Has(fsnotify.Remove|fsnotify.Rename)
+			relevant := false
+			if removed {
+				relevant = s.relevant(event)
 				// fsnotify automatically drops deleted or renamed directories.
-				for path := range s.actifs {
-					if _, ok := relatif(event.Name, path); ok {
+				for path := range s.watched {
+					if _, ok := relativeTo(event.Name, path); ok {
 						_ = s.w.Remove(path)
-						delete(s.actifs, path)
+						delete(s.watched, path)
 					}
 				}
 			}
 			info, statErr := os.Stat(event.Name)
-			if supprime || (statErr == nil && info.IsDir() && event.Has(fsnotify.Create|fsnotify.Rename)) {
-				s.ajuster()
+			if removed || (statErr == nil && info.IsDir() && event.Has(fsnotify.Create|fsnotify.Rename)) {
+				s.refresh()
 			}
-			pertinent = s.pertinent(event) || pertinent
-			if !pertinent {
+			relevant = s.relevant(event) || relevant
+			if !relevant {
 				continue
 			}
 			if enCours {
@@ -333,7 +333,7 @@ func Watch(ctx context.Context, opt Options) error {
 				opt.Announce(result.c.Tables()...)
 			}
 			s.repos()
-			s.ajuster()
+			s.refresh()
 			if suivant && ctx.Err() == nil {
 				suivant = false
 				startImport()

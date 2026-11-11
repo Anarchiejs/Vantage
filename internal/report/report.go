@@ -58,7 +58,7 @@ func Generate(ctx context.Context, q *gen.Queries, today string) ([]byte, error)
 
 	var b strings.Builder
 	fmt.Fprintf(&b, "---\ntype: statistics\ngenerated_by: observatoire\ngenerated_on: %s\n---\n# Statistics — week of %s to %s\n\n", today, monday.Format(dayLayout), today)
-	b.WriteString("Note generated automatically by [[Observatoire]]: do not edit it by hand; it is rewritten every week.\nBack to the hub: [[Statistics]]\n\n")
+	b.WriteString("Note generated automatically by [[Observatoire]]: do not edit it by hand; it is rewritten every week.\n\n")
 	b.WriteString("## Activity\n\n| | This week | Previous week |\n|---|---:|---:|\n")
 	metric := func(name string, current, earlier int64) {
 		fmt.Fprintf(&b, "| %s | %s | %s |\n", name, grouped(current), grouped(earlier))
@@ -112,9 +112,6 @@ func Generate(ctx context.Context, q *gen.Queries, today string) ([]byte, error)
 			name := "unknown"
 			if assistant.Ai != nil {
 				name = *assistant.Ai
-			}
-			if name == "Claude Code" {
-				name = "Claude Code|Claude"
 			}
 			fmt.Fprintf(&b, "- [[%s]] — %s\n", link(name), plural(assistant.Sessions, "session"))
 		}

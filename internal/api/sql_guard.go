@@ -39,8 +39,8 @@ func allowConsole(action sqlite.AuthorizerActionCode, arg1, arg2, _, _ string) s
 	case sqlite.AuthSelect, sqlite.AuthRead, sqlite.AuthFunction, sqlite.AuthRecursive:
 		return sqlite.AuthorizerOK
 	case sqlite.AuthPragma:
-		nom := strings.ToLower(arg1)
-		if pragmasWithArgument[nom] || (arg2 == "" && pragmasWithoutArgument[nom]) {
+		name := strings.ToLower(arg1)
+		if pragmasWithArgument[name] || (arg2 == "" && pragmasWithoutArgument[name]) {
 			return sqlite.AuthorizerOK
 		}
 	}

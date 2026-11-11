@@ -30,7 +30,7 @@ func root() string {
 func prepare(t *testing.T) *sql.DB {
 	t.Helper()
 	r := root()
-	if _, err := os.Stat(filepath.Join(r, "testdata/depots/alpha/.git")); err != nil {
+	if _, err := os.Stat(filepath.Join(r, "testdata/repos/alpha/.git")); err != nil {
 		t.Fatal("run go run ./scripts/fixtures/make-repos.go first:", err)
 	}
 	b, err := db.Open(filepath.Join(t.TempDir(), "test.db"))
@@ -43,7 +43,7 @@ func prepare(t *testing.T) *sql.DB {
 	}
 	summary, err := ingest.Import(context.Background(), b, ingest.Options{
 		Vault: filepath.Join(r, "testdata/vault"),
-		Repos: map[string]string{"Atlas": filepath.Join(r, "testdata/depots/alpha"), "Compass": filepath.Join(r, "testdata/depots/beta")},
+		Repos: map[string]string{"Atlas": filepath.Join(r, "testdata/repos/alpha"), "Compass": filepath.Join(r, "testdata/repos/beta")},
 		Today: today,
 	})
 	if err != nil {

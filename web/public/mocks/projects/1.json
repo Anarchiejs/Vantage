@@ -1,12 +1,12 @@
 {
   "project": {
     "id": 1,
-    "name": "Observatoire",
+    "name": "Atlas",
     "status": "in progress",
     "commits": 120,
     "last_commit": "2026-10-26T14:30:00Z",
     "primary_language": "Go",
-    "source_path": "C:/dev/Observatoire",
+    "source_path": "C:/dev/Atlas",
     "technologies": [
       "Go",
       "SQLite",
@@ -19,546 +19,546 @@
       "type": "commit",
       "title": "Fix data validation",
       "ref": "12aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-26",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-26 - Observatoire.md",
-      "ia": "Codex"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-26 - Atlas.md",
+      "ai": "Codex"
     },
     {
       "date": "2026-10-26",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "102",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-25T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "15aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-25",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-25 - Observatoire.md",
-      "ia": "Claude Code"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-25 - Atlas.md",
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-25",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "105",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-24T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "18aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-24",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-24 - Observatoire.md",
-      "ia": "Codex"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-24 - Atlas.md",
+      "ai": "Codex"
     },
     {
       "date": "2026-10-24",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "108",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-23T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "1baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-23",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-23 - Observatoire.md",
-      "ia": "Claude Code"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-23 - Atlas.md",
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-23",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "111",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-22T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "1eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-22",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-22 - Observatoire.md",
-      "ia": "Codex"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-22 - Atlas.md",
+      "ai": "Codex"
     },
     {
       "date": "2026-10-22",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "114",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-21T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "111aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-21",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-21 - Observatoire.md",
-      "ia": "Claude Code"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-21 - Atlas.md",
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-21",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "117",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-20T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "114aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-20",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-20 - Observatoire.md",
-      "ia": "Codex"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-20 - Atlas.md",
+      "ai": "Codex"
     },
     {
       "date": "2026-10-20",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "120",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-19T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "117aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-19",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-19 - Observatoire.md",
-      "ia": "Claude Code"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-19 - Atlas.md",
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-19",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "123",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-18T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "11aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-18",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-18 - Observatoire.md",
-      "ia": "Codex"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-18 - Atlas.md",
+      "ai": "Codex"
     },
     {
       "date": "2026-10-18",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "126",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-17T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "11daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-17",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-17 - Observatoire.md",
-      "ia": "Claude Code"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-17 - Atlas.md",
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-17",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "129",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-16T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "120aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-16",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-16 - Observatoire.md",
-      "ia": "Codex"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-16 - Atlas.md",
+      "ai": "Codex"
     },
     {
       "date": "2026-10-16",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "132",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-15T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "123aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-15",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-15 - Observatoire.md",
-      "ia": "Claude Code"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-15 - Atlas.md",
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-15",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "135",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-14T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "126aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-14",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-14 - Observatoire.md",
-      "ia": "Codex"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-14 - Atlas.md",
+      "ai": "Codex"
     },
     {
       "date": "2026-10-14",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "138",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-13T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "129aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-13",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-13 - Observatoire.md",
-      "ia": "Claude Code"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-13 - Atlas.md",
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-13",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "141",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-12T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "12caaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-12",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-12 - Observatoire.md",
-      "ia": "Codex"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-12 - Atlas.md",
+      "ai": "Codex"
     },
     {
       "date": "2026-10-12",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "144",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-11T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "12faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-11",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-11 - Observatoire.md",
-      "ia": "Claude Code"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-11 - Atlas.md",
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-11",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "147",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-10T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "132aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-10",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-10 - Observatoire.md",
-      "ia": "Codex"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-10 - Atlas.md",
+      "ai": "Codex"
     },
     {
       "date": "2026-10-10",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "150",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-09T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "135aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-09",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-09 - Observatoire.md",
-      "ia": "Claude Code"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-09 - Atlas.md",
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-09",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "153",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-08T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "138aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-08",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-08 - Observatoire.md",
-      "ia": "Codex"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-08 - Atlas.md",
+      "ai": "Codex"
     },
     {
       "date": "2026-10-08",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "156",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-07T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "13baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-07",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-07 - Observatoire.md",
-      "ia": "Claude Code"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-07 - Atlas.md",
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-07",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "159",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-06T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "13eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-06",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-06 - Observatoire.md",
-      "ia": "Codex"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-06 - Atlas.md",
+      "ai": "Codex"
     },
     {
       "date": "2026-10-06",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "162",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-05T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "141aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-05",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-05 - Observatoire.md",
-      "ia": "Claude Code"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-05 - Atlas.md",
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-05",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "165",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-04T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "144aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-04",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-04 - Observatoire.md",
-      "ia": "Codex"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-04 - Atlas.md",
+      "ai": "Codex"
     },
     {
       "date": "2026-10-04",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "168",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-03T14:30:00Z",
       "type": "commit",
       "title": "Improve loading states",
       "ref": "147aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-03",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-03 - Observatoire.md",
-      "ia": "Claude Code"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-03 - Atlas.md",
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-03",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "171",
-      "ia": "Codex"
+      "ai": "Codex"
     },
     {
       "date": "2026-10-02T14:30:00Z",
       "type": "commit",
       "title": "Fix data validation",
       "ref": "14aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-02",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-02 - Observatoire.md",
-      "ia": "Codex"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-02 - Atlas.md",
+      "ai": "Codex"
     },
     {
       "date": "2026-10-02",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "174",
-      "ia": "Claude Code"
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-01T14:30:00Z",
       "type": "commit",
       "title": "Add search filters",
       "ref": "14daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "ia": null
+      "ai": null
     },
     {
       "date": "2026-10-01",
       "type": "session",
-      "title": "Review and improve Observatoire",
-      "ref": "Sessions/2026-10-01 - Observatoire.md",
-      "ia": "Claude Code"
+      "title": "Review and improve Atlas",
+      "ref": "Sessions/2026-10-01 - Atlas.md",
+      "ai": "Claude Code"
     },
     {
       "date": "2026-10-01",
       "type": "journal",
-      "title": "Updated the card for Observatoire",
+      "title": "Updated the card for Atlas",
       "ref": "177",
-      "ia": "Codex"
+      "ai": "Codex"
     }
   ],
   "volume": [
@@ -1049,15 +1049,15 @@
     "commits_since": 0,
     "missing_notes": []
   },
-  "ia": [
+  "ai": [
     {
-      "ia": "Codex",
+      "ai": "Codex",
       "sessions": 13,
       "first": "2026-10-01",
       "last": "2026-10-26"
     },
     {
-      "ia": "Claude Code",
+      "ai": "Claude Code",
       "sessions": 13,
       "first": "2026-10-02",
       "last": "2026-10-26"

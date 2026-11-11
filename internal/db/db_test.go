@@ -1,6 +1,7 @@
 package db
 
 import (
+	"errors"
 	"path/filepath"
 	"testing"
 )
@@ -64,6 +65,22 @@ func TestMigrateAndTriggers(t *testing.T) {
 	}
 	if n != 1 {
 		t.Fatalf("FTS5 without accents: %d", n)
+	}
+}
+
+func TestRefuseLegacySchema(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "old.db")
+	base, err := Open(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer base.Close()
+	if _, err := base.Exec(`CREATE TABLE projet (id INTEGER)`); err != nil {
+		t.Fatal(err)
+	}
+	err = Migrate(base)
+	if !errors.Is(err, ErrLegacySchema) {
+		t.Fatalf("legacy schema: %v", err)
 	}
 }
 

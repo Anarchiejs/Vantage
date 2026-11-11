@@ -1,0 +1,21 @@
+Observatoire
+Copyright (c) 2026 Anarchy (https://github.com/Anarchiejs)
+
+This project is licensed under the MIT License. See LICENSE.
+
+Observatoire is built with third-party software that keeps its own license.
+Those licenses are distributed with the modules themselves (Go modules and
+npm packages). Notable ones:
+
+- github.com/pressly/goose/v3 — MIT
+- github.com/fsnotify/fsnotify — BSD-3-Clause
+- modernc.org/sqlite and modernc.org/libc — BSD-3-Clause
+- gopkg.in/yaml.v3 — MIT and Apache-2.0 (see the module)
+- github.com/boyter/scc/v3 — MIT
+- React, Vite, CodeMirror, and their companion packages — MIT
+- echarts — Apache-2.0
+- Playwright — Apache-2.0
+
+Apache-2.0 components include their own NOTICE and license text inside
+node_modules or the module cache. Keep those notices if you redistribute
+a binary that contains them.

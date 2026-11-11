@@ -5,11 +5,11 @@
   "degree": 1,
   "path": "Technologies/Go.md",
   "updated": "2026-10-26",
-  "content": "# Go\n\nDemo note from the Observatoire vault.\n\nLinked to [[Observatoire]].",
+  "content": "# Go\n\nDemo note from the Atlas vault.\n\nLinked to [[Atlas]].",
   "neighbors": [
     {
       "id": 1,
-      "title": "Observatoire",
+      "title": "Atlas",
       "folder": "Projects",
       "degree": 7
     }

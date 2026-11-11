@@ -1,10 +1,10 @@
 [
   {
     "source": "note",
-    "ref": "Projects/Observatoire.md",
-    "title": "<mark>Observatoire</mark>",
+    "ref": "Projects/Atlas.md",
+    "title": "<mark>Atlas</mark>",
     "excerpt": "The repository tracks commits and the vault. Base <mark>SQLite</mark>.",
-    "project": "Observatoire",
+    "project": "Atlas",
     "date": "2026-10-26",
     "note_id": 1
   },
@@ -22,7 +22,7 @@
     "ref": "c0ffee00a1b2c3d4e5f678901234567890abcd",
     "title": "Index notes with <mark>FTS5</mark>",
     "excerpt": "… <mark>FTS5</mark> on title and content …",
-    "project": "Observatoire",
+    "project": "Atlas",
     "date": "2026-10-26T14:30:00Z",
     "note_id": null
   },
@@ -49,7 +49,7 @@
     "ref": "Sessions/2026-10-22.md",
     "title": "Session du 22 octobre",
     "excerpt": "Review of the note <mark>graph</mark> in the vault.",
-    "project": "Observatoire",
+    "project": "Atlas",
     "date": "2026-10-22",
     "note_id": 6
   },

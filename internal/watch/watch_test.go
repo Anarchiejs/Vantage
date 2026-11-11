@@ -12,35 +12,35 @@ import (
 	"time"
 )
 
-const delaiTest = 100 * time.Millisecond
+const testDelay = 100 * time.Millisecond
 
-type banc struct {
-	t          *testing.T
-	root       string
-	cancel     context.CancelFunc
-	fini       chan error
-	imports    chan int
-	n          atomic.Int32
-	mu         sync.Mutex
-	depotPaths []string
-	traiter    func(context.Context, int) (Changes, error)
-	annoncer   func(...string)
-	logs       chan string
+type rig struct {
+	t            *testing.T
+	root         string
+	cancel       context.CancelFunc
+	fini         chan error
+	imports      chan int
+	n            atomic.Int32
+	mu           sync.Mutex
+	repoPaths    []string
+	handleImport func(context.Context, int) (Changes, error)
+	announceFn   func(...string)
+	logs         chan string
 }
 
-func nouveauBanc(t *testing.T, depots ...string) *banc {
+func newRig(t *testing.T, repos ...string) *rig {
 	t.Helper()
-	b := &banc{t: t, root: t.TempDir(), fini: make(chan error, 1), imports: make(chan int, 128), depotPaths: depots, logs: make(chan string, 128)}
+	b := &rig{t: t, root: t.TempDir(), fini: make(chan error, 1), imports: make(chan int, 128), repoPaths: repos, logs: make(chan string, 128)}
 	ctx, cancel := context.WithCancel(context.Background())
 	b.cancel = cancel
 	opt := Options{
-		Vault: b.root, Delay: delaiTest,
-		Repos: func() []string { b.mu.Lock(); defer b.mu.Unlock(); return append([]string(nil), b.depotPaths...) },
+		Vault: b.root, Delay: testDelay,
+		Repos: func() []string { b.mu.Lock(); defer b.mu.Unlock(); return append([]string(nil), b.repoPaths...) },
 		Import: func(ctx context.Context) (Changes, error) {
 			n := int(b.n.Add(1))
 			b.imports <- n
 			b.mu.Lock()
-			f := b.traiter
+			f := b.handleImport
 			b.mu.Unlock()
 			if f != nil {
 				return f(ctx, n)
@@ -49,7 +49,7 @@ func nouveauBanc(t *testing.T, depots ...string) *banc {
 		},
 		Announce: func(tables ...string) {
 			b.mu.Lock()
-			f := b.annoncer
+			f := b.announceFn
 			b.mu.Unlock()
 			if f != nil {
 				f(tables...)
@@ -79,48 +79,48 @@ func nouveauBanc(t *testing.T, depots ...string) *banc {
 	defer ticker.Stop()
 	deadline := time.NewTimer(3 * time.Second)
 	defer deadline.Stop()
-	pret := false
-	for !pret {
+	ready := false
+	for !ready {
 		select {
 		case <-ticker.C:
-			b.ecrire(filepath.Join(b.root, "sonde.md"), "ready")
+			b.writeNote(filepath.Join(b.root, "probe.md"), "ready")
 		case <-b.imports:
-			pret = true
+			ready = true
 		case <-deadline.C:
 			t.Fatal("watch not ready")
 		}
 	}
-	b.silence(3 * delaiTest)
+	b.settle(3 * testDelay)
 	b.n.Store(0)
 	return b
 }
 
-func (b *banc) ecrire(path, contenu string) {
+func (b *rig) writeNote(path, contents string) {
 	b.t.Helper()
-	if err := os.WriteFile(path, []byte(contenu), 0600); err != nil {
+	if err := os.WriteFile(path, []byte(contents), 0600); err != nil {
 		b.t.Fatal(err)
 	}
 }
 
-func (b *banc) attendre(n int) {
+func (b *rig) waitForImport(n int) {
 	b.t.Helper()
 	select {
 	case got := <-b.imports:
 		if got != n {
-			b.t.Fatalf("import %d, attendu %d", got, n)
+			b.t.Fatalf("import %d, expected %d", got, n)
 		}
 	case <-time.After(3 * time.Second):
 		b.t.Fatalf("import %d absent", n)
 	}
 }
 
-func (b *banc) silence(d time.Duration) {
+func (b *rig) settle(d time.Duration) {
 	b.t.Helper()
 	// Startup can still produce an import that is already queued.
 	timer := time.NewTimer(d)
 	defer timer.Stop()
-	limite := time.NewTimer(3 * time.Second)
-	defer limite.Stop()
+	limitTimer := time.NewTimer(3 * time.Second)
+	defer limitTimer.Stop()
 	for {
 		select {
 		case <-b.imports:
@@ -133,18 +133,18 @@ func (b *banc) silence(d time.Duration) {
 			timer.Reset(d)
 		case <-timer.C:
 			return
-		case <-limite.C:
+		case <-limitTimer.C:
 			b.t.Fatal("startup did not settle")
 		}
 	}
 }
 
-func (b *banc) aucun() {
+func (b *rig) expectQuiet() {
 	b.t.Helper()
 	select {
 	case n := <-b.imports:
-		b.t.Fatalf("import inattendu : %d", n)
-	case <-time.After(3 * delaiTest):
+		b.t.Fatalf("unexpected import : %d", n)
+	case <-time.After(3 * testDelay):
 	}
 }
 
@@ -174,64 +174,64 @@ func TestChanges(t *testing.T) {
 	}
 }
 
-func TestNotesEtRegroupement(t *testing.T) {
-	b := nouveauBanc(t)
-	b.ecrire(filepath.Join(b.root, "note.md"), "a note")
-	b.attendre(1)
-	b.aucun()
+func TestNotesAndBatching(t *testing.T) {
+	b := newRig(t)
+	b.writeNote(filepath.Join(b.root, "note.md"), "a note")
+	b.waitForImport(1)
+	b.expectQuiet()
 	for i := 0; i < 20; i++ {
-		b.ecrire(filepath.Join(b.root, "note.md"), "modification")
+		b.writeNote(filepath.Join(b.root, "note.md"), "modification")
 	}
-	b.attendre(2)
-	b.aucun()
+	b.waitForImport(2)
+	b.expectQuiet()
 }
 
-func TestIgnorerEtNouveauxDossiers(t *testing.T) {
-	b := nouveauBanc(t)
+func TestIgnoreAndNewFolders(t *testing.T) {
+	b := newRig(t)
 	for _, dir := range []string{".obsidian", ".trash", ".git", ".cache"} {
 		mkdir(t, filepath.Join(b.root, dir))
-		b.ecrire(filepath.Join(b.root, dir, "cache.md"), "ignored")
+		b.writeNote(filepath.Join(b.root, dir, "cache.md"), "ignored")
 	}
-	b.ecrire(filepath.Join(b.root, ".obsidian", "x.json"), "{}")
-	b.ecrire(filepath.Join(b.root, "note.txt"), "ignored")
-	b.aucun()
-	sub := filepath.Join(b.root, "nouveau", "profond")
+	b.writeNote(filepath.Join(b.root, ".obsidian", "x.json"), "{}")
+	b.writeNote(filepath.Join(b.root, "note.txt"), "ignored")
+	b.expectQuiet()
+	sub := filepath.Join(b.root, "fresh", "nested")
 	mkdir(t, sub)
-	b.ecrire(filepath.Join(sub, "note.md"), "nouvelle note")
-	b.attendre(1)
-	b.aucun()
-	b.ecrire(filepath.Join(sub, "note.md"), "later edit")
-	b.attendre(2)
-	b.aucun()
+	b.writeNote(filepath.Join(sub, "note.md"), "new note")
+	b.waitForImport(1)
+	b.expectQuiet()
+	b.writeNote(filepath.Join(sub, "note.md"), "later edit")
+	b.waitForImport(2)
+	b.expectQuiet()
 }
 
 func TestGit(t *testing.T) {
-	depot := t.TempDir()
-	git := filepath.Join(depot, ".git")
+	repoDir := t.TempDir()
+	git := filepath.Join(repoDir, ".git")
 	mkdir(t, filepath.Join(git, "refs", "heads"))
 	mkdir(t, filepath.Join(git, "objects"))
-	b := nouveauBanc(t, depot)
+	b := newRig(t, repoDir)
 	for _, name := range []string{"index.lock", "objects/objet", "refs/heads/main.lock"} {
-		b.ecrire(filepath.Join(git, filepath.FromSlash(name)), "ignored")
+		b.writeNote(filepath.Join(git, filepath.FromSlash(name)), "ignored")
 	}
-	b.aucun()
-	for i, name := range []string{"refs/heads/main", "HEAD", "packed-refs", "refs/heads/equipe/branche"} {
+	b.expectQuiet()
+	for i, name := range []string{"refs/heads/main", "HEAD", "packed-refs", "refs/heads/team/branch"} {
 		path := filepath.Join(git, filepath.FromSlash(name))
 		mkdir(t, filepath.Dir(path))
-		b.ecrire(path, "new ref")
-		b.attendre(i + 1)
-		b.aucun()
+		b.writeNote(path, "new ref")
+		b.waitForImport(i + 1)
+		b.expectQuiet()
 	}
 }
 
-func TestImportLent(t *testing.T) {
-	b := nouveauBanc(t)
+func TestSlowImport(t *testing.T) {
+	b := newRig(t)
 	liberer := make(chan struct{})
-	var actifs, maximum atomic.Int32
+	var activeCount, maximum atomic.Int32
 	b.mu.Lock()
-	b.traiter = func(ctx context.Context, n int) (Changes, error) {
-		a := actifs.Add(1)
-		defer actifs.Add(-1)
+	b.handleImport = func(ctx context.Context, n int) (Changes, error) {
+		a := activeCount.Add(1)
+		defer activeCount.Add(-1)
 		if a > maximum.Load() {
 			maximum.Store(a)
 		}
@@ -244,30 +244,30 @@ func TestImportLent(t *testing.T) {
 		return Changes{}, nil
 	}
 	b.mu.Unlock()
-	b.ecrire(filepath.Join(b.root, "lent.md"), "premier")
-	b.attendre(1)
+	b.writeNote(filepath.Join(b.root, "slow.md"), "first")
+	b.waitForImport(1)
 	for i := 0; i < 20; i++ {
-		b.ecrire(filepath.Join(b.root, "pendant.md"), "pendant")
+		b.writeNote(filepath.Join(b.root, "during.md"), "during")
 	}
-	b.aucun()
+	b.expectQuiet()
 	close(liberer)
-	b.attendre(2)
-	b.aucun()
+	b.waitForImport(2)
+	b.expectQuiet()
 	if maximum.Load() != 1 {
 		t.Fatal("imports concurrents")
 	}
 }
 
-func TestErreurAnnonceEtDepotsDynamiques(t *testing.T) {
-	ancien, nouveau := t.TempDir(), t.TempDir()
-	for _, depot := range []string{ancien, nouveau} {
-		mkdir(t, filepath.Join(depot, ".git", "refs", "heads"))
+func TestErrorAnnounceAndDynamicRepos(t *testing.T) {
+	oldDir, newDir := t.TempDir(), t.TempDir()
+	for _, repoDir := range []string{oldDir, newDir} {
+		mkdir(t, filepath.Join(repoDir, ".git", "refs", "heads"))
 	}
-	b := nouveauBanc(t, ancien)
+	b := newRig(t, oldDir)
 	annonces := make(chan []string, 4)
 	b.mu.Lock()
-	b.annoncer = func(tables ...string) { annonces <- tables }
-	b.traiter = func(ctx context.Context, n int) (Changes, error) {
+	b.announceFn = func(tables ...string) { annonces <- tables }
+	b.handleImport = func(ctx context.Context, n int) (Changes, error) {
 		if n == 1 {
 			return Changes{Notes: 1}, errors.New("simulated failure")
 		}
@@ -276,11 +276,11 @@ func TestErreurAnnonceEtDepotsDynamiques(t *testing.T) {
 		}
 		return Changes{}, nil
 	}
-	b.depotPaths = []string{nouveau}
+	b.repoPaths = []string{newDir}
 	b.mu.Unlock()
-	b.ecrire(filepath.Join(b.root, "note.md"), "erreur")
-	b.attendre(1)
-	b.aucun()
+	b.writeNote(filepath.Join(b.root, "note.md"), "failure")
+	b.waitForImport(1)
+	b.expectQuiet()
 	select {
 	case <-b.logs:
 	case <-time.After(3 * time.Second):
@@ -291,10 +291,10 @@ func TestErreurAnnonceEtDepotsDynamiques(t *testing.T) {
 		t.Fatal("announcement after an error")
 	default:
 	}
-	b.ecrire(filepath.Join(ancien, ".git", "HEAD"), "ancien")
-	b.aucun()
-	b.ecrire(filepath.Join(nouveau, ".git", "HEAD"), "nouveau")
-	b.attendre(2)
+	b.writeNote(filepath.Join(oldDir, ".git", "HEAD"), "oldDir")
+	b.expectQuiet()
+	b.writeNote(filepath.Join(newDir, ".git", "HEAD"), "newDir")
+	b.waitForImport(2)
 	select {
 	case tables := <-annonces:
 		if !reflect.DeepEqual(tables, (Changes{Notes: 1, Commits: 1}).Tables()) {
@@ -303,38 +303,38 @@ func TestErreurAnnonceEtDepotsDynamiques(t *testing.T) {
 	case <-time.After(3 * time.Second):
 		t.Fatal("annonce absente")
 	}
-	b.aucun()
-	b.ecrire(filepath.Join(b.root, "note.md"), "sans changement")
-	b.attendre(3)
-	b.aucun()
+	b.expectQuiet()
+	b.writeNote(filepath.Join(b.root, "note.md"), "unchanged")
+	b.waitForImport(3)
+	b.expectQuiet()
 	select {
 	case <-annonces:
-		t.Fatal("annonce vide")
+		t.Fatal("empty announcement")
 	default:
 	}
 }
 
-func TestGitdirEtRepertoireCommun(t *testing.T) {
-	depot, commun := t.TempDir(), t.TempDir()
-	git := filepath.Join(commun, "worktrees", "test")
+func TestGitdirAndCommonDir(t *testing.T) {
+	repoDir, sharedDir := t.TempDir(), t.TempDir()
+	git := filepath.Join(sharedDir, "worktrees", "test")
 	mkdir(t, git)
-	mkdir(t, filepath.Join(commun, "refs", "heads"))
-	if err := os.WriteFile(filepath.Join(depot, ".git"), []byte("gitdir: "+git+"\n"), 0600); err != nil {
+	mkdir(t, filepath.Join(sharedDir, "refs", "heads"))
+	if err := os.WriteFile(filepath.Join(repoDir, ".git"), []byte("gitdir: "+git+"\n"), 0600); err != nil {
 		t.Fatal(err)
 	}
 	if err := os.WriteFile(filepath.Join(git, "commondir"), []byte("../..\n"), 0600); err != nil {
 		t.Fatal(err)
 	}
-	b := nouveauBanc(t, depot)
-	b.ecrire(filepath.Join(git, "HEAD"), "checkout")
-	b.attendre(1)
-	b.aucun()
-	b.ecrire(filepath.Join(commun, "refs", "heads", "main"), "commit")
-	b.attendre(2)
-	b.aucun()
+	b := newRig(t, repoDir)
+	b.writeNote(filepath.Join(git, "HEAD"), "checkout")
+	b.waitForImport(1)
+	b.expectQuiet()
+	b.writeNote(filepath.Join(sharedDir, "refs", "heads", "main"), "commit")
+	b.waitForImport(2)
+	b.expectQuiet()
 }
 
-func TestAnnulationEtValidation(t *testing.T) {
+func TestCancelAndSettle(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
 	if err := Watch(ctx, Options{}); err != nil {
@@ -346,41 +346,41 @@ func TestAnnulationEtValidation(t *testing.T) {
 	if err := Watch(context.Background(), Options{Delay: -1, Import: func(context.Context) (Changes, error) { return Changes{}, nil }}); err == nil {
 		t.Fatal("negative delay was accepted")
 	}
-	b := nouveauBanc(t)
-	b.ecrire(filepath.Join(b.root, "en-attente.md"), "annulation")
+	b := newRig(t)
+	b.writeNote(filepath.Join(b.root, "pending.md"), "cancellation")
 	b.cancel()
 }
 
-func TestGitCreationRefsEtGitdirRelatif(t *testing.T) {
-	depot := t.TempDir()
-	git := filepath.Join(depot, "metadonnees")
+func TestRefCreationAndRelativeGitdir(t *testing.T) {
+	repoDir := t.TempDir()
+	git := filepath.Join(repoDir, "metadata")
 	mkdir(t, git)
-	if err := os.WriteFile(filepath.Join(depot, ".git"), []byte("gitdir: metadonnees\n"), 0600); err != nil {
+	if err := os.WriteFile(filepath.Join(repoDir, ".git"), []byte("gitdir: metadata\n"), 0600); err != nil {
 		t.Fatal(err)
 	}
-	b := nouveauBanc(t, depot)
-	branche := filepath.Join(git, "refs", "heads", "main")
-	mkdir(t, filepath.Dir(branche))
-	b.ecrire(branche, "premier commit")
-	b.attendre(1)
-	b.aucun()
-	b.ecrire(branche, "second commit")
-	b.attendre(2)
-	b.aucun()
+	b := newRig(t, repoDir)
+	branchRef := filepath.Join(git, "refs", "heads", "main")
+	mkdir(t, filepath.Dir(branchRef))
+	b.writeNote(branchRef, "first commit")
+	b.waitForImport(1)
+	b.expectQuiet()
+	b.writeNote(branchRef, "second commit")
+	b.waitForImport(2)
+	b.expectQuiet()
 }
 
-func TestAnnulationPendantImport(t *testing.T) {
-	b := nouveauBanc(t)
+func TestCancelDuringImport(t *testing.T) {
+	b := newRig(t)
 	arrete := make(chan struct{})
 	b.mu.Lock()
-	b.traiter = func(ctx context.Context, n int) (Changes, error) {
+	b.handleImport = func(ctx context.Context, n int) (Changes, error) {
 		<-ctx.Done()
 		close(arrete)
 		return Changes{}, ctx.Err()
 	}
 	b.mu.Unlock()
-	b.ecrire(filepath.Join(b.root, "note.md"), "import blocked")
-	b.attendre(1)
+	b.writeNote(filepath.Join(b.root, "note.md"), "import blocked")
+	b.waitForImport(1)
 	b.cancel()
 	select {
 	case <-arrete:
@@ -389,39 +389,39 @@ func TestAnnulationPendantImport(t *testing.T) {
 	}
 }
 
-func TestFenetreDepuisPremierEvenement(t *testing.T) {
-	b := nouveauBanc(t)
+func TestWindowFromFirstEvent(t *testing.T) {
+	b := newRig(t)
 	ticker := time.NewTicker(20 * time.Millisecond)
 	defer ticker.Stop()
-	limite := time.NewTimer(time.Second)
-	defer limite.Stop()
+	limitTimer := time.NewTimer(time.Second)
+	defer limitTimer.Stop()
 	for {
 		select {
 		case <-ticker.C:
-			b.ecrire(filepath.Join(b.root, "continu.md"), "continuous writes")
+			b.writeNote(filepath.Join(b.root, "continu.md"), "continuous writes")
 		case <-b.imports:
 			return
-		case <-limite.C:
+		case <-limitTimer.C:
 			t.Fatal("window pushed back by later writes")
 		}
 	}
 }
 
-func TestRenommageEtSuppressionNotes(t *testing.T) {
-	b := nouveauBanc(t)
-	ancien := filepath.Join(b.root, "ancien.md")
-	nouveau := filepath.Join(b.root, "nouveau.md")
-	b.ecrire(ancien, "note")
-	b.attendre(1)
-	b.aucun()
-	if err := os.Rename(ancien, nouveau); err != nil {
+func TestRenameAndDeleteNotes(t *testing.T) {
+	b := newRig(t)
+	oldDir := filepath.Join(b.root, "oldDir.md")
+	newDir := filepath.Join(b.root, "newDir.md")
+	b.writeNote(oldDir, "note")
+	b.waitForImport(1)
+	b.expectQuiet()
+	if err := os.Rename(oldDir, newDir); err != nil {
 		t.Fatal(err)
 	}
-	b.attendre(2)
-	b.aucun()
-	if err := os.Remove(nouveau); err != nil {
+	b.waitForImport(2)
+	b.expectQuiet()
+	if err := os.Remove(newDir); err != nil {
 		t.Fatal(err)
 	}
-	b.attendre(3)
-	b.aucun()
+	b.waitForImport(3)
+	b.expectQuiet()
 }
