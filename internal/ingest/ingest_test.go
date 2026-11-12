@@ -3,7 +3,6 @@ package ingest
 import (
 	"context"
 	"database/sql"
-	"os"
 	"path/filepath"
 	"runtime"
 	"testing"
@@ -20,11 +19,6 @@ func root(t *testing.T) string {
 func prepare(t *testing.T) (*sql.DB, Options) {
 	t.Helper()
 	r := root(t)
-	// The repositories are created once before `go test ./...` (see testdata/README.md): regenerating them here
-	// would break the other packages' tests running at the same time.
-	if _, err := os.Stat(filepath.Join(r, "testdata", "repos", "alpha", ".git")); err != nil {
-		t.Fatal("fixtures missing: run go run ./scripts/fixtures/make-repos.go first")
-	}
 	base, err := db.Open(filepath.Join(t.TempDir(), "test.db"))
 	if err != nil {
 		t.Fatal(err)

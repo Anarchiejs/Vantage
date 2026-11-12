@@ -1,0 +1,6 @@
+# Repository paths for this vault, relative to the vault folder.
+# import and watch read this file. -repos on the command line replaces a name.
+# The sample cards keep their written source_path (including C:/Fixtures/Compass).
+# These lines are what make the fixture repositories resolve on every OS.
+Atlas=../repos/alpha
+Compass=../repos/beta

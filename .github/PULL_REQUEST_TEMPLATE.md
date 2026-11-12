@@ -2,8 +2,7 @@
 
 ## How to test
 
-- [ ] `go run ./scripts/fixtures/make-repos.go`
-- [ ] `go test ./...`
+- [ ] `go test ./...` (creates `testdata/repos` when they are missing)
 - [ ] `npm --prefix web test`
 - [ ] `npm --prefix web run typecheck`
 

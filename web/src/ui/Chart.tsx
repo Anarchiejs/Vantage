@@ -1,7 +1,40 @@
 import { useEffect, useRef } from 'react'
-import * as echarts from 'echarts'
+import { init, use as registerECharts, type ECharts, type ECElementEvent } from 'echarts/core'
+import { BarChart, GraphChart, HeatmapChart, LineChart, PieChart, SankeyChart } from 'echarts/charts'
+import {
+  AxisPointerComponent,
+  CalendarComponent,
+  GridComponent,
+  LegendComponent,
+  LegendScrollComponent,
+  TooltipComponent,
+  VisualMapComponent,
+  VisualMapPiecewiseComponent,
+} from 'echarts/components'
+import { LabelLayout, LegacyGridContainLabel } from 'echarts/features'
+import { CanvasRenderer } from 'echarts/renderers'
 import type { EChartsOption } from 'echarts'
 import { series, token } from '../theme/theme'
+
+registerECharts([
+  BarChart,
+  LineChart,
+  PieChart,
+  SankeyChart,
+  GraphChart,
+  HeatmapChart,
+  GridComponent,
+  TooltipComponent,
+  AxisPointerComponent,
+  LegendComponent,
+  LegendScrollComponent,
+  VisualMapComponent,
+  VisualMapPiecewiseComponent,
+  CalendarComponent,
+  LabelLayout,
+  LegacyGridContainLabel,
+  CanvasRenderer,
+])
 
 /** Options shared by both themes, recomputed on every theme change. */
 function base(): EChartsOption {
@@ -42,16 +75,16 @@ export function Chart({
 }: {
   option: EChartsOption | (() => EChartsOption)
   height?: number
-  onClick?: (event: echarts.ECElementEvent) => void
+  onClick?: (event: ECElementEvent) => void
   className?: string
   'aria-label'?: string
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  const chart = useRef<echarts.ECharts | null>(null)
+  const chart = useRef<ECharts | null>(null)
 
   useEffect(() => {
     if (!ref.current) return
-    const instance = echarts.init(ref.current, undefined, { renderer: 'canvas' })
+    const instance = init(ref.current, undefined, { renderer: 'canvas' })
     chart.current = instance
     let frame = 0
     const observer = new ResizeObserver(() => { cancelAnimationFrame(frame); frame = requestAnimationFrame(() => { if (!instance.isDisposed()) instance.resize() }) })

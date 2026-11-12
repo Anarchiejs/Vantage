@@ -10,3 +10,6 @@ internal/sql/queries/PLANS.md text eol=lf
 # Windows scripts: CRLF, required by cmd.exe and PowerShell 5.1.
 *.cmd text eol=crlf
 *.ps1 text eol=crlf
+
+# Shell scripts: LF on every checkout, including Windows.
+*.sh text eol=lf

@@ -5,13 +5,14 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"sort"
 	"strings"
 	"sync"
 
+	"github.com/Anarchiejs/Observatoire/internal/ingest/git"
 	"github.com/Anarchiejs/Observatoire/internal/model"
+	"github.com/Anarchiejs/Observatoire/internal/ospath"
 	"github.com/boyter/scc/v3/processor"
 )
 
@@ -22,7 +23,7 @@ var initSCC sync.Once
 // Environment files are always excluded, even when they are tracked.
 func Measure(ctx context.Context, repo string) ([]model.LanguageStat, error) {
 	initSCC.Do(processor.ProcessConstants)
-	cmd := exec.CommandContext(ctx, "git", "-C", repo, "ls-files", "-z")
+	cmd := git.Command(ctx, repo, "ls-files", "-z")
 	out, err := cmd.Output()
 	if err != nil {
 		return nil, fmt.Errorf("git ls-files in %q: %w", repo, err)
@@ -33,7 +34,7 @@ func Measure(ctx context.Context, repo string) ([]model.LanguageStat, error) {
 		if len(rawPath) == 0 {
 			continue
 		}
-		rel := filepath.FromSlash(string(rawPath))
+		rel := ospath.ForCompare(filepath.FromSlash(string(rawPath)))
 		base := filepath.Base(rel)
 		if strings.HasPrefix(strings.ToLower(base), ".env") {
 			continue

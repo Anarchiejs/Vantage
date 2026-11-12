@@ -7,9 +7,11 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"time"
 
+	"github.com/Anarchiejs/Observatoire/internal/ospath"
 	"github.com/fsnotify/fsnotify"
 )
 
@@ -53,15 +55,28 @@ func (s *watcher) log(format string, args ...any) {
 	}
 }
 
+func normalize(path string) string {
+	return ospath.ForCompare(path)
+}
+
 func absolute(path string) string {
 	p, err := filepath.Abs(path)
 	if err != nil {
-		return filepath.Clean(path)
+		return normalize(filepath.Clean(path))
 	}
-	return p
+	// /tmp on macOS is a symlink to /private/tmp. Watch events use the
+	// resolved path. Linux and Windows keep the path the caller passed.
+	if runtime.GOOS == "darwin" {
+		if resolved, err := filepath.EvalSymlinks(p); err == nil {
+			p = resolved
+		}
+	}
+	return normalize(p)
 }
 
 func relativeTo(root, path string) (string, bool) {
+	root = normalize(root)
+	path = normalize(path)
 	r, err := filepath.Rel(root, path)
 	return r, err == nil && r != ".." && !strings.HasPrefix(r, ".."+string(filepath.Separator))
 }
@@ -76,11 +91,13 @@ func visible(path string) bool {
 }
 
 func (s *watcher) walkTree(root string, wanted map[string]bool, cache bool) {
+	root = normalize(root)
 	err := filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			s.log("walk %s: %v", path, err)
 			return nil
 		}
+		path = normalize(path)
 		if !d.IsDir() {
 			return nil
 		}
@@ -98,6 +115,7 @@ func (s *watcher) walkTree(root string, wanted map[string]bool, cache bool) {
 }
 
 func (s *watcher) addWatch(path string) {
+	path = normalize(path)
 	if s.watched[path] {
 		return
 	}
@@ -185,7 +203,7 @@ func (s *watcher) refresh() {
 }
 
 func (s *watcher) relevant(event fsnotify.Event) bool {
-	path := filepath.Clean(event.Name)
+	path := normalize(filepath.Clean(event.Name))
 	info, statErr := os.Stat(path)
 	directory := (statErr == nil && info.IsDir()) || s.watched[path]
 	if directory && !event.Has(fsnotify.Create|fsnotify.Remove|fsnotify.Rename) {
@@ -289,19 +307,20 @@ func Watch(ctx context.Context, opt Options) error {
 				return nil
 			}
 			// Deletes are still recognizable in the previous list.
-			removed := s.watched[event.Name] && event.Has(fsnotify.Remove|fsnotify.Rename)
+			name := normalize(event.Name)
+			removed := s.watched[name] && event.Has(fsnotify.Remove|fsnotify.Rename)
 			relevant := false
 			if removed {
 				relevant = s.relevant(event)
 				// fsnotify automatically drops deleted or renamed directories.
 				for path := range s.watched {
-					if _, ok := relativeTo(event.Name, path); ok {
+					if _, ok := relativeTo(name, path); ok {
 						_ = s.w.Remove(path)
 						delete(s.watched, path)
 					}
 				}
 			}
-			info, statErr := os.Stat(event.Name)
+			info, statErr := os.Stat(name)
 			if removed || (statErr == nil && info.IsDir() && event.Has(fsnotify.Create|fsnotify.Rename)) {
 				s.refresh()
 			}
