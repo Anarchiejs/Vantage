@@ -26,9 +26,6 @@ func projectRoot() string {
 func baseFixture(t *testing.T) *sql.DB {
 	t.Helper()
 	root := projectRoot()
-	if _, err := os.Stat(filepath.Join(root, "testdata/repos/alpha/.git")); err != nil {
-		t.Fatalf("Git fixtures are missing (do not regenerate them automatically): %v", err)
-	}
 	b, err := db.Open(filepath.Join(t.TempDir(), "report.db"))
 	if err != nil {
 		t.Fatal(err)

@@ -14,7 +14,6 @@ if (-not (Test-Path -LiteralPath 'web\node_modules')) {
 
 Step "Building the UI (npm run build)"
 Run "The UI build" { npm --prefix web run build }
-Info "(the warning ""Some chunks are larger than 500 kB"" is normal)"
 
 Step 'Compiling observatoire.exe'
 Run 'The compile' { go build -tags embed -o observatoire.exe ./cmd/observatoire }
