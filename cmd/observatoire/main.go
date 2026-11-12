@@ -12,6 +12,7 @@ import (
 	"os/signal"
 	"path/filepath"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/Anarchiejs/Observatoire/internal/api"
@@ -77,12 +78,12 @@ func runImport(args []string) error {
 	fs := flag.NewFlagSet("import", flag.ExitOnError)
 	path := fs.String("db", "observatoire.db", "database file")
 	vault := fs.String("vault", "", "Obsidian vault root (required)")
-	repos := fs.String("repos", "", `replaces source_path for named cards: "Atlas=testdata/repos/alpha,Compass=..."`)
+	repos := fs.String("repos", "", `replaces source_path: "Name=/absolute/path,..." (overrides <vault>/.observatoire/repos)`)
 	fs.Parse(args)
 	if err := requireVault(*vault); err != nil {
 		return err
 	}
-	replacements, err := readRepos(*repos)
+	replacements, err := reposForVault(*vault, *repos)
 	if err != nil {
 		return err
 	}
@@ -109,10 +110,61 @@ func requireVault(path string) error {
 	return nil
 }
 
-func readRepos(repos string) (map[string]string, error) {
+// reposForVault loads <vault>/.observatoire/repos, then applies the -repos flag.
+// A name on the command line replaces the same name from the file.
+// Paths in the file are relative to the vault. Flag paths are relative to the
+// current directory. Both are returned absolute.
+func reposForVault(vault, flagValue string) (map[string]string, error) {
+	merged := map[string]string{}
+	file := filepath.Join(vault, ".observatoire", "repos")
+	data, err := os.ReadFile(file)
+	if err != nil && !errors.Is(err, os.ErrNotExist) {
+		return nil, err
+	}
+	if err == nil {
+		parsed, err := parseRepos(string(data), vault)
+		if err != nil {
+			return nil, fmt.Errorf("%s: %w", file, err)
+		}
+		for name, dir := range parsed {
+			merged[name] = dir
+		}
+	}
+	overrides, err := parseRepos(flagValue, "")
+	if err != nil {
+		return nil, err
+	}
+	for name, dir := range overrides {
+		merged[name] = dir
+	}
+	return merged, nil
+}
+
+// parseRepos reads Name=path pairs. Newlines separate lines (a # line is a comment);
+// commas separate pairs on one line, which is the -repos flag syntax.
+// Relative paths are joined to base when base is set, then made absolute.
+func parseRepos(text, base string) (map[string]string, error) {
 	replacements := map[string]string{}
-	for _, pair := range strings.Split(repos, ",") {
-		if name, dir, ok := strings.Cut(strings.TrimSpace(pair), "="); ok {
+	text = strings.ReplaceAll(text, "\r\n", "\n")
+	for _, line := range strings.Split(text, "\n") {
+		line = strings.TrimSpace(line)
+		if line == "" || strings.HasPrefix(line, "#") {
+			continue
+		}
+		for _, pair := range strings.Split(line, ",") {
+			pair = strings.TrimSpace(pair)
+			if pair == "" {
+				continue
+			}
+			name, dir, ok := strings.Cut(pair, "=")
+			name = strings.TrimSpace(name)
+			dir = strings.TrimSpace(dir)
+			if !ok || name == "" || dir == "" {
+				return nil, fmt.Errorf("repository remap %q must look like Name=path", pair)
+			}
+			if base != "" && !filepath.IsAbs(dir) {
+				dir = filepath.Join(base, dir)
+			}
 			abs, err := filepath.Abs(dir)
 			if err != nil {
 				return nil, err
@@ -142,7 +194,7 @@ func serve(args []string) error {
 		return err
 	}
 	defer closeDBs()
-	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	ctx, stop := cancelOnSignal()
 	defer stop()
 	return server.Listen(ctx)
 }
@@ -191,13 +243,13 @@ func runWatch(args []string) error {
 	fs := flag.NewFlagSet("watch", flag.ExitOnError)
 	path := fs.String("db", "observatoire.db", "database file")
 	vault := fs.String("vault", "", "Obsidian vault root (required)")
-	repos := fs.String("repos", "", `replaces source_path for named cards: "Atlas=testdata/repos/alpha,Compass=..."`)
+	repos := fs.String("repos", "", `replaces source_path: "Name=/absolute/path,..." (overrides <vault>/.observatoire/repos)`)
 	port := fs.Int("port", 7878, "port on 127.0.0.1")
 	fs.Parse(args)
 	if err := requireVault(*vault); err != nil {
 		return err
 	}
-	replacements, err := readRepos(*repos)
+	replacements, err := reposForVault(*vault, *repos)
 	if err != nil {
 		return err
 	}
@@ -207,7 +259,7 @@ func runWatch(args []string) error {
 		return err
 	}
 	defer closeDBs()
-	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	ctx, stop := cancelOnSignal()
 	defer stop()
 
 	opt := ingest.Options{Vault: *vault, Repos: replacements}
@@ -237,6 +289,11 @@ func runWatch(args []string) error {
 		}
 	}()
 	return server.Listen(ctx)
+}
+
+// cancelOnSignal stops the server on Ctrl+C, and on SIGTERM on Linux and macOS.
+func cancelOnSignal() (context.Context, context.CancelFunc) {
+	return signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 }
 
 func repositoryPaths(ctx context.Context, base *sql.DB) []string {

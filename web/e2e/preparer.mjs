@@ -27,10 +27,7 @@ function run(command, args) {
 const alpha = path.join(root, 'testdata', 'repos', 'alpha')
 const beta = path.join(root, 'testdata', 'repos', 'beta')
 if (!existsSync(path.join(alpha, '.git')) || !existsSync(path.join(beta, '.git'))) {
-  console.error('The test repositories are missing (testdata/repos/alpha and testdata/repos/beta).')
-  console.error('Generate them from the repository root, then run the tests again:')
-  console.error('  go run ./scripts/fixtures/make-repos.go')
-  process.exit(1)
+  await run('go', ['run', './scripts/fixtures/make-repos.go'])
 }
 
 if (!existsSync(path.join(root, 'web', 'dist', 'index.html'))) {

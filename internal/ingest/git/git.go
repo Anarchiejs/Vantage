@@ -14,16 +14,21 @@ import (
 	"time"
 
 	"github.com/Anarchiejs/Observatoire/internal/model"
+	"github.com/Anarchiejs/Observatoire/internal/ospath"
 )
 
 var ErrHistoryRewritten = errors.New("git history was rewritten")
 
-func command(ctx context.Context, repo string, args ...string) *exec.Cmd {
-	return exec.CommandContext(ctx, "git", append([]string{"-C", repo, "-c", "core.quotepath=false"}, args...)...)
+// Command runs git in repo. core.quotepath keeps non-ASCII paths literal.
+// core.precomposeunicode is ignored on Linux and Windows; on macOS it makes
+// Git return the same precomposed paths those systems already store.
+func Command(ctx context.Context, repo string, args ...string) *exec.Cmd {
+	prefix := []string{"-C", repo, "-c", "core.quotepath=false", "-c", "core.precomposeunicode=true"}
+	return exec.CommandContext(ctx, "git", append(prefix, args...)...)
 }
 
 func output(ctx context.Context, repo string, args ...string) (string, error) {
-	cmd := command(ctx, repo, args...)
+	cmd := Command(ctx, repo, args...)
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	b, err := cmd.Output()
@@ -79,7 +84,7 @@ func Read(ctx context.Context, repo string, sinceSHA string) ([]model.Commit, er
 			}
 		}
 	}
-	cmd := command(ctx, repo, "log", "--reverse", "--topo-order", "--numstat", "-z", "-M", "--no-ext-diff", "--no-textconv", "--diff-merges=off", "--format=%x00%H%x00%P%x00%an%x00%aI%x00%B%x00", revision, "--")
+	cmd := Command(ctx, repo, "log", "--reverse", "--topo-order", "--numstat", "-z", "-M", "--no-ext-diff", "--no-textconv", "--diff-merges=off", "--format=%x00%H%x00%P%x00%an%x00%aI%x00%B%x00", revision, "--")
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	stdout, err := cmd.StdoutPipe()
@@ -165,6 +170,7 @@ func readStream(r io.Reader) ([]model.Commit, error) {
 				return nil, fmt.Errorf("new path: %w", err)
 			}
 		}
+		filePath = ospath.ForCompare(filePath)
 		f := model.ChangedFile{Path: filePath, Language: language(filePath)}
 		if parts[0] != "-" || parts[1] != "-" {
 			additions, err := strconv.ParseInt(parts[0], 10, 64)

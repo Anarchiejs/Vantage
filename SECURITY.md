@@ -12,7 +12,7 @@ The database holds the text of your notes, commit subjects, author names, and ch
 
 `import` and `watch` read the vault and do not modify notes. `report` writes `Statistics.md` at the vault root. It replaces that file only when the existing note contains `generated_by: observatoire`. It does not keep a backup. Copy the note first if you need the previous text.
 
-`start.cmd` remembers the vault path in `%LOCALAPPDATA%\Observatoire\vault.txt`.
+`start.cmd` remembers the vault path in `%LOCALAPPDATA%\Observatoire\vault.txt`. `start.sh` remembers it in `$XDG_DATA_HOME/observatoire/vault.txt` on Linux (`~/.local/share/observatoire/vault.txt` when `XDG_DATA_HOME` is unset) and in `~/Library/Application Support/Observatoire/vault.txt` on macOS. The file contains only that path.
 
 On Windows, `build.ps1` may open an administrator prompt so Windows Defender Controlled Folder Access allows `observatoire.exe` to create the database. That changes a machine setting. Decline it and move the repository out of a protected folder if you do not want that change.
 

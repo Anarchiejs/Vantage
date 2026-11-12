@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -168,6 +169,32 @@ func TestHiddenDirectoriesAndNonMarkdown(t *testing.T) {
 	}
 	if _, err := Read(filepath.Join(root, "missing")); err == nil {
 		t.Fatal("missing root accepted")
+	}
+}
+
+func TestDecomposedFilename(t *testing.T) {
+	root := t.TempDir()
+	nfd := "Nai\u0308ve.md"
+	if err := os.WriteFile(filepath.Join(root, nfd), []byte("# Hi\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	r, err := Read(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(r.Notes) != 1 {
+		t.Fatalf("notes: %#v", r.Notes)
+	}
+	got := r.Notes[0]
+	wantPath, wantTitle := nfd, strings.TrimSuffix(nfd, ".md")
+	if runtime.GOOS == "darwin" {
+		wantPath, wantTitle = "Na\u00efve.md", "Na\u00efve"
+	}
+	if got.Path != wantPath || got.Title != wantTitle {
+		t.Fatalf("path %q title %q", got.Path, got.Title)
+	}
+	if _, err := ReadNote(root, got.Path); err != nil {
+		t.Fatal(err)
 	}
 }
 

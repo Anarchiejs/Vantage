@@ -11,6 +11,14 @@ import (
 	"time"
 )
 
+func TestCommandPinsPathFlags(t *testing.T) {
+	cmd := Command(context.Background(), "repo", "status")
+	joined := strings.Join(cmd.Args, " ")
+	if !strings.Contains(joined, "core.quotepath=false") || !strings.Contains(joined, "core.precomposeunicode=true") {
+		t.Fatal(cmd.Args)
+	}
+}
+
 func TestFixtures(t *testing.T) {
 	for _, name := range []string{"alpha", "beta"} {
 		t.Run(name, func(t *testing.T) {
