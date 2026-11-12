@@ -1,6 +1,6 @@
 # Observatoire
 
-Observatoire is a **local dashboard built for [Obsidian](https://obsidian.md)**. It is not an Obsidian plugin and it does not run inside Obsidian. It reads the vault folder on disk, reads the Git repositories named by that vault's project cards, and shows the result at **http://127.0.0.1:7878**: history, languages, the note graph, search, and a SQL console.
+Observatoire is a **local dashboard built for [Obsidian](https://obsidian.md)**. It runs on **Windows, Linux, and macOS**. It is not an Obsidian plugin and it does not run inside Obsidian. It reads the vault folder on disk, reads the Git repositories named by that vault's project cards, and shows the result at **http://127.0.0.1:7878**: history, languages, the note graph, search, and a SQL console.
 
 It is for someone who already keeps project notes in Obsidian and wants those notes next to the commits of the repositories they describe.
 
@@ -34,7 +34,7 @@ technologies:
 # My project
 ```
 
-`source_path` must be an absolute path to a Git repository. Without it, the card is still a project and still has notes, and it has no commits. `status: in progress` is the exact string used to decide that a quiet project is dormant.
+`source_path` must be an absolute path to a Git repository. On Linux that looks like `/home/you/dev/my-project`, and on macOS like `/Users/you/dev/my-project`. Without it, the card is still a project and still has notes, and it has no commits. `status: in progress` is the exact string used to decide that a quiet project is dormant.
 
 Optional:
 
@@ -59,9 +59,29 @@ Git import follows **HEAD** of each repository (the current branch only). It is 
 - `observatoire.db`, plus `observatoire.db-wal` and `observatoire.db-shm`, in the current directory (or `-db`).
 - `queries/*.sql` next to that database, when you save a query in the SQL console.
 - `Statistics.md` at the vault root, only when you run `report` (or the report command). The file is replaced atomically. An existing `Statistics.md` is overwritten only when it contains `generated_by: observatoire`. There is no backup: copy the note first if you need the previous text. `report` can create the vault directory.
-- On Windows, `start.cmd` stores the vault path in `%LOCALAPPDATA%\Observatoire\vault.txt`.
+- The vault path remembered by the start script: `%LOCALAPPDATA%\Observatoire\vault.txt` on Windows, `$XDG_DATA_HOME/observatoire/vault.txt` on Linux (`~/.local/share/observatoire/vault.txt` when `XDG_DATA_HOME` is unset), and `~/Library/Application Support/Observatoire/vault.txt` on macOS.
 
-`build.ps1` on Windows may open an administrator prompt so Controlled Folder Access allows `observatoire.exe` to create the database. That is a machine setting. On Linux and macOS that step does not exist.
+`build.ps1` on Windows may open an administrator prompt so Controlled Folder Access allows `observatoire.exe` to create the database. That is a machine setting. `build.sh` on Linux and macOS does not change a security product.
+
+## Supported platforms
+
+| Platform | What CI runs |
+|---|---|
+| Windows 10 or later | Go tests, `install.cmd`, `build.cmd` |
+| Linux | Go tests, web tests, end-to-end tests, `install.sh`, `build.sh`, `start.sh` |
+| macOS | Go tests, web unit tests, `install.sh`, `build.sh`, `start.sh` |
+
+The program is the same binary on each system. Paths inside a vault are stored with forward slashes. A `source_path` copied from Windows (`C:\...` or `C:/...`) is still recognized on Linux and macOS, and a path that starts with `/` is recognized on Windows, but Git can only read a repository that exists on the machine where Observatoire is running.
+
+## Requirements
+
+| | Windows | Linux | macOS |
+|---|---|---|---|
+| Git | [Git for Windows](https://git-scm.com/download/win), or `winget install --id Git.Git -e` | `git` from the distribution | Xcode command line tools, or Homebrew `git` |
+| Go | 1.26.4 (`go.mod`). `winget install --id GoLang.Go -e` | 1.26.4 from [go.dev/dl](https://go.dev/dl/) | 1.26.4 from [go.dev/dl](https://go.dev/dl/) or Homebrew |
+| Node.js | 22.12 or newer. `winget install --id OpenJS.NodeJS.LTS -e` | 22.12 or newer from [nodejs.org](https://nodejs.org/) | 22.12 or newer from [nodejs.org](https://nodejs.org/) or Homebrew |
+
+`install.cmd` installs anything missing through winget. `install.sh` installs Git through the system package manager (Homebrew on macOS) when the `git` command is missing, and downloads the official Go and Node.js builds into `~/.local/opt` when the copies on `PATH` are missing or older than the versions above. Add the printed `PATH` line to your shell profile if you want those copies in new terminals. The scripts find them on their own either way.
 
 ## Quick start (Windows)
 
@@ -100,24 +120,40 @@ The browser opens **http://127.0.0.1:7878**. `Ctrl+C` stops the server. The path
 
 While `start.cmd` is running, an edited note or a new commit shows up within a few seconds. After a `git pull`, run `.\build.cmd` again.
 
-## Linux and macOS
+## Quick start (Linux and macOS)
 
-The server is the same program. CI runs it on Ubuntu and on Windows. You need Go 1.26.4, Node.js 22, and Git.
+Open a terminal in this folder. The commands are the same on both systems.
+
+**0. Get the project** (once)
 
 ```bash
 git clone https://github.com/Anarchiejs/Observatoire.git
 cd Observatoire
-go mod download
-npm --prefix web ci
-npm --prefix web run build
-go build -tags embed -o observatoire ./cmd/observatoire
-./observatoire import -vault "$HOME/Documents/My Vault"
-./observatoire watch -vault "$HOME/Documents/My Vault"
 ```
 
-Open http://127.0.0.1:7878. `-vault` is required. There is no remembered path outside Windows: pass `-vault` each time, or wrap the two commands in a shell script.
+**1. Install** — Git, Go, and Node when they are missing or too old, then the dependencies
 
-`go build` without `-tags embed` reads `web/dist` from disk and only works when the current directory is the repository root.
+```bash
+./install.sh
+```
+
+**2. Build** — the UI, then the `observatoire` binary
+
+```bash
+./build.sh
+```
+
+**3. Start** — import your Obsidian vault and open the UI. The path is the folder you open in Obsidian, not this repository.
+
+```bash
+./start.sh "$HOME/Documents/My Vault"
+```
+
+The browser opens **http://127.0.0.1:7878** when a desktop session is available. Otherwise the script prints the address. `Ctrl+C` stops the server. The path is remembered: next time, `./start.sh` is enough.
+
+While `start.sh` is running, an edited note or a new commit shows up within a few seconds. After a `git pull`, run `./build.sh` again.
+
+`go build` without `-tags embed` reads `web/dist` from disk and only works when the current directory is the repository root. `./build.sh` passes `-tags embed`, so the binary can be started from any directory.
 
 ## Commands
 
@@ -132,7 +168,7 @@ Open http://127.0.0.1:7878. `-vault` is required. There is no remembered path ou
 | Option | Commands | Default |
 |---|---|---|
 | `-db <file>` | all | `observatoire.db` in the current directory |
-| `-vault <folder>` | `import`, `watch`, and `report` (unless `-stdout`) | required; no default |
+| `-vault <folder>` | `import`, `watch`, and `report` (unless `-stdout`) | required on the binary; `start.cmd` and `start.sh` remember it and pass it |
 | `-repos "Name=folder,…"` | `import`, `watch` | replaces `source_path` for the named cards |
 | `-port <n>` | `serve`, `watch` | `7878` |
 | `-stdout` | `report` | print the report instead of writing it |
@@ -161,6 +197,9 @@ Delete `observatoire.db`, `observatoire.db-wal`, and `observatoire.db-shm`, upda
 | `unable to open database file (14)`, or the server stops immediately | On Windows, Defender is blocking `observatoire.exe`. Run `.\build.cmd` again and accept the administrator window, or allow the program in *Windows Security › Virus & threat protection › Manage ransomware protection › Allow an app*. Or move the repository out of a protected folder. |
 | `… was not found` / `was just installed but is still not found` | Close and reopen PowerShell, then run the script again. |
 | `winget was not found` | Install "App Installer" from the Microsoft Store. |
+| `On Windows, run install.cmd` | A `.sh` script was started from Git Bash. Use `install.cmd`, `build.cmd`, or `start.cmd` in PowerShell. |
+| `Go … is older than go.mod` / `Node … is older than 22.12.0` | On Linux or macOS, run `./install.sh` again. It places a current Go or Node under `~/.local/opt` and the scripts prefer that copy. |
+| Browser did not open | On Linux without a graphical session the script prints the URL. Open http://127.0.0.1:7878 yourself. |
 | `Some chunks are larger than 500 kB` | A Vite warning. Ignore it. |
 | `folder not found` | Check the vault path and quote it. |
 | `no Git repository imported` / `0 repositories` | No `Projects/<Name>/<Name>.md` card with `type: project` and an absolute `source_path`. |
@@ -172,6 +211,8 @@ Delete `observatoire.db`, `observatoire.db-wal`, and `observatoire.db-shm`, upda
 See [CONTRIBUTING.md](CONTRIBUTING.md). Short form:
 
 ```bash
+./install.sh                      # Linux and macOS; Windows: .\install.cmd
+./build.sh                        # Linux and macOS; Windows: .\build.cmd
 npm --prefix web run dev          # Vite; /api is proxied to http://127.0.0.1:7878
 npm --prefix web run dev:mock     # no Go server; responses come from web/public/mocks
 go run ./scripts/fixtures/make-repos.go
@@ -191,7 +232,7 @@ internal/report/    Statistics.md
 internal/sql/       sqlc queries and generated code (gen/)
 internal/watch/     vault and repository watching (fsnotify)
 migrations/         SQL schema (goose)
-scripts/            install.ps1, build.ps1, start.ps1, fixtures/
+scripts/            install, build, start (PowerShell and bash), fixtures/
 testdata/           fictional vault; repos/ is generated and gitignored
 web/                React + Vite UI
 ```

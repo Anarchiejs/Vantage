@@ -46,6 +46,18 @@ func build(dir, project string) error {
 	if err := git(dir, nil, "config", "user.email", "fixture@example.invalid"); err != nil {
 		return err
 	}
+	// Pin settings that otherwise follow the machine, so fixture hashes match
+	// on Linux, macOS, and Windows. core.precomposeunicode is a no-op outside macOS.
+	for _, kv := range [][2]string{
+		{"commit.gpgsign", "false"},
+		{"core.autocrlf", "false"},
+		{"core.filemode", "false"},
+		{"core.precomposeunicode", "true"},
+	} {
+		if err := git(dir, nil, "config", kv[0], kv[1]); err != nil {
+			return err
+		}
+	}
 	files := map[string][]byte{}
 	for i := 0; i < 20; i++ {
 		date := fmt.Sprintf("2026-%02d-%02dT12:00:00Z", 1+i/7, 5+(i%7)*3)

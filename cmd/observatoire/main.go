@@ -12,6 +12,7 @@ import (
 	"os/signal"
 	"path/filepath"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/Anarchiejs/Observatoire/internal/api"
@@ -142,7 +143,7 @@ func serve(args []string) error {
 		return err
 	}
 	defer closeDBs()
-	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	ctx, stop := cancelOnSignal()
 	defer stop()
 	return server.Listen(ctx)
 }
@@ -207,7 +208,7 @@ func runWatch(args []string) error {
 		return err
 	}
 	defer closeDBs()
-	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	ctx, stop := cancelOnSignal()
 	defer stop()
 
 	opt := ingest.Options{Vault: *vault, Repos: replacements}
@@ -237,6 +238,11 @@ func runWatch(args []string) error {
 		}
 	}()
 	return server.Listen(ctx)
+}
+
+// cancelOnSignal stops the server on Ctrl+C, and on SIGTERM on Linux and macOS.
+func cancelOnSignal() (context.Context, context.CancelFunc) {
+	return signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 }
 
 func repositoryPaths(ctx context.Context, base *sql.DB) []string {

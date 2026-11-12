@@ -4,13 +4,31 @@ Observatoire is maintained by [Anarchy](https://github.com/Anarchiejs). Issues a
 
 ## Setup
 
+Windows, Linux, and macOS. CI runs the Go tests on all three, and runs the install and build scripts there too.
+
 - Go 1.26.4 (`go.mod`)
 - Node.js 22.12 or newer
 - Git
 
+Windows, from PowerShell:
+
+```powershell
+.\install.cmd
+.\build.cmd
+```
+
+Linux and macOS:
+
 ```bash
-go mod download
-npm --prefix web ci
+./install.sh
+./build.sh
+```
+
+`install.sh` installs Git through the system package manager when it is missing (Homebrew on macOS), and downloads official Go and Node.js builds into `~/.local/opt` when the copies on `PATH` are missing or too old.
+
+Then, on every platform:
+
+```bash
 go run ./scripts/fixtures/make-repos.go
 ```
 
@@ -27,7 +45,7 @@ npm --prefix web run build
 npm --prefix web run e2e
 ```
 
-End-to-end tests build the UI, import `testdata/vault`, and serve it on `127.0.0.1:7879`. On Windows the same checks run through `install.cmd` and `build.cmd`.
+End-to-end tests build the UI, import `testdata/vault`, and serve it on `127.0.0.1:7879`. On Windows the same build runs through `install.cmd` and `build.cmd`. On Linux and macOS it runs through `./install.sh` and `./build.sh`. `scripts/smoke-start.sh` checks that `start.sh` remembers a vault and that the server stops on SIGTERM.
 
 ## SQL
 

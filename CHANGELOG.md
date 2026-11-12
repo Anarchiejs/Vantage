@@ -2,7 +2,18 @@
 
 ## Unreleased
 
-Public-release cleanup. Observatoire is a local application built for Obsidian.
+Public-release cleanup. Observatoire is a local application built for Obsidian. It runs on Windows, Linux, and macOS.
+
+### Added
+
+- Linux and macOS launchers `install.sh`, `build.sh`, and `start.sh`, next to the Windows `.cmd` scripts. The Windows scripts are unchanged.
+- `start.sh` remembers the vault path (`$XDG_DATA_HOME/observatoire/vault.txt` on Linux, `~/Library/Application Support/Observatoire/vault.txt` on macOS).
+- CI runs on Ubuntu, macOS, and Windows.
+
+### Fixed
+
+- macOS filenames are stored as Unicode NFC, so accented note titles and Git paths match Linux and Windows. On Linux and Windows the path bytes are unchanged.
+- The server stops on SIGTERM (the signal Linux and macOS use to ask a process to exit). Ctrl+C is unchanged.
 
 ### Breaking
 
