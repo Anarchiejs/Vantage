@@ -1,4 +1,3 @@
-.orchestra/
 testdata/repos/
 *.db
 *.db-wal

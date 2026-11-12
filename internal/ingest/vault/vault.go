@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/Anarchiejs/Observatoire/internal/model"
+	"github.com/Anarchiejs/Observatoire/internal/ospath"
 	"gopkg.in/yaml.v3"
 )
 
@@ -95,6 +96,9 @@ func read(root, notePath string) (model.Note, metadata, error) {
 	if err != nil {
 		return note, nil, err
 	}
+	// macOS stores filenames decomposed. NFC matches Linux, Windows, and the
+	// bytes in this repository. On those systems ForCompare returns rel unchanged.
+	rel = ospath.ForCompare(rel)
 	if rel == ".." || strings.HasPrefix(rel, ".."+string(filepath.Separator)) || filepath.Ext(rel) != ".md" {
 		return note, nil, fmt.Errorf("note outside vault or not Markdown: %s", notePath)
 	}
