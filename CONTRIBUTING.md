@@ -29,10 +29,10 @@ Linux and macOS:
 Then, on every platform:
 
 ```bash
-go run ./scripts/fixtures/make-repos.go
+go test ./...
 ```
 
-The fixture command creates `testdata/repos/alpha` and `testdata/repos/beta`. Those directories are gitignored. `go test ./...` fails without them. It forces `commit.gpgsign=false` so a machine that signs commits still produces the hashes checked in under `internal/sql/queries_test/expected/`.
+`go test` creates `testdata/repos/alpha` and `testdata/repos/beta` when they are missing. Those directories are gitignored. `go run ./scripts/fixtures/make-repos.go` rebuilds them. The generator forces `commit.gpgsign=false` and pins `core.autocrlf`, `core.filemode`, and `core.precomposeunicode` so a machine that signs commits still produces the hashes checked in under `internal/sql/queries_test/expected/`.
 
 ## Checks
 
@@ -45,7 +45,7 @@ npm --prefix web run build
 npm --prefix web run e2e
 ```
 
-End-to-end tests build the UI, import `testdata/vault`, and serve it on `127.0.0.1:7879`. On Windows the same build runs through `install.cmd` and `build.cmd`. On Linux and macOS it runs through `./install.sh` and `./build.sh`. `scripts/smoke-start.sh` checks that `start.sh` remembers a vault and that the server stops on SIGTERM.
+End-to-end tests build the UI, import `testdata/vault`, and serve it on `127.0.0.1:7879`. CI runs them with Playwright on Ubuntu. They generate `testdata/repos` when those repositories are missing. On Windows the same build runs through `install.cmd` and `build.cmd`, and CI runs `npm --prefix web test` there. On Linux and macOS the build runs through `./install.sh` and `./build.sh`. `scripts/smoke-start.sh` checks that `start.sh` remembers a vault, accepts `--port` and `--repos`, and that the server stops on SIGTERM.
 
 ## SQL
 

@@ -12,16 +12,20 @@ if [ ! -x "$ROOT/observatoire" ]; then
 fi
 
 # curl, not bash /dev/tcp: the bash shipped with macOS is built without network redirections.
+# Not the default 7878: the script must forward --port or this check never connects.
+port=7877
+url="http://127.0.0.1:${port}"
+
 port_open() {
   if command -v curl >/dev/null 2>&1; then
-    curl -sf -o /dev/null --max-time 1 "http://127.0.0.1:7878/"
+    curl -sf -o /dev/null --max-time 1 "${url}/"
     return
   fi
-  python3 -c 'import socket,sys; s=socket.create_connection(("127.0.0.1",7878),1); s.close()'
+  python3 -c 'import socket,sys; s=socket.create_connection(("127.0.0.1",int(sys.argv[1])),1); s.close()' "$port"
 }
 
 if port_open; then
-  echo "port 7878 is already in use" >&2
+  echo "port ${port} is already in use" >&2
   exit 1
 fi
 
@@ -70,7 +74,7 @@ wait_until_listening() {
     sleep 0.2
     i=$((i + 1))
   done
-  echo "timed out waiting for http://127.0.0.1:7878" >&2
+  echo "timed out waiting for ${url}" >&2
   cat "$log" >&2
   exit 1
 }
@@ -85,7 +89,7 @@ wait_until_closed() {
     sleep 0.2
     i=$((i + 1))
   done
-  echo "server still listening on 127.0.0.1:7878" >&2
+  echo "server still listening on ${url}" >&2
   exit 1
 }
 
@@ -125,6 +129,41 @@ if ! grep -q "give your Obsidian vault folder" "$log"; then
 fi
 
 set +e
+./start.sh --port "$port" --repos "Atlas=/tmp/observatoire-smoke" >"$log" 2>&1
+code=$?
+set -e
+if [ "$code" -eq 0 ]; then
+  echo "start.sh with options and no vault should fail" >&2
+  cat "$log" >&2
+  exit 1
+fi
+if ! grep -q "give your Obsidian vault folder" "$log"; then
+  echo "options were not accepted before the vault check" >&2
+  cat "$log" >&2
+  exit 1
+fi
+
+set +e
+./start.sh --not-an-option >"$log" 2>&1
+code=$?
+set -e
+if [ "$code" -eq 0 ] || ! grep -q "unknown option" "$log"; then
+  echo "unknown option was accepted" >&2
+  cat "$log" >&2
+  exit 1
+fi
+
+set +e
+./start.sh --port 0 "$vault" >"$log" 2>&1
+code=$?
+set -e
+if [ "$code" -eq 0 ] || ! grep -q "port must be a number" "$log"; then
+  echo "port 0 was accepted" >&2
+  cat "$log" >&2
+  exit 1
+fi
+
+set +e
 ./start.sh "$tmp/missing" >"$log" 2>&1
 code=$?
 set -e
@@ -155,9 +194,9 @@ if ! grep -q "not an Obsidian vault" "$log"; then
   exit 1
 fi
 
-launch first "$vault"
+launch first --port "$port" "$vault"
 wait_until_listening
-if ! grep -q "Observatoire on http://127.0.0.1:7878" "$log"; then
+if ! grep -q "Observatoire on ${url}" "$log"; then
   echo "server log missing" >&2
   cat "$log" >&2
   exit 1
@@ -183,7 +222,7 @@ fi
 stop_server
 wait_until_closed
 
-launch remembered
+launch remembered --port "$port"
 wait_until_listening
 if ! grep -q "Remembered vault:" "$log"; then
   echo "vault was not remembered" >&2

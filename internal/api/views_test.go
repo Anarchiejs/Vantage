@@ -27,9 +27,6 @@ func repoRoot() string {
 func serveurFixtures(t *testing.T) http.Handler {
 	t.Helper()
 	r := repoRoot()
-	if _, err := os.Stat(filepath.Join(r, "testdata", "repos", "alpha", ".git")); err != nil {
-		t.Fatal("fixtures missing: run go run ./scripts/fixtures/make-repos.go first")
-	}
 	path := filepath.Join(t.TempDir(), "test.db")
 	rw, err := db.Open(path)
 	if err != nil {

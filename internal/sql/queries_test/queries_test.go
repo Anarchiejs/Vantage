@@ -30,9 +30,6 @@ func root() string {
 func prepare(t *testing.T) *sql.DB {
 	t.Helper()
 	r := root()
-	if _, err := os.Stat(filepath.Join(r, "testdata/repos/alpha/.git")); err != nil {
-		t.Fatal("run go run ./scripts/fixtures/make-repos.go first:", err)
-	}
 	b, err := db.Open(filepath.Join(t.TempDir(), "test.db"))
 	if err != nil {
 		t.Fatal(err)

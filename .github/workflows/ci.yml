@@ -122,6 +122,9 @@ jobs:
       - name: Web unit tests (macOS)
         if: runner.os == 'macOS'
         run: npm --prefix web test
+      - name: Web unit tests (Windows)
+        if: runner.os == 'Windows'
+        run: npm --prefix web test
       - name: Start script
         if: runner.os != 'Windows'
         run: bash scripts/smoke-start.sh

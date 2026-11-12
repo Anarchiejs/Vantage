@@ -6,12 +6,15 @@ Public-release cleanup. Observatoire is a local application built for Obsidian. 
 
 ### Added
 
-- Linux and macOS launchers `install.sh`, `build.sh`, and `start.sh`, next to the Windows `.cmd` scripts. The Windows scripts are unchanged.
+- Linux and macOS launchers `install.sh`, `build.sh`, and `start.sh`, next to the Windows `.cmd` scripts.
+- `start.sh` and `start.cmd` take a port (`--port` / `-Port`, default 7878) and a repository remap (`--repos` / `-Repos`). `<vault>/.observatoire/repos` supplies the same remap, with paths relative to the vault. The sample vault maps Atlas and Compass onto `testdata/repos`, so that vault imports Git history on Windows, Linux, and macOS. The start scripts create those repositories when they are missing.
 - `start.sh` remembers the vault path (`$XDG_DATA_HOME/observatoire/vault.txt` on Linux, `~/Library/Application Support/Observatoire/vault.txt` on macOS).
-- CI runs on Ubuntu, macOS, and Windows.
+- CI runs on Ubuntu, macOS, and Windows. Web unit tests run on all three. Playwright end-to-end tests run on Ubuntu.
+- `go test ./...` creates `testdata/repos` when the fixture repositories are missing.
 
 ### Fixed
 
+- The UI build no longer reports a JavaScript chunk larger than 500 kB. Charts load the ECharts series this app draws, and CodeMirror is its own chunk.
 - macOS filenames are stored as Unicode NFC, so accented note titles and Git paths match Linux and Windows. On Linux and Windows the path bytes are unchanged.
 - The server stops on SIGTERM (the signal Linux and macOS use to ask a process to exit). Ctrl+C is unchanged.
 

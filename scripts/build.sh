@@ -27,7 +27,6 @@ fi
 
 step "Building the UI (npm run build)"
 run "The UI build" npm --prefix web run build
-info "(the warning \"Some chunks are larger than 500 kB\" is normal)"
 
 step "Compiling observatoire"
 run "The compile" go build -tags embed -o observatoire ./cmd/observatoire

@@ -36,6 +36,8 @@ technologies:
 
 `source_path` must be an absolute path to a Git repository. On Linux that looks like `/home/you/dev/my-project`, and on macOS like `/Users/you/dev/my-project`. Without it, the card is still a project and still has notes, and it has no commits. `status: in progress` is the exact string used to decide that a quiet project is dormant.
 
+The sample Compass card still says `source_path: C:/Fixtures/Compass`. That folder is not a repository on Linux or macOS. `testdata/vault/.observatoire/repos` maps the names Atlas and Compass onto `testdata/repos`, with paths relative to the vault, so `import` reads both histories on every OS. A hidden directory is not a note. See [Port and repository paths](#port-and-repository-paths).
+
 Optional:
 
 - `verified_commit` and `verified_on`, to spot a card that has fallen behind the repository. A value may start with a SHA (`0df64eb2 (upstream)`).
@@ -51,7 +53,7 @@ Git import follows **HEAD** of each repository (the current branch only). It is 
 **Reads**
 
 - Every non-hidden `.md` file in the vault (symlink notes are refused).
-- `git log` of `HEAD` for each absolute `source_path`.
+- `git log` of `HEAD` for each absolute `source_path`, or for the path named in `<vault>/.observatoire/repos` / `-repos` when that replaces it.
 - A line count of the repository working tree, for language statistics.
 
 **Writes**
@@ -67,8 +69,8 @@ Git import follows **HEAD** of each repository (the current branch only). It is 
 
 | Platform | What CI runs |
 |---|---|
-| Windows 10 or later | Go tests, `install.cmd`, `build.cmd` |
-| Linux | Go tests, web tests, end-to-end tests, `install.sh`, `build.sh`, `start.sh` |
+| Windows 10 or later | Go tests, web unit tests, `install.cmd`, `build.cmd` |
+| Linux | Go tests, web tests, Playwright end-to-end tests, `install.sh`, `build.sh`, `start.sh` |
 | macOS | Go tests, web unit tests, `install.sh`, `build.sh`, `start.sh` |
 
 The program is the same binary on each system. Paths inside a vault are stored with forward slashes. A `source_path` copied from Windows (`C:\...` or `C:/...`) is still recognized on Linux and macOS, and a path that starts with `/` is recognized on Windows, but Git can only read a repository that exists on the machine where Observatoire is running.
@@ -116,7 +118,7 @@ If Windows Defender **Controlled folder access** is on, an administrator window 
 .\start.cmd "C:\Users\you\Documents\My Vault"
 ```
 
-The browser opens **http://127.0.0.1:7878**. `Ctrl+C` stops the server. The path is remembered: next time, `.\start.cmd` is enough.
+The browser opens **http://127.0.0.1:7878**. `Ctrl+C` stops the server. The path is remembered: next time, `.\start.cmd` is enough. Another port is `.\start.cmd -Port 8080`. To point a card at a repository on this PC, add `-Repos "Name=C:\path"`. Details are under [Port and repository paths](#port-and-repository-paths).
 
 While `start.cmd` is running, an edited note or a new commit shows up within a few seconds. After a `git pull`, run `.\build.cmd` again.
 
@@ -149,11 +151,37 @@ cd Observatoire
 ./start.sh "$HOME/Documents/My Vault"
 ```
 
-The browser opens **http://127.0.0.1:7878** when a desktop session is available. Otherwise the script prints the address. `Ctrl+C` stops the server. The path is remembered: next time, `./start.sh` is enough.
+The browser opens **http://127.0.0.1:7878** when a desktop session is available. Otherwise the script prints the address. `Ctrl+C` stops the server. The path is remembered: next time, `./start.sh` is enough. Another port is `./start.sh --port 8080`. To point a card at a repository on this machine, add `--repos "Name=/absolute/path"`. Details are under [Port and repository paths](#port-and-repository-paths).
 
 While `start.sh` is running, an edited note or a new commit shows up within a few seconds. After a `git pull`, run `./build.sh` again.
 
 `go build` without `-tags embed` reads `web/dist` from disk and only works when the current directory is the repository root. `./build.sh` passes `-tags embed`, so the binary can be started from any directory.
+
+## Port and repository paths
+
+`start.cmd` and `start.sh` listen on port **7878**. Pick another port when that one is taken:
+
+```powershell
+.\start.cmd -Port 8080 "C:\Users\you\Documents\My Vault"
+```
+
+```bash
+./start.sh --port 8080 "$HOME/Documents/My Vault"
+```
+
+The same flags exist on the binary: `observatoire serve -port 8080` and `observatoire watch -vault <folder> -port 8080`.
+
+A card's `source_path` is the repository on the machine that wrote the card. To point a card at a different folder, pass `-repos` / `-Repos` / `--repos`:
+
+```powershell
+.\start.cmd -Repos "Atlas=$PWD\testdata\repos\alpha,Compass=$PWD\testdata\repos\beta" testdata\vault
+```
+
+```bash
+./start.sh --repos "Atlas=$PWD/testdata/repos/alpha,Compass=$PWD/testdata/repos/beta" testdata/vault
+```
+
+You can also put one `Name=path` pair per line in `<vault>/.observatoire/repos`. A line starting with `#` is a comment. Paths in that file are relative to the vault. The sample vault includes this file, so `.\start.cmd testdata\vault` and `./start.sh testdata/vault` import both fixture repositories on Windows, Linux, and macOS. The start scripts create those repositories the first time they are missing. A name on the command line replaces the same name from the file. `import` and `watch` read the file too, so the flag is optional for that vault.
 
 ## Commands
 
@@ -169,7 +197,7 @@ While `start.sh` is running, an edited note or a new commit shows up within a fe
 |---|---|---|
 | `-db <file>` | all | `observatoire.db` in the current directory |
 | `-vault <folder>` | `import`, `watch`, and `report` (unless `-stdout`) | required on the binary; `start.cmd` and `start.sh` remember it and pass it |
-| `-repos "Name=folder,…"` | `import`, `watch` | replaces `source_path` for the named cards |
+| `-repos "Name=folder,…"` | `import`, `watch` | replaces `source_path` for the named cards. Also loaded from `<vault>/.observatoire/repos` when that file exists |
 | `-port <n>` | `serve`, `watch` | `7878` |
 | `-stdout` | `report` | print the report instead of writing it |
 
@@ -200,11 +228,10 @@ Delete `observatoire.db`, `observatoire.db-wal`, and `observatoire.db-shm`, upda
 | `On Windows, run install.cmd` | A `.sh` script was started from Git Bash. Use `install.cmd`, `build.cmd`, or `start.cmd` in PowerShell. |
 | `Go … is older than go.mod` / `Node … is older than 22.12.0` | On Linux or macOS, run `./install.sh` again. It places a current Go or Node under `~/.local/opt` and the scripts prefer that copy. |
 | Browser did not open | On Linux without a graphical session the script prints the URL. Open http://127.0.0.1:7878 yourself. |
-| `Some chunks are larger than 500 kB` | A Vite warning. Ignore it. |
 | `folder not found` | Check the vault path and quote it. |
-| `no Git repository imported` / `0 repositories` | No `Projects/<Name>/<Name>.md` card with `type: project` and an absolute `source_path`. |
+| `no Git repository imported` / `0 repositories` | No `Projects/<Name>/<Name>.md` card with `type: project` and a repository that exists on this machine. Pass `--repos` / `-Repos`, or add `<vault>/.observatoire/repos`. |
 | `warning: <Project> (<path>): git rev-parse` | That `source_path` is not a Git repository. The other projects are still imported. |
-| `listen tcp 127.0.0.1:7878: bind` | The port is taken. Stop the other process, or `observatoire serve -port 8080`. |
+| `listen tcp 127.0.0.1:7878: bind` | The port is taken. Stop the other process, or `./start.sh --port 8080` (`.\start.cmd -Port 8080` on Windows). |
 
 ## Develop
 
@@ -215,9 +242,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Short form:
 ./build.sh                        # Linux and macOS; Windows: .\build.cmd
 npm --prefix web run dev          # Vite; /api is proxied to http://127.0.0.1:7878
 npm --prefix web run dev:mock     # no Go server; responses come from web/public/mocks
-go run ./scripts/fixtures/make-repos.go
-go test ./...
+go test ./...                     # creates testdata/repos when they are missing
+go run ./scripts/fixtures/make-repos.go   # rebuild those repositories
 ```
+
+Playwright end-to-end tests run in CI on Linux (`npm --prefix web run e2e`). Web unit tests run in CI on Linux, macOS, and Windows.
 
 Schema changes are new files in `migrations/`. SQL is compiled with sqlc 1.31.1. Do not edit `internal/sql/gen` by hand.
 
