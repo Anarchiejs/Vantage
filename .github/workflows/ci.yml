@@ -100,10 +100,19 @@ jobs:
       - name: Install and build (Windows)
         if: runner.os == 'Windows'
         shell: powershell
+        # build.ps1 reloads the machine PATH, which puts the runner image's Go
+        # ahead of the one setup-go installed. setup-go also sets
+        # GOTOOLCHAIN=local, so that older Go refuses to fetch 1.26.4.
+        # auto is the normal Windows default and lets that Go switch toolchains.
+        env:
+          GOTOOLCHAIN: auto
         run: |
           powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\build.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           .\observatoire.exe migrate -db (Join-Path $env:RUNNER_TEMP 'observatoire-ci.db')
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Install and build (Linux, macOS)
         if: runner.os != 'Windows'
         run: |
