@@ -12,8 +12,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Anarchiejs/Observatoire/internal/model"
-	"github.com/Anarchiejs/Observatoire/internal/ospath"
+	"github.com/Anarchiejs/Vantage/internal/model"
+	"github.com/Anarchiejs/Vantage/internal/ospath"
 	"gopkg.in/yaml.v3"
 )
 

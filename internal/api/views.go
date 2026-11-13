@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Anarchiejs/Observatoire/internal/sql/gen"
+	"github.com/Anarchiejs/Vantage/internal/sql/gen"
 )
 
 // viewRoutes wires the UI views to the queries in internal/sql/queries.

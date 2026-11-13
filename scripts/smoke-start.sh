@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # Proves start.sh remembers a vault and that SIGTERM stops the server.
-# Linux and macOS only. Requires ./observatoire from ./build.sh.
+# Linux and macOS only. Requires ./vantage from ./build.sh.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-if [ ! -x "$ROOT/observatoire" ]; then
-  echo "observatoire is missing. Run ./build.sh first." >&2
+if [ ! -x "$ROOT/vantage" ]; then
+  echo "vantage is missing. Run ./build.sh first." >&2
   exit 1
 fi
 
@@ -29,7 +29,7 @@ if port_open; then
   exit 1
 fi
 
-tmp="$(mktemp -d "${TMPDIR:-/tmp}/observatoire-smoke.XXXXXX")"
+tmp="$(mktemp -d "${TMPDIR:-/tmp}/vantage-smoke.XXXXXX")"
 ok=0
 pid=""
 log=""
@@ -129,7 +129,7 @@ if ! grep -q "give your Obsidian vault folder" "$log"; then
 fi
 
 set +e
-./start.sh --port "$port" --repos "Atlas=/tmp/observatoire-smoke" >"$log" 2>&1
+./start.sh --port "$port" --repos "Atlas=/tmp/vantage-smoke" >"$log" 2>&1
 code=$?
 set -e
 if [ "$code" -eq 0 ]; then
@@ -196,7 +196,7 @@ fi
 
 launch first --port "$port" "$vault"
 wait_until_listening
-if ! grep -q "Observatoire on ${url}" "$log"; then
+if ! grep -q "Vantage on ${url}" "$log"; then
   echo "server log missing" >&2
   cat "$log" >&2
   exit 1
@@ -208,9 +208,9 @@ if ! grep -q "0 repositories" "$log"; then
 fi
 
 if [ "$(uname -s)" = "Darwin" ]; then
-  memo="${HOME}/Library/Application Support/Observatoire/vault.txt"
+  memo="${HOME}/Library/Application Support/Vantage/vault.txt"
 else
-  memo="${XDG_DATA_HOME}/observatoire/vault.txt"
+  memo="${XDG_DATA_HOME}/vantage/vault.txt"
 fi
 expected="$(cd "$vault" && pwd -P)"
 got="$(tr -d '\r' < "$memo")"

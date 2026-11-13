@@ -91,7 +91,7 @@ func rebuild(root string) error {
 
 func withLock(root string, fn func() error) error {
 	sum := sha256.Sum256([]byte(filepath.Clean(root)))
-	path := filepath.Join(os.TempDir(), fmt.Sprintf("observatoire-fixtures-%x.lock", sum[:8]))
+	path := filepath.Join(os.TempDir(), fmt.Sprintf("vantage-fixtures-%x.lock", sum[:8]))
 	if err := acquire(path, filepath.Join(root, "testdata", "repos")); err != nil {
 		return err
 	}

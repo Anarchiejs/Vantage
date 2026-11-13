@@ -111,14 +111,14 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\build.ps1
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          .\observatoire.exe migrate -db (Join-Path $env:RUNNER_TEMP 'observatoire-ci.db')
+          .\vantage.exe migrate -db (Join-Path $env:RUNNER_TEMP 'vantage-ci.db')
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Install and build (Linux, macOS)
         if: runner.os != 'Windows'
         run: |
           ./install.sh
           ./build.sh
-          ./observatoire migrate -db "${RUNNER_TEMP}/observatoire-ci.db"
+          ./vantage migrate -db "${RUNNER_TEMP}/vantage-ci.db"
       - name: Web unit tests (macOS)
         if: runner.os == 'macOS'
         run: npm --prefix web test

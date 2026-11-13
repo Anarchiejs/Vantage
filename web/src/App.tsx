@@ -22,13 +22,13 @@ const NAV = [
   { to: '/console', label: 'SQL console', icon: 'console' },
 ]
 
-/** Relays the server's SSE events as "observatoire:update" (listened to by useApi). */
+/** Relays the server's SSE events as "vantage:update" (listened to by useApi). */
 function useLiveUpdates() {
   useEffect(() => {
     if (import.meta.env.VITE_MOCK === '1' || typeof EventSource === 'undefined') return
     const source = new EventSource('/api/events')
     source.addEventListener('update', (event) => {
-      window.dispatchEvent(new CustomEvent('observatoire:update', { detail: JSON.parse((event as MessageEvent).data) }))
+      window.dispatchEvent(new CustomEvent('vantage:update', { detail: JSON.parse((event as MessageEvent).data) }))
     })
     return () => source.close()
   }, [])
@@ -63,8 +63,8 @@ function Frame() {
   useShortcuts(() => setPalette(true))
   // The palette (or any page) toggles the theme by emitting this event.
   useEffect(() => {
-    window.addEventListener('observatoire:toggle-theme', toggle)
-    return () => window.removeEventListener('observatoire:toggle-theme', toggle)
+    window.addEventListener('vantage:toggle-theme', toggle)
+    return () => window.removeEventListener('vantage:toggle-theme', toggle)
   }, [toggle])
 
   const current = NAV.find(item => item.to === '/' ? pathname === '/' : pathname.startsWith(item.to))?.label ?? 'Page'
@@ -75,7 +75,7 @@ function Frame() {
       <nav aria-label="Main" className="app-sidebar">
         <div className="brand">
           <span className="brand-mark">◉</span>
-          <div><span className="font-semibold">Observatoire</span><small>The thread of your projects</small></div>
+          <div><span className="font-semibold">Vantage</span><small>The thread of your projects</small></div>
         </div>
         <p className="nav-caption">WORKSPACE</p>
         <div className="nav-links">
@@ -108,7 +108,7 @@ function Frame() {
         </div>
       </nav>
       <div className="app-workspace">
-      <div className="app-topbar"><span>My observatoire <span className="text-muted">/ {current}</span></span><button onClick={() => setPalette(true)} className="top-search"><Icon name="search" /> Search… <kbd>Ctrl K</kbd></button></div>
+      <div className="app-topbar"><span>My Vantage <span className="text-muted">/ {current}</span></span><button onClick={() => setPalette(true)} className="top-search"><Icon name="search" /> Search… <kbd>Ctrl K</kbd></button></div>
       <main id="content" className="app-main">
         <Suspense fallback={<Loading lines={6} />}>
           <Routes>

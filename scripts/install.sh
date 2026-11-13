@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install what Observatoire needs to build: Git, Go, and Node,
+# Install what Vantage needs to build: Git, Go, and Node,
 # then the Go and npm dependencies.
 # Usage: ./install.sh
 # On Windows, use install.cmd instead.
@@ -86,7 +86,7 @@ install_go() {
   # dl.google.com serves the tarball and a one-line checksum. go.dev/dl redirects
   # the tarball but returns an HTML page for the .sha256 URL.
   url="https://dl.google.com/go/${name}"
-  tmp="$(mktemp -d "${TMPDIR:-/tmp}/observatoire-go.XXXXXX")"
+  tmp="$(mktemp -d "${TMPDIR:-/tmp}/vantage-go.XXXXXX")"
   trap 'rm -rf "$tmp"' EXIT
   info "Downloading ${url}"
   fetch "$url" "$tmp/$name"
@@ -106,7 +106,7 @@ install_node() {
   os="$(host_node_os)"
   arch="$(host_node_arch)"
   suffix="-${os}-${arch}.tar.gz"
-  tmp="$(mktemp -d "${TMPDIR:-/tmp}/observatoire-node.XXXXXX")"
+  tmp="$(mktemp -d "${TMPDIR:-/tmp}/vantage-node.XXXXXX")"
   trap 'rm -rf "$tmp"' EXIT
   info "Downloading the current Node.js 22 release"
   fetch "https://nodejs.org/dist/latest-v22.x/SHASUMS256.txt" "$tmp/SHASUMS256.txt"

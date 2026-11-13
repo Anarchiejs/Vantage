@@ -14,8 +14,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Anarchiejs/Observatoire/internal/db"
-	"github.com/Anarchiejs/Observatoire/internal/ingest"
+	"github.com/Anarchiejs/Vantage/internal/db"
+	"github.com/Anarchiejs/Vantage/internal/ingest"
 )
 
 func repoRoot() string {

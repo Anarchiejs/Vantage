@@ -43,7 +43,7 @@ export default function Palette({ close }: { close: () => void }) {
     }))
     const theme: Command = {
       id: 'theme', label: 'Toggle theme', detail: 'Light or dark',
-      run: () => { window.dispatchEvent(new Event('observatoire:toggle-theme')); close() },
+      run: () => { window.dispatchEvent(new Event('vantage:toggle-theme')); close() },
     }
     return [...pages, ...openProjects, theme]
   }, [projectData, navigate, close])

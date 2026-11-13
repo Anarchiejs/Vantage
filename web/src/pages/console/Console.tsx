@@ -18,7 +18,7 @@ import { chartOption, numericColumns, validName, type ChartShape } from './chart
 
 export { chartOption, validName } from './chart'
 
-const SQL_KEY = 'observatoire.console.sql'
+const SQL_KEY = 'vantage.console.sql'
 
 const DEFAULT_SQL = `SELECT p.name, SUM(a.commit_count) AS commits, SUM(a.additions) AS additions
 FROM daily_activity a
@@ -133,8 +133,8 @@ export default function Console() {
     const measure = new ResizeObserver(() => editor.requestMeasure())
     measure.observe(parent)
     const onTheme = () => editor.dispatch({ effects: themeComp.current.reconfigure(editorTheme()) })
-    window.addEventListener('observatoire:theme', onTheme)
-    return () => { measure.disconnect(); window.removeEventListener('observatoire:theme', onTheme); editor.destroy(); viewRef.current = null }
+    window.addEventListener('vantage:theme', onTheme)
+    return () => { measure.disconnect(); window.removeEventListener('vantage:theme', onTheme); editor.destroy(); viewRef.current = null }
   }, [])
 
   useEffect(() => {

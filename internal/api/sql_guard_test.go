@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Anarchiejs/Observatoire/internal/db"
+	"github.com/Anarchiejs/Vantage/internal/db"
 )
 
 func sqlConsole(h http.Handler, query string) (int, string) {
