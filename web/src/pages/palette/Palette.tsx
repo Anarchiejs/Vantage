@@ -12,6 +12,7 @@ interface Command extends Labeled {
 const PAGES: { id: string; label: string; detail: string; to: string }[] = [
   { id: 'home', label: 'Home', detail: 'Dashboard', to: '/' },
   { id: 'projects', label: 'Projects', detail: 'Project list', to: '/projects' },
+  { id: 'repos', label: 'Repos', detail: 'Card paths and imported paths', to: '/repos' },
   { id: 'tech', label: 'Tech & AI', detail: 'Technologies', to: '/tech' },
   { id: 'graph', label: 'Graph', detail: 'Linked notes', to: '/graph' },
   { id: 'search', label: 'Search', detail: 'Notes and commits', to: '/search' },

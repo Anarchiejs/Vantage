@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import type { EChartsOption } from 'echarts'
 import type { Graph as GraphData, GraphNode, GraphPath, NoteDetail } from '../../api/types'
@@ -61,13 +61,27 @@ export function graphOption(data: GraphData, folders: string[], selected?: numbe
     emphasis: { focus: 'self', label: { show: true } } }] }
 }
 
-export function NoteBody({ content, nodes }: { content: string; nodes: GraphNode[] }) {
-  const titles = new Map(nodes.map(node => [node.title, node]))
+export function resolveNote(raw: string, sourceFolder: string, nodes: GraphNode[]): GraphNode | undefined {
+  const cleaned = raw.split('|')[0].split('#')[0].split('^')[0].trim().replaceAll('\\', '/').replace(/\.md$/i, '')
+  const pathHits = nodes.filter(node => node.path.replace(/\.md$/i, '').toLowerCase() === cleaned.toLowerCase())
+  if (pathHits.length === 1) return pathHits[0]
+  const title = cleaned.split('/').pop() ?? cleaned
+  const titleHits = nodes.filter(node => node.title.toLowerCase() === title.toLowerCase())
+  if (titleHits.length !== 1 && titleHits.length !== 0) {
+    const same = titleHits.filter(node => node.folder === sourceFolder)
+    const pool = same.length ? same : titleHits
+    return [...pool].sort((a, b) => a.path.length - b.path.length || a.path.localeCompare(b.path))[0]
+  }
+  return titleHits[0]
+}
+
+export function NoteBody({ content, nodes, folder }: { content: string; nodes: GraphNode[]; folder: string }) {
   return <div className="whitespace-pre-wrap break-words text-sm leading-relaxed">{content.split(/(\[\[[^\]]+\]\])/g).map((part, index) => {
     if (!part.startsWith('[[') || !part.endsWith(']]')) return <span key={index}>{part}</span>
-    const [target, alias] = part.slice(2, -2).split('|')
-    const node = titles.get(target.split('#')[0])
-    return node ? <Link key={index} className="text-accent underline" to={`/graph/${node.id}`}>{alias || target}</Link> : <span key={index}>{part}</span>
+    const body = part.slice(2, -2)
+    const alias = body.includes('|') ? body.slice(body.indexOf('|') + 1) : ''
+    const node = resolveNote(body, folder, nodes)
+    return node ? <Link key={index} className="text-accent underline" to={`/graph/${node.id}`}>{alias || node.title}</Link> : <span key={index}>{part}</span>
   })}</div>
 }
 
@@ -76,7 +90,8 @@ function Panel({ id, nodes }: { id: number; nodes: GraphNode[] }) {
   return <Card title="Selected note"><Load state={note}>{item => item.id === id ? <>
     <div className="mb-4 flex justify-between gap-3"><h2 className="font-semibold">{item.title}</h2><Link aria-label="Close the note" to="/graph">×</Link></div>
     <p className="mb-4 text-xs text-muted">{item.folder} · {date(item.updated)}</p>
-    <NoteBody content={item.content} nodes={nodes} />
+    {item.obsidian_url && <p className="mb-3"><a className="text-sm text-accent hover:underline" href={item.obsidian_url}>Open in Obsidian</a></p>}
+    <NoteBody content={item.content} nodes={nodes} folder={item.folder} />
     <h3 className="mt-5 mb-2 font-semibold">Neighbors</h3><NodeList nodes={item.neighbors} />
   </> : <Empty>Loading the note…</Empty>}</Load></Card>
 }
@@ -85,12 +100,11 @@ function NodeList({ nodes }: { nodes: GraphNode[] }) {
   return nodes.length ? <ul className="space-y-1 text-sm">{nodes.map(node => <li key={node.id}><Link className="text-accent hover:underline" to={`/graph/${node.id}`}>{node.title}</Link> <span className="text-muted tabular-nums">({node.degree})</span></li>)}</ul> : <Empty>No note.</Empty>
 }
 
-function Explore({ data }: { data: GraphData }) {
+function Explore({ data, hidden, setHidden, properties, setProperties }: { data: GraphData; hidden: string[]; setHidden: (value: string[] | ((values: string[]) => string[])) => void; properties: boolean; setProperties: (value: boolean) => void }) {
   const { id } = useParams()
   const [params] = useSearchParams()
   const navigate = useNavigate()
   const selected = selectedNote(data, id, params.get('note'))
-  const [hidden, setHidden] = useState<string[]>([])
   const [search, setSearch] = useState('')
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
@@ -113,10 +127,10 @@ function Explore({ data }: { data: GraphData }) {
     return () => ctrl.abort()
   }, [request, turn, data])
   const result: ApiState<GraphPath> = response.url === request ? response.state : { status: 'loading' }
-  const folders = useMemo(() => [...new Set(data.nodes.map(node => node.folder))].sort(), [data])
+  const folders = data.folders.length ? data.folders : [...new Set(data.nodes.map(node => node.folder))].sort()
   const route = result.status === 'ok' && request ? result.data.path : undefined
   const selectedId = selected?.id
-  const option = useCallback(() => graphOption(data, folders.filter(folder => !hidden.includes(folder)), selectedId, route?.map(node => node.id)), [data, folders, hidden, selectedId, route])
+  const option = useCallback(() => graphOption(data, [...new Set(data.nodes.map(node => node.folder))], selectedId, route?.map(node => node.id)), [data, selectedId, route])
   const find = (title: string) => data.nodes.find(node => node.title === title)
   return <>
     <Card title="Explore the vault">
@@ -127,6 +141,7 @@ function Explore({ data }: { data: GraphData }) {
       <datalist id="graph-titles">{data.nodes.map(node => <option key={node.id} value={node.title} />)}</datalist>
       <fieldset className="flex flex-wrap gap-4 text-sm"><legend className="mb-2 text-muted">Folders</legend>{folders.map(folder => <label className="flex items-center gap-2" key={folder}>
         <input type="checkbox" checked={!hidden.includes(folder)} onChange={e => setHidden(values => e.target.checked ? values.filter(item => item !== folder) : [...values, folder])} />{folder}</label>)}</fieldset>
+      <label className="mt-3 flex items-center gap-2 text-sm"><input type="checkbox" checked={properties} onChange={e => setProperties(e.target.checked)} />Include links from properties</label>
     </Card>
     {(id || params.has('note')) && !selected && <p role="status" className="text-muted">Note not found.</p>}
     <div className={`grid gap-4 ${selected ? 'grid-cols-[minmax(0,2fr)_minmax(280px,1fr)]' : 'grid-cols-1'}`}>
@@ -158,6 +173,19 @@ function Explore({ data }: { data: GraphData }) {
 }
 
 export default function Graph() {
-  const graph = useApi<GraphData>('/api/graph')
-  return <div className="space-y-5"><Header title="Note graph" description="Explore the connections between your notes. Move the nodes, zoom, and open a note to follow its links." /><Load state={graph}>{data => <Explore data={data} />}</Load></div>
+  const [hidden, setHidden] = useState<string[]>([])
+  const [properties, setProperties] = useState(true)
+  const [folders, setFolders] = useState<string[]>([])
+  const visible = folders.filter(folder => !hidden.includes(folder))
+  const filtering = folders.length > 0 && visible.length !== folders.length
+  const params = new URLSearchParams()
+  if (filtering) for (const folder of visible) params.append('folder', folder)
+  if (!properties) params.set('properties', '0')
+  const query = params.toString()
+  const graph = useApi<GraphData>(`/api/graph${query ? `?${query}` : ''}`)
+  const folderKey = graph.status === 'ok' ? graph.data.folders.join('\n') : ''
+  useEffect(() => {
+    if (folderKey) setFolders(folderKey.split('\n'))
+  }, [folderKey])
+  return <div className="space-y-5"><Header title="Note graph" description="Explore the connections between your notes. Move the nodes, zoom, and open a note to follow its links." /><Load state={graph}>{data => <Explore data={data} hidden={hidden} setHidden={setHidden} properties={properties} setProperties={setProperties} />}</Load></div>
 }

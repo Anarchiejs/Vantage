@@ -4,1801 +4,2101 @@
       "id": 1,
       "title": "Atlas",
       "folder": "Projects",
-      "degree": 7
+      "degree": 7,
+      "path": "Projects/Atlas.md"
     },
     {
       "id": 2,
       "title": "Compass",
       "folder": "Projects",
-      "degree": 4
+      "degree": 4,
+      "path": "Projects/Compass.md"
     },
     {
       "id": 3,
       "title": "Harbor",
       "folder": "Projects",
-      "degree": 3
+      "degree": 3,
+      "path": "Projects/Harbor.md"
     },
     {
       "id": 4,
       "title": "Northwind",
       "folder": "Projects",
-      "degree": 3
+      "degree": 3,
+      "path": "Projects/Northwind.md"
     },
     {
       "id": 5,
       "title": "Lantern",
       "folder": "Projects",
-      "degree": 2
+      "degree": 2,
+      "path": "Projects/Lantern.md"
     },
     {
       "id": 6,
       "title": "Keel",
       "folder": "Projects",
-      "degree": 2
+      "degree": 2,
+      "path": "Projects/Keel.md"
     },
     {
       "id": 7,
       "title": "Tidepool",
       "folder": "Projects",
-      "degree": 3
+      "degree": 3,
+      "path": "Projects/Tidepool.md"
     },
     {
       "id": 8,
       "title": "Quartz",
       "folder": "Projects",
-      "degree": 2
+      "degree": 2,
+      "path": "Projects/Quartz.md"
     },
     {
       "id": 9,
       "title": "Sable",
       "folder": "Projects",
-      "degree": 2
+      "degree": 2,
+      "path": "Projects/Sable.md"
     },
     {
       "id": 10,
       "title": "Waypoint",
       "folder": "Projects",
-      "degree": 3
+      "degree": 3,
+      "path": "Projects/Waypoint.md"
     },
     {
       "id": 20,
       "title": "Go",
       "folder": "Technologies",
-      "degree": 1
+      "degree": 1,
+      "path": "Technologies/Go.md"
     },
     {
       "id": 21,
       "title": "React",
       "folder": "Technologies",
-      "degree": 3
+      "degree": 3,
+      "path": "Technologies/React.md"
     },
     {
       "id": 22,
       "title": "TypeScript",
       "folder": "Technologies",
-      "degree": 5
+      "degree": 5,
+      "path": "Technologies/TypeScript.md"
     },
     {
       "id": 23,
       "title": "SQLite",
       "folder": "Technologies",
-      "degree": 2
+      "degree": 2,
+      "path": "Technologies/SQLite.md"
     },
     {
       "id": 24,
       "title": "Expo",
       "folder": "Technologies",
-      "degree": 1
+      "degree": 1,
+      "path": "Technologies/Expo.md"
     },
     {
       "id": 25,
       "title": "Python",
       "folder": "Technologies",
-      "degree": 3
+      "degree": 3,
+      "path": "Technologies/Python.md"
     },
     {
       "id": 26,
       "title": "MongoDB",
       "folder": "Technologies",
-      "degree": 1
+      "degree": 1,
+      "path": "Technologies/MongoDB.md"
     },
     {
       "id": 27,
       "title": "Luau",
       "folder": "Technologies",
-      "degree": 1
+      "degree": 1,
+      "path": "Technologies/Luau.md"
     },
     {
       "id": 28,
       "title": "Supabase",
       "folder": "Technologies",
-      "degree": 1
+      "degree": 1,
+      "path": "Technologies/Supabase.md"
     },
     {
       "id": 29,
       "title": "Rust",
       "folder": "Technologies",
-      "degree": 1
+      "degree": 1,
+      "path": "Technologies/Rust.md"
     },
     {
       "id": 40,
       "title": "Claude Code",
-      "folder": "IA",
-      "degree": 3
+      "folder": "AI",
+      "degree": 3,
+      "path": "AI/Claude Code.md"
     },
     {
       "id": 41,
       "title": "Codex",
-      "folder": "IA",
-      "degree": 4
+      "folder": "AI",
+      "degree": 4,
+      "path": "AI/Codex.md"
     },
     {
       "id": 42,
       "title": "DeepSeek",
-      "folder": "IA",
-      "degree": 2
+      "folder": "AI",
+      "degree": 2,
+      "path": "AI/DeepSeek.md"
     },
     {
       "id": 43,
       "title": "Local AI",
-      "folder": "IA",
-      "degree": 2
+      "folder": "AI",
+      "degree": 2,
+      "path": "AI/Local AI.md"
     },
     {
       "id": 50,
       "title": "Architecture Atlas",
       "folder": "Concepts",
-      "degree": 2
+      "degree": 2,
+      "path": "Concepts/Architecture Atlas.md"
     },
     {
       "id": 51,
       "title": "Idea to explore",
       "folder": "Inbox",
-      "degree": 0
+      "degree": 0,
+      "path": "Inbox/Idea to explore.md"
     },
     {
       "id": 52,
       "title": "2026-10-26 - Atlas",
       "folder": "Sessions",
-      "degree": 2
+      "degree": 2,
+      "path": "Sessions/2026-10-26 - Atlas.md"
     },
     {
       "id": 53,
       "title": "Concepts ? example 053",
       "folder": "Concepts",
-      "degree": 21
+      "degree": 21,
+      "path": "Concepts/Concepts ? example 053.md"
     },
     {
       "id": 54,
       "title": "Sessions ? example 054",
       "folder": "Sessions",
-      "degree": 20
+      "degree": 20,
+      "path": "Sessions/Sessions ? example 054.md"
     },
     {
       "id": 55,
       "title": "Guides ? example 055",
       "folder": "Guides",
-      "degree": 20
+      "degree": 20,
+      "path": "Guides/Guides ? example 055.md"
     },
     {
       "id": 56,
       "title": "Archives ? example 056",
       "folder": "Archives",
-      "degree": 20
+      "degree": 20,
+      "path": "Archives/Archives ? example 056.md"
     },
     {
       "id": 57,
       "title": "Inbox ? example 057",
       "folder": "Inbox",
-      "degree": 20
+      "degree": 20,
+      "path": "Inbox/Inbox ? example 057.md"
     },
     {
       "id": 58,
       "title": "Concepts ? example 058",
       "folder": "Concepts",
-      "degree": 20
+      "degree": 20,
+      "path": "Concepts/Concepts ? example 058.md"
     },
     {
       "id": 59,
       "title": "Sessions ? example 059",
       "folder": "Sessions",
-      "degree": 20
+      "degree": 20,
+      "path": "Sessions/Sessions ? example 059.md"
     },
     {
       "id": 60,
       "title": "Guides ? example 060",
       "folder": "Guides",
-      "degree": 20
+      "degree": 20,
+      "path": "Guides/Guides ? example 060.md"
     },
     {
       "id": 61,
       "title": "Archives ? example 061",
       "folder": "Archives",
-      "degree": 20
+      "degree": 20,
+      "path": "Archives/Archives ? example 061.md"
     },
     {
       "id": 62,
       "title": "Inbox ? example 062",
       "folder": "Inbox",
-      "degree": 20
+      "degree": 20,
+      "path": "Inbox/Inbox ? example 062.md"
     },
     {
       "id": 63,
       "title": "Concepts ? example 063",
       "folder": "Concepts",
-      "degree": 20
+      "degree": 20,
+      "path": "Concepts/Concepts ? example 063.md"
     },
     {
       "id": 64,
       "title": "Sessions ? example 064",
       "folder": "Sessions",
-      "degree": 20
+      "degree": 20,
+      "path": "Sessions/Sessions ? example 064.md"
     },
     {
       "id": 65,
       "title": "Guides ? example 065",
       "folder": "Guides",
-      "degree": 19
+      "degree": 19,
+      "path": "Guides/Guides ? example 065.md"
     },
     {
       "id": 66,
       "title": "Archives ? example 066",
       "folder": "Archives",
-      "degree": 19
+      "degree": 19,
+      "path": "Archives/Archives ? example 066.md"
     },
     {
       "id": 67,
       "title": "Inbox ? example 067",
       "folder": "Inbox",
-      "degree": 19
+      "degree": 19,
+      "path": "Inbox/Inbox ? example 067.md"
     },
     {
       "id": 68,
       "title": "Concepts ? example 068",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 068.md"
     },
     {
       "id": 69,
       "title": "Sessions ? example 069",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 069.md"
     },
     {
       "id": 70,
       "title": "Guides ? example 070",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 070.md"
     },
     {
       "id": 71,
       "title": "Archives ? example 071",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 071.md"
     },
     {
       "id": 72,
       "title": "Inbox ? example 072",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 072.md"
     },
     {
       "id": 73,
       "title": "Concepts ? example 073",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 073.md"
     },
     {
       "id": 74,
       "title": "Sessions ? example 074",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 074.md"
     },
     {
       "id": 75,
       "title": "Guides ? example 075",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 075.md"
     },
     {
       "id": 76,
       "title": "Archives ? example 076",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 076.md"
     },
     {
       "id": 77,
       "title": "Inbox ? example 077",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 077.md"
     },
     {
       "id": 78,
       "title": "Concepts ? example 078",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 078.md"
     },
     {
       "id": 79,
       "title": "Sessions ? example 079",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 079.md"
     },
     {
       "id": 80,
       "title": "Guides ? example 080",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 080.md"
     },
     {
       "id": 81,
       "title": "Archives ? example 081",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 081.md"
     },
     {
       "id": 82,
       "title": "Inbox ? example 082",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 082.md"
     },
     {
       "id": 83,
       "title": "Concepts ? example 083",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 083.md"
     },
     {
       "id": 84,
       "title": "Sessions ? example 084",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 084.md"
     },
     {
       "id": 85,
       "title": "Guides ? example 085",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 085.md"
     },
     {
       "id": 86,
       "title": "Archives ? example 086",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 086.md"
     },
     {
       "id": 87,
       "title": "Inbox ? example 087",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 087.md"
     },
     {
       "id": 88,
       "title": "Concepts ? example 088",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 088.md"
     },
     {
       "id": 89,
       "title": "Sessions ? example 089",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 089.md"
     },
     {
       "id": 90,
       "title": "Guides ? example 090",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 090.md"
     },
     {
       "id": 91,
       "title": "Archives ? example 091",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 091.md"
     },
     {
       "id": 92,
       "title": "Inbox ? example 092",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 092.md"
     },
     {
       "id": 93,
       "title": "Concepts ? example 093",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 093.md"
     },
     {
       "id": 94,
       "title": "Sessions ? example 094",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 094.md"
     },
     {
       "id": 95,
       "title": "Guides ? example 095",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 095.md"
     },
     {
       "id": 96,
       "title": "Archives ? example 096",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 096.md"
     },
     {
       "id": 97,
       "title": "Inbox ? example 097",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 097.md"
     },
     {
       "id": 98,
       "title": "Concepts ? example 098",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 098.md"
     },
     {
       "id": 99,
       "title": "Sessions ? example 099",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 099.md"
     },
     {
       "id": 100,
       "title": "Guides ? example 100",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 100.md"
     },
     {
       "id": 101,
       "title": "Archives ? example 101",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 101.md"
     },
     {
       "id": 102,
       "title": "Inbox ? example 102",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 102.md"
     },
     {
       "id": 103,
       "title": "Concepts ? example 103",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 103.md"
     },
     {
       "id": 104,
       "title": "Sessions ? example 104",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 104.md"
     },
     {
       "id": 105,
       "title": "Guides ? example 105",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 105.md"
     },
     {
       "id": 106,
       "title": "Archives ? example 106",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 106.md"
     },
     {
       "id": 107,
       "title": "Inbox ? example 107",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 107.md"
     },
     {
       "id": 108,
       "title": "Concepts ? example 108",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 108.md"
     },
     {
       "id": 109,
       "title": "Sessions ? example 109",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 109.md"
     },
     {
       "id": 110,
       "title": "Guides ? example 110",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 110.md"
     },
     {
       "id": 111,
       "title": "Archives ? example 111",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 111.md"
     },
     {
       "id": 112,
       "title": "Inbox ? example 112",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 112.md"
     },
     {
       "id": 113,
       "title": "Concepts ? example 113",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 113.md"
     },
     {
       "id": 114,
       "title": "Sessions ? example 114",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 114.md"
     },
     {
       "id": 115,
       "title": "Guides ? example 115",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 115.md"
     },
     {
       "id": 116,
       "title": "Archives ? example 116",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 116.md"
     },
     {
       "id": 117,
       "title": "Inbox ? example 117",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 117.md"
     },
     {
       "id": 118,
       "title": "Concepts ? example 118",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 118.md"
     },
     {
       "id": 119,
       "title": "Sessions ? example 119",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 119.md"
     },
     {
       "id": 120,
       "title": "Guides ? example 120",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 120.md"
     },
     {
       "id": 121,
       "title": "Archives ? example 121",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 121.md"
     },
     {
       "id": 122,
       "title": "Inbox ? example 122",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 122.md"
     },
     {
       "id": 123,
       "title": "Concepts ? example 123",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 123.md"
     },
     {
       "id": 124,
       "title": "Sessions ? example 124",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 124.md"
     },
     {
       "id": 125,
       "title": "Guides ? example 125",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 125.md"
     },
     {
       "id": 126,
       "title": "Archives ? example 126",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 126.md"
     },
     {
       "id": 127,
       "title": "Inbox ? example 127",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 127.md"
     },
     {
       "id": 128,
       "title": "Concepts ? example 128",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 128.md"
     },
     {
       "id": 129,
       "title": "Sessions ? example 129",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 129.md"
     },
     {
       "id": 130,
       "title": "Guides ? example 130",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 130.md"
     },
     {
       "id": 131,
       "title": "Archives ? example 131",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 131.md"
     },
     {
       "id": 132,
       "title": "Inbox ? example 132",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 132.md"
     },
     {
       "id": 133,
       "title": "Concepts ? example 133",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 133.md"
     },
     {
       "id": 134,
       "title": "Sessions ? example 134",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 134.md"
     },
     {
       "id": 135,
       "title": "Guides ? example 135",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 135.md"
     },
     {
       "id": 136,
       "title": "Archives ? example 136",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 136.md"
     },
     {
       "id": 137,
       "title": "Inbox ? example 137",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 137.md"
     },
     {
       "id": 138,
       "title": "Concepts ? example 138",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 138.md"
     },
     {
       "id": 139,
       "title": "Sessions ? example 139",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 139.md"
     },
     {
       "id": 140,
       "title": "Guides ? example 140",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 140.md"
     },
     {
       "id": 141,
       "title": "Archives ? example 141",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 141.md"
     },
     {
       "id": 142,
       "title": "Inbox ? example 142",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 142.md"
     },
     {
       "id": 143,
       "title": "Concepts ? example 143",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 143.md"
     },
     {
       "id": 144,
       "title": "Sessions ? example 144",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 144.md"
     },
     {
       "id": 145,
       "title": "Guides ? example 145",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 145.md"
     },
     {
       "id": 146,
       "title": "Archives ? example 146",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 146.md"
     },
     {
       "id": 147,
       "title": "Inbox ? example 147",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 147.md"
     },
     {
       "id": 148,
       "title": "Concepts ? example 148",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 148.md"
     },
     {
       "id": 149,
       "title": "Sessions ? example 149",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 149.md"
     },
     {
       "id": 150,
       "title": "Guides ? example 150",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 150.md"
     },
     {
       "id": 151,
       "title": "Archives ? example 151",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 151.md"
     },
     {
       "id": 152,
       "title": "Inbox ? example 152",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 152.md"
     },
     {
       "id": 153,
       "title": "Concepts ? example 153",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 153.md"
     },
     {
       "id": 154,
       "title": "Sessions ? example 154",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 154.md"
     },
     {
       "id": 155,
       "title": "Guides ? example 155",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 155.md"
     },
     {
       "id": 156,
       "title": "Archives ? example 156",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 156.md"
     },
     {
       "id": 157,
       "title": "Inbox ? example 157",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 157.md"
     },
     {
       "id": 158,
       "title": "Concepts ? example 158",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 158.md"
     },
     {
       "id": 159,
       "title": "Sessions ? example 159",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 159.md"
     },
     {
       "id": 160,
       "title": "Guides ? example 160",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 160.md"
     },
     {
       "id": 161,
       "title": "Archives ? example 161",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 161.md"
     },
     {
       "id": 162,
       "title": "Inbox ? example 162",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 162.md"
     },
     {
       "id": 163,
       "title": "Concepts ? example 163",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 163.md"
     },
     {
       "id": 164,
       "title": "Sessions ? example 164",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 164.md"
     },
     {
       "id": 165,
       "title": "Guides ? example 165",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 165.md"
     },
     {
       "id": 166,
       "title": "Archives ? example 166",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 166.md"
     },
     {
       "id": 167,
       "title": "Inbox ? example 167",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 167.md"
     },
     {
       "id": 168,
       "title": "Concepts ? example 168",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 168.md"
     },
     {
       "id": 169,
       "title": "Sessions ? example 169",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 169.md"
     },
     {
       "id": 170,
       "title": "Guides ? example 170",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 170.md"
     },
     {
       "id": 171,
       "title": "Archives ? example 171",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 171.md"
     },
     {
       "id": 172,
       "title": "Inbox ? example 172",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 172.md"
     },
     {
       "id": 173,
       "title": "Concepts ? example 173",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 173.md"
     },
     {
       "id": 174,
       "title": "Sessions ? example 174",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 174.md"
     },
     {
       "id": 175,
       "title": "Guides ? example 175",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 175.md"
     },
     {
       "id": 176,
       "title": "Archives ? example 176",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 176.md"
     },
     {
       "id": 177,
       "title": "Inbox ? example 177",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 177.md"
     },
     {
       "id": 178,
       "title": "Concepts ? example 178",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 178.md"
     },
     {
       "id": 179,
       "title": "Sessions ? example 179",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 179.md"
     },
     {
       "id": 180,
       "title": "Guides ? example 180",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 180.md"
     },
     {
       "id": 181,
       "title": "Archives ? example 181",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 181.md"
     },
     {
       "id": 182,
       "title": "Inbox ? example 182",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 182.md"
     },
     {
       "id": 183,
       "title": "Concepts ? example 183",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 183.md"
     },
     {
       "id": 184,
       "title": "Sessions ? example 184",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 184.md"
     },
     {
       "id": 185,
       "title": "Guides ? example 185",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 185.md"
     },
     {
       "id": 186,
       "title": "Archives ? example 186",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 186.md"
     },
     {
       "id": 187,
       "title": "Inbox ? example 187",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 187.md"
     },
     {
       "id": 188,
       "title": "Concepts ? example 188",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 188.md"
     },
     {
       "id": 189,
       "title": "Sessions ? example 189",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 189.md"
     },
     {
       "id": 190,
       "title": "Guides ? example 190",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 190.md"
     },
     {
       "id": 191,
       "title": "Archives ? example 191",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 191.md"
     },
     {
       "id": 192,
       "title": "Inbox ? example 192",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 192.md"
     },
     {
       "id": 193,
       "title": "Concepts ? example 193",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 193.md"
     },
     {
       "id": 194,
       "title": "Sessions ? example 194",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 194.md"
     },
     {
       "id": 195,
       "title": "Guides ? example 195",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 195.md"
     },
     {
       "id": 196,
       "title": "Archives ? example 196",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 196.md"
     },
     {
       "id": 197,
       "title": "Inbox ? example 197",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 197.md"
     },
     {
       "id": 198,
       "title": "Concepts ? example 198",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 198.md"
     },
     {
       "id": 199,
       "title": "Sessions ? example 199",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 199.md"
     },
     {
       "id": 200,
       "title": "Guides ? example 200",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 200.md"
     },
     {
       "id": 201,
       "title": "Archives ? example 201",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 201.md"
     },
     {
       "id": 202,
       "title": "Inbox ? example 202",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 202.md"
     },
     {
       "id": 203,
       "title": "Concepts ? example 203",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 203.md"
     },
     {
       "id": 204,
       "title": "Sessions ? example 204",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 204.md"
     },
     {
       "id": 205,
       "title": "Guides ? example 205",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 205.md"
     },
     {
       "id": 206,
       "title": "Archives ? example 206",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 206.md"
     },
     {
       "id": 207,
       "title": "Inbox ? example 207",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 207.md"
     },
     {
       "id": 208,
       "title": "Concepts ? example 208",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 208.md"
     },
     {
       "id": 209,
       "title": "Sessions ? example 209",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 209.md"
     },
     {
       "id": 210,
       "title": "Guides ? example 210",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 210.md"
     },
     {
       "id": 211,
       "title": "Archives ? example 211",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 211.md"
     },
     {
       "id": 212,
       "title": "Inbox ? example 212",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 212.md"
     },
     {
       "id": 213,
       "title": "Concepts ? example 213",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 213.md"
     },
     {
       "id": 214,
       "title": "Sessions ? example 214",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 214.md"
     },
     {
       "id": 215,
       "title": "Guides ? example 215",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 215.md"
     },
     {
       "id": 216,
       "title": "Archives ? example 216",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 216.md"
     },
     {
       "id": 217,
       "title": "Inbox ? example 217",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 217.md"
     },
     {
       "id": 218,
       "title": "Concepts ? example 218",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 218.md"
     },
     {
       "id": 219,
       "title": "Sessions ? example 219",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 219.md"
     },
     {
       "id": 220,
       "title": "Guides ? example 220",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 220.md"
     },
     {
       "id": 221,
       "title": "Archives ? example 221",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 221.md"
     },
     {
       "id": 222,
       "title": "Inbox ? example 222",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 222.md"
     },
     {
       "id": 223,
       "title": "Concepts ? example 223",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 223.md"
     },
     {
       "id": 224,
       "title": "Sessions ? example 224",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 224.md"
     },
     {
       "id": 225,
       "title": "Guides ? example 225",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 225.md"
     },
     {
       "id": 226,
       "title": "Archives ? example 226",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 226.md"
     },
     {
       "id": 227,
       "title": "Inbox ? example 227",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 227.md"
     },
     {
       "id": 228,
       "title": "Concepts ? example 228",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 228.md"
     },
     {
       "id": 229,
       "title": "Sessions ? example 229",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 229.md"
     },
     {
       "id": 230,
       "title": "Guides ? example 230",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 230.md"
     },
     {
       "id": 231,
       "title": "Archives ? example 231",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 231.md"
     },
     {
       "id": 232,
       "title": "Inbox ? example 232",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 232.md"
     },
     {
       "id": 233,
       "title": "Concepts ? example 233",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 233.md"
     },
     {
       "id": 234,
       "title": "Sessions ? example 234",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 234.md"
     },
     {
       "id": 235,
       "title": "Guides ? example 235",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 235.md"
     },
     {
       "id": 236,
       "title": "Archives ? example 236",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 236.md"
     },
     {
       "id": 237,
       "title": "Inbox ? example 237",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 237.md"
     },
     {
       "id": 238,
       "title": "Concepts ? example 238",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 238.md"
     },
     {
       "id": 239,
       "title": "Sessions ? example 239",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 239.md"
     },
     {
       "id": 240,
       "title": "Guides ? example 240",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 240.md"
     },
     {
       "id": 241,
       "title": "Archives ? example 241",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 241.md"
     },
     {
       "id": 242,
       "title": "Inbox ? example 242",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 242.md"
     },
     {
       "id": 243,
       "title": "Concepts ? example 243",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 243.md"
     },
     {
       "id": 244,
       "title": "Sessions ? example 244",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 244.md"
     },
     {
       "id": 245,
       "title": "Guides ? example 245",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 245.md"
     },
     {
       "id": 246,
       "title": "Archives ? example 246",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 246.md"
     },
     {
       "id": 247,
       "title": "Inbox ? example 247",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 247.md"
     },
     {
       "id": 248,
       "title": "Concepts ? example 248",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 248.md"
     },
     {
       "id": 249,
       "title": "Sessions ? example 249",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 249.md"
     },
     {
       "id": 250,
       "title": "Guides ? example 250",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 250.md"
     },
     {
       "id": 251,
       "title": "Archives ? example 251",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 251.md"
     },
     {
       "id": 252,
       "title": "Inbox ? example 252",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 252.md"
     },
     {
       "id": 253,
       "title": "Concepts ? example 253",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 253.md"
     },
     {
       "id": 254,
       "title": "Sessions ? example 254",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 254.md"
     },
     {
       "id": 255,
       "title": "Guides ? example 255",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 255.md"
     },
     {
       "id": 256,
       "title": "Archives ? example 256",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 256.md"
     },
     {
       "id": 257,
       "title": "Inbox ? example 257",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 257.md"
     },
     {
       "id": 258,
       "title": "Concepts ? example 258",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 258.md"
     },
     {
       "id": 259,
       "title": "Sessions ? example 259",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 259.md"
     },
     {
       "id": 260,
       "title": "Guides ? example 260",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 260.md"
     },
     {
       "id": 261,
       "title": "Archives ? example 261",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 261.md"
     },
     {
       "id": 262,
       "title": "Inbox ? example 262",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 262.md"
     },
     {
       "id": 263,
       "title": "Concepts ? example 263",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 263.md"
     },
     {
       "id": 264,
       "title": "Sessions ? example 264",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 264.md"
     },
     {
       "id": 265,
       "title": "Guides ? example 265",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 265.md"
     },
     {
       "id": 266,
       "title": "Archives ? example 266",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 266.md"
     },
     {
       "id": 267,
       "title": "Inbox ? example 267",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 267.md"
     },
     {
       "id": 268,
       "title": "Concepts ? example 268",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 268.md"
     },
     {
       "id": 269,
       "title": "Sessions ? example 269",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 269.md"
     },
     {
       "id": 270,
       "title": "Guides ? example 270",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 270.md"
     },
     {
       "id": 271,
       "title": "Archives ? example 271",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 271.md"
     },
     {
       "id": 272,
       "title": "Inbox ? example 272",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 272.md"
     },
     {
       "id": 273,
       "title": "Concepts ? example 273",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 273.md"
     },
     {
       "id": 274,
       "title": "Sessions ? example 274",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 274.md"
     },
     {
       "id": 275,
       "title": "Guides ? example 275",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 275.md"
     },
     {
       "id": 276,
       "title": "Archives ? example 276",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 276.md"
     },
     {
       "id": 277,
       "title": "Inbox ? example 277",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 277.md"
     },
     {
       "id": 278,
       "title": "Concepts ? example 278",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 278.md"
     },
     {
       "id": 279,
       "title": "Sessions ? example 279",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 279.md"
     },
     {
       "id": 280,
       "title": "Guides ? example 280",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 280.md"
     },
     {
       "id": 281,
       "title": "Archives ? example 281",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 281.md"
     },
     {
       "id": 282,
       "title": "Inbox ? example 282",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 282.md"
     },
     {
       "id": 283,
       "title": "Concepts ? example 283",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 283.md"
     },
     {
       "id": 284,
       "title": "Sessions ? example 284",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 284.md"
     },
     {
       "id": 285,
       "title": "Guides ? example 285",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 285.md"
     },
     {
       "id": 286,
       "title": "Archives ? example 286",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 286.md"
     },
     {
       "id": 287,
       "title": "Inbox ? example 287",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 287.md"
     },
     {
       "id": 288,
       "title": "Concepts ? example 288",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 288.md"
     },
     {
       "id": 289,
       "title": "Sessions ? example 289",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 289.md"
     },
     {
       "id": 290,
       "title": "Guides ? example 290",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 290.md"
     },
     {
       "id": 291,
       "title": "Archives ? example 291",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 291.md"
     },
     {
       "id": 292,
       "title": "Inbox ? example 292",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 292.md"
     },
     {
       "id": 293,
       "title": "Concepts ? example 293",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 293.md"
     },
     {
       "id": 294,
       "title": "Sessions ? example 294",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 294.md"
     },
     {
       "id": 295,
       "title": "Guides ? example 295",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 295.md"
     },
     {
       "id": 296,
       "title": "Archives ? example 296",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 296.md"
     },
     {
       "id": 297,
       "title": "Inbox ? example 297",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 297.md"
     },
     {
       "id": 298,
       "title": "Concepts ? example 298",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 298.md"
     },
     {
       "id": 299,
       "title": "Sessions ? example 299",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 299.md"
     },
     {
       "id": 300,
       "title": "Guides ? example 300",
       "folder": "Guides",
-      "degree": 5
+      "degree": 5,
+      "path": "Guides/Guides ? example 300.md"
     },
     {
       "id": 301,
       "title": "Archives ? example 301",
       "folder": "Archives",
-      "degree": 5
+      "degree": 5,
+      "path": "Archives/Archives ? example 301.md"
     },
     {
       "id": 302,
       "title": "Inbox ? example 302",
       "folder": "Inbox",
-      "degree": 5
+      "degree": 5,
+      "path": "Inbox/Inbox ? example 302.md"
     },
     {
       "id": 303,
       "title": "Concepts ? example 303",
       "folder": "Concepts",
-      "degree": 5
+      "degree": 5,
+      "path": "Concepts/Concepts ? example 303.md"
     },
     {
       "id": 304,
       "title": "Sessions ? example 304",
       "folder": "Sessions",
-      "degree": 5
+      "degree": 5,
+      "path": "Sessions/Sessions ? example 304.md"
     },
     {
       "id": 305,
       "title": "Guides ? example 305",
       "folder": "Guides",
-      "degree": 4
+      "degree": 4,
+      "path": "Guides/Guides ? example 305.md"
     },
     {
       "id": 306,
       "title": "Archives ? example 306",
       "folder": "Archives",
-      "degree": 4
+      "degree": 4,
+      "path": "Archives/Archives ? example 306.md"
     },
     {
       "id": 307,
       "title": "Inbox ? example 307",
       "folder": "Inbox",
-      "degree": 4
+      "degree": 4,
+      "path": "Inbox/Inbox ? example 307.md"
     },
     {
       "id": 308,
       "title": "Concepts ? example 308",
       "folder": "Concepts",
-      "degree": 4
+      "degree": 4,
+      "path": "Concepts/Concepts ? example 308.md"
     },
     {
       "id": 309,
       "title": "Sessions ? example 309",
       "folder": "Sessions",
-      "degree": 4
+      "degree": 4,
+      "path": "Sessions/Sessions ? example 309.md"
     },
     {
       "id": 310,
       "title": "Guides ? example 310",
       "folder": "Guides",
-      "degree": 4
+      "degree": 4,
+      "path": "Guides/Guides ? example 310.md"
     },
     {
       "id": 311,
       "title": "Archives ? example 311",
       "folder": "Archives",
-      "degree": 4
+      "degree": 4,
+      "path": "Archives/Archives ? example 311.md"
     },
     {
       "id": 312,
       "title": "Inbox ? example 312",
       "folder": "Inbox",
-      "degree": 4
+      "degree": 4,
+      "path": "Inbox/Inbox ? example 312.md"
     },
     {
       "id": 313,
       "title": "Concepts ? example 313",
       "folder": "Concepts",
-      "degree": 4
+      "degree": 4,
+      "path": "Concepts/Concepts ? example 313.md"
     },
     {
       "id": 314,
       "title": "Sessions ? example 314",
       "folder": "Sessions",
-      "degree": 4
+      "degree": 4,
+      "path": "Sessions/Sessions ? example 314.md"
     },
     {
       "id": 315,
       "title": "Guides ? example 315",
       "folder": "Guides",
-      "degree": 4
+      "degree": 4,
+      "path": "Guides/Guides ? example 315.md"
     },
     {
       "id": 316,
       "title": "Archives ? example 316",
       "folder": "Archives",
-      "degree": 4
+      "degree": 4,
+      "path": "Archives/Archives ? example 316.md"
     },
     {
       "id": 317,
       "title": "Inbox ? example 317",
       "folder": "Inbox",
-      "degree": 4
+      "degree": 4,
+      "path": "Inbox/Inbox ? example 317.md"
     },
     {
       "id": 318,
       "title": "Concepts ? example 318",
       "folder": "Concepts",
-      "degree": 0
+      "degree": 0,
+      "path": "Concepts/Concepts ? example 318.md"
     },
     {
       "id": 319,
       "title": "Sessions ? example 319",
       "folder": "Sessions",
-      "degree": 0
+      "degree": 0,
+      "path": "Sessions/Sessions ? example 319.md"
     },
     {
       "id": 320,
       "title": "Guides ? example 320",
       "folder": "Guides",
-      "degree": 0
+      "degree": 0,
+      "path": "Guides/Guides ? example 320.md"
     },
     {
       "id": 321,
       "title": "Archives ? example 321",
       "folder": "Archives",
-      "degree": 0
+      "degree": 0,
+      "path": "Archives/Archives ? example 321.md"
     },
     {
       "id": 322,
       "title": "Inbox ? example 322",
       "folder": "Inbox",
-      "degree": 0
+      "degree": 0,
+      "path": "Inbox/Inbox ? example 322.md"
     },
     {
       "id": 323,
       "title": "Concepts ? example 323",
       "folder": "Concepts",
-      "degree": 0
+      "degree": 0,
+      "path": "Concepts/Concepts ? example 323.md"
     },
     {
       "id": 324,
       "title": "Sessions ? example 324",
       "folder": "Sessions",
-      "degree": 0
+      "degree": 0,
+      "path": "Sessions/Sessions ? example 324.md"
     },
     {
       "id": 325,
       "title": "Guides ? example 325",
       "folder": "Guides",
-      "degree": 0
+      "degree": 0,
+      "path": "Guides/Guides ? example 325.md"
     }
   ],
   "links": [
@@ -5127,5 +5427,15 @@
       "source_title": "Architecture Atlas",
       "target_title": "Deployment plan"
     }
+  ],
+  "folders": [
+    "Archives",
+    "Concepts",
+    "Guides",
+    "IA",
+    "Inbox",
+    "Projects",
+    "Sessions",
+    "Technologies"
   ]
 }

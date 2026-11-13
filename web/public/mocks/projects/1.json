@@ -1047,7 +1047,8 @@
     "last_sha": "12aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "up_to_date": true,
     "commits_since": 0,
-    "missing_notes": []
+    "missing_notes": [],
+    "activity_note": "Not dormant: status is watched and the last commit is within 30 days."
   },
   "ai": [
     {
@@ -1062,5 +1063,10 @@
       "first": "2026-10-02",
       "last": "2026-10-26"
     }
-  ]
+  ],
+  "since_session": [],
+  "repo_paths": [
+    "C:/dev/Atlas"
+  ],
+  "obsidian_url": ""
 }
