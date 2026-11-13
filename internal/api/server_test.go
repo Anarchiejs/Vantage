@@ -10,7 +10,7 @@ import (
 	"testing"
 	"testing/fstest"
 
-	"github.com/Anarchiejs/Observatoire/internal/db"
+	"github.com/Anarchiejs/Vantage/internal/db"
 )
 
 func testServer(t *testing.T) (*Server, http.Handler) {

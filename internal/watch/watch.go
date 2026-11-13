@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Anarchiejs/Observatoire/internal/ospath"
+	"github.com/Anarchiejs/Vantage/internal/ospath"
 	"github.com/fsnotify/fsnotify"
 )
 

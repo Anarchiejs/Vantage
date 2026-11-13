@@ -1,6 +1,6 @@
-# Observatoire
+# Vantage
 
-Observatoire is a **local dashboard built for [Obsidian](https://obsidian.md)**. It runs on **Windows, Linux, and macOS**. It is not an Obsidian plugin and it does not run inside Obsidian. It reads the vault folder on disk, reads the Git repositories named by that vault's project cards, and shows the result at **http://127.0.0.1:7878**: history, languages, the note graph, search, and a SQL console.
+Vantage is a **local dashboard built for [Obsidian](https://obsidian.md)**. It runs on **Windows, Linux, and macOS**. It is not an Obsidian plugin and it does not run inside Obsidian. It reads the vault folder on disk, reads the Git repositories named by that vault's project cards, and shows the result at **http://127.0.0.1:7878**: history, languages, the note graph, search, and a SQL console.
 
 It is for someone who already keeps project notes in Obsidian and wants those notes next to the commits of the repositories they describe.
 
@@ -14,12 +14,12 @@ Nothing is uploaded. There is no telemetry. The network behavior, and the few fi
 
 ## What Obsidian features it uses
 
-Observatoire understands a vault the way Obsidian stores it on disk:
+Vantage understands a vault the way Obsidian stores it on disk:
 
 - A vault is a folder that contains `.obsidian`. Hidden directories, including `.obsidian`, are skipped.
 - Notes are Markdown files. Properties are YAML between the opening `---` lines. [Dataview](https://github.com/blacksmithgu/obsidian-dataview) inline fields (`key:: value`) are not read. Templater, the core graph, and community plugins are not required and are not consulted.
 - Links are Obsidian wikilinks (`[[Note]]`, `[[Note|alias]]`, `[[Note#heading]]`). Links inside fenced code are ignored. An embed of a non-Markdown file is ignored.
-- The graph in the UI is Observatoire's graph of those wikilinks. It is not `graph.json`.
+- The graph in the UI is Vantage's graph of those wikilinks. It is not `graph.json`.
 
 Every `.md` note is imported for search, the graph, and broken links. A **project** is a card at exactly `Projects/<Name>/<Name>.md`:
 
@@ -58,12 +58,12 @@ Git import follows **HEAD** of each repository (the current branch only). It is 
 
 **Writes**
 
-- `observatoire.db`, plus `observatoire.db-wal` and `observatoire.db-shm`, in the current directory (or `-db`).
+- `vantage.db`, plus `vantage.db-wal` and `vantage.db-shm`, in the current directory (or `-db`).
 - `queries/*.sql` next to that database, when you save a query in the SQL console.
 - `Statistics.md` at the vault root, only when you run `report` (or the report command). The file is replaced atomically. An existing `Statistics.md` is overwritten only when it contains `generated_by: observatoire`. There is no backup: copy the note first if you need the previous text. `report` can create the vault directory.
-- The vault path remembered by the start script: `%LOCALAPPDATA%\Observatoire\vault.txt` on Windows, `$XDG_DATA_HOME/observatoire/vault.txt` on Linux (`~/.local/share/observatoire/vault.txt` when `XDG_DATA_HOME` is unset), and `~/Library/Application Support/Observatoire/vault.txt` on macOS.
+- The vault path remembered by the start script: `%LOCALAPPDATA%\Vantage\vault.txt` on Windows, `$XDG_DATA_HOME/vantage/vault.txt` on Linux (`~/.local/share/vantage/vault.txt` when `XDG_DATA_HOME` is unset), and `~/Library/Application Support/Vantage/vault.txt` on macOS. If a path was stored under the previous Observatoire directory, the start script still reads it and then writes the Vantage location.
 
-`build.ps1` on Windows may open an administrator prompt so Controlled Folder Access allows `observatoire.exe` to create the database. That is a machine setting. `build.sh` on Linux and macOS does not change a security product.
+`build.ps1` on Windows may open an administrator prompt so Controlled Folder Access allows `vantage.exe` to create the database. That is a machine setting. `build.sh` on Linux and macOS does not change a security product.
 
 ## Supported platforms
 
@@ -73,7 +73,7 @@ Git import follows **HEAD** of each repository (the current branch only). It is 
 | Linux | Go tests, web tests, Playwright end-to-end tests, `install.sh`, `build.sh`, `start.sh` |
 | macOS | Go tests, web unit tests, `install.sh`, `build.sh`, `start.sh` |
 
-The program is the same binary on each system. Paths inside a vault are stored with forward slashes. A `source_path` copied from Windows (`C:\...` or `C:/...`) is still recognized on Linux and macOS, and a path that starts with `/` is recognized on Windows, but Git can only read a repository that exists on the machine where Observatoire is running.
+The program is the same binary on each system. Paths inside a vault are stored with forward slashes. A `source_path` copied from Windows (`C:\...` or `C:/...`) is still recognized on Linux and macOS, and a path that starts with `/` is recognized on Windows, but Git can only read a repository that exists on the machine where Vantage is running.
 
 ## Requirements
 
@@ -92,8 +92,8 @@ Open **PowerShell** in this folder.
 **0. Get the project** (once)
 
 ```powershell
-git clone https://github.com/Anarchiejs/Observatoire.git
-cd Observatoire
+git clone https://github.com/Anarchiejs/Vantage.git
+cd Vantage
 ```
 
 > No Git yet? `winget install --id Git.Git -e`, then close and reopen PowerShell.
@@ -104,13 +104,13 @@ cd Observatoire
 .\install.cmd
 ```
 
-**2. Build** — the UI, then `observatoire.exe`
+**2. Build** — the UI, then `vantage.exe`
 
 ```powershell
 .\build.cmd
 ```
 
-If Windows Defender **Controlled folder access** is on, an administrator window may open to allow `observatoire.exe`. Accept it, or the program cannot create its database. You can also keep the repository outside a protected folder, for example `C:\dev\Observatoire`.
+If Windows Defender **Controlled folder access** is on, an administrator window may open to allow `vantage.exe`. Accept it, or the program cannot create its database. You can also keep the repository outside a protected folder, for example `C:\dev\Vantage`.
 
 **3. Start** — import your Obsidian vault and open the UI. The path is the folder you open in Obsidian, not this repository.
 
@@ -129,8 +129,8 @@ Open a terminal in this folder. The commands are the same on both systems.
 **0. Get the project** (once)
 
 ```bash
-git clone https://github.com/Anarchiejs/Observatoire.git
-cd Observatoire
+git clone https://github.com/Anarchiejs/Vantage.git
+cd Vantage
 ```
 
 **1. Install** — Git, Go, and Node when they are missing or too old, then the dependencies
@@ -139,7 +139,7 @@ cd Observatoire
 ./install.sh
 ```
 
-**2. Build** — the UI, then the `observatoire` binary
+**2. Build** — the UI, then the `vantage` binary
 
 ```bash
 ./build.sh
@@ -169,7 +169,7 @@ While `start.sh` is running, an edited note or a new commit shows up within a fe
 ./start.sh --port 8080 "$HOME/Documents/My Vault"
 ```
 
-The same flags exist on the binary: `observatoire serve -port 8080` and `observatoire watch -vault <folder> -port 8080`.
+The same flags exist on the binary: `vantage serve -port 8080` and `vantage watch -vault <folder> -port 8080`.
 
 A card's `source_path` is the repository on the machine that wrote the card. To point a card at a different folder, pass `-repos` / `-Repos` / `--repos`:
 
@@ -195,26 +195,26 @@ You can also put one `Name=path` pair per line in `<vault>/.observatoire/repos`.
 
 | Option | Commands | Default |
 |---|---|---|
-| `-db <file>` | all | `observatoire.db` in the current directory |
+| `-db <file>` | all | `vantage.db` in the current directory |
 | `-vault <folder>` | `import`, `watch`, and `report` (unless `-stdout`) | required on the binary; `start.cmd` and `start.sh` remember it and pass it |
 | `-repos "Name=folder,…"` | `import`, `watch` | replaces `source_path` for the named cards. Also loaded from `<vault>/.observatoire/repos` when that file exists |
 | `-port <n>` | `serve`, `watch` | `7878` |
 | `-stdout` | `report` | print the report instead of writing it |
 
 ```bash
-./observatoire report -vault "$HOME/Documents/My Vault"
-./observatoire report -stdout
+./vantage report -vault "$HOME/Documents/My Vault"
+./vantage report -stdout
 ```
 
 **SQL console:** read-only (no writes, no `ATTACH`, no `PRAGMA` that changes the connection, no transaction), 5 seconds, 1000 rows, and at most two queries at once. The server accepts only local requests. Details are in [SECURITY.md](SECURITY.md).
 
-Deleting `observatoire.db` is safe. The next import rebuilds it from the vault and the repositories. Do not delete the vault.
+Deleting `vantage.db` is safe. The next import rebuilds it from the vault and the repositories. Do not delete the vault. An older `observatoire.db` in the same directory is unused; rename it to `vantage.db` or pass `-db` if you want to keep it.
 
 ## Upgrading an older database
 
-The schema, the vault keys, and the CLI were renamed from French to English by editing the first two migration files in place. Goose will not rebuild a database that already applied those versions, and Observatoire refuses to open a file that still contains a table named `projet`.
+The schema, the vault keys, and the CLI were renamed from French to English by editing the first two migration files in place. Goose will not rebuild a database that already applied those versions, and Vantage refuses to open a file that still contains a table named `projet`.
 
-Delete `observatoire.db`, `observatoire.db-wal`, and `observatoire.db-shm`, update the cards using the table in [CHANGELOG.md](CHANGELOG.md), then import again. The remembered Windows path also moved from `coffre.txt` to `vault.txt`; `start.cmd` will ask for the vault once.
+Delete `vantage.db`, `vantage.db-wal`, and `vantage.db-shm`, update the cards using the table in [CHANGELOG.md](CHANGELOG.md), then import again. The remembered Windows path also moved from `coffre.txt` to `vault.txt`; `start.cmd` will ask for the vault once.
 
 ## Common problems
 
@@ -222,7 +222,7 @@ Delete `observatoire.db`, `observatoire.db-wal`, and `observatoire.db-shm`, upda
 |---|---|
 | `-vault is required` | Pass the folder you open in Obsidian. |
 | `retired French schema` | Delete the database and its `-wal` and `-shm` files, then import again. See [CHANGELOG.md](CHANGELOG.md). |
-| `unable to open database file (14)`, or the server stops immediately | On Windows, Defender is blocking `observatoire.exe`. Run `.\build.cmd` again and accept the administrator window, or allow the program in *Windows Security › Virus & threat protection › Manage ransomware protection › Allow an app*. Or move the repository out of a protected folder. |
+| `unable to open database file (14)`, or the server stops immediately | On Windows, Defender is blocking `vantage.exe`. Run `.\build.cmd` again and accept the administrator window, or allow the program in *Windows Security › Virus & threat protection › Manage ransomware protection › Allow an app*. Or move the repository out of a protected folder. |
 | `… was not found` / `was just installed but is still not found` | Close and reopen PowerShell, then run the script again. |
 | `winget was not found` | Install "App Installer" from the Microsoft Store. |
 | `On Windows, run install.cmd` | A `.sh` script was started from Git Bash. Use `install.cmd`, `build.cmd`, or `start.cmd` in PowerShell. |
@@ -253,7 +253,7 @@ Schema changes are new files in `migrations/`. SQL is compiled with sqlc 1.31.1.
 ## Layout
 
 ```
-cmd/observatoire/   entry point (import, serve, watch, report, migrate)
+cmd/vantage/   entry point (import, serve, watch, report, migrate)
 internal/api/       HTTP server: JSON views, SQL console, SSE, UI
 internal/db/        SQLite and migrations
 internal/ingest/    import: git/, code/ (languages via scc), vault/

@@ -7,10 +7,10 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/Anarchiejs/Observatoire/internal/db"
+	"github.com/Anarchiejs/Vantage/internal/db"
 )
 
-// root returns the Observatoire repository root.
+// root returns the Vantage repository root.
 func root(t *testing.T) string {
 	_, f, _, _ := runtime.Caller(0)
 	return filepath.Join(filepath.Dir(f), "..", "..")

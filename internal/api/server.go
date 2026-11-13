@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Anarchiejs/Observatoire/internal/sql/gen"
+	"github.com/Anarchiejs/Vantage/internal/sql/gen"
 )
 
 // Config for the server.
@@ -25,7 +25,7 @@ type Config struct {
 	Today   func() string
 }
 
-// Server is Observatoire's HTTP server.
+// Server is Vantage's HTTP server.
 type Server struct {
 	cfg     Config
 	q       *gen.Queries
@@ -94,7 +94,7 @@ func (s *Server) Listen(ctx context.Context) error {
 		s.updates.Close()
 		srv.Shutdown(shutdown)
 	}()
-	log.Printf("Observatoire on http://%s", s.cfg.Address)
+	log.Printf("Vantage on http://%s", s.cfg.Address)
 	if err := srv.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
 		return err
 	}
