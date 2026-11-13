@@ -8,7 +8,7 @@ export type ApiState<T> =
 
 /**
  * Loads a GET from the API. Reloads when `path` changes, and when the server announces an update
- * (the "observatoire:update" event emitted by the SSE connection in App.tsx). `path` null means load nothing.
+ * (the "vantage:update" event emitted by the SSE connection in App.tsx). `path` null means load nothing.
  */
 export function useApi<T>(path: string | null): ApiState<T> & { reload: () => void } {
   const [response, setResponse] = useState<{ path: string | null; state: ApiState<T> }>({ path: null, state: { status: 'loading' } })
@@ -16,8 +16,8 @@ export function useApi<T>(path: string | null): ApiState<T> & { reload: () => vo
   const reload = useCallback(() => setTurn((value) => value + 1), [])
 
   useEffect(() => {
-    window.addEventListener('observatoire:update', reload)
-    return () => window.removeEventListener('observatoire:update', reload)
+    window.addEventListener('vantage:update', reload)
+    return () => window.removeEventListener('vantage:update', reload)
   }, [reload])
 
   useEffect(() => {

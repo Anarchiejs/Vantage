@@ -12,7 +12,8 @@ param(
     [string]$Repos = ''
 )
 
-$memo = Join-Path $env:LOCALAPPDATA 'Observatoire\vault.txt'
+$memo = Join-Path $env:LOCALAPPDATA 'Vantage\vault.txt'
+$legacyMemo = Join-Path $env:LOCALAPPDATA 'Observatoire\vault.txt'
 
 if ($Port -lt 1 -or $Port -gt 65535) {
     Write-Host ''
@@ -23,6 +24,9 @@ if ($Port -lt 1 -or $Port -gt 65535) {
 if (-not $Vault) {
     if (Test-Path -LiteralPath $memo) {
         $Vault = (Get-Content -LiteralPath $memo -TotalCount 1).Trim()
+        Write-Host "Remembered vault: $Vault"
+    } elseif (Test-Path -LiteralPath $legacyMemo) {
+        $Vault = (Get-Content -LiteralPath $legacyMemo -TotalCount 1).Trim()
         Write-Host "Remembered vault: $Vault"
     } else {
         Write-Host ''
@@ -47,8 +51,8 @@ if (-not (Test-Path -LiteralPath (Join-Path $Vault '.obsidian') -PathType Contai
 }
 
 Update-Path
-if (-not (Test-Path -LiteralPath (Join-Path $Root 'observatoire.exe'))) {
-    Fail "observatoire.exe is missing. Run .\build.cmd first."
+if (-not (Test-Path -LiteralPath (Join-Path $Root 'vantage.exe'))) {
+    Fail "vantage.exe is missing. Run .\build.cmd first."
 }
 
 # The sample vault maps Atlas and Compass onto testdata\repos. Create those
@@ -74,12 +78,12 @@ Ensure-Fixtures
 $url = "http://127.0.0.1:$Port"
 Step "Importing vault $Vault"
 if ($Repos) {
-    Run "The import" { & '.\observatoire.exe' import -vault $Vault -repos $Repos }
+    Run "The import" { & '.\vantage.exe' import -vault $Vault -repos $Repos }
 } else {
-    Run "The import" { & '.\observatoire.exe' import -vault $Vault }
+    Run "The import" { & '.\vantage.exe' import -vault $Vault }
 }
 
-if ($global:ObsOutput | Where-Object { $_ -match '^0 repositories' }) {
+if ($global:VantageOutput | Where-Object { $_ -match '^0 repositories' }) {
     Warn "no Git repository imported. Check the ""warning"" lines above if there are any."
     Info "A project has commits when its Projects\<Name>\<Name>.md card has ""type: project"""
     Info "and ""source_path:"" is a Git repository on this PC."
@@ -90,8 +94,8 @@ Step "Starting the UI: $url  (Ctrl+C to stop)"
 Info 'Live updates: an edited note or commit is reimported within a few seconds.'
 Start-Job -ScriptBlock { param($Address) Start-Sleep -Seconds 2; Start-Process $Address } -ArgumentList $url | Out-Null
 if ($Repos) {
-    & '.\observatoire.exe' watch -vault $Vault -port "$Port" -repos $Repos
+    & '.\vantage.exe' watch -vault $Vault -port "$Port" -repos $Repos
 } else {
-    & '.\observatoire.exe' watch -vault $Vault -port "$Port"
+    & '.\vantage.exe' watch -vault $Vault -port "$Port"
 }
 exit $LASTEXITCODE

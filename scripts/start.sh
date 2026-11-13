@@ -145,9 +145,11 @@ memo="$(vault_memo_file)"
 
 if [ -z "$vault" ]; then
   if ! vault="$(read_memo "$memo")"; then
-    printf '\n%sERROR: give your Obsidian vault folder the first time, for example:%s\n' "$red" "$reset" >&2
-    printf '  ./start.sh "%s/Documents/My Vault"\n' "$HOME" >&2
-    exit 1
+    if ! vault="$(read_memo "$(legacy_vault_memo_file)")"; then
+      printf '\n%sERROR: give your Obsidian vault folder the first time, for example:%s\n' "$red" "$reset" >&2
+      printf '  ./start.sh "%s/Documents/My Vault"\n' "$HOME" >&2
+      exit 1
+    fi
   fi
   printf 'Remembered vault: %s\n' "$vault"
 fi
@@ -160,11 +162,11 @@ vault="$(cd "$vault" && pwd -P)"
 if [ ! -d "$vault/.obsidian" ]; then
   fail "${vault} is not an Obsidian vault (no .obsidian folder). Give your vault folder, not the project folder."
 fi
-if [ ! -e "$ROOT/observatoire" ]; then
-  fail "observatoire is missing. Run ./build.sh first."
+if [ ! -e "$ROOT/vantage" ]; then
+  fail "vantage is missing. Run ./build.sh first."
 fi
-if [ ! -x "$ROOT/observatoire" ]; then
-  fail "observatoire is not executable. Run ./build.sh again."
+if [ ! -x "$ROOT/vantage" ]; then
+  fail "vantage is not executable. Run ./build.sh again."
 fi
 
 mkdir -p "$(dirname "$memo")"
@@ -174,12 +176,12 @@ ensure_fixtures
 
 url="http://127.0.0.1:${port}"
 step "Importing vault ${vault}"
-log="$(mktemp "${TMPDIR:-/tmp}/observatoire-import.XXXXXX")"
+log="$(mktemp "${TMPDIR:-/tmp}/vantage-import.XXXXXX")"
 set +e
 if [ -n "$repos" ]; then
-  "$ROOT/observatoire" import -vault "$vault" -repos "$repos" >"$log" 2>&1
+  "$ROOT/vantage" import -vault "$vault" -repos "$repos" >"$log" 2>&1
 else
-  "$ROOT/observatoire" import -vault "$vault" >"$log" 2>&1
+  "$ROOT/vantage" import -vault "$vault" >"$log" 2>&1
 fi
 code=$?
 set -e
@@ -200,7 +202,7 @@ step "Starting the UI: ${url}  (Ctrl+C to stop)"
 info "Live updates: an edited note or commit is reimported within a few seconds."
 open_browser "$url"
 if [ -n "$repos" ]; then
-  "$ROOT/observatoire" watch -vault "$vault" -port "$port" -repos "$repos"
+  "$ROOT/vantage" watch -vault "$vault" -port "$port" -repos "$repos"
 else
-  "$ROOT/observatoire" watch -vault "$vault" -port "$port"
+  "$ROOT/vantage" watch -vault "$vault" -port "$port"
 fi

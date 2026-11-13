@@ -1,4 +1,4 @@
-// Command observatoire: a local dashboard for development work.
+// Command vantage: a local dashboard for development work.
 package main
 
 import (
@@ -15,16 +15,16 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/Anarchiejs/Observatoire/internal/api"
-	"github.com/Anarchiejs/Observatoire/internal/db"
-	"github.com/Anarchiejs/Observatoire/internal/ingest"
-	"github.com/Anarchiejs/Observatoire/internal/report"
-	"github.com/Anarchiejs/Observatoire/internal/sql/gen"
-	"github.com/Anarchiejs/Observatoire/internal/watch"
-	"github.com/Anarchiejs/Observatoire/web"
+	"github.com/Anarchiejs/Vantage/internal/api"
+	"github.com/Anarchiejs/Vantage/internal/db"
+	"github.com/Anarchiejs/Vantage/internal/ingest"
+	"github.com/Anarchiejs/Vantage/internal/report"
+	"github.com/Anarchiejs/Vantage/internal/sql/gen"
+	"github.com/Anarchiejs/Vantage/internal/watch"
+	"github.com/Anarchiejs/Vantage/web"
 )
 
-const usage = `usage: observatoire <command> [options]
+const usage = `usage: vantage <command> [options]
 
 commands:
   migrate   create or update the database schema
@@ -64,7 +64,7 @@ func main() {
 
 func migrate(args []string) error {
 	fs := flag.NewFlagSet("migrate", flag.ExitOnError)
-	path := fs.String("db", "observatoire.db", "database file")
+	path := fs.String("db", "vantage.db", "database file")
 	fs.Parse(args)
 	base, err := db.Open(*path)
 	if err != nil {
@@ -76,7 +76,7 @@ func migrate(args []string) error {
 
 func runImport(args []string) error {
 	fs := flag.NewFlagSet("import", flag.ExitOnError)
-	path := fs.String("db", "observatoire.db", "database file")
+	path := fs.String("db", "vantage.db", "database file")
 	vault := fs.String("vault", "", "Obsidian vault root (required)")
 	repos := fs.String("repos", "", `replaces source_path: "Name=/absolute/path,..." (overrides <vault>/.observatoire/repos)`)
 	fs.Parse(args)
@@ -185,7 +185,7 @@ func printSummary(summary ingest.Summary) {
 
 func serve(args []string) error {
 	fs := flag.NewFlagSet("serve", flag.ExitOnError)
-	path := fs.String("db", "observatoire.db", "database file")
+	path := fs.String("db", "vantage.db", "database file")
 	port := fs.Int("port", 7878, "port on 127.0.0.1")
 	fs.Parse(args)
 
@@ -241,7 +241,7 @@ func prepareServer(path string, port int) (*api.Server, *sql.DB, func(), error) 
 // The UI is notified by the SSE "update" event.
 func runWatch(args []string) error {
 	fs := flag.NewFlagSet("watch", flag.ExitOnError)
-	path := fs.String("db", "observatoire.db", "database file")
+	path := fs.String("db", "vantage.db", "database file")
 	vault := fs.String("vault", "", "Obsidian vault root (required)")
 	repos := fs.String("repos", "", `replaces source_path: "Name=/absolute/path,..." (overrides <vault>/.observatoire/repos)`)
 	port := fs.Int("port", 7878, "port on 127.0.0.1")
@@ -314,7 +314,7 @@ func repositoryPaths(ctx context.Context, base *sql.DB) []string {
 
 func runReport(args []string) error {
 	fs := flag.NewFlagSet("report", flag.ExitOnError)
-	path := fs.String("db", "observatoire.db", "database file")
+	path := fs.String("db", "vantage.db", "database file")
 	vault := fs.String("vault", "", "Obsidian vault root (required)")
 	stdout := fs.Bool("stdout", false, "print the report instead of writing it into the vault")
 	fs.Parse(args)

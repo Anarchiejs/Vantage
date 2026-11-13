@@ -1,9 +1,9 @@
-Observatoire
+Vantage
 Copyright (c) 2026 Anarchy (https://github.com/Anarchiejs)
 
 This project is licensed under the MIT License. See LICENSE.
 
-Observatoire is built with third-party software that keeps its own license.
+Vantage is built with third-party software that keeps its own license.
 Those licenses are distributed with the modules themselves (Go modules and
 npm packages). Notable ones:
 

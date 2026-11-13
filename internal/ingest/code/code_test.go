@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/Anarchiejs/Observatoire/internal/model"
+	"github.com/Anarchiejs/Vantage/internal/model"
 )
 
 func TestMeasureFixtureAlpha(t *testing.T) {

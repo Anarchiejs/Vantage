@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Anarchiejs/Observatoire/internal/model"
+	"github.com/Anarchiejs/Vantage/internal/model"
 )
 
 func TestReadFixture(t *testing.T) {

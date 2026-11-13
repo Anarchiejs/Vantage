@@ -127,8 +127,8 @@ export function Chart({
       instance.setOption(merged, { notMerge: true })
     }
     apply()
-    window.addEventListener('observatoire:theme', apply)
-    return () => window.removeEventListener('observatoire:theme', apply)
+    window.addEventListener('vantage:theme', apply)
+    return () => window.removeEventListener('vantage:theme', apply)
   }, [option])
 
   useEffect(() => {

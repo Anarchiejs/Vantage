@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/Anarchiejs/Observatoire/internal/fixtures"
+	"github.com/Anarchiejs/Vantage/internal/fixtures"
 )
 
 func TestMain(m *testing.M) {

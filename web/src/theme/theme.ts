@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 export type Theme = 'light' | 'dark'
 
-const KEY = 'observatoire.theme'
+const KEY = 'vantage.theme'
 
 function initialTheme(): Theme {
   try {
@@ -26,7 +26,7 @@ export function useTheme(): [Theme, () => void] {
     } catch {
       /* ignore */
     }
-    window.dispatchEvent(new CustomEvent('observatoire:theme', { detail: theme }))
+    window.dispatchEvent(new CustomEvent('vantage:theme', { detail: theme }))
   }, [theme])
   const toggle = useCallback(() => setTheme((current) => (current === 'light' ? 'dark' : 'light')), [])
   return [theme, toggle]

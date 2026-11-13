@@ -4,6 +4,8 @@ testdata/repos/
 *.db-shm
 *.exe
 *.log
+/vantage
+/vantage.exe
 /observatoire
 /observatoire.exe
 node_modules/

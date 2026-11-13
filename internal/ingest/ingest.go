@@ -12,11 +12,11 @@ import (
 	"sync"
 	"time"
 
-	icode "github.com/Anarchiejs/Observatoire/internal/ingest/code"
-	igit "github.com/Anarchiejs/Observatoire/internal/ingest/git"
-	ivault "github.com/Anarchiejs/Observatoire/internal/ingest/vault"
-	"github.com/Anarchiejs/Observatoire/internal/model"
-	"github.com/Anarchiejs/Observatoire/internal/sql/gen"
+	icode "github.com/Anarchiejs/Vantage/internal/ingest/code"
+	igit "github.com/Anarchiejs/Vantage/internal/ingest/git"
+	ivault "github.com/Anarchiejs/Vantage/internal/ingest/vault"
+	"github.com/Anarchiejs/Vantage/internal/model"
+	"github.com/Anarchiejs/Vantage/internal/sql/gen"
 )
 
 // Options for an import.

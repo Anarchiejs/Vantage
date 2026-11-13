@@ -1,4 +1,4 @@
-# Install what Observatoire needs to build: git, Go, Node (via winget if missing),
+# Install what Vantage needs to build: git, Go, Node (via winget if missing),
 # then the Go and npm dependencies.
 # Usage: .\install.cmd
 
