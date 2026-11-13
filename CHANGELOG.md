@@ -14,6 +14,7 @@ The project is now named Vantage. It is a local application built for Obsidian. 
 
 ### Fixed
 
+- `-repos` keeps the backslashes in a Windows path. A comma still separates pairs; write `\,` when the path itself contains a comma.
 - The UI build no longer reports a JavaScript chunk larger than 500 kB. Charts load the ECharts series this app draws, and CodeMirror is its own chunk.
 - macOS filenames are stored as Unicode NFC, so accented note titles and Git paths match Linux and Windows. On Linux and Windows the path bytes are unchanged.
 - The server stops on SIGTERM (the signal Linux and macOS use to ask a process to exit). Ctrl+C is unchanged.

@@ -170,7 +170,8 @@ func parseRepoFile(text, base string) (map[string]string, error) {
 }
 
 // parseRepos reads Name=path pairs. Newlines separate lines (a # line is a comment);
-// unescaped commas separate pairs on one line, which is the -repos flag syntax.
+// commas separate pairs on one line, which is the -repos flag syntax.
+// A backslash before a comma keeps that comma in the path. Other backslashes stay.
 // Relative paths are joined to base when base is set, then made absolute.
 func parseRepos(text, base string) (map[string]string, error) {
 	return parseRepoText(text, base, true)
@@ -219,6 +220,11 @@ func splitUnescaped(line string, sep rune) []string {
 	for _, r := range line {
 		switch {
 		case escaped:
+			// Only "\," and "\\" are escapes. Any other backslash stays, so a
+			// Windows path can be written with its own separators.
+			if r != '\\' && r != sep {
+				b.WriteByte('\\')
+			}
 			b.WriteRune(r)
 			escaped = false
 		case r == '\\':

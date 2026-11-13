@@ -100,7 +100,8 @@ func TestRetiredDatabaseName(t *testing.T) {
 }
 
 func TestDSNEscapesPath(t *testing.T) {
-	dir := filepath.Join(t.TempDir(), "a b?")
+	// Space and '#' must be escaped in the SQLite DSN. '?' is reserved in a Windows path.
+	dir := filepath.Join(t.TempDir(), "a b#hash")
 	if err := os.MkdirAll(dir, 0700); err != nil {
 		t.Fatal(err)
 	}
