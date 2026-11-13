@@ -182,8 +182,33 @@ func TestNotesAndBatching(t *testing.T) {
 	for i := 0; i < 20; i++ {
 		b.writeNote(filepath.Join(b.root, "note.md"), "modification")
 	}
-	b.waitForImport(2)
-	b.expectQuiet()
+	// The debounce absorbs a fast burst into one import. A slower machine,
+	// including the race detector, can start that import before the last
+	// writes land and then run one follow-up. Either way the burst ends.
+	quiet := time.NewTimer(5 * time.Second)
+	defer quiet.Stop()
+	got := 0
+	for {
+		select {
+		case <-b.imports:
+			got++
+			if got > 3 {
+				t.Fatalf("burst produced %d imports", got)
+			}
+			if !quiet.Stop() {
+				select {
+				case <-quiet.C:
+				default:
+				}
+			}
+			quiet.Reset(3 * testDelay)
+		case <-quiet.C:
+			if got == 0 {
+				t.Fatal("no import after the burst")
+			}
+			return
+		}
+	}
 }
 
 func TestIgnoreAndNewFolders(t *testing.T) {

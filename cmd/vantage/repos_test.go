@@ -90,7 +90,7 @@ func TestRepoFileKeepsCommas(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(flagged) != 2 || !strings.HasSuffix(flagged["Atlas"], "a,b") {
+	if len(flagged) != 2 || !strings.Contains(flagged["Atlas"], `a,b`) || !strings.Contains(flagged["Compass"], `\c`) {
 		t.Fatalf("%v", flagged)
 	}
 }

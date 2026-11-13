@@ -183,6 +183,8 @@ A card's `source_path` is the repository on the machine that wrote the card. To 
 ./start.sh --repos "Atlas=$PWD/testdata/repos/alpha,Compass=$PWD/testdata/repos/beta" testdata/vault
 ```
 
+A comma separates pairs. Write `\,` when a path itself contains a comma. Other backslashes stay, so a Windows path can be written as usual.
+
 You can also put one `Name=path` pair per line in `<vault>/.vantage/repos`. A line starting with `#` is a comment. Paths in that file are relative to the vault. The sample vault includes this file, so `.\start.cmd testdata\vault` and `./start.sh testdata/vault` import both fixture repositories on Windows, Linux, and macOS. The start scripts create those repositories the first time they are missing. A name on the command line replaces the same name from the file. `import` and `watch` read the file too, so the flag is optional for that vault.
 
 ## Commands
