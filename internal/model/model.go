@@ -31,27 +31,37 @@ type ChangedFile struct {
 	Deletions *int64
 }
 
+// RepoRef is an extra repository named on a project card.
+type RepoRef struct {
+	Path   string
+	Branch string
+}
+
 // ProjectCard is the note `Projects/<Name>/<Name>.md` for a project.
 type ProjectCard struct {
 	Name           string
 	Status         string
 	SourcePath     string
+	Branch         string
 	Updated        string
 	VerifiedOn     string
 	VerifiedCommit string
 	Technologies   []string
+	ExpectedNotes  []string
+	Extra          []RepoRef
 }
 
 // Note is one note from the vault.
 type Note struct {
-	Path    string // relative to the vault, separator "/"
-	Folder  string // first path segment, "" at the vault root
-	Title   string // file name without ".md"
-	Type    string
-	Updated string
-	Hash    string   // sha256 hex of the raw content
-	Content string   // text without front matter, for full-text search
-	Links   []string // [[...]] targets, without alias or "#section", deduplicated
+	Path          string // relative to the vault, separator "/"
+	Folder        string // first path segment, "" at the vault root
+	Title         string // file name without ".md"
+	Type          string
+	Updated       string
+	Hash          string   // sha256 hex of the raw content
+	Content       string   // text without front matter, for full-text search
+	Links         []string // wikilink targets from the body, path kept, alias and heading removed
+	PropertyLinks []string // the same kind of target, taken from front matter
 }
 
 // Session is a note `Sessions/YYYY-MM-DD - <Project> - topic.md`.

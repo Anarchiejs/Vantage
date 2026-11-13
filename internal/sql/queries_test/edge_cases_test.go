@@ -43,7 +43,7 @@ func TestSearchFilters(t *testing.T) {
 				if c.p.Project != nil && (r.Project == nil || *r.Project != c.p.Project) {
 					t.Fatalf("project: %+v", r)
 				}
-				if !strings.Contains(r.Title, "<mark>") && !strings.Contains(r.Excerpt, "<mark>") {
+				if !strings.Contains(r.Title, "\uE000") && !strings.Contains(r.Excerpt, "\uE000") {
 					t.Fatalf("highlight: %+v", r)
 				}
 			}

@@ -24,6 +24,9 @@ import (
 	"github.com/Anarchiejs/Vantage/web"
 )
 
+// version is set by the release build with -X main.version=...
+var version = "dev"
+
 const usage = `usage: vantage <command> [options]
 
 commands:
@@ -32,6 +35,7 @@ commands:
   serve     serve the UI on http://127.0.0.1
   report    write Statistics.md in the vault
   watch     import, serve the UI, and reimport on every change
+  version   print the build version
 `
 
 func main() {
@@ -52,6 +56,8 @@ func main() {
 		err = runReport(args)
 	case "watch":
 		err = runWatch(args)
+	case "version":
+		fmt.Println(version)
 	default:
 		fmt.Fprint(os.Stderr, usage)
 		os.Exit(2)
@@ -78,12 +84,13 @@ func runImport(args []string) error {
 	fs := flag.NewFlagSet("import", flag.ExitOnError)
 	path := fs.String("db", "vantage.db", "database file")
 	vault := fs.String("vault", "", "Obsidian vault root (required)")
-	repos := fs.String("repos", "", `replaces source_path: "Name=/absolute/path,..." (overrides <vault>/.observatoire/repos)`)
+	var repos repoFlags
+	fs.Var(&repos, "repos", `replaces source_path: "Name=/absolute/path,..." (overrides <vault>/.vantage/repos). Repeat the flag to add more. Escape a comma in a path as \,`)
 	fs.Parse(args)
 	if err := requireVault(*vault); err != nil {
 		return err
 	}
-	replacements, err := reposForVault(*vault, *repos)
+	replacements, err := reposForVault(*vault, repos)
 	if err != nil {
 		return err
 	}
@@ -110,19 +117,34 @@ func requireVault(path string) error {
 	return nil
 }
 
-// reposForVault loads <vault>/.observatoire/repos, then applies the -repos flag.
+type repoFlags []string
+
+func (r *repoFlags) String() string { return strings.Join(*r, "\n") }
+func (r *repoFlags) Set(value string) error {
+	*r = append(*r, value)
+	return nil
+}
+
+// reposForVault loads <vault>/.vantage/repos, then applies every -repos flag.
 // A name on the command line replaces the same name from the file.
-// Paths in the file are relative to the vault. Flag paths are relative to the
-// current directory. Both are returned absolute.
-func reposForVault(vault, flagValue string) (map[string]string, error) {
+// Paths in the file are relative to the vault and are not split on commas.
+// Flag paths are relative to the current directory and split on unescaped commas.
+func reposForVault(vault string, flags repoFlags) (map[string]string, error) {
 	merged := map[string]string{}
-	file := filepath.Join(vault, ".observatoire", "repos")
+	file := filepath.Join(vault, ".vantage", "repos")
+	legacy := filepath.Join(vault, ".observatoire", "repos")
 	data, err := os.ReadFile(file)
+	if errors.Is(err, os.ErrNotExist) {
+		data, err = os.ReadFile(legacy)
+		if err == nil {
+			fmt.Fprintf(os.Stderr, "warning: %s is the previous remap file; move it to %s\n", legacy, file)
+		}
+	}
 	if err != nil && !errors.Is(err, os.ErrNotExist) {
 		return nil, err
 	}
 	if err == nil {
-		parsed, err := parseRepos(string(data), vault)
+		parsed, err := parseRepoFile(string(data), vault)
 		if err != nil {
 			return nil, fmt.Errorf("%s: %w", file, err)
 		}
@@ -130,20 +152,31 @@ func reposForVault(vault, flagValue string) (map[string]string, error) {
 			merged[name] = dir
 		}
 	}
-	overrides, err := parseRepos(flagValue, "")
-	if err != nil {
-		return nil, err
-	}
-	for name, dir := range overrides {
-		merged[name] = dir
+	for _, flagValue := range flags {
+		overrides, err := parseRepos(flagValue, "")
+		if err != nil {
+			return nil, err
+		}
+		for name, dir := range overrides {
+			merged[name] = dir
+		}
 	}
 	return merged, nil
 }
 
+// parseRepoFile reads one Name=path per line. A comma is part of the path.
+func parseRepoFile(text, base string) (map[string]string, error) {
+	return parseRepoText(text, base, false)
+}
+
 // parseRepos reads Name=path pairs. Newlines separate lines (a # line is a comment);
-// commas separate pairs on one line, which is the -repos flag syntax.
+// unescaped commas separate pairs on one line, which is the -repos flag syntax.
 // Relative paths are joined to base when base is set, then made absolute.
 func parseRepos(text, base string) (map[string]string, error) {
+	return parseRepoText(text, base, true)
+}
+
+func parseRepoText(text, base string, splitCommas bool) (map[string]string, error) {
 	replacements := map[string]string{}
 	text = strings.ReplaceAll(text, "\r\n", "\n")
 	for _, line := range strings.Split(text, "\n") {
@@ -151,7 +184,11 @@ func parseRepos(text, base string) (map[string]string, error) {
 		if line == "" || strings.HasPrefix(line, "#") {
 			continue
 		}
-		for _, pair := range strings.Split(line, ",") {
+		pairs := []string{line}
+		if splitCommas {
+			pairs = splitUnescaped(line, ',')
+		}
+		for _, pair := range pairs {
 			pair = strings.TrimSpace(pair)
 			if pair == "" {
 				continue
@@ -173,6 +210,31 @@ func parseRepos(text, base string) (map[string]string, error) {
 		}
 	}
 	return replacements, nil
+}
+
+func splitUnescaped(line string, sep rune) []string {
+	var parts []string
+	var b strings.Builder
+	escaped := false
+	for _, r := range line {
+		switch {
+		case escaped:
+			b.WriteRune(r)
+			escaped = false
+		case r == '\\':
+			escaped = true
+		case r == sep:
+			parts = append(parts, b.String())
+			b.Reset()
+		default:
+			b.WriteRune(r)
+		}
+	}
+	if escaped {
+		b.WriteByte('\\')
+	}
+	parts = append(parts, b.String())
+	return parts
 }
 
 func printSummary(summary ingest.Summary) {
@@ -243,13 +305,14 @@ func runWatch(args []string) error {
 	fs := flag.NewFlagSet("watch", flag.ExitOnError)
 	path := fs.String("db", "vantage.db", "database file")
 	vault := fs.String("vault", "", "Obsidian vault root (required)")
-	repos := fs.String("repos", "", `replaces source_path: "Name=/absolute/path,..." (overrides <vault>/.observatoire/repos)`)
+	var repos repoFlags
+	fs.Var(&repos, "repos", `replaces source_path: "Name=/absolute/path,..." (overrides <vault>/.vantage/repos). Repeat the flag to add more. Escape a comma in a path as \,`)
 	port := fs.Int("port", 7878, "port on 127.0.0.1")
 	fs.Parse(args)
 	if err := requireVault(*vault); err != nil {
 		return err
 	}
-	replacements, err := reposForVault(*vault, *repos)
+	replacements, err := reposForVault(*vault, repos)
 	if err != nil {
 		return err
 	}

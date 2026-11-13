@@ -9,10 +9,57 @@ import (
 	"context"
 )
 
+const commitsSinceSession = `-- name: CommitsSinceSession :many
+SELECT c.date_utc AS date, c.sha AS ref,
+ CASE WHEN instr(c.message, char(10)) > 0 THEN substr(c.message, 1, instr(c.message, char(10)) - 1) ELSE c.message END AS title,
+ (SELECT max(s.date) FROM session s WHERE s.project_id = ?1) AS since
+FROM repository d JOIN commit_git c ON c.repository_id = d.id
+WHERE d.project_id = ?1
+ AND c.local_day > coalesce((SELECT max(s.date) FROM session s WHERE s.project_id = ?1), '9999-12-31')
+ORDER BY c.date_utc DESC
+LIMIT 30
+`
+
+type CommitsSinceSessionRow struct {
+	Date  string      `json:"date"`
+	Ref   string      `json:"ref"`
+	Title interface{} `json:"title"`
+	Since interface{} `json:"since"`
+}
+
+// Commits strictly after the latest session date. No session means no rows.
+func (q *Queries) CommitsSinceSession(ctx context.Context, projectID *int64) ([]CommitsSinceSessionRow, error) {
+	rows, err := q.query(ctx, q.commitsSinceSessionStmt, commitsSinceSession, projectID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []CommitsSinceSessionRow
+	for rows.Next() {
+		var i CommitsSinceSessionRow
+		if err := rows.Scan(
+			&i.Date,
+			&i.Ref,
+			&i.Title,
+			&i.Since,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const hotspots = `-- name: Hotspots :many
 SELECT f.path, count(*) AS modifications, CAST(coalesce(sum(f.additions),0) AS INTEGER) AS additions,
  CAST(coalesce(sum(f.deletions),0) AS INTEGER) AS deletions
-FROM repository d JOIN commit_git c ON c.repository_id=d.id JOIN changed_file f ON f.commit_sha=c.sha
+FROM repository d JOIN commit_git c ON c.repository_id=d.id JOIN changed_file f ON f.repository_id=c.repository_id AND f.commit_sha=c.sha
 WHERE d.project_id=?1 GROUP BY f.path ORDER BY modifications DESC, f.path LIMIT 20
 `
 
@@ -231,7 +278,7 @@ func (q *Queries) ProjectAI(ctx context.Context, projectID *int64) ([]ProjectAIR
 }
 
 const projectByID = `-- name: ProjectByID :one
-SELECT id, name, status, source_path, card_updated, verified_commit, verified_on FROM project WHERE id=?1
+SELECT id, name, status, source_path, card_updated, verified_commit, verified_on, branch, expected_notes FROM project WHERE id=?1
 `
 
 // Primary-key lookup leaves nullable metadata unchanged.
@@ -246,6 +293,8 @@ func (q *Queries) ProjectByID(ctx context.Context, id int64) (Project, error) {
 		&i.CardUpdated,
 		&i.VerifiedCommit,
 		&i.VerifiedOn,
+		&i.Branch,
+		&i.ExpectedNotes,
 	)
 	return i, err
 }
@@ -281,12 +330,13 @@ func (q *Queries) ProjectNotes(ctx context.Context, projectID int64) ([]string, 
 }
 
 const projectRepositories = `-- name: ProjectRepositories :many
-SELECT id, path, last_imported_sha FROM repository WHERE project_id = ? ORDER BY path
+SELECT id, path, branch, last_imported_sha FROM repository WHERE project_id = ? ORDER BY path
 `
 
 type ProjectRepositoriesRow struct {
 	ID              int64   `json:"id"`
 	Path            string  `json:"path"`
+	Branch          *string `json:"branch"`
 	LastImportedSha *string `json:"last_imported_sha"`
 }
 
@@ -300,7 +350,12 @@ func (q *Queries) ProjectRepositories(ctx context.Context, projectID int64) ([]P
 	var items []ProjectRepositoriesRow
 	for rows.Next() {
 		var i ProjectRepositoriesRow
-		if err := rows.Scan(&i.ID, &i.Path, &i.LastImportedSha); err != nil {
+		if err := rows.Scan(
+			&i.ID,
+			&i.Path,
+			&i.Branch,
+			&i.LastImportedSha,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)

@@ -2,6 +2,7 @@ package db
 
 import (
 	"errors"
+	"os"
 	"path/filepath"
 	"testing"
 )
@@ -32,8 +33,8 @@ func TestMigrateAndTriggers(t *testing.T) {
 	// 23:30 UTC at +120 min is 01:30 the next local day.
 	exec(`INSERT INTO commit_git (sha, repository_id, author, date_utc, offset_min, message)
 	      VALUES ('a1', 1, 'me', '2026-10-25T23:30:00Z', 120, 'first')`)
-	exec(`INSERT INTO changed_file VALUES ('a1', 'main.go', 'Go', 10, 2)`)
-	exec(`INSERT INTO changed_file VALUES ('a1', 'logo.png', NULL, NULL, NULL)`)
+	exec(`INSERT INTO changed_file (repository_id, commit_sha, path, language, additions, deletions) VALUES (1, 'a1', 'main.go', 'Go', 10, 2)`)
+	exec(`INSERT INTO changed_file (repository_id, commit_sha, path, language, additions, deletions) VALUES (1, 'a1', 'logo.png', NULL, NULL, NULL)`)
 
 	var day string
 	var hour, n, additions, deletions int
@@ -81,6 +82,39 @@ func TestRefuseLegacySchema(t *testing.T) {
 	err = Migrate(base)
 	if !errors.Is(err, ErrLegacySchema) {
 		t.Fatalf("legacy schema: %v", err)
+	}
+}
+
+func TestRetiredDatabaseName(t *testing.T) {
+	dir := t.TempDir()
+	legacy := filepath.Join(dir, "observatoire.db")
+	if err := os.WriteFile(legacy, []byte("old"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Open(legacy); !errors.Is(err, ErrRetiredDatabase) {
+		t.Fatalf("opening observatoire.db: %v", err)
+	}
+	if _, err := Open(filepath.Join(dir, "vantage.db")); !errors.Is(err, ErrRetiredDatabase) {
+		t.Fatalf("missing vantage.db beside observatoire.db: %v", err)
+	}
+}
+
+func TestDSNEscapesPath(t *testing.T) {
+	dir := filepath.Join(t.TempDir(), "a b?")
+	if err := os.MkdirAll(dir, 0700); err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(dir, "vantage.db")
+	base, err := Open(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer base.Close()
+	if err := Migrate(base); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := base.Exec(`SELECT 1`); err != nil {
+		t.Fatal(err)
 	}
 }
 

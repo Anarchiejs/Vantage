@@ -40,9 +40,21 @@ SELECT p.id, p.name, max(c.date_utc) AS last_commit,
  CAST(coalesce(julianday(sqlc.arg(today))-julianday(max(c.local_day)), -1) AS INTEGER) AS days
 FROM project p LEFT JOIN repository d ON d.project_id=p.id
 LEFT JOIN commit_git c ON c.repository_id=d.id AND c.local_day <= sqlc.arg(today)
-WHERE p.status='in progress' GROUP BY p.id
+WHERE lower(trim(p.status)) IN ('in progress', 'active', 'ongoing') GROUP BY p.id
 HAVING max(c.local_day) IS NULL OR max(c.local_day)<date(sqlc.arg(today), '-30 days')
 ORDER BY p.name;
+
+-- name: QuietOutsideStatus :one
+-- Quiet cards the dormant list hides because their status is outside the watched set.
+SELECT count(*) FROM (
+  SELECT p.id
+  FROM project p
+  LEFT JOIN repository d ON d.project_id = p.id
+  LEFT JOIN commit_git c ON c.repository_id = d.id AND c.local_day <= sqlc.arg(today)
+  WHERE lower(trim(coalesce(p.status, ''))) NOT IN ('in progress', 'active', 'ongoing')
+  GROUP BY p.id
+  HAVING max(c.local_day) IS NULL OR max(c.local_day) < date(sqlc.arg(today), '-30 days')
+);
 
 -- name: StaleCards :many
 -- Prefix matching supports abbreviated SHAs; an unknown verification returns -1.

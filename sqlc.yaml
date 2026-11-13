@@ -1,7 +1,7 @@
 version: "2"
 sql:
   - engine: sqlite
-    schema: migrations
+    schema: internal/sql/schema.sql
     queries:
       - internal/sql/import
       - internal/sql/queries

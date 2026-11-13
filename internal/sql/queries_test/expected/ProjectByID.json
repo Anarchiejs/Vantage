@@ -5,5 +5,7 @@
   "source_path": null,
   "card_updated": "2026-10-26",
   "verified_commit": "a1b2c3d",
-  "verified_on": "2026-10-26"
+  "verified_on": "2026-10-26",
+  "branch": null,
+  "expected_notes": null
 }

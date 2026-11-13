@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"testing"
 )
 
@@ -39,7 +40,7 @@ func TestSampleVaultRemap(t *testing.T) {
 		t.Fatal("caller")
 	}
 	vault := filepath.Join(filepath.Dir(file), "..", "..", "testdata", "vault")
-	got, err := reposForVault(vault, "")
+	got, err := reposForVault(vault, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -56,7 +57,7 @@ func TestSampleVaultRemap(t *testing.T) {
 		t.Fatalf("Atlas=%s Compass=%s", got["Atlas"], got["Compass"])
 	}
 	override := filepath.Join(t.TempDir(), "compass")
-	got, err = reposForVault(vault, "Compass="+override)
+	got, err = reposForVault(vault, repoFlags{"Compass=" + override})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -67,7 +68,29 @@ func TestSampleVaultRemap(t *testing.T) {
 	if got["Compass"] != want || got["Atlas"] != alpha {
 		t.Fatalf("override: %+v", got)
 	}
-	if _, err := os.Stat(filepath.Join(vault, ".observatoire", "repos")); err != nil {
+	if _, err := os.Stat(filepath.Join(vault, ".vantage", "repos")); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestRepoFileKeepsCommas(t *testing.T) {
+	base := t.TempDir()
+	got, err := parseRepoFile("Atlas=../repos/alpha, the copy\n", base)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want, err := filepath.Abs(filepath.Join(base, "..", "repos", "alpha, the copy"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got["Atlas"] != want || len(got) != 1 {
+		t.Fatalf("%v", got)
+	}
+	flagged, err := parseRepos(`Atlas=C:\a\,b, Compass=C:\c`, "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(flagged) != 2 || !strings.HasSuffix(flagged["Atlas"], "a,b") {
+		t.Fatalf("%v", flagged)
 	}
 }

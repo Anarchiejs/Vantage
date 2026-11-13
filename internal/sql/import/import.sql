@@ -2,14 +2,16 @@
 
 -- name: UpsertProject :one
 -- Create the project or update its card fields; return its id in both cases.
-INSERT INTO project (name, status, source_path, card_updated, verified_commit, verified_on)
-VALUES (?, ?, ?, ?, ?, ?)
+INSERT INTO project (name, status, source_path, card_updated, verified_commit, verified_on, branch, expected_notes)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 ON CONFLICT (name) DO UPDATE SET
     status = excluded.status,
     source_path = excluded.source_path,
     card_updated = excluded.card_updated,
     verified_commit = excluded.verified_commit,
-    verified_on = excluded.verified_on
+    verified_on = excluded.verified_on,
+    branch = excluded.branch,
+    expected_notes = excluded.expected_notes
 RETURNING id;
 
 -- name: UpsertRepository :one
@@ -22,15 +24,15 @@ RETURNING id, last_imported_sha;
 UPDATE repository SET last_imported_sha = ? WHERE id = ?;
 
 -- name: InsertCommit :execrows
--- 0 rows touched means the commit is already known; the caller then skips its files.
+-- 0 rows touched means this repository already stored the commit.
 INSERT INTO commit_git (sha, repository_id, author, date_utc, offset_min, message)
 VALUES (?, ?, ?, ?, ?, ?)
-ON CONFLICT (sha) DO NOTHING;
+ON CONFLICT (repository_id, sha) DO NOTHING;
 
 -- name: InsertChangedFile :exec
-INSERT INTO changed_file (commit_sha, path, language, additions, deletions)
-VALUES (?, ?, ?, ?, ?)
-ON CONFLICT (commit_sha, path) DO NOTHING;
+INSERT INTO changed_file (repository_id, commit_sha, path, language, additions, deletions)
+VALUES (?, ?, ?, ?, ?, ?)
+ON CONFLICT (repository_id, commit_sha, path) DO NOTHING;
 
 -- name: NoteHash :one
 SELECT id, content_hash FROM note WHERE path = ?;
@@ -50,13 +52,17 @@ RETURNING id;
 DELETE FROM link WHERE source_id = ?;
 
 -- name: InsertLink :exec
-INSERT INTO link (source_id, target_title)
-VALUES (?, ?)
-ON CONFLICT (source_id, target_title) DO NOTHING;
+INSERT INTO link (source_id, target_title, from_property)
+VALUES (?, ?, ?)
+ON CONFLICT (source_id, target_title) DO UPDATE SET from_property = min(link.from_property, excluded.from_property);
 
--- name: ResolveLinks :exec
--- After every note is imported: point each link at the title it names (NULL if broken).
-UPDATE link SET target_id = (SELECT n.id FROM note n WHERE n.title = link.target_title LIMIT 1);
+-- name: SetLinkTarget :exec
+UPDATE link SET target_id = ? WHERE source_id = ? AND target_title = ?;
+
+-- name: ListLinks :many
+SELECT l.source_id, n.path AS source_path, l.target_title
+FROM link l JOIN note n ON n.id = l.source_id
+ORDER BY l.source_id, l.target_title;
 
 -- name: UpsertSession :exec
 INSERT INTO session (note_id, date, project_id, ai)
@@ -105,7 +111,40 @@ DELETE FROM note WHERE id = ?;
 DELETE FROM commit_git WHERE repository_id = ?;
 
 -- name: DeleteRepositoryCommitSearch :exec
-DELETE FROM search_index WHERE source = 'commit' AND ref IN (SELECT sha FROM commit_git WHERE repository_id = ?);
+DELETE FROM search_index WHERE source = 'commit' AND ref IN (
+    SELECT printf('%d:%s', repository_id, sha) FROM commit_git WHERE repository_id = ?);
 
 -- name: LastRepositorySHA :one
 SELECT last_imported_sha FROM repository WHERE path = ?;
+
+-- name: ListProjectIDs :many
+SELECT id, name FROM project ORDER BY id;
+
+-- name: DeleteCommitSearchForRepository :exec
+DELETE FROM search_index WHERE source = 'commit' AND ref IN (
+    SELECT printf('%d:%s', repository_id, sha) FROM commit_git WHERE repository_id = ?);
+
+-- name: DeleteRepository :exec
+DELETE FROM repository WHERE id = ?;
+
+-- name: DeleteProject :exec
+DELETE FROM project WHERE id = ?;
+
+-- name: DeleteJournal :exec
+DELETE FROM journal;
+
+-- name: DeleteSessions :exec
+DELETE FROM session;
+
+-- name: ClearProjectTechnologies :exec
+DELETE FROM project_technology WHERE project_id = ?;
+
+-- name: DeleteUnusedTechnologies :exec
+DELETE FROM technology WHERE id NOT IN (SELECT technology_id FROM project_technology);
+
+-- name: UpsertSetting :exec
+INSERT INTO app_setting (key, value) VALUES (?, ?)
+ON CONFLICT (key) DO UPDATE SET value = excluded.value;
+
+-- name: Setting :one
+SELECT value FROM app_setting WHERE key = ?;

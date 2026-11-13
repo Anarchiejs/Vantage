@@ -42,11 +42,29 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.calendarStmt, err = db.PrepareContext(ctx, calendar); err != nil {
 		return nil, fmt.Errorf("error preparing query Calendar: %w", err)
 	}
+	if q.clearProjectTechnologiesStmt, err = db.PrepareContext(ctx, clearProjectTechnologies); err != nil {
+		return nil, fmt.Errorf("error preparing query ClearProjectTechnologies: %w", err)
+	}
+	if q.commitsSinceSessionStmt, err = db.PrepareContext(ctx, commitsSinceSession); err != nil {
+		return nil, fmt.Errorf("error preparing query CommitsSinceSession: %w", err)
+	}
+	if q.deleteCommitSearchForRepositoryStmt, err = db.PrepareContext(ctx, deleteCommitSearchForRepository); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteCommitSearchForRepository: %w", err)
+	}
+	if q.deleteJournalStmt, err = db.PrepareContext(ctx, deleteJournal); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteJournal: %w", err)
+	}
 	if q.deleteNoteStmt, err = db.PrepareContext(ctx, deleteNote); err != nil {
 		return nil, fmt.Errorf("error preparing query DeleteNote: %w", err)
 	}
 	if q.deleteNoteLinksStmt, err = db.PrepareContext(ctx, deleteNoteLinks); err != nil {
 		return nil, fmt.Errorf("error preparing query DeleteNoteLinks: %w", err)
+	}
+	if q.deleteProjectStmt, err = db.PrepareContext(ctx, deleteProject); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteProject: %w", err)
+	}
+	if q.deleteRepositoryStmt, err = db.PrepareContext(ctx, deleteRepository); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteRepository: %w", err)
 	}
 	if q.deleteRepositoryCommitSearchStmt, err = db.PrepareContext(ctx, deleteRepositoryCommitSearch); err != nil {
 		return nil, fmt.Errorf("error preparing query DeleteRepositoryCommitSearch: %w", err)
@@ -56,6 +74,12 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	}
 	if q.deleteSearchStmt, err = db.PrepareContext(ctx, deleteSearch); err != nil {
 		return nil, fmt.Errorf("error preparing query DeleteSearch: %w", err)
+	}
+	if q.deleteSessionsStmt, err = db.PrepareContext(ctx, deleteSessions); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteSessions: %w", err)
+	}
+	if q.deleteUnusedTechnologiesStmt, err = db.PrepareContext(ctx, deleteUnusedTechnologies); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteUnusedTechnologies: %w", err)
 	}
 	if q.dormantProjectsStmt, err = db.PrepareContext(ctx, dormantProjects); err != nil {
 		return nil, fmt.Errorf("error preparing query DormantProjects: %w", err)
@@ -99,8 +123,14 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.linkProjectTechnologyStmt, err = db.PrepareContext(ctx, linkProjectTechnology); err != nil {
 		return nil, fmt.Errorf("error preparing query LinkProjectTechnology: %w", err)
 	}
+	if q.listLinksStmt, err = db.PrepareContext(ctx, listLinks); err != nil {
+		return nil, fmt.Errorf("error preparing query ListLinks: %w", err)
+	}
 	if q.listNotesStmt, err = db.PrepareContext(ctx, listNotes); err != nil {
 		return nil, fmt.Errorf("error preparing query ListNotes: %w", err)
+	}
+	if q.listProjectIDsStmt, err = db.PrepareContext(ctx, listProjectIDs); err != nil {
+		return nil, fmt.Errorf("error preparing query ListProjectIDs: %w", err)
 	}
 	if q.listProjectsStmt, err = db.PrepareContext(ctx, listProjects); err != nil {
 		return nil, fmt.Errorf("error preparing query ListProjects: %w", err)
@@ -138,14 +168,20 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.projectsByAIStmt, err = db.PrepareContext(ctx, projectsByAI); err != nil {
 		return nil, fmt.Errorf("error preparing query ProjectsByAI: %w", err)
 	}
-	if q.resolveLinksStmt, err = db.PrepareContext(ctx, resolveLinks); err != nil {
-		return nil, fmt.Errorf("error preparing query ResolveLinks: %w", err)
+	if q.quietOutsideStatusStmt, err = db.PrepareContext(ctx, quietOutsideStatus); err != nil {
+		return nil, fmt.Errorf("error preparing query QuietOutsideStatus: %w", err)
 	}
 	if q.sankeyLinksStmt, err = db.PrepareContext(ctx, sankeyLinks); err != nil {
 		return nil, fmt.Errorf("error preparing query SankeyLinks: %w", err)
 	}
 	if q.searchStmt, err = db.PrepareContext(ctx, search); err != nil {
 		return nil, fmt.Errorf("error preparing query Search: %w", err)
+	}
+	if q.setLinkTargetStmt, err = db.PrepareContext(ctx, setLinkTarget); err != nil {
+		return nil, fmt.Errorf("error preparing query SetLinkTarget: %w", err)
+	}
+	if q.settingStmt, err = db.PrepareContext(ctx, setting); err != nil {
+		return nil, fmt.Errorf("error preparing query Setting: %w", err)
 	}
 	if q.shortestPathStmt, err = db.PrepareContext(ctx, shortestPath); err != nil {
 		return nil, fmt.Errorf("error preparing query ShortestPath: %w", err)
@@ -173,6 +209,9 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	}
 	if q.upsertSessionStmt, err = db.PrepareContext(ctx, upsertSession); err != nil {
 		return nil, fmt.Errorf("error preparing query UpsertSession: %w", err)
+	}
+	if q.upsertSettingStmt, err = db.PrepareContext(ctx, upsertSetting); err != nil {
+		return nil, fmt.Errorf("error preparing query UpsertSetting: %w", err)
 	}
 	if q.upsertTechnologyStmt, err = db.PrepareContext(ctx, upsertTechnology); err != nil {
 		return nil, fmt.Errorf("error preparing query UpsertTechnology: %w", err)
@@ -215,6 +254,26 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing calendarStmt: %w", cerr)
 		}
 	}
+	if q.clearProjectTechnologiesStmt != nil {
+		if cerr := q.clearProjectTechnologiesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing clearProjectTechnologiesStmt: %w", cerr)
+		}
+	}
+	if q.commitsSinceSessionStmt != nil {
+		if cerr := q.commitsSinceSessionStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing commitsSinceSessionStmt: %w", cerr)
+		}
+	}
+	if q.deleteCommitSearchForRepositoryStmt != nil {
+		if cerr := q.deleteCommitSearchForRepositoryStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteCommitSearchForRepositoryStmt: %w", cerr)
+		}
+	}
+	if q.deleteJournalStmt != nil {
+		if cerr := q.deleteJournalStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteJournalStmt: %w", cerr)
+		}
+	}
 	if q.deleteNoteStmt != nil {
 		if cerr := q.deleteNoteStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing deleteNoteStmt: %w", cerr)
@@ -223,6 +282,16 @@ func (q *Queries) Close() error {
 	if q.deleteNoteLinksStmt != nil {
 		if cerr := q.deleteNoteLinksStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing deleteNoteLinksStmt: %w", cerr)
+		}
+	}
+	if q.deleteProjectStmt != nil {
+		if cerr := q.deleteProjectStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteProjectStmt: %w", cerr)
+		}
+	}
+	if q.deleteRepositoryStmt != nil {
+		if cerr := q.deleteRepositoryStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteRepositoryStmt: %w", cerr)
 		}
 	}
 	if q.deleteRepositoryCommitSearchStmt != nil {
@@ -238,6 +307,16 @@ func (q *Queries) Close() error {
 	if q.deleteSearchStmt != nil {
 		if cerr := q.deleteSearchStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing deleteSearchStmt: %w", cerr)
+		}
+	}
+	if q.deleteSessionsStmt != nil {
+		if cerr := q.deleteSessionsStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteSessionsStmt: %w", cerr)
+		}
+	}
+	if q.deleteUnusedTechnologiesStmt != nil {
+		if cerr := q.deleteUnusedTechnologiesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteUnusedTechnologiesStmt: %w", cerr)
 		}
 	}
 	if q.dormantProjectsStmt != nil {
@@ -310,9 +389,19 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing linkProjectTechnologyStmt: %w", cerr)
 		}
 	}
+	if q.listLinksStmt != nil {
+		if cerr := q.listLinksStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing listLinksStmt: %w", cerr)
+		}
+	}
 	if q.listNotesStmt != nil {
 		if cerr := q.listNotesStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing listNotesStmt: %w", cerr)
+		}
+	}
+	if q.listProjectIDsStmt != nil {
+		if cerr := q.listProjectIDsStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing listProjectIDsStmt: %w", cerr)
 		}
 	}
 	if q.listProjectsStmt != nil {
@@ -375,9 +464,9 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing projectsByAIStmt: %w", cerr)
 		}
 	}
-	if q.resolveLinksStmt != nil {
-		if cerr := q.resolveLinksStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing resolveLinksStmt: %w", cerr)
+	if q.quietOutsideStatusStmt != nil {
+		if cerr := q.quietOutsideStatusStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing quietOutsideStatusStmt: %w", cerr)
 		}
 	}
 	if q.sankeyLinksStmt != nil {
@@ -388,6 +477,16 @@ func (q *Queries) Close() error {
 	if q.searchStmt != nil {
 		if cerr := q.searchStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing searchStmt: %w", cerr)
+		}
+	}
+	if q.setLinkTargetStmt != nil {
+		if cerr := q.setLinkTargetStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing setLinkTargetStmt: %w", cerr)
+		}
+	}
+	if q.settingStmt != nil {
+		if cerr := q.settingStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing settingStmt: %w", cerr)
 		}
 	}
 	if q.shortestPathStmt != nil {
@@ -433,6 +532,11 @@ func (q *Queries) Close() error {
 	if q.upsertSessionStmt != nil {
 		if cerr := q.upsertSessionStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing upsertSessionStmt: %w", cerr)
+		}
+	}
+	if q.upsertSettingStmt != nil {
+		if cerr := q.upsertSettingStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing upsertSettingStmt: %w", cerr)
 		}
 	}
 	if q.upsertTechnologyStmt != nil {
@@ -482,117 +586,143 @@ func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, ar
 }
 
 type Queries struct {
-	db                               DBTX
-	tx                               *sql.Tx
-	aIActivityStmt                   *sql.Stmt
-	aISessionsByMonthStmt            *sql.Stmt
-	aISessionsInPeriodStmt           *sql.Stmt
-	activeProjectsStmt               *sql.Stmt
-	brokenLinksStmt                  *sql.Stmt
-	calendarStmt                     *sql.Stmt
-	deleteNoteStmt                   *sql.Stmt
-	deleteNoteLinksStmt              *sql.Stmt
-	deleteRepositoryCommitSearchStmt *sql.Stmt
-	deleteRepositoryCommitsStmt      *sql.Stmt
-	deleteSearchStmt                 *sql.Stmt
-	dormantProjectsStmt              *sql.Stmt
-	graphLinksStmt                   *sql.Stmt
-	graphNodesStmt                   *sql.Stmt
-	hotspotsStmt                     *sql.Stmt
-	insertChangedFileStmt            *sql.Stmt
-	insertCommitStmt                 *sql.Stmt
-	insertJournalStmt                *sql.Stmt
-	insertLanguageStatStmt           *sql.Stmt
-	insertLinkStmt                   *sql.Stmt
-	insertSearchStmt                 *sql.Stmt
-	languageEvolutionStmt            *sql.Stmt
-	lastRepositorySHAStmt            *sql.Stmt
-	latestLanguagesStmt              *sql.Stmt
-	linkProjectTechnologyStmt        *sql.Stmt
-	listNotesStmt                    *sql.Stmt
-	listProjectsStmt                 *sql.Stmt
-	markRepositoryImportedStmt       *sql.Stmt
-	neighborsStmt                    *sql.Stmt
-	noteByIDStmt                     *sql.Stmt
-	noteHashStmt                     *sql.Stmt
-	periodStatsStmt                  *sql.Stmt
-	projectAIStmt                    *sql.Stmt
-	projectByIDStmt                  *sql.Stmt
-	projectNotesStmt                 *sql.Stmt
-	projectRepositoriesStmt          *sql.Stmt
-	projectTechnologiesStmt          *sql.Stmt
-	projectsByAIStmt                 *sql.Stmt
-	resolveLinksStmt                 *sql.Stmt
-	sankeyLinksStmt                  *sql.Stmt
-	searchStmt                       *sql.Stmt
-	shortestPathStmt                 *sql.Stmt
-	staleCardsStmt                   *sql.Stmt
-	technologyTrendStmt              *sql.Stmt
-	timelineStmt                     *sql.Stmt
-	unassignedTechnologiesStmt       *sql.Stmt
-	upsertNoteStmt                   *sql.Stmt
-	upsertProjectStmt                *sql.Stmt
-	upsertRepositoryStmt             *sql.Stmt
-	upsertSessionStmt                *sql.Stmt
-	upsertTechnologyStmt             *sql.Stmt
-	weeklyVolumeStmt                 *sql.Stmt
+	db                                  DBTX
+	tx                                  *sql.Tx
+	aIActivityStmt                      *sql.Stmt
+	aISessionsByMonthStmt               *sql.Stmt
+	aISessionsInPeriodStmt              *sql.Stmt
+	activeProjectsStmt                  *sql.Stmt
+	brokenLinksStmt                     *sql.Stmt
+	calendarStmt                        *sql.Stmt
+	clearProjectTechnologiesStmt        *sql.Stmt
+	commitsSinceSessionStmt             *sql.Stmt
+	deleteCommitSearchForRepositoryStmt *sql.Stmt
+	deleteJournalStmt                   *sql.Stmt
+	deleteNoteStmt                      *sql.Stmt
+	deleteNoteLinksStmt                 *sql.Stmt
+	deleteProjectStmt                   *sql.Stmt
+	deleteRepositoryStmt                *sql.Stmt
+	deleteRepositoryCommitSearchStmt    *sql.Stmt
+	deleteRepositoryCommitsStmt         *sql.Stmt
+	deleteSearchStmt                    *sql.Stmt
+	deleteSessionsStmt                  *sql.Stmt
+	deleteUnusedTechnologiesStmt        *sql.Stmt
+	dormantProjectsStmt                 *sql.Stmt
+	graphLinksStmt                      *sql.Stmt
+	graphNodesStmt                      *sql.Stmt
+	hotspotsStmt                        *sql.Stmt
+	insertChangedFileStmt               *sql.Stmt
+	insertCommitStmt                    *sql.Stmt
+	insertJournalStmt                   *sql.Stmt
+	insertLanguageStatStmt              *sql.Stmt
+	insertLinkStmt                      *sql.Stmt
+	insertSearchStmt                    *sql.Stmt
+	languageEvolutionStmt               *sql.Stmt
+	lastRepositorySHAStmt               *sql.Stmt
+	latestLanguagesStmt                 *sql.Stmt
+	linkProjectTechnologyStmt           *sql.Stmt
+	listLinksStmt                       *sql.Stmt
+	listNotesStmt                       *sql.Stmt
+	listProjectIDsStmt                  *sql.Stmt
+	listProjectsStmt                    *sql.Stmt
+	markRepositoryImportedStmt          *sql.Stmt
+	neighborsStmt                       *sql.Stmt
+	noteByIDStmt                        *sql.Stmt
+	noteHashStmt                        *sql.Stmt
+	periodStatsStmt                     *sql.Stmt
+	projectAIStmt                       *sql.Stmt
+	projectByIDStmt                     *sql.Stmt
+	projectNotesStmt                    *sql.Stmt
+	projectRepositoriesStmt             *sql.Stmt
+	projectTechnologiesStmt             *sql.Stmt
+	projectsByAIStmt                    *sql.Stmt
+	quietOutsideStatusStmt              *sql.Stmt
+	sankeyLinksStmt                     *sql.Stmt
+	searchStmt                          *sql.Stmt
+	setLinkTargetStmt                   *sql.Stmt
+	settingStmt                         *sql.Stmt
+	shortestPathStmt                    *sql.Stmt
+	staleCardsStmt                      *sql.Stmt
+	technologyTrendStmt                 *sql.Stmt
+	timelineStmt                        *sql.Stmt
+	unassignedTechnologiesStmt          *sql.Stmt
+	upsertNoteStmt                      *sql.Stmt
+	upsertProjectStmt                   *sql.Stmt
+	upsertRepositoryStmt                *sql.Stmt
+	upsertSessionStmt                   *sql.Stmt
+	upsertSettingStmt                   *sql.Stmt
+	upsertTechnologyStmt                *sql.Stmt
+	weeklyVolumeStmt                    *sql.Stmt
 }
 
 func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 	return &Queries{
-		db:                               tx,
-		tx:                               tx,
-		aIActivityStmt:                   q.aIActivityStmt,
-		aISessionsByMonthStmt:            q.aISessionsByMonthStmt,
-		aISessionsInPeriodStmt:           q.aISessionsInPeriodStmt,
-		activeProjectsStmt:               q.activeProjectsStmt,
-		brokenLinksStmt:                  q.brokenLinksStmt,
-		calendarStmt:                     q.calendarStmt,
-		deleteNoteStmt:                   q.deleteNoteStmt,
-		deleteNoteLinksStmt:              q.deleteNoteLinksStmt,
-		deleteRepositoryCommitSearchStmt: q.deleteRepositoryCommitSearchStmt,
-		deleteRepositoryCommitsStmt:      q.deleteRepositoryCommitsStmt,
-		deleteSearchStmt:                 q.deleteSearchStmt,
-		dormantProjectsStmt:              q.dormantProjectsStmt,
-		graphLinksStmt:                   q.graphLinksStmt,
-		graphNodesStmt:                   q.graphNodesStmt,
-		hotspotsStmt:                     q.hotspotsStmt,
-		insertChangedFileStmt:            q.insertChangedFileStmt,
-		insertCommitStmt:                 q.insertCommitStmt,
-		insertJournalStmt:                q.insertJournalStmt,
-		insertLanguageStatStmt:           q.insertLanguageStatStmt,
-		insertLinkStmt:                   q.insertLinkStmt,
-		insertSearchStmt:                 q.insertSearchStmt,
-		languageEvolutionStmt:            q.languageEvolutionStmt,
-		lastRepositorySHAStmt:            q.lastRepositorySHAStmt,
-		latestLanguagesStmt:              q.latestLanguagesStmt,
-		linkProjectTechnologyStmt:        q.linkProjectTechnologyStmt,
-		listNotesStmt:                    q.listNotesStmt,
-		listProjectsStmt:                 q.listProjectsStmt,
-		markRepositoryImportedStmt:       q.markRepositoryImportedStmt,
-		neighborsStmt:                    q.neighborsStmt,
-		noteByIDStmt:                     q.noteByIDStmt,
-		noteHashStmt:                     q.noteHashStmt,
-		periodStatsStmt:                  q.periodStatsStmt,
-		projectAIStmt:                    q.projectAIStmt,
-		projectByIDStmt:                  q.projectByIDStmt,
-		projectNotesStmt:                 q.projectNotesStmt,
-		projectRepositoriesStmt:          q.projectRepositoriesStmt,
-		projectTechnologiesStmt:          q.projectTechnologiesStmt,
-		projectsByAIStmt:                 q.projectsByAIStmt,
-		resolveLinksStmt:                 q.resolveLinksStmt,
-		sankeyLinksStmt:                  q.sankeyLinksStmt,
-		searchStmt:                       q.searchStmt,
-		shortestPathStmt:                 q.shortestPathStmt,
-		staleCardsStmt:                   q.staleCardsStmt,
-		technologyTrendStmt:              q.technologyTrendStmt,
-		timelineStmt:                     q.timelineStmt,
-		unassignedTechnologiesStmt:       q.unassignedTechnologiesStmt,
-		upsertNoteStmt:                   q.upsertNoteStmt,
-		upsertProjectStmt:                q.upsertProjectStmt,
-		upsertRepositoryStmt:             q.upsertRepositoryStmt,
-		upsertSessionStmt:                q.upsertSessionStmt,
-		upsertTechnologyStmt:             q.upsertTechnologyStmt,
-		weeklyVolumeStmt:                 q.weeklyVolumeStmt,
+		db:                                  tx,
+		tx:                                  tx,
+		aIActivityStmt:                      q.aIActivityStmt,
+		aISessionsByMonthStmt:               q.aISessionsByMonthStmt,
+		aISessionsInPeriodStmt:              q.aISessionsInPeriodStmt,
+		activeProjectsStmt:                  q.activeProjectsStmt,
+		brokenLinksStmt:                     q.brokenLinksStmt,
+		calendarStmt:                        q.calendarStmt,
+		clearProjectTechnologiesStmt:        q.clearProjectTechnologiesStmt,
+		commitsSinceSessionStmt:             q.commitsSinceSessionStmt,
+		deleteCommitSearchForRepositoryStmt: q.deleteCommitSearchForRepositoryStmt,
+		deleteJournalStmt:                   q.deleteJournalStmt,
+		deleteNoteStmt:                      q.deleteNoteStmt,
+		deleteNoteLinksStmt:                 q.deleteNoteLinksStmt,
+		deleteProjectStmt:                   q.deleteProjectStmt,
+		deleteRepositoryStmt:                q.deleteRepositoryStmt,
+		deleteRepositoryCommitSearchStmt:    q.deleteRepositoryCommitSearchStmt,
+		deleteRepositoryCommitsStmt:         q.deleteRepositoryCommitsStmt,
+		deleteSearchStmt:                    q.deleteSearchStmt,
+		deleteSessionsStmt:                  q.deleteSessionsStmt,
+		deleteUnusedTechnologiesStmt:        q.deleteUnusedTechnologiesStmt,
+		dormantProjectsStmt:                 q.dormantProjectsStmt,
+		graphLinksStmt:                      q.graphLinksStmt,
+		graphNodesStmt:                      q.graphNodesStmt,
+		hotspotsStmt:                        q.hotspotsStmt,
+		insertChangedFileStmt:               q.insertChangedFileStmt,
+		insertCommitStmt:                    q.insertCommitStmt,
+		insertJournalStmt:                   q.insertJournalStmt,
+		insertLanguageStatStmt:              q.insertLanguageStatStmt,
+		insertLinkStmt:                      q.insertLinkStmt,
+		insertSearchStmt:                    q.insertSearchStmt,
+		languageEvolutionStmt:               q.languageEvolutionStmt,
+		lastRepositorySHAStmt:               q.lastRepositorySHAStmt,
+		latestLanguagesStmt:                 q.latestLanguagesStmt,
+		linkProjectTechnologyStmt:           q.linkProjectTechnologyStmt,
+		listLinksStmt:                       q.listLinksStmt,
+		listNotesStmt:                       q.listNotesStmt,
+		listProjectIDsStmt:                  q.listProjectIDsStmt,
+		listProjectsStmt:                    q.listProjectsStmt,
+		markRepositoryImportedStmt:          q.markRepositoryImportedStmt,
+		neighborsStmt:                       q.neighborsStmt,
+		noteByIDStmt:                        q.noteByIDStmt,
+		noteHashStmt:                        q.noteHashStmt,
+		periodStatsStmt:                     q.periodStatsStmt,
+		projectAIStmt:                       q.projectAIStmt,
+		projectByIDStmt:                     q.projectByIDStmt,
+		projectNotesStmt:                    q.projectNotesStmt,
+		projectRepositoriesStmt:             q.projectRepositoriesStmt,
+		projectTechnologiesStmt:             q.projectTechnologiesStmt,
+		projectsByAIStmt:                    q.projectsByAIStmt,
+		quietOutsideStatusStmt:              q.quietOutsideStatusStmt,
+		sankeyLinksStmt:                     q.sankeyLinksStmt,
+		searchStmt:                          q.searchStmt,
+		setLinkTargetStmt:                   q.setLinkTargetStmt,
+		settingStmt:                         q.settingStmt,
+		shortestPathStmt:                    q.shortestPathStmt,
+		staleCardsStmt:                      q.staleCardsStmt,
+		technologyTrendStmt:                 q.technologyTrendStmt,
+		timelineStmt:                        q.timelineStmt,
+		unassignedTechnologiesStmt:          q.unassignedTechnologiesStmt,
+		upsertNoteStmt:                      q.upsertNoteStmt,
+		upsertProjectStmt:                   q.upsertProjectStmt,
+		upsertRepositoryStmt:                q.upsertRepositoryStmt,
+		upsertSessionStmt:                   q.upsertSessionStmt,
+		upsertSettingStmt:                   q.upsertSettingStmt,
+		upsertTechnologyStmt:                q.upsertTechnologyStmt,
+		weeklyVolumeStmt:                    q.weeklyVolumeStmt,
 	}
 }

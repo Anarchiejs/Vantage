@@ -91,13 +91,33 @@ func TestWriteRefusesForeignNote(t *testing.T) {
 	}
 }
 
-func TestWriteReplacesAndRemovesTemp(t *testing.T) {
+func TestWritePreviousNameAndMissingVault(t *testing.T) {
 	dir := t.TempDir()
 	path := filepath.Join(dir, "Statistics.md")
 	if err := os.WriteFile(path, []byte("---\ngenerated_by: observatoire\n---\nold\n"), 0644); err != nil {
 		t.Fatal(err)
 	}
-	new := []byte("---\ngenerated_by: observatoire\n---\nnew\n")
+	if err := Write(dir, []byte("new")); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(path, []byte("# note\ngenerated_by: vantage\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := Write(dir, []byte("replaced")); err == nil {
+		t.Fatal("a body mention was treated as front matter")
+	}
+	if err := Write(filepath.Join(dir, "missing"), []byte("new")); err == nil {
+		t.Fatal("a missing vault directory was created")
+	}
+}
+
+func TestWriteReplacesAndRemovesTemp(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "Statistics.md")
+	if err := os.WriteFile(path, []byte("---\ngenerated_by: vantage\n---\nold\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	new := []byte("---\ngenerated_by: vantage\n---\nnew\n")
 	if err := Write(dir, new); err != nil {
 		t.Fatal(err)
 	}

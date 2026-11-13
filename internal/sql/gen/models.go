@@ -4,12 +4,18 @@
 
 package gen
 
+type AppSetting struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
+}
+
 type ChangedFile struct {
-	CommitSha string  `json:"commit_sha"`
-	Path      string  `json:"path"`
-	Language  *string `json:"language"`
-	Additions *int64  `json:"additions"`
-	Deletions *int64  `json:"deletions"`
+	RepositoryID int64   `json:"repository_id"`
+	CommitSha    string  `json:"commit_sha"`
+	Path         string  `json:"path"`
+	Language     *string `json:"language"`
+	Additions    *int64  `json:"additions"`
+	Deletions    *int64  `json:"deletions"`
 }
 
 type CommitGit struct {
@@ -48,9 +54,10 @@ type LanguageStat struct {
 }
 
 type Link struct {
-	SourceID    int64  `json:"source_id"`
-	TargetTitle string `json:"target_title"`
-	TargetID    *int64 `json:"target_id"`
+	SourceID     int64  `json:"source_id"`
+	TargetTitle  string `json:"target_title"`
+	TargetID     *int64 `json:"target_id"`
+	FromProperty int64  `json:"from_property"`
 }
 
 type Note struct {
@@ -71,6 +78,8 @@ type Project struct {
 	CardUpdated    *string `json:"card_updated"`
 	VerifiedCommit *string `json:"verified_commit"`
 	VerifiedOn     *string `json:"verified_on"`
+	Branch         *string `json:"branch"`
+	ExpectedNotes  *string `json:"expected_notes"`
 }
 
 type ProjectTechnology struct {

@@ -74,7 +74,7 @@ GROUP BY m.measured_on, m.language ORDER BY m.measured_on, m.language;
 -- Start from the project's repositories, then indexed commits and changed files.
 SELECT f.path, count(*) AS modifications, CAST(coalesce(sum(f.additions),0) AS INTEGER) AS additions,
  CAST(coalesce(sum(f.deletions),0) AS INTEGER) AS deletions
-FROM repository d JOIN commit_git c ON c.repository_id=d.id JOIN changed_file f ON f.commit_sha=c.sha
+FROM repository d JOIN commit_git c ON c.repository_id=d.id JOIN changed_file f ON f.repository_id=c.repository_id AND f.commit_sha=c.sha
 WHERE d.project_id=sqlc.arg(project_id) GROUP BY f.path ORDER BY modifications DESC, f.path LIMIT 20;
 
 -- name: ProjectAI :many
@@ -90,4 +90,15 @@ WHERE p.id=sqlc.arg(project_id) ORDER BY n.title;
 
 -- name: ProjectRepositories :many
 -- Last imported commit of each repository for this project (card health).
-SELECT id, path, last_imported_sha FROM repository WHERE project_id = ? ORDER BY path;
+SELECT id, path, branch, last_imported_sha FROM repository WHERE project_id = ? ORDER BY path;
+
+-- name: CommitsSinceSession :many
+-- Commits strictly after the latest session date. No session means no rows.
+SELECT c.date_utc AS date, c.sha AS ref,
+ CASE WHEN instr(c.message, char(10)) > 0 THEN substr(c.message, 1, instr(c.message, char(10)) - 1) ELSE c.message END AS title,
+ (SELECT max(s.date) FROM session s WHERE s.project_id = sqlc.arg(project_id)) AS since
+FROM repository d JOIN commit_git c ON c.repository_id = d.id
+WHERE d.project_id = sqlc.arg(project_id)
+ AND c.local_day > coalesce((SELECT max(s.date) FROM session s WHERE s.project_id = sqlc.arg(project_id)), '9999-12-31')
+ORDER BY c.date_utc DESC
+LIMIT 30;

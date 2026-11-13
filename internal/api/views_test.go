@@ -156,7 +156,7 @@ func TestViews(t *testing.T) {
 
 	g := getJSON[Graph](t, h, "/api/graph", 200)
 	noNilList(t, "graph", g)
-	if len(g.Nodes) == 0 || len(g.Links) == 0 || len(g.Broken) != 3 {
+	if len(g.Nodes) == 0 || len(g.Links) == 0 || len(g.Broken) != 6 {
 		t.Errorf("graph: %d nodes, %d links, %d broken", len(g.Nodes), len(g.Links), len(g.Broken))
 	}
 	n := getJSON[NoteDetail](t, h, "/api/notes/"+itoa(g.Nodes[0].ID), 200)
@@ -168,7 +168,7 @@ func TestViews(t *testing.T) {
 	getJSON[APIError](t, h, "/api/graph/path?from=x", 400)
 
 	rech := getJSON[[]SearchHit](t, h, "/api/search?q=naive", 200)
-	if len(rech) == 0 || !strings.Contains(rech[0].Title+rech[0].Excerpt, "<mark>") {
+	if len(rech) == 0 || !strings.Contains(rech[0].Title+rech[0].Excerpt, "\uE000") {
 		t.Errorf("recherche : %+v", rech)
 	}
 	if v := getJSON[[]SearchHit](t, h, "/api/search?q=", 200); len(v) != 0 {
@@ -192,8 +192,8 @@ func TestContractMirror(t *testing.T) {
 	types := map[string]reflect.Type{}
 	for _, v := range []any{APIError{}, ActivityDay{}, Stats{}, ActiveProject{}, DormantProject{}, StaleCard{}, Home{},
 		ProjectSummary{}, TimelineEvent{}, WeeklyVolume{}, LanguageShare{}, LanguagePoint{}, Hotspot{}, Health{}, AIActivity{},
-		ProjectDetail{}, SankeyNode{}, SankeyLink{}, TechTrend{}, Technologies{}, Assistant{}, GraphNode{}, Graph{}, GraphPath{},
-		NoteDetail{}, SearchHit{}, SQLRequest{}, SQLResult{}, SchemaTable{}, SavedQuery{}, UpdateEvent{}} {
+		CommitSince{}, ProjectDetail{}, SankeyNode{}, SankeyLink{}, TechTrend{}, Technologies{}, Assistant{}, GraphNode{}, Graph{}, GraphPath{},
+		NoteDetail{}, RepoFile{}, RepoCard{}, SearchHit{}, SQLRequest{}, SQLResult{}, SchemaTable{}, SavedQuery{}, UpdateEvent{}} {
 		types[reflect.TypeOf(v).Name()] = reflect.TypeOf(v)
 	}
 	if len(blocks) < 25 {

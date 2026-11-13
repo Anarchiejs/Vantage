@@ -1,18 +1,18 @@
 ---
 type: statistics
-generated_by: observatoire
+generated_by: vantage
 generated_on: 2026-03-21
 ---
-# Statistics — week of 2026-03-16 to 2026-03-21
+# Statistics — 2026-03-15 to 2026-03-21
 
-Note generated automatically by [[Observatoire]]: do not edit it by hand; it is rewritten every week.
+Note generated automatically by [[Vantage]]: do not edit it by hand; it is rewritten every week.
 
 ## Activity
 
-| | This week | Previous week |
+| | Last 7 days | Previous 7 days |
 |---|---:|---:|
-| Commits | 4 | 4 |
-| Lines added | 12 | 12 |
+| Commits | 4 | 6 |
+| Lines added | 12 | 18 |
 | Lines deleted | 0 | 0 |
 | Sessions | 0 | 0 |
 | Active projects | 2 | 2 |

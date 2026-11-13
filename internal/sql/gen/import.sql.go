@@ -9,6 +9,34 @@ import (
 	"context"
 )
 
+const clearProjectTechnologies = `-- name: ClearProjectTechnologies :exec
+DELETE FROM project_technology WHERE project_id = ?
+`
+
+func (q *Queries) ClearProjectTechnologies(ctx context.Context, projectID int64) error {
+	_, err := q.exec(ctx, q.clearProjectTechnologiesStmt, clearProjectTechnologies, projectID)
+	return err
+}
+
+const deleteCommitSearchForRepository = `-- name: DeleteCommitSearchForRepository :exec
+DELETE FROM search_index WHERE source = 'commit' AND ref IN (
+    SELECT printf('%d:%s', repository_id, sha) FROM commit_git WHERE repository_id = ?)
+`
+
+func (q *Queries) DeleteCommitSearchForRepository(ctx context.Context, repositoryID int64) error {
+	_, err := q.exec(ctx, q.deleteCommitSearchForRepositoryStmt, deleteCommitSearchForRepository, repositoryID)
+	return err
+}
+
+const deleteJournal = `-- name: DeleteJournal :exec
+DELETE FROM journal
+`
+
+func (q *Queries) DeleteJournal(ctx context.Context) error {
+	_, err := q.exec(ctx, q.deleteJournalStmt, deleteJournal)
+	return err
+}
+
 const deleteNote = `-- name: DeleteNote :exec
 DELETE FROM note WHERE id = ?
 `
@@ -28,8 +56,27 @@ func (q *Queries) DeleteNoteLinks(ctx context.Context, sourceID int64) error {
 	return err
 }
 
+const deleteProject = `-- name: DeleteProject :exec
+DELETE FROM project WHERE id = ?
+`
+
+func (q *Queries) DeleteProject(ctx context.Context, id int64) error {
+	_, err := q.exec(ctx, q.deleteProjectStmt, deleteProject, id)
+	return err
+}
+
+const deleteRepository = `-- name: DeleteRepository :exec
+DELETE FROM repository WHERE id = ?
+`
+
+func (q *Queries) DeleteRepository(ctx context.Context, id int64) error {
+	_, err := q.exec(ctx, q.deleteRepositoryStmt, deleteRepository, id)
+	return err
+}
+
 const deleteRepositoryCommitSearch = `-- name: DeleteRepositoryCommitSearch :exec
-DELETE FROM search_index WHERE source = 'commit' AND ref IN (SELECT sha FROM commit_git WHERE repository_id = ?)
+DELETE FROM search_index WHERE source = 'commit' AND ref IN (
+    SELECT printf('%d:%s', repository_id, sha) FROM commit_git WHERE repository_id = ?)
 `
 
 func (q *Queries) DeleteRepositoryCommitSearch(ctx context.Context, repositoryID int64) error {
@@ -61,22 +108,42 @@ func (q *Queries) DeleteSearch(ctx context.Context, arg DeleteSearchParams) erro
 	return err
 }
 
+const deleteSessions = `-- name: DeleteSessions :exec
+DELETE FROM session
+`
+
+func (q *Queries) DeleteSessions(ctx context.Context) error {
+	_, err := q.exec(ctx, q.deleteSessionsStmt, deleteSessions)
+	return err
+}
+
+const deleteUnusedTechnologies = `-- name: DeleteUnusedTechnologies :exec
+DELETE FROM technology WHERE id NOT IN (SELECT technology_id FROM project_technology)
+`
+
+func (q *Queries) DeleteUnusedTechnologies(ctx context.Context) error {
+	_, err := q.exec(ctx, q.deleteUnusedTechnologiesStmt, deleteUnusedTechnologies)
+	return err
+}
+
 const insertChangedFile = `-- name: InsertChangedFile :exec
-INSERT INTO changed_file (commit_sha, path, language, additions, deletions)
-VALUES (?, ?, ?, ?, ?)
-ON CONFLICT (commit_sha, path) DO NOTHING
+INSERT INTO changed_file (repository_id, commit_sha, path, language, additions, deletions)
+VALUES (?, ?, ?, ?, ?, ?)
+ON CONFLICT (repository_id, commit_sha, path) DO NOTHING
 `
 
 type InsertChangedFileParams struct {
-	CommitSha string  `json:"commit_sha"`
-	Path      string  `json:"path"`
-	Language  *string `json:"language"`
-	Additions *int64  `json:"additions"`
-	Deletions *int64  `json:"deletions"`
+	RepositoryID int64   `json:"repository_id"`
+	CommitSha    string  `json:"commit_sha"`
+	Path         string  `json:"path"`
+	Language     *string `json:"language"`
+	Additions    *int64  `json:"additions"`
+	Deletions    *int64  `json:"deletions"`
 }
 
 func (q *Queries) InsertChangedFile(ctx context.Context, arg InsertChangedFileParams) error {
 	_, err := q.exec(ctx, q.insertChangedFileStmt, insertChangedFile,
+		arg.RepositoryID,
 		arg.CommitSha,
 		arg.Path,
 		arg.Language,
@@ -89,7 +156,7 @@ func (q *Queries) InsertChangedFile(ctx context.Context, arg InsertChangedFilePa
 const insertCommit = `-- name: InsertCommit :execrows
 INSERT INTO commit_git (sha, repository_id, author, date_utc, offset_min, message)
 VALUES (?, ?, ?, ?, ?, ?)
-ON CONFLICT (sha) DO NOTHING
+ON CONFLICT (repository_id, sha) DO NOTHING
 `
 
 type InsertCommitParams struct {
@@ -101,7 +168,7 @@ type InsertCommitParams struct {
 	Message      string `json:"message"`
 }
 
-// 0 rows touched means the commit is already known; the caller then skips its files.
+// 0 rows touched means this repository already stored the commit.
 func (q *Queries) InsertCommit(ctx context.Context, arg InsertCommitParams) (int64, error) {
 	result, err := q.exec(ctx, q.insertCommitStmt, insertCommit,
 		arg.Sha,
@@ -165,18 +232,19 @@ func (q *Queries) InsertLanguageStat(ctx context.Context, arg InsertLanguageStat
 }
 
 const insertLink = `-- name: InsertLink :exec
-INSERT INTO link (source_id, target_title)
-VALUES (?, ?)
-ON CONFLICT (source_id, target_title) DO NOTHING
+INSERT INTO link (source_id, target_title, from_property)
+VALUES (?, ?, ?)
+ON CONFLICT (source_id, target_title) DO UPDATE SET from_property = min(link.from_property, excluded.from_property)
 `
 
 type InsertLinkParams struct {
-	SourceID    int64  `json:"source_id"`
-	TargetTitle string `json:"target_title"`
+	SourceID     int64  `json:"source_id"`
+	TargetTitle  string `json:"target_title"`
+	FromProperty int64  `json:"from_property"`
 }
 
 func (q *Queries) InsertLink(ctx context.Context, arg InsertLinkParams) error {
-	_, err := q.exec(ctx, q.insertLinkStmt, insertLink, arg.SourceID, arg.TargetTitle)
+	_, err := q.exec(ctx, q.insertLinkStmt, insertLink, arg.SourceID, arg.TargetTitle, arg.FromProperty)
 	return err
 }
 
@@ -228,6 +296,41 @@ func (q *Queries) LinkProjectTechnology(ctx context.Context, arg LinkProjectTech
 	return err
 }
 
+const listLinks = `-- name: ListLinks :many
+SELECT l.source_id, n.path AS source_path, l.target_title
+FROM link l JOIN note n ON n.id = l.source_id
+ORDER BY l.source_id, l.target_title
+`
+
+type ListLinksRow struct {
+	SourceID    int64  `json:"source_id"`
+	SourcePath  string `json:"source_path"`
+	TargetTitle string `json:"target_title"`
+}
+
+func (q *Queries) ListLinks(ctx context.Context) ([]ListLinksRow, error) {
+	rows, err := q.query(ctx, q.listLinksStmt, listLinks)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListLinksRow
+	for rows.Next() {
+		var i ListLinksRow
+		if err := rows.Scan(&i.SourceID, &i.SourcePath, &i.TargetTitle); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listNotes = `-- name: ListNotes :many
 SELECT id, path FROM note
 `
@@ -247,6 +350,38 @@ func (q *Queries) ListNotes(ctx context.Context) ([]ListNotesRow, error) {
 	for rows.Next() {
 		var i ListNotesRow
 		if err := rows.Scan(&i.ID, &i.Path); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listProjectIDs = `-- name: ListProjectIDs :many
+SELECT id, name FROM project ORDER BY id
+`
+
+type ListProjectIDsRow struct {
+	ID   int64  `json:"id"`
+	Name string `json:"name"`
+}
+
+func (q *Queries) ListProjectIDs(ctx context.Context) ([]ListProjectIDsRow, error) {
+	rows, err := q.query(ctx, q.listProjectIDsStmt, listProjectIDs)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListProjectIDsRow
+	for rows.Next() {
+		var i ListProjectIDsRow
+		if err := rows.Scan(&i.ID, &i.Name); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -290,14 +425,30 @@ func (q *Queries) NoteHash(ctx context.Context, path string) (NoteHashRow, error
 	return i, err
 }
 
-const resolveLinks = `-- name: ResolveLinks :exec
-UPDATE link SET target_id = (SELECT n.id FROM note n WHERE n.title = link.target_title LIMIT 1)
+const setLinkTarget = `-- name: SetLinkTarget :exec
+UPDATE link SET target_id = ? WHERE source_id = ? AND target_title = ?
 `
 
-// After every note is imported: point each link at the title it names (NULL if broken).
-func (q *Queries) ResolveLinks(ctx context.Context) error {
-	_, err := q.exec(ctx, q.resolveLinksStmt, resolveLinks)
+type SetLinkTargetParams struct {
+	TargetID    *int64 `json:"target_id"`
+	SourceID    int64  `json:"source_id"`
+	TargetTitle string `json:"target_title"`
+}
+
+func (q *Queries) SetLinkTarget(ctx context.Context, arg SetLinkTargetParams) error {
+	_, err := q.exec(ctx, q.setLinkTargetStmt, setLinkTarget, arg.TargetID, arg.SourceID, arg.TargetTitle)
 	return err
+}
+
+const setting = `-- name: Setting :one
+SELECT value FROM app_setting WHERE key = ?
+`
+
+func (q *Queries) Setting(ctx context.Context, key string) (string, error) {
+	row := q.queryRow(ctx, q.settingStmt, setting, key)
+	var value string
+	err := row.Scan(&value)
+	return value, err
 }
 
 const upsertNote = `-- name: UpsertNote :one
@@ -337,14 +488,16 @@ func (q *Queries) UpsertNote(ctx context.Context, arg UpsertNoteParams) (int64, 
 
 const upsertProject = `-- name: UpsertProject :one
 
-INSERT INTO project (name, status, source_path, card_updated, verified_commit, verified_on)
-VALUES (?, ?, ?, ?, ?, ?)
+INSERT INTO project (name, status, source_path, card_updated, verified_commit, verified_on, branch, expected_notes)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 ON CONFLICT (name) DO UPDATE SET
     status = excluded.status,
     source_path = excluded.source_path,
     card_updated = excluded.card_updated,
     verified_commit = excluded.verified_commit,
-    verified_on = excluded.verified_on
+    verified_on = excluded.verified_on,
+    branch = excluded.branch,
+    expected_notes = excluded.expected_notes
 RETURNING id
 `
 
@@ -355,6 +508,8 @@ type UpsertProjectParams struct {
 	CardUpdated    *string `json:"card_updated"`
 	VerifiedCommit *string `json:"verified_commit"`
 	VerifiedOn     *string `json:"verified_on"`
+	Branch         *string `json:"branch"`
+	ExpectedNotes  *string `json:"expected_notes"`
 }
 
 // Import writes. All of them are idempotent: running the import again creates no duplicates.
@@ -367,6 +522,8 @@ func (q *Queries) UpsertProject(ctx context.Context, arg UpsertProjectParams) (i
 		arg.CardUpdated,
 		arg.VerifiedCommit,
 		arg.VerifiedOn,
+		arg.Branch,
+		arg.ExpectedNotes,
 	)
 	var id int64
 	err := row.Scan(&id)
@@ -418,6 +575,21 @@ func (q *Queries) UpsertSession(ctx context.Context, arg UpsertSessionParams) er
 		arg.ProjectID,
 		arg.Ai,
 	)
+	return err
+}
+
+const upsertSetting = `-- name: UpsertSetting :exec
+INSERT INTO app_setting (key, value) VALUES (?, ?)
+ON CONFLICT (key) DO UPDATE SET value = excluded.value
+`
+
+type UpsertSettingParams struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
+}
+
+func (q *Queries) UpsertSetting(ctx context.Context, arg UpsertSettingParams) error {
+	_, err := q.exec(ctx, q.upsertSettingStmt, upsertSetting, arg.Key, arg.Value)
 	return err
 }
 

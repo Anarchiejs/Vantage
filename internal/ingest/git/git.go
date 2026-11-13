@@ -43,22 +43,42 @@ func output(ctx context.Context, repo string, args ...string) (string, error) {
 
 // Head returns the HEAD SHA and its branch (empty when HEAD is detached).
 func Head(ctx context.Context, repo string) (sha string, branch string, err error) {
-	sha, err = output(ctx, repo, "rev-parse", "--verify", "HEAD")
+	return Tip(ctx, repo, "")
+}
+
+// Tip returns the SHA and branch name to import. An empty branch means HEAD.
+func Tip(ctx context.Context, repo, branch string) (sha string, name string, err error) {
+	if strings.TrimSpace(branch) == "" {
+		sha, err = output(ctx, repo, "rev-parse", "--verify", "HEAD")
+		if err != nil {
+			return "", "", err
+		}
+		name, err = output(ctx, repo, "symbolic-ref", "--quiet", "--short", "HEAD")
+		var exitErr *exec.ExitError
+		if errors.As(err, &exitErr) && exitErr.ExitCode() == 1 {
+			err = nil
+		}
+		return sha, name, err
+	}
+	sha, err = output(ctx, repo, "rev-parse", "--verify", "--end-of-options", branch)
 	if err != nil {
 		return "", "", err
 	}
-	branch, err = output(ctx, repo, "symbolic-ref", "--quiet", "--short", "HEAD")
-	var exitErr *exec.ExitError
-	if errors.As(err, &exitErr) && exitErr.ExitCode() == 1 {
-		err = nil
-	}
-	return sha, branch, err
+	return sha, branch, nil
 }
 
-// Read returns commits in topological order, parents before children.
+// Read returns commits in topological order, parents before children, from HEAD.
 // An unknown or unreachable resume point triggers a full reread and ErrHistoryRewritten.
 func Read(ctx context.Context, repo string, sinceSHA string) ([]model.Commit, error) {
-	revision := "HEAD"
+	return ReadRevision(ctx, repo, "HEAD", sinceSHA)
+}
+
+// ReadRevision is Read, starting from revision instead of HEAD.
+func ReadRevision(ctx context.Context, repo, revision, sinceSHA string) ([]model.Commit, error) {
+	if strings.TrimSpace(revision) == "" {
+		revision = "HEAD"
+	}
+	tip := revision
 	var warning error
 	if sinceSHA != "" {
 		sha, err := output(ctx, repo, "rev-parse", "--verify", "--end-of-options", sinceSHA+"^{commit}")
@@ -72,9 +92,9 @@ func Read(ctx context.Context, repo string, sinceSHA string) ([]model.Commit, er
 			}
 			warning = fmt.Errorf("%w: %s", ErrHistoryRewritten, sinceSHA)
 		} else {
-			_, err = output(ctx, repo, "merge-base", "--is-ancestor", sha, "HEAD")
+			_, err = output(ctx, repo, "merge-base", "--is-ancestor", sha, tip)
 			if err == nil {
-				revision = sha + "..HEAD"
+				tip = sha + ".." + tip
 			} else {
 				var exitErr *exec.ExitError
 				if !errors.As(err, &exitErr) || exitErr.ExitCode() != 1 {
@@ -84,7 +104,7 @@ func Read(ctx context.Context, repo string, sinceSHA string) ([]model.Commit, er
 			}
 		}
 	}
-	cmd := Command(ctx, repo, "log", "--reverse", "--topo-order", "--numstat", "-z", "-M", "--no-ext-diff", "--no-textconv", "--diff-merges=off", "--format=%x00%H%x00%P%x00%an%x00%aI%x00%B%x00", revision, "--")
+	cmd := Command(ctx, repo, "log", "--reverse", "--topo-order", "--numstat", "-z", "-M", "--no-ext-diff", "--no-textconv", "--diff-merges=off", "--format=%x00%H%x00%P%x00%an%x00%aI%x00%B%x00", tip, "--")
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	stdout, err := cmd.StdoutPipe()
