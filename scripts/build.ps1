@@ -1,5 +1,5 @@
-# Build the UI (web\dist) then observatoire.exe, which embeds it.
-# If Windows Defender Controlled folder access is on, allow observatoire.exe
+# Build the UI (web\dist) then vantage.exe, which embeds it.
+# If Windows Defender Controlled folder access is on, allow vantage.exe
 # (an administrator window opens).
 # Usage: .\build.cmd
 
@@ -15,15 +15,15 @@ if (-not (Test-Path -LiteralPath 'web\node_modules')) {
 Step "Building the UI (npm run build)"
 Run "The UI build" { npm --prefix web run build }
 
-Step 'Compiling observatoire.exe'
-Run 'The compile' { go build -tags embed -o observatoire.exe ./cmd/observatoire }
+Step 'Compiling vantage.exe'
+Run 'The compile' { go build -tags embed -o vantage.exe ./cmd/vantage }
 
-$exe = Join-Path $Root 'observatoire.exe'
+$exe = Join-Path $Root 'vantage.exe'
 $preference = $null
 try { $preference = Get-MpPreference -ErrorAction Stop } catch {}
 if ($preference -and $preference.EnableControlledFolderAccess -eq 1) {
     # Without admin rights the allow-list cannot be read: test directly
-    # whether observatoire.exe can write here (create a throwaway database).
+    # whether vantage.exe can write here (create a throwaway database).
     $probe = Join-Path $Root '.write-probe.db'
     $ok = $false
     try {
@@ -32,18 +32,18 @@ if ($preference -and $preference.EnableControlledFolderAccess -eq 1) {
     } catch {}
     Remove-Item -Path "$probe*" -Force -ErrorAction SilentlyContinue
     if ($ok) {
-        Info 'Controlled folder access: observatoire.exe is already allowed.'
+        Info 'Controlled folder access: vantage.exe is already allowed.'
     } else {
-        Step 'Controlled folder access is on: allowing observatoire.exe (accept the administrator window)'
+        Step 'Controlled folder access is on: allowing vantage.exe (accept the administrator window)'
         $command = "Add-MpPreference -ControlledFolderAccessAllowedApplications '" + ($exe -replace "'", "''") + "'"
         $encoded = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($command))
         try {
             $p = Start-Process powershell -Verb RunAs -Wait -PassThru -ArgumentList "-NoProfile -EncodedCommand $encoded"
             if ($p.ExitCode -ne 0) { throw "code $($p.ExitCode)" }
-            Info 'observatoire.exe allowed.'
+            Info 'vantage.exe allowed.'
         } catch {
             Warn "permission was not granted ($($_.Exception.Message))."
-            Info "Without it, observatoire.exe cannot create its database. Do it by hand: Windows Security >"
+            Info "Without it, vantage.exe cannot create its database. Do it by hand: Windows Security >"
             Info "Virus & threat protection > Manage ransomware protection >"
             Info "Allow an app through Controlled folder access > $exe"
         }
@@ -51,5 +51,5 @@ if ($preference -and $preference.EnableControlledFolderAccess -eq 1) {
 }
 
 Write-Host ''
-Write-Host 'Build complete: observatoire.exe' -ForegroundColor Green
+Write-Host 'Build complete: vantage.exe' -ForegroundColor Green
 Write-Host 'Next step: .\start.cmd "C:\path\to\your vault"'

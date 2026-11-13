@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build the UI (web/dist) then the observatoire binary, which embeds it.
+# Build the UI (web/dist) then the vantage binary, which embeds it.
 # Usage: ./build.sh
 # On Windows, use build.cmd instead.
 
@@ -28,8 +28,8 @@ fi
 step "Building the UI (npm run build)"
 run "The UI build" npm --prefix web run build
 
-step "Compiling observatoire"
-run "The compile" go build -tags embed -o observatoire ./cmd/observatoire
+step "Compiling vantage"
+run "The compile" go build -tags embed -o vantage ./cmd/vantage
 
-printf '\n%sBuild complete: observatoire%s\n' "$green" "$reset"
+printf '\n%sBuild complete: vantage%s\n' "$green" "$reset"
 printf 'Next step: ./start.sh "/path/to/your vault"\n'

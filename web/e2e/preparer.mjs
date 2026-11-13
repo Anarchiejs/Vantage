@@ -1,4 +1,4 @@
-// Prepare and start Observatoire for the end-to-end tests.
+// Prepare and start Vantage for the end-to-end tests.
 // Can be launched from any directory: the repository root is derived from this file.
 import { spawn } from 'node:child_process'
 import { existsSync } from 'node:fs'
@@ -34,8 +34,8 @@ if (!existsSync(path.join(root, 'web', 'dist', 'index.html'))) {
   await run(npmCommand(), ['--prefix', 'web', 'run', 'build'])
 }
 
-const tmp = await mkdtemp(path.join(os.tmpdir(), 'observatoire-e2e-'))
-const binary = path.join(tmp, process.platform === 'win32' ? 'observatoire.exe' : 'observatoire')
+const tmp = await mkdtemp(path.join(os.tmpdir(), 'vantage-e2e-'))
+const binary = path.join(tmp, process.platform === 'win32' ? 'vantage.exe' : 'vantage')
 const base = path.join(tmp, 'e2e.db')
 const vault = path.join(root, 'testdata', 'vault')
 
@@ -44,7 +44,7 @@ async function removeTmp() {
 }
 
 try {
-  await run('go', ['build', '-tags', 'embed', '-o', binary, './cmd/observatoire'])
+  await run('go', ['build', '-tags', 'embed', '-o', binary, './cmd/vantage'])
   await run(binary, [
     'import',
     '-db',

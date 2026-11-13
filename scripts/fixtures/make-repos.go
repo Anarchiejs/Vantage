@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Anarchiejs/Observatoire/internal/fixtures"
+	"github.com/Anarchiejs/Vantage/internal/fixtures"
 )
 
 func main() {

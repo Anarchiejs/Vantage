@@ -1,4 +1,4 @@
-module github.com/Anarchiejs/Observatoire
+module github.com/Anarchiejs/Vantage
 
 go 1.26.4
 

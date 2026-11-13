@@ -2,13 +2,13 @@
 
 ## Unreleased
 
-Public-release cleanup. Observatoire is a local application built for Obsidian. It runs on Windows, Linux, and macOS.
+The project is now named Vantage. It is a local application built for Obsidian. It runs on Windows, Linux, and macOS.
 
 ### Added
 
 - Linux and macOS launchers `install.sh`, `build.sh`, and `start.sh`, next to the Windows `.cmd` scripts.
 - `start.sh` and `start.cmd` take a port (`--port` / `-Port`, default 7878) and a repository remap (`--repos` / `-Repos`). `<vault>/.observatoire/repos` supplies the same remap, with paths relative to the vault. The sample vault maps Atlas and Compass onto `testdata/repos`, so that vault imports Git history on Windows, Linux, and macOS. The start scripts create those repositories when they are missing.
-- `start.sh` remembers the vault path (`$XDG_DATA_HOME/observatoire/vault.txt` on Linux, `~/Library/Application Support/Observatoire/vault.txt` on macOS).
+- `start.sh` remembers the vault path (`$XDG_DATA_HOME/vantage/vault.txt` on Linux, `~/Library/Application Support/Vantage/vault.txt` on macOS). If a path was stored under the previous Observatoire directory, the start script still reads it and then writes the Vantage location.
 - CI runs on Ubuntu, macOS, and Windows. Web unit tests run on all three. Playwright end-to-end tests run on Ubuntu.
 - `go test ./...` creates `testdata/repos` when the fixture repositories are missing.
 
@@ -20,13 +20,15 @@ Public-release cleanup. Observatoire is a local application built for Obsidian. 
 
 ### Breaking
 
+- The command is `vantage`, the Go module is `github.com/Anarchiejs/Vantage`, and the default database file is `vantage.db`. Rename or delete `observatoire.db`, `observatoire.db-wal`, and `observatoire.db-shm` if you still have them, or pass `-db`.
 - `-vault` is required for `import` and `watch`, and for `report` unless `-stdout` is set. There is no default vault path.
-- A database created before the English schema rename (it still has a table named `projet`) is refused. Goose cannot rebuild tables whose migration version is already applied. Delete `observatoire.db`, `observatoire.db-wal`, and `observatoire.db-shm`, then import the vault again.
+- A database created before the English schema rename (it still has a table named `projet`) is refused. Goose cannot rebuild tables whose migration version is already applied. Delete `vantage.db`, `vantage.db-wal`, and `vantage.db-shm`, then import the vault again.
 - `Statistics.md` no longer links to a fixed hub note, and it no longer rewrites the `Claude Code` wikilink.
+- The remembered vault path moved from the Observatoire application-data directory to the Vantage directory (`%LOCALAPPDATA%\Vantage\vault.txt` on Windows, `$XDG_DATA_HOME/vantage/vault.txt` on Linux, `~/Library/Application Support/Vantage/vault.txt` on macOS). The start scripts still read the previous file when the new one is missing.
 
 ### Changed
 
-- Go module path is `github.com/Anarchiejs/Observatoire`.
+- Go module path is `github.com/Anarchiejs/Vantage`.
 - Fixture repositories are generated in `testdata/repos` (`go run ./scripts/fixtures/make-repos.go`). `make-repos.exe` is not part of the repository.
 - The weekly report is still `Statistics.md` at the vault root, with front matter `generated_by: observatoire`.
 

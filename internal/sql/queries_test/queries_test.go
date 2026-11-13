@@ -13,9 +13,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Anarchiejs/Observatoire/internal/db"
-	"github.com/Anarchiejs/Observatoire/internal/ingest"
-	"github.com/Anarchiejs/Observatoire/internal/sql/gen"
+	"github.com/Anarchiejs/Vantage/internal/db"
+	"github.com/Anarchiejs/Vantage/internal/ingest"
+	"github.com/Anarchiejs/Vantage/internal/sql/gen"
 )
 
 var update = flag.Bool("update", false, "rewrite reviewed JSON expectations and EXPLAIN plans")

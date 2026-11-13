@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Anarchiejs/Observatoire/internal/sql/gen"
+	"github.com/Anarchiejs/Vantage/internal/sql/gen"
 )
 
 const dayLayout = "2006-01-02"

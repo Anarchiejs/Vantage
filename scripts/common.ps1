@@ -1,8 +1,8 @@
-# Shared helpers for Observatoire scripts (PowerShell 5.1 compatible).
+# Shared helpers for Vantage scripts (PowerShell 5.1 compatible).
 # Loaded by ". (Join-Path $PSScriptRoot 'common.ps1')": it moves to the repository root.
 
 $ErrorActionPreference = 'Stop'
-# Programs (go, npm, observatoire.exe) write UTF-8. Without this, PowerShell 5.1 mangles accents.
+# Programs (go, npm, vantage.exe) write UTF-8. Without this, PowerShell 5.1 mangles accents.
 try { [Console]::OutputEncoding = [System.Text.Encoding]::UTF8 } catch {}
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
@@ -32,16 +32,16 @@ function Update-Path {
 # Run an external command and stop if it fails (non-zero exit code).
 # Its error stream is shown as normal text: in PowerShell 5.1, a warning
 # written to stderr (for example Vite's chunk-size warning) would otherwise become an error.
-# Printed lines stay in $global:ObsOutput.
+# Printed lines stay in $global:VantageOutput.
 function Run([string]$Description, [scriptblock]$Command) {
     $previous = $ErrorActionPreference
     $ErrorActionPreference = 'Continue'
     $global:LASTEXITCODE = -1
-    $global:ObsOutput = @()
+    $global:VantageOutput = @()
     try {
         & $Command 2>&1 | ForEach-Object {
             $line = "$_"
-            $global:ObsOutput += $line
+            $global:VantageOutput += $line
             Write-Host "    $line"
         }
         $code = $global:LASTEXITCODE

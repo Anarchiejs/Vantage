@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Anarchiejs/Observatoire/internal/sql/gen"
+	"github.com/Anarchiejs/Vantage/internal/sql/gen"
 )
 
 func TestSearchFilters(t *testing.T) {

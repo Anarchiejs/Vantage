@@ -1,7 +1,7 @@
 //go:build embed
 
 // Package web provides the built UI (web/dist). With -tags embed it is included in the executable:
-// `npm --prefix web run build && go build -tags embed ./cmd/observatoire`.
+// `npm --prefix web run build && go build -tags embed ./cmd/vantage`.
 package web
 
 import (

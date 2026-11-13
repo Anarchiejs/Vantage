@@ -1,4 +1,4 @@
--- Initial Observatoire schema.
+-- Initial Vantage schema.
 -- Every table is STRICT: SQLite rejects a value of the wrong type instead of converting it silently.
 -- Dates are ISO 8601 text ("2026-10-26" or "2026-10-26T14:03:00Z"), so they compare and sort as text.
 -- The commit table is named commit_git because COMMIT is a reserved SQL word.

@@ -52,7 +52,7 @@ supported_os() {
       fail "On Windows, run ${cmd_name} from Command Prompt or PowerShell."
       ;;
     *)
-      fail "Unsupported operating system $(uname -s). Observatoire supports Windows, Linux, and macOS."
+      fail "Unsupported operating system $(uname -s). Vantage supports Windows, Linux, and macOS."
       ;;
   esac
 }
@@ -137,6 +137,20 @@ prepend_user_tools() {
 }
 
 vault_memo_file() {
+  case "$(uname -s)" in
+    Darwin)
+      printf '%s\n' "${HOME}/Library/Application Support/Vantage/vault.txt"
+      ;;
+    Linux)
+      printf '%s\n' "${XDG_DATA_HOME:-${HOME}/.local/share}/vantage/vault.txt"
+      ;;
+    *)
+      fail "unsupported operating system $(uname -s)"
+      ;;
+  esac
+}
+
+legacy_vault_memo_file() {
   case "$(uname -s)" in
     Darwin)
       printf '%s\n' "${HOME}/Library/Application Support/Observatoire/vault.txt"

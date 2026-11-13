@@ -1,6 +1,6 @@
 # Contributing
 
-Observatoire is maintained by [Anarchy](https://github.com/Anarchiejs). Issues and pull requests are welcome.
+Vantage is maintained by [Anarchy](https://github.com/Anarchiejs). Issues and pull requests are welcome.
 
 ## Setup
 

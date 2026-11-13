@@ -9,9 +9,9 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/Anarchiejs/Observatoire/internal/db"
-	"github.com/Anarchiejs/Observatoire/internal/ingest"
-	"github.com/Anarchiejs/Observatoire/internal/sql/gen"
+	"github.com/Anarchiejs/Vantage/internal/db"
+	"github.com/Anarchiejs/Vantage/internal/ingest"
+	"github.com/Anarchiejs/Vantage/internal/sql/gen"
 )
 
 var maj = flag.Bool("update", false, "rewrite the reviewed Markdown expectation")

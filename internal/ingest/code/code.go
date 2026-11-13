@@ -10,9 +10,9 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/Anarchiejs/Observatoire/internal/ingest/git"
-	"github.com/Anarchiejs/Observatoire/internal/model"
-	"github.com/Anarchiejs/Observatoire/internal/ospath"
+	"github.com/Anarchiejs/Vantage/internal/ingest/git"
+	"github.com/Anarchiejs/Vantage/internal/model"
+	"github.com/Anarchiejs/Vantage/internal/ospath"
 	"github.com/boyter/scc/v3/processor"
 )
 
