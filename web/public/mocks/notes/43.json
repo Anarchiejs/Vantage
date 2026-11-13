@@ -1,9 +1,9 @@
 {
   "id": 43,
   "title": "Local AI",
-  "folder": "IA",
+  "folder": "AI",
   "degree": 2,
-  "path": "IA/Local AI.md",
+  "path": "AI/Local AI.md",
   "updated": "2026-10-26",
   "content": "# Local AI\n\nDemo note from the Atlas vault.\n\nLinked to [[Northwind]].\nLinked to [[Quartz]].",
   "neighbors": [

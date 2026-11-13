@@ -30,7 +30,7 @@ test('tech: filter the Sankey, then restore every project', async ({ page }) => 
 
 test('mobile: every page stays within the screen width', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  for (const route of ['/', '/projects', '/tech', '/graph', '/search', '/console']) {
+  for (const route of ['/', '/projects', '/repos', '/tech', '/graph', '/search', '/console']) {
     await page.goto(route)
     await expect(page.locator('main h1')).toBeVisible()
     await expect(page.getByRole('navigation', { name: 'Main' })).toBeVisible()

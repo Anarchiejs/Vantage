@@ -55,6 +55,7 @@ export interface Home {
   active: ActiveProject[]
   dormant: DormantProject[] // status "in progress" with no commit for more than 30 days
   stale_cards: StaleCard[]
+  quiet_hidden: number // quiet cards hidden because status is outside the watched set
 }
 
 // ---- GET /api/projects and /api/projects/{id} ------------------------------
@@ -110,7 +111,8 @@ export interface Health {
   last_sha: string | null
   up_to_date: boolean
   commits_since: number
-  missing_notes: string[] // among "<Name> - Summary", "<Name> - Detail"
+  missing_notes: string[] // titles listed in the card's expected_notes
+  activity_note: string // why the card is or is not dormant
 }
 
 export interface AIActivity {
@@ -118,6 +120,13 @@ export interface AIActivity {
   sessions: number
   first: string
   last: string
+}
+
+export interface CommitSince {
+  date: string
+  ref: string
+  title: string
+  since: string // latest session date these commits follow
 }
 
 export interface ProjectDetail {
@@ -129,6 +138,9 @@ export interface ProjectDetail {
   hotspots: Hotspot[] // 20 most modified files
   health: Health
   ai: AIActivity[]
+  since_session: CommitSince[]
+  repo_paths: string[]
+  obsidian_url: string
 }
 
 // ---- GET /api/technologies and /api/ai -------------------------------------
@@ -168,6 +180,7 @@ export interface Assistant {
 export interface GraphNode {
   id: number
   title: string
+  path: string
   folder: string
   degree: number // resolved incoming + outgoing links
 }
@@ -178,6 +191,7 @@ export interface Graph {
   orphans: GraphNode[] // degree = 0
   central: GraphNode[] // 10 highest degrees
   broken: { source: number; source_title: string; target_title: string }[]
+  folders: string[] // every folder, before the folder filter
 }
 
 export interface GraphPath {
@@ -192,6 +206,23 @@ export interface NoteDetail {
   updated: string | null
   content: string
   neighbors: GraphNode[]
+  obsidian_url: string
+}
+
+export interface RepoFile {
+  path: string
+  branch: string
+  exists: boolean
+  imported: boolean
+}
+
+export interface RepoCard {
+  id: number
+  name: string
+  source_path: string
+  source_exists: boolean
+  branch: string
+  repos: RepoFile[]
 }
 
 // ---- GET /api/search ---------------------------------------------------------
@@ -199,7 +230,7 @@ export interface NoteDetail {
 export interface SearchHit {
   source: 'note' | 'commit'
   ref: string // note path or sha
-  title: string // with <mark>…</mark> around matched terms
+  title: string // matched terms wrapped in U+E000 / U+E001
   excerpt: string // same, with "…" at cuts
   project: string | null
   date: string | null

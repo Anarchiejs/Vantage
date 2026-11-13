@@ -73,6 +73,6 @@ test('project page shows the card and its source path', async () => {
     </MemoryRouter>,
   )
   expect(await screen.findByRole('heading', { name: 'Atlas' })).toBeTruthy()
-  expect(screen.getByText('C:/dev/Atlas')).toBeTruthy()
+  expect(screen.getAllByText('C:/dev/Atlas').length).toBeGreaterThan(0)
   expect(screen.getByText('Up to date')).toBeTruthy()
 })

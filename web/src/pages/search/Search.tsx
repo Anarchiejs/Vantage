@@ -39,6 +39,7 @@ export default function Search() {
   const written = useRef(qUrl)
   const field = useRef<HTMLInputElement>(null)
   const [active, setActive] = useState(0)
+  const [limit, setLimit] = useState(50)
 
   useEffect(() => { field.current?.focus() }, [])
   useEffect(() => {
@@ -72,7 +73,7 @@ export default function Search() {
   }
 
   const path = qUrl.trim()
-    ? withParams('/api/search', { q: qUrl, source: apiSource(source), project, folder, since, until })
+    ? withParams('/api/search', { q: qUrl, source: apiSource(source), project, folder, since, until, limit })
     : null
   const state = useApi<SearchHit[]>(path)
   const projectState = useApi<ProjectSummary[]>('/api/projects')
@@ -80,7 +81,7 @@ export default function Search() {
   const hits = qUrl.trim() && state.status === 'ok' ? state.data : []
   const index = hits.length === 0 ? -1 : Math.min(active, hits.length - 1)
 
-  useEffect(() => { setActive(0) }, [path])
+  useEffect(() => { setActive(0); setLimit(50) }, [qUrl, source, project, folder, since, until])
 
   const projectNames = projects.map((item) => item.name)
   const projectOptions = project && !projectNames.includes(project) ? [project, ...projectNames] : projectNames
@@ -147,6 +148,7 @@ export default function Search() {
           ))}
         </div>
       )}
+      {hits.length > 0 && hits.length >= limit && limit < 200 && <button type="button" className="rounded border border-line px-3 py-2 text-sm text-accent" onClick={() => setLimit(value => Math.min(200, value + 50))}>Load more</button>}
     </div>
   )
 }

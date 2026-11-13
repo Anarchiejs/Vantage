@@ -2,12 +2,11 @@ const START = '\uE000'
 const END = '\uE001'
 
 /**
- * The server wraps matched terms in `<mark>`. Escape all HTML,
- * then restore only those two tags.
+ * The server wraps matched terms in U+E000 / U+E001.
+ * Escape all HTML, then turn those sentinels into mark tags.
  */
 export function highlightedHtml(raw: string): string {
-  const reserved = raw.replaceAll('<mark>', START).replaceAll('</mark>', END)
-  const escaped = reserved
+  const escaped = raw
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')

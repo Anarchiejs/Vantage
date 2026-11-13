@@ -2,7 +2,7 @@ import { expect, test } from 'vitest'
 import type { Graph as GraphData } from '../../api/types'
 import { mockPath, nodeSize, selectedNote } from './Graph'
 
-const node = (id: number, title: string): GraphData['nodes'][number] => ({ id, title, folder: 'Projects', degree: 1 })
+const node = (id: number, title: string): GraphData['nodes'][number] => ({ id, title, path: `Projects/${title}.md`, folder: 'Projects', degree: 1 })
 
 const graph: GraphData = {
   nodes: [node(1, 'Atlas'), node(2, 'Compass'), node(3, 'Harbor')],
@@ -10,6 +10,7 @@ const graph: GraphData = {
   orphans: [],
   central: [],
   broken: [],
+  folders: ['Projects'],
 }
 
 test('node size stays inside the drawing bounds', () => {

@@ -11,11 +11,13 @@ const Tech = lazy(() => import('./pages/tech/Tech'))
 const Graph = lazy(() => import('./pages/graph/Graph'))
 const Search = lazy(() => import('./pages/search/Search'))
 const Console = lazy(() => import('./pages/console/Console'))
+const Repos = lazy(() => import('./pages/repos/Repos'))
 const Palette = lazy(() => import('./pages/palette/Palette'))
 
 const NAV = [
   { to: '/', label: 'Home', icon: 'home' },
   { to: '/projects', label: 'Projects', icon: 'projects' },
+  { to: '/repos', label: 'Repos', icon: 'repos' },
   { to: '/tech', label: 'Tech & AI', icon: 'tech' },
   { to: '/graph', label: 'Graph', icon: 'graph' },
   { to: '/search', label: 'Search', icon: 'search' },
@@ -115,6 +117,7 @@ function Frame() {
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:id" element={<Project />} />
+            <Route path="/repos" element={<Repos />} />
             <Route path="/tech" element={<Tech />} />
             <Route path="/graph" element={<Graph />} />
             <Route path="/graph/:id" element={<Graph />} />
