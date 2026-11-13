@@ -13,12 +13,16 @@ param(
 )
 
 $memo = Join-Path $env:LOCALAPPDATA 'Vantage\vault.txt'
-$legacyMemo = Join-Path $env:LOCALAPPDATA 'Observatoire\vault.txt'
 
 if ($Port -lt 1 -or $Port -gt 65535) {
     Write-Host ''
     Write-Host 'ERROR: port must be a number between 1 and 65535.' -ForegroundColor Red
     exit 1
+}
+
+$legacyMemo = Join-Path $env:LOCALAPPDATA 'Observatoire\vault.txt'
+if (-not (Test-Path -LiteralPath $memo) -and (Test-Path -LiteralPath $legacyMemo)) {
+    Write-Host "warning: $legacyMemo is the previous remembered vault. Move that file to $memo"
 }
 
 if (-not $Vault) {
@@ -58,7 +62,7 @@ if (-not (Test-Path -LiteralPath (Join-Path $Root 'vantage.exe'))) {
 # The sample vault maps Atlas and Compass onto testdata\repos. Create those
 # repositories the first time, so .\start.cmd testdata\vault works on a fresh tree.
 function Ensure-Fixtures {
-    $map = Join-Path $Vault '.observatoire\repos'
+    $map = Join-Path $Vault '.vantage\repos'
     if (-not (Test-Path -LiteralPath $map)) { return }
     $alpha = Join-Path $Root 'testdata\repos\alpha\.git'
     $beta = Join-Path $Root 'testdata\repos\beta\.git'
@@ -87,7 +91,7 @@ if ($global:VantageOutput | Where-Object { $_ -match '^0 repositories' }) {
     Warn "no Git repository imported. Check the ""warning"" lines above if there are any."
     Info "A project has commits when its Projects\<Name>\<Name>.md card has ""type: project"""
     Info "and ""source_path:"" is a Git repository on this PC."
-    Info "Or pass -Repos ""Name=C:\path"", or add <vault>\.observatoire\repos."
+    Info "Or pass -Repos ""Name=C:\path"", or add <vault>\.vantage\repos."
 }
 
 Step "Starting the UI: $url  (Ctrl+C to stop)"

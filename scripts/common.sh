@@ -136,20 +136,6 @@ prepend_user_tools() {
   hash -r
 }
 
-vault_memo_file() {
-  case "$(uname -s)" in
-    Darwin)
-      printf '%s\n' "${HOME}/Library/Application Support/Vantage/vault.txt"
-      ;;
-    Linux)
-      printf '%s\n' "${XDG_DATA_HOME:-${HOME}/.local/share}/vantage/vault.txt"
-      ;;
-    *)
-      fail "unsupported operating system $(uname -s)"
-      ;;
-  esac
-}
-
 legacy_vault_memo_file() {
   case "$(uname -s)" in
     Darwin)
@@ -157,6 +143,20 @@ legacy_vault_memo_file() {
       ;;
     Linux)
       printf '%s\n' "${XDG_DATA_HOME:-${HOME}/.local/share}/observatoire/vault.txt"
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+vault_memo_file() {
+  case "$(uname -s)" in
+    Darwin)
+      printf '%s\n' "${HOME}/Library/Application Support/Vantage/vault.txt"
+      ;;
+    Linux)
+      printf '%s\n' "${XDG_DATA_HOME:-${HOME}/.local/share}/vantage/vault.txt"
       ;;
     *)
       fail "unsupported operating system $(uname -s)"

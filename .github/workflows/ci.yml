@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_call:
 
 permissions:
   contents: read
@@ -29,6 +30,19 @@ jobs:
         run: go vet ./...
       - name: go test
         run: go test ./...
+      - name: go test race
+        if: runner.os == 'Linux'
+        run: go test -race ./internal/ingest ./internal/watch
+      - name: golangci-lint
+        if: runner.os == 'Linux'
+        run: |
+          go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.5.0
+          "$(go env GOPATH)/bin/golangci-lint" run
+      - name: govulncheck
+        if: runner.os == 'Linux'
+        run: |
+          go install golang.org/x/vuln/cmd/govulncheck@latest
+          "$(go env GOPATH)/bin/govulncheck" ./...
       - name: sqlc generate
         if: runner.os == 'Linux'
         run: |
@@ -102,8 +116,10 @@ jobs:
         shell: powershell
         # build.ps1 reloads the machine PATH, which puts the runner image's Go
         # ahead of the one setup-go installed. setup-go also sets
-        # GOTOOLCHAIN=local, so that older Go refuses to fetch 1.26.4.
+        # GOTOOLCHAIN=local, so that older Go refuses to fetch the version in go.mod.
         # auto is the normal Windows default and lets that Go switch toolchains.
+        # Keep this override until the GitHub-hosted Windows image ships a Go
+        # at least as new as go.mod. Drop it once that image Go can build the module.
         env:
           GOTOOLCHAIN: auto
         run: |

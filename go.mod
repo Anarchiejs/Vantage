@@ -1,6 +1,6 @@
 module github.com/Anarchiejs/Vantage
 
-go 1.26.4
+go 1.26.11
 
 require (
 	github.com/boyter/scc/v3 v3.7.0

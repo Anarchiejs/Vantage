@@ -10,9 +10,9 @@ The database holds the text of your notes, commit subjects, author names, and ch
 
 ## What it changes on disk
 
-`import` and `watch` read the vault and do not modify notes. `report` writes `Statistics.md` at the vault root. It replaces that file only when the existing note contains `generated_by: observatoire`. It does not keep a backup. Copy the note first if you need the previous text.
+`import` and `watch` read the vault and do not modify notes. `report` writes `Statistics.md` at the vault root. It replaces that file only when the front matter says `generated_by: vantage` or `generated_by: observatoire`. The same words in the body do not count. It does not keep a backup. Copy the note first if you need the previous text.
 
-`start.cmd` remembers the vault path in `%LOCALAPPDATA%\Vantage\vault.txt`. `start.sh` remembers it in `$XDG_DATA_HOME/vantage/vault.txt` on Linux (`~/.local/share/vantage/vault.txt` when `XDG_DATA_HOME` is unset) and in `~/Library/Application Support/Vantage/vault.txt` on macOS. The file contains only that path. If that file is missing, the start script still reads the previous Observatoire location and then writes the Vantage path.
+`start.cmd` remembers the vault path in `%LOCALAPPDATA%\Vantage\vault.txt`. `start.sh` remembers it in `$XDG_DATA_HOME/vantage/vault.txt` on Linux (`~/.local/share/vantage/vault.txt` when `XDG_DATA_HOME` is unset) and in `~/Library/Application Support/Vantage/vault.txt` on macOS. The file contains only that path. If that file is missing, the start script still reads the previous Observatoire location, warns, and then writes the Vantage path. It does not delete the old file.
 
 On Windows, `build.ps1` may open an administrator prompt so Windows Defender Controlled Folder Access allows `vantage.exe` to create the database. That changes a machine setting. Decline it and move the repository out of a protected folder if you do not want that change.
 

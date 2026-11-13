@@ -21,7 +21,7 @@ Vantage understands a vault the way Obsidian stores it on disk:
 - Links are Obsidian wikilinks (`[[Note]]`, `[[Note|alias]]`, `[[Note#heading]]`). Links inside fenced code are ignored. An embed of a non-Markdown file is ignored.
 - The graph in the UI is Vantage's graph of those wikilinks. It is not `graph.json`.
 
-Every `.md` note is imported for search, the graph, and broken links. A **project** is a card at exactly `Projects/<Name>/<Name>.md`:
+Every Markdown note is imported for search, the graph, and broken links. The extension is matched without regard to case (`.md` and `.MD`). A file whose name starts with `.` is skipped. A **project** is a card at exactly `Projects/<Name>/<Name>.md`:
 
 ```markdown
 ---
@@ -36,13 +36,15 @@ technologies:
 
 `source_path` must be an absolute path to a Git repository. On Linux that looks like `/home/you/dev/my-project`, and on macOS like `/Users/you/dev/my-project`. Without it, the card is still a project and still has notes, and it has no commits. `status: in progress` is the exact string used to decide that a quiet project is dormant.
 
-The sample Compass card still says `source_path: C:/Fixtures/Compass`. That folder is not a repository on Linux or macOS. `testdata/vault/.observatoire/repos` maps the names Atlas and Compass onto `testdata/repos`, with paths relative to the vault, so `import` reads both histories on every OS. A hidden directory is not a note. See [Port and repository paths](#port-and-repository-paths).
+The sample Compass card still says `source_path: C:/Fixtures/Compass`. That folder is not a repository on Linux or macOS. `testdata/vault/.vantage/repos` maps the names Atlas and Compass onto `testdata/repos`, with paths relative to the vault, so `import` reads both histories on every OS. A hidden directory is not a note. See [Port and repository paths](#port-and-repository-paths).
 
 Optional:
 
 - `verified_commit` and `verified_on`, to spot a card that has fallen behind the repository. A value may start with a SHA (`0df64eb2 (upstream)`).
 - Sessions: notes in `Sessions/` with `type: session`, `project: "[[Name]]"`, `date: YYYY-MM-DD`, and `ai: "[[Name]]"`.
-- A `Journal.md` at the vault root. A line is kept when it matches `- YYYY-MM-DD - [[AI]] - text`.
+- A `Journal.md` at the vault root. A line is kept when it matches `- YYYY-MM-DD - [[AI]] - text` or the same line with a `*` bullet. A line with an invalid date, or any other shape, is ignored.
+- Optional `expected_notes` on a project card: a YAML list of note titles. Health warns only about titles in that list. An empty list, or a missing key, means no missing-note warning.
+- Optional `branch` (used when a repository spec does not name its own branch; empty means `HEAD`) and `repos` (extra paths, or maps with `path` and `branch`).
 
 A full fictional vault is in `testdata/vault` (Atlas and Compass). `import` does not modify notes. `report` does write one file; see below.
 
@@ -52,16 +54,16 @@ Git import follows **HEAD** of each repository (the current branch only). It is 
 
 **Reads**
 
-- Every non-hidden `.md` file in the vault (symlink notes are refused).
-- `git log` of `HEAD` for each absolute `source_path`, or for the path named in `<vault>/.observatoire/repos` / `-repos` when that replaces it.
-- A line count of the repository working tree, for language statistics.
+- Every Markdown file whose name does not start with `.` (`.md` and `.MD`; symlink notes are refused; hidden directories are still skipped).
+- `git log` of `HEAD` for each absolute `source_path`, or for the path named in `<vault>/.vantage/repos` / `-repos` when that replaces it.
+- A line count of the Git tree at the imported revision, for language statistics.
 
 **Writes**
 
 - `vantage.db`, plus `vantage.db-wal` and `vantage.db-shm`, in the current directory (or `-db`).
 - `queries/*.sql` next to that database, when you save a query in the SQL console.
-- `Statistics.md` at the vault root, only when you run `report` (or the report command). The file is replaced atomically. An existing `Statistics.md` is overwritten only when it contains `generated_by: observatoire`. There is no backup: copy the note first if you need the previous text. `report` can create the vault directory.
-- The vault path remembered by the start script: `%LOCALAPPDATA%\Vantage\vault.txt` on Windows, `$XDG_DATA_HOME/vantage/vault.txt` on Linux (`~/.local/share/vantage/vault.txt` when `XDG_DATA_HOME` is unset), and `~/Library/Application Support/Vantage/vault.txt` on macOS. If a path was stored under the previous Observatoire directory, the start script still reads it and then writes the Vantage location.
+- `Statistics.md` at the vault root, only when you run `report`. The file is replaced atomically. An existing `Statistics.md` is overwritten only when its front matter says `generated_by: vantage` or `generated_by: observatoire`. The same words in the body do not count. There is no backup: copy the note first if you need the previous text. `report` does not create the vault directory; a missing vault is an error. The activity table compares the last 7 days with the 7 days before that.
+- The vault path remembered by the start script: `%LOCALAPPDATA%\Vantage\vault.txt` on Windows, `$XDG_DATA_HOME/vantage/vault.txt` on Linux (`~/.local/share/vantage/vault.txt` when `XDG_DATA_HOME` is unset), and `~/Library/Application Support/Vantage/vault.txt` on macOS. If a path was stored under the previous Observatoire directory, the start script still reads it, warns, and then writes the Vantage location.
 
 `build.ps1` on Windows may open an administrator prompt so Controlled Folder Access allows `vantage.exe` to create the database. That is a machine setting. `build.sh` on Linux and macOS does not change a security product.
 
@@ -80,7 +82,7 @@ The program is the same binary on each system. Paths inside a vault are stored w
 | | Windows | Linux | macOS |
 |---|---|---|---|
 | Git | [Git for Windows](https://git-scm.com/download/win), or `winget install --id Git.Git -e` | `git` from the distribution | Xcode command line tools, or Homebrew `git` |
-| Go | 1.26.4 (`go.mod`). `winget install --id GoLang.Go -e` | 1.26.4 from [go.dev/dl](https://go.dev/dl/) | 1.26.4 from [go.dev/dl](https://go.dev/dl/) or Homebrew |
+| Go | 1.26.11 (`go.mod`). `winget install --id GoLang.Go -e` | 1.26.11 from [go.dev/dl](https://go.dev/dl/) | 1.26.11 from [go.dev/dl](https://go.dev/dl/) or Homebrew |
 | Node.js | 22.12 or newer. `winget install --id OpenJS.NodeJS.LTS -e` | 22.12 or newer from [nodejs.org](https://nodejs.org/) | 22.12 or newer from [nodejs.org](https://nodejs.org/) or Homebrew |
 
 `install.cmd` installs anything missing through winget. `install.sh` installs Git through the system package manager (Homebrew on macOS) when the `git` command is missing, and downloads the official Go and Node.js builds into `~/.local/opt` when the copies on `PATH` are missing or older than the versions above. Add the printed `PATH` line to your shell profile if you want those copies in new terminals. The scripts find them on their own either way.
@@ -181,7 +183,7 @@ A card's `source_path` is the repository on the machine that wrote the card. To 
 ./start.sh --repos "Atlas=$PWD/testdata/repos/alpha,Compass=$PWD/testdata/repos/beta" testdata/vault
 ```
 
-You can also put one `Name=path` pair per line in `<vault>/.observatoire/repos`. A line starting with `#` is a comment. Paths in that file are relative to the vault. The sample vault includes this file, so `.\start.cmd testdata\vault` and `./start.sh testdata/vault` import both fixture repositories on Windows, Linux, and macOS. The start scripts create those repositories the first time they are missing. A name on the command line replaces the same name from the file. `import` and `watch` read the file too, so the flag is optional for that vault.
+You can also put one `Name=path` pair per line in `<vault>/.vantage/repos`. A line starting with `#` is a comment. Paths in that file are relative to the vault. The sample vault includes this file, so `.\start.cmd testdata\vault` and `./start.sh testdata/vault` import both fixture repositories on Windows, Linux, and macOS. The start scripts create those repositories the first time they are missing. A name on the command line replaces the same name from the file. `import` and `watch` read the file too, so the flag is optional for that vault.
 
 ## Commands
 
@@ -197,7 +199,7 @@ You can also put one `Name=path` pair per line in `<vault>/.observatoire/repos`.
 |---|---|---|
 | `-db <file>` | all | `vantage.db` in the current directory |
 | `-vault <folder>` | `import`, `watch`, and `report` (unless `-stdout`) | required on the binary; `start.cmd` and `start.sh` remember it and pass it |
-| `-repos "Name=folder,…"` | `import`, `watch` | replaces `source_path` for the named cards. Also loaded from `<vault>/.observatoire/repos` when that file exists |
+| `-repos "Name=folder,…"` | `import`, `watch` | replaces `source_path` for the named cards. Also loaded from `<vault>/.vantage/repos` when that file exists |
 | `-port <n>` | `serve`, `watch` | `7878` |
 | `-stdout` | `report` | print the report instead of writing it |
 
@@ -208,13 +210,13 @@ You can also put one `Name=path` pair per line in `<vault>/.observatoire/repos`.
 
 **SQL console:** read-only (no writes, no `ATTACH`, no `PRAGMA` that changes the connection, no transaction), 5 seconds, 1000 rows, and at most two queries at once. The server accepts only local requests. Details are in [SECURITY.md](SECURITY.md).
 
-Deleting `vantage.db` is safe. The next import rebuilds it from the vault and the repositories. Do not delete the vault. An older `observatoire.db` in the same directory is unused; rename it to `vantage.db` or pass `-db` if you want to keep it.
+Deleting `vantage.db` is safe. The next import rebuilds it from the vault and the repositories. Do not delete the vault. A file still named `observatoire.db` is refused: rename it, and the `-wal` and `-shm` companions, to `vantage.db` (or pass `-db` after renaming). If `observatoire.db` sits next to a missing `vantage.db`, Vantage does not create an empty database.
 
 ## Upgrading an older database
 
 The schema, the vault keys, and the CLI were renamed from French to English by editing the first two migration files in place. Goose will not rebuild a database that already applied those versions, and Vantage refuses to open a file that still contains a table named `projet`.
 
-Delete `vantage.db`, `vantage.db-wal`, and `vantage.db-shm`, update the cards using the table in [CHANGELOG.md](CHANGELOG.md), then import again. The remembered Windows path also moved from `coffre.txt` to `vault.txt`; `start.cmd` will ask for the vault once.
+Delete `vantage.db`, `vantage.db-wal`, and `vantage.db-shm`, update the cards using the table in [CHANGELOG.md](CHANGELOG.md), then import again. A database file still named `observatoire.db` is refused: rename it, and the `-wal` and `-shm` companions, to `vantage.db`. A remembered vault path still stored as `Observatoire/vault.txt` is read once, with a warning, and then written to the Vantage location; the old file is not deleted. Move `<vault>/.observatoire/repos` to `<vault>/.vantage/repos` (the old file is still read, with a warning). The remembered Windows path also moved from `coffre.txt` to `vault.txt`.
 
 ## Common problems
 
@@ -229,7 +231,7 @@ Delete `vantage.db`, `vantage.db-wal`, and `vantage.db-shm`, update the cards us
 | `Go … is older than go.mod` / `Node … is older than 22.12.0` | On Linux or macOS, run `./install.sh` again. It places a current Go or Node under `~/.local/opt` and the scripts prefer that copy. |
 | Browser did not open | On Linux without a graphical session the script prints the URL. Open http://127.0.0.1:7878 yourself. |
 | `folder not found` | Check the vault path and quote it. |
-| `no Git repository imported` / `0 repositories` | No `Projects/<Name>/<Name>.md` card with `type: project` and a repository that exists on this machine. Pass `--repos` / `-Repos`, or add `<vault>/.observatoire/repos`. |
+| `no Git repository imported` / `0 repositories` | No `Projects/<Name>/<Name>.md` card with `type: project` and a repository that exists on this machine. Pass `--repos` / `-Repos`, or add `<vault>/.vantage/repos`. |
 | `warning: <Project> (<path>): git rev-parse` | That `source_path` is not a Git repository. The other projects are still imported. |
 | `listen tcp 127.0.0.1:7878: bind` | The port is taken. Stop the other process, or `./start.sh --port 8080` (`.\start.cmd -Port 8080` on Windows). |
 
