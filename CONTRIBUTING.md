@@ -6,7 +6,7 @@ Vantage is maintained by [Anarchy](https://github.com/Anarchiejs). Issues and pu
 
 Windows, Linux, and macOS. CI runs the Go tests on all three, and runs the install and build scripts there too.
 
-- Go 1.26.4 (`go.mod`)
+- Go 1.26.11 (`go.mod`)
 - Node.js 22.12 or newer
 - Git
 
@@ -65,6 +65,14 @@ go test ./internal/sql/queries_test -count=1 -args -update
 ```
 
 A new schema change is a new file `migrations/0003_….sql` with `-- +goose Up` and `-- +goose Down`. Do not edit a migration that has already been applied: goose records the version and will not re-run it.
+
+## Commit messages
+
+Use an imperative sentence that says what changed, for example `Keep both clones when two repositories share a commit`. Do not add trailers.
+
+## Releases
+
+Add a `## x.y.z` section to CHANGELOG.md, then tag `vx.y.z`. The release workflow runs the tests, checks that the changelog has that section, and publishes Windows, Linux, and macOS binaries. The first tag needs a matching changelog heading before it will publish.
 
 ## Vault fixtures
 

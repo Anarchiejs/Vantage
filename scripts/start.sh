@@ -19,7 +19,7 @@ Usage: ./start.sh [options] [vault]
   vault                  Obsidian vault folder. Omitted later, the remembered path is used.
   -port, --port N        UI port on 127.0.0.1 (default 7878)
   -repos, --repos LIST   Replace source_path: "Name=/absolute/path,Other=/path"
-                         Also read from <vault>/.observatoire/repos when that file exists.
+                         Also read from <vault>/.vantage/repos when that file exists.
                          Paths in the file are relative to the vault. -repos replaces a name.
   -h, --help             Show this help
 EOF
@@ -57,7 +57,7 @@ open_browser() {
 # The sample vault maps Atlas and Compass onto testdata/repos. Create those
 # repositories the first time, so ./start.sh testdata/vault works on a fresh tree.
 ensure_fixtures() {
-  local map="$vault/.observatoire/repos"
+  local map="$vault/.vantage/repos"
   if [ ! -f "$map" ]; then
     return 0
   fi
@@ -145,11 +145,13 @@ memo="$(vault_memo_file)"
 
 if [ -z "$vault" ]; then
   if ! vault="$(read_memo "$memo")"; then
-    if ! vault="$(read_memo "$(legacy_vault_memo_file)")"; then
+    legacy="$(legacy_vault_memo_file || true)"
+    if [ -z "$legacy" ] || ! vault="$(read_memo "$legacy")"; then
       printf '\n%sERROR: give your Obsidian vault folder the first time, for example:%s\n' "$red" "$reset" >&2
       printf '  ./start.sh "%s/Documents/My Vault"\n' "$HOME" >&2
       exit 1
     fi
+    printf 'warning: %s is the previous remembered vault. Move that file to %s\n' "$legacy" "$memo" >&2
   fi
   printf 'Remembered vault: %s\n' "$vault"
 fi
@@ -194,7 +196,7 @@ if grep -q '^0 repositories' "$log"; then
   warn "no Git repository imported. Check the \"warning\" lines above if there are any."
   info "A project has commits when its Projects/<Name>/<Name>.md card has \"type: project\""
   info "and \"source_path:\" is a Git repository on this machine."
-  info "Or pass --repos \"Name=/absolute/path\", or add <vault>/.observatoire/repos."
+  info "Or pass --repos \"Name=/absolute/path\", or add <vault>/.vantage/repos."
 fi
 rm -f "$log"
 

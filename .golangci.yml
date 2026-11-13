@@ -1,0 +1,34 @@
+version: "2"
+linters:
+  default: none
+  enable:
+    - errcheck
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+  settings:
+    staticcheck:
+      checks: ["all", "-QF*", "-ST*", "-S*"]
+    errcheck:
+      exclude-functions:
+        - (io.Closer).Close
+        - (*database/sql.DB).Close
+        - (*database/sql.Rows).Close
+        - (*database/sql.Stmt).Close
+        - (*database/sql.Tx).Rollback
+        - (*os.File).Close
+        - os.Remove
+        - (*github.com/fsnotify/fsnotify.Watcher).Close
+        - (*database/sql.Conn).Close
+        - (*net/http.Server).Shutdown
+        - (*github.com/Anarchiejs/Vantage/internal/sql/gen.Queries).Close
+        - (*flag.FlagSet).Parse
+        - (*encoding/json.Encoder).Encode
+        - (*net/http.ResponseController).SetReadDeadline
+        - (*net/http.ResponseController).SetWriteDeadline
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - errcheck
