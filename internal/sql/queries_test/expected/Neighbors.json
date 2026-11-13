@@ -1,32 +1,44 @@
 [
   {
+    "id": 1,
+    "title": "Claude Code",
+    "path": "AI/Claude Code.md",
+    "folder": "AI",
+    "degree": 5
+  },
+  {
     "id": 3,
     "title": "Mapping",
+    "path": "Concepts/Mapping.md",
     "folder": "Concepts",
     "degree": 1
   },
   {
     "id": 5,
     "title": "Journal",
+    "path": "Journal.md",
     "folder": "",
     "degree": 2
   },
   {
     "id": 6,
     "title": "Atlas - Detail",
+    "path": "Projects/Atlas/Atlas - Detail.md",
     "folder": "Projects",
     "degree": 1
   },
   {
     "id": 7,
     "title": "Atlas - Summary",
+    "path": "Projects/Atlas/Atlas - Summary.md",
     "folder": "Projects",
     "degree": 1
   },
   {
     "id": 14,
     "title": "2026-10-20 - Atlas - initial import",
+    "path": "Sessions/2026-10-20 - Atlas - initial import.md",
     "folder": "Sessions",
-    "degree": 1
+    "degree": 3
   }
 ]

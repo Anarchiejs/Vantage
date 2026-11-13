@@ -6,13 +6,18 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
+	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/pressly/goose/v3"
 	_ "modernc.org/sqlite"
 
 	"github.com/Anarchiejs/Vantage/migrations"
 )
+
+// ErrRetiredDatabase means the file still uses the name from before the Vantage rename.
+var ErrRetiredDatabase = errors.New("this database is still named observatoire.db: rename observatoire.db and its -wal and -shm companions to vantage.db, then start again")
 
 // Open opens the database read-write with the project's PRAGMAs.
 func Open(path string) (*sql.DB, error) {
@@ -29,6 +34,17 @@ func open(path string, readOnly bool) (*sql.DB, error) {
 	if err != nil {
 		return nil, err
 	}
+	if strings.EqualFold(filepath.Base(abs), "observatoire.db") {
+		return nil, ErrRetiredDatabase
+	}
+	if !readOnly {
+		if _, err := os.Stat(abs); errors.Is(err, os.ErrNotExist) {
+			legacy := filepath.Join(filepath.Dir(abs), "observatoire.db")
+			if _, err := os.Stat(legacy); err == nil {
+				return nil, fmt.Errorf("%w (found %s next to a missing %s)", ErrRetiredDatabase, legacy, abs)
+			}
+		}
+	}
 	q := url.Values{}
 	q.Add("_pragma", "foreign_keys(1)")
 	q.Add("_pragma", "busy_timeout(5000)")
@@ -39,7 +55,11 @@ func open(path string, readOnly bool) (*sql.DB, error) {
 		q.Add("_pragma", "journal_mode(WAL)")
 		q.Add("_pragma", "synchronous(NORMAL)")
 	}
-	dsn := "file:" + filepath.ToSlash(abs) + "?" + q.Encode()
+	filePath := filepath.ToSlash(abs)
+	if !strings.HasPrefix(filePath, "/") {
+		filePath = "/" + filePath
+	}
+	dsn := (&url.URL{Scheme: "file", Path: filePath, RawQuery: q.Encode()}).String()
 	base, err := sql.Open("sqlite", dsn)
 	if err != nil {
 		return nil, err

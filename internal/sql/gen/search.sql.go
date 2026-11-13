@@ -11,11 +11,11 @@ import (
 
 const search = `-- name: Search :many
 SELECT CAST(search_index.source AS TEXT) AS source,CAST(search_index.ref AS TEXT) AS ref,
- CAST(highlight(search_index,0,'<mark>','</mark>') AS TEXT) AS title,
- CAST(snippet(search_index,1,'<mark>','</mark>',char(8230),12) AS TEXT) AS excerpt,
+ CAST(highlight(search_index,0,char(57344),char(57345)) AS TEXT) AS title,
+ CAST(snippet(search_index,1,char(57344),char(57345),char(8230),12) AS TEXT) AS excerpt,
  p.name AS project, CASE WHEN c.sha IS NOT NULL THEN c.date_utc ELSE n.updated END AS date,n.id AS note_id
 FROM search_index(?1) AS search_index
-LEFT JOIN commit_git c ON search_index.source='commit' AND c.sha=search_index.ref
+LEFT JOIN commit_git c ON search_index.source='commit' AND printf('%d:%s', c.repository_id, c.sha)=search_index.ref
 LEFT JOIN repository d ON d.id=c.repository_id
 LEFT JOIN note n ON search_index.source='note' AND n.path=search_index.ref
 LEFT JOIN session s ON s.note_id=n.id

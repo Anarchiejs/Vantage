@@ -1,38 +1,77 @@
 [
   {
     "source": 5,
-    "target": 1
+    "target": 1,
+    "from_property": 0
   },
   {
     "source": 5,
-    "target": 8
+    "target": 8,
+    "from_property": 0
   },
   {
     "source": 8,
-    "target": 3
+    "target": 1,
+    "from_property": 1
   },
   {
     "source": 8,
-    "target": 6
+    "target": 3,
+    "from_property": 0
   },
   {
     "source": 8,
-    "target": 7
+    "target": 6,
+    "from_property": 0
   },
   {
     "source": 8,
-    "target": 14
+    "target": 7,
+    "from_property": 0
+  },
+  {
+    "source": 8,
+    "target": 14,
+    "from_property": 0
   },
   {
     "source": 11,
-    "target": 9
+    "target": 1,
+    "from_property": 1
   },
   {
     "source": 11,
-    "target": 10
+    "target": 9,
+    "from_property": 0
   },
   {
     "source": 11,
-    "target": 13
+    "target": 10,
+    "from_property": 0
+  },
+  {
+    "source": 11,
+    "target": 13,
+    "from_property": 0
+  },
+  {
+    "source": 13,
+    "target": 1,
+    "from_property": 1
+  },
+  {
+    "source": 13,
+    "target": 11,
+    "from_property": 1
+  },
+  {
+    "source": 14,
+    "target": 1,
+    "from_property": 1
+  },
+  {
+    "source": 14,
+    "target": 8,
+    "from_property": 1
   }
 ]

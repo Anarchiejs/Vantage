@@ -2,12 +2,14 @@
   {
     "id": 8,
     "title": "Atlas",
+    "path": "Projects/Atlas/Atlas.md",
     "folder": "Projects",
-    "degree": 5
+    "degree": 7
   },
   {
     "id": 3,
     "title": "Mapping",
+    "path": "Concepts/Mapping.md",
     "folder": "Concepts",
     "degree": 1
   }

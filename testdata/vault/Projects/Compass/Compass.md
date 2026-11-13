@@ -4,7 +4,7 @@ status: archived
 source_path: C:/Fixtures/Compass
 updated: 2026-07-01
 verified_on: 2026-07-01
-verified_commit: deadbeef-stale
+verified_commit: deadbeef (stale)
 technologies:
   - "[[Markdown]]"
 ai:

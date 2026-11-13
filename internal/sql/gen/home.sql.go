@@ -117,7 +117,7 @@ SELECT p.id, p.name, max(c.date_utc) AS last_commit,
  CAST(coalesce(julianday(?1)-julianday(max(c.local_day)), -1) AS INTEGER) AS days
 FROM project p LEFT JOIN repository d ON d.project_id=p.id
 LEFT JOIN commit_git c ON c.repository_id=d.id AND c.local_day <= ?1
-WHERE p.status='in progress' GROUP BY p.id
+WHERE lower(trim(p.status)) IN ('in progress', 'active', 'ongoing') GROUP BY p.id
 HAVING max(c.local_day) IS NULL OR max(c.local_day)<date(?1, '-30 days')
 ORDER BY p.name
 `
@@ -192,6 +192,26 @@ func (q *Queries) PeriodStats(ctx context.Context, arg PeriodStatsParams) (Perio
 		&i.ActiveProjects,
 	)
 	return i, err
+}
+
+const quietOutsideStatus = `-- name: QuietOutsideStatus :one
+SELECT count(*) FROM (
+  SELECT p.id
+  FROM project p
+  LEFT JOIN repository d ON d.project_id = p.id
+  LEFT JOIN commit_git c ON c.repository_id = d.id AND c.local_day <= ?1
+  WHERE lower(trim(coalesce(p.status, ''))) NOT IN ('in progress', 'active', 'ongoing')
+  GROUP BY p.id
+  HAVING max(c.local_day) IS NULL OR max(c.local_day) < date(?1, '-30 days')
+)
+`
+
+// Quiet cards the dormant list hides because their status is outside the watched set.
+func (q *Queries) QuietOutsideStatus(ctx context.Context, today *string) (int64, error) {
+	row := q.queryRow(ctx, q.quietOutsideStatusStmt, quietOutsideStatus, today)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
 }
 
 const staleCards = `-- name: StaleCards :many

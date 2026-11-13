@@ -23,11 +23,11 @@ func Generate(ctx context.Context, q *gen.Queries, today string) ([]byte, error)
 	if err != nil {
 		return nil, fmt.Errorf("invalid today date: %w", err)
 	}
-	monday := end.AddDate(0, 0, -((int(end.Weekday()) + 6) % 7))
-	previousEnd := monday.AddDate(0, 0, -1)
+	start := end.AddDate(0, 0, -6)
+	previousEnd := start.AddDate(0, 0, -1)
 	previousStart := previousEnd.AddDate(0, 0, -6)
 
-	week, err := q.PeriodStats(ctx, gen.PeriodStatsParams{StartDate: monday.Format(dayLayout), EndDate: today})
+	week, err := q.PeriodStats(ctx, gen.PeriodStatsParams{StartDate: start.Format(dayLayout), EndDate: today})
 	if err != nil {
 		return nil, fmt.Errorf("week stats: %w", err)
 	}
@@ -47,7 +47,7 @@ func Generate(ctx context.Context, q *gen.Queries, today string) ([]byte, error)
 	if err != nil {
 		return nil, fmt.Errorf("stale cards: %w", err)
 	}
-	assistants, err := q.AISessionsInPeriod(ctx, gen.AISessionsInPeriodParams{StartDate: monday.Format(dayLayout), EndDate: today})
+	assistants, err := q.AISessionsInPeriod(ctx, gen.AISessionsInPeriodParams{StartDate: start.Format(dayLayout), EndDate: today})
 	if err != nil {
 		return nil, fmt.Errorf("AI sessions this week: %w", err)
 	}
@@ -57,9 +57,9 @@ func Generate(ctx context.Context, q *gen.Queries, today string) ([]byte, error)
 	}
 
 	var b strings.Builder
-	fmt.Fprintf(&b, "---\ntype: statistics\ngenerated_by: observatoire\ngenerated_on: %s\n---\n# Statistics — week of %s to %s\n\n", today, monday.Format(dayLayout), today)
-	b.WriteString("Note generated automatically by [[Observatoire]]: do not edit it by hand; it is rewritten every week.\n\n")
-	b.WriteString("## Activity\n\n| | This week | Previous week |\n|---|---:|---:|\n")
+	fmt.Fprintf(&b, "---\ntype: statistics\ngenerated_by: vantage\ngenerated_on: %s\n---\n# Statistics — %s to %s\n\n", today, start.Format(dayLayout), today)
+	b.WriteString("Note generated automatically by [[Vantage]]: do not edit it by hand; it is rewritten every week.\n\n")
+	b.WriteString("## Activity\n\n| | Last 7 days | Previous 7 days |\n|---|---:|---:|\n")
 	metric := func(name string, current, earlier int64) {
 		fmt.Fprintf(&b, "| %s | %s | %s |\n", name, grouped(current), grouped(earlier))
 	}
@@ -123,7 +123,7 @@ func Generate(ctx context.Context, q *gen.Queries, today string) ([]byte, error)
 	}
 	var days []activeDay
 	for _, day := range calendar {
-		if day.Day >= monday.Format(dayLayout) && day.Day <= today && day.Commits > 0 {
+		if day.Day >= start.Format(dayLayout) && day.Day <= today && day.Commits > 0 {
 			days = append(days, activeDay{date: day.Day, commits: day.Commits})
 		}
 	}
@@ -148,13 +148,17 @@ func Generate(ctx context.Context, q *gen.Queries, today string) ([]byte, error)
 
 // Write atomically replaces an existing generated report and refuses unrelated files.
 func Write(vault string, content []byte) error {
-	if err := os.MkdirAll(vault, 0755); err != nil {
-		return err
+	info, err := os.Stat(vault)
+	if err != nil {
+		return fmt.Errorf("vault %s: %w", vault, err)
+	}
+	if !info.IsDir() {
+		return fmt.Errorf("vault %s is not a directory", vault)
 	}
 	target := filepath.Join(vault, reportName)
 	if old, err := os.ReadFile(target); err == nil {
-		if !strings.Contains(string(old), "generated_by: observatoire") {
-			return fmt.Errorf("refusing to overwrite %s: front matter generated_by: observatoire is missing", target)
+		if !generatedReport(string(old)) {
+			return fmt.Errorf("refusing to overwrite %s: front matter generated_by must be vantage or observatoire", target)
 		}
 	} else if !os.IsNotExist(err) {
 		return err
@@ -177,6 +181,27 @@ func Write(vault string, content []byte) error {
 		return err
 	}
 	return os.Rename(name, target)
+}
+
+func generatedReport(content string) bool {
+	content = strings.TrimPrefix(content, "\ufeff")
+	if !strings.HasPrefix(content, "---") {
+		return false
+	}
+	rest := strings.TrimPrefix(content, "---")
+	end := strings.Index(rest, "\n---")
+	if end < 0 {
+		return false
+	}
+	for _, line := range strings.Split(rest[:end], "\n") {
+		key, value, ok := strings.Cut(strings.TrimSpace(line), ":")
+		if !ok || strings.TrimSpace(key) != "generated_by" {
+			continue
+		}
+		value = strings.Trim(strings.TrimSpace(value), `"'`)
+		return value == "vantage" || value == "observatoire"
+	}
+	return false
 }
 
 func grouped(n int64) string {

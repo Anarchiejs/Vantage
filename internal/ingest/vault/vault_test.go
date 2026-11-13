@@ -62,7 +62,7 @@ func TestReadFixture(t *testing.T) {
 				t.Fatalf("invalid YAML: %#v", n)
 			}
 		case "Atlas":
-			links := []string{"Atlas - Summary", "Atlas - Detail", "2026-10-20 - Atlas - initial import", "Mapping", "Missing note", "Note"}
+			links := []string{"Atlas - Summary", "Atlas - Detail", "Sessions/2026-10-20 - Atlas - initial import", "Mapping", "Missing note", "Note"}
 			if !reflect.DeepEqual(n.Links, links) || n.Folder != "Projects" {
 				t.Fatalf("Atlas: %#v", n)
 			}
@@ -77,7 +77,7 @@ func TestLinks(t *testing.T) {
 	body := "[[ Folder/Title.md#section|alias ]] [[Title]] ![[image.png]] ![[Sub/Note.md]] [[File.pdf]]\n" +
 		"`[[inline]]` ``[[double]] ` code`` [[Visible]]\n```md\n[[fenced]]\n````\n" +
 		"~~~\n[[tilde]]\n~~~\n`multiline\n[[hidden]]` [[Final]] \\[[escaped]]"
-	want := []string{"Title", "Note", "Visible", "Final"}
+	want := []string{"Folder/Title", "Title", "Sub/Note", "Visible", "Final"}
 	if got := links(body); !reflect.DeepEqual(got, want) {
 		t.Fatalf("got %q, want %q", got, want)
 	}
@@ -198,6 +198,31 @@ func TestDecomposedFilename(t *testing.T) {
 	}
 }
 
+func TestHiddenFileAndMarkdownCase(t *testing.T) {
+	root := t.TempDir()
+	if err := os.WriteFile(filepath.Join(root, ".secret.md"), []byte("# Hidden\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(root, "Upper.MD"), []byte("# Upper\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	r, err := Read(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(r.Notes) != 1 || r.Notes[0].Title != "Upper" {
+		t.Fatalf("%#v", r.Notes)
+	}
+}
+
+func TestStarJournalLine(t *testing.T) {
+	body := "* 2026-10-20 - [[AI/Claude Code]] - kept\n- 2026-02-30 - [[AI]] - invalid\nnot a journal line\n"
+	got := journal(body)
+	if len(got) != 1 || got[0].Text != "kept" || got[0].AI != "Claude Code" {
+		t.Fatalf("%#v", got)
+	}
+}
+
 func TestLeadingSHA(t *testing.T) {
 	for input, want := range map[string]string{
 		"0df64eb2 (official, unmodified)": "0df64eb2",
@@ -206,6 +231,8 @@ func TestLeadingSHA(t *testing.T) {
 		"abc":                             "",
 		"deadbeefz":                       "",
 		" 0f085ad ":                       "0f085ad",
+		"deadbeef-stale":                  "",
+		"deadbeef (stale)":                "deadbeef",
 	} {
 		if got := leadingSHA(input); got != want {
 			t.Errorf("leadingSHA(%q) = %q, want %q", input, got, want)

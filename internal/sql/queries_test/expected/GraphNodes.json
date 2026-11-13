@@ -2,85 +2,99 @@
   {
     "id": 1,
     "title": "Claude Code",
+    "path": "AI/Claude Code.md",
     "folder": "AI",
-    "degree": 1
+    "degree": 5
   },
   {
     "id": 2,
     "title": "GPT-6 Luna",
+    "path": "AI/GPT-6 Luna.md",
     "folder": "AI",
     "degree": 0
   },
   {
     "id": 3,
     "title": "Mapping",
+    "path": "Concepts/Mapping.md",
     "folder": "Concepts",
     "degree": 1
   },
   {
     "id": 4,
     "title": "Naïve",
+    "path": "Concepts/Naïve.md",
     "folder": "Concepts",
     "degree": 0
   },
   {
     "id": 5,
     "title": "Journal",
+    "path": "Journal.md",
     "folder": "",
     "degree": 2
   },
   {
     "id": 6,
     "title": "Atlas - Detail",
+    "path": "Projects/Atlas/Atlas - Detail.md",
     "folder": "Projects",
     "degree": 1
   },
   {
     "id": 7,
     "title": "Atlas - Summary",
+    "path": "Projects/Atlas/Atlas - Summary.md",
     "folder": "Projects",
     "degree": 1
   },
   {
     "id": 8,
     "title": "Atlas",
+    "path": "Projects/Atlas/Atlas.md",
     "folder": "Projects",
-    "degree": 5
+    "degree": 7
   },
   {
     "id": 9,
     "title": "Compass - Detail",
+    "path": "Projects/Compass/Compass - Detail.md",
     "folder": "Projects",
     "degree": 1
   },
   {
     "id": 10,
     "title": "Compass - Summary",
+    "path": "Projects/Compass/Compass - Summary.md",
     "folder": "Projects",
     "degree": 1
   },
   {
     "id": 11,
     "title": "Compass",
+    "path": "Projects/Compass/Compass.md",
     "folder": "Projects",
-    "degree": 3
+    "degree": 5
   },
   {
     "id": 12,
     "title": "Draft",
+    "path": "Projects/Draft/Draft.md",
     "folder": "Projects",
     "degree": 0
   },
   {
     "id": 13,
     "title": "2026-07-01 - Compass - archive",
+    "path": "Sessions/2026-07-01 - Compass - archive.md",
     "folder": "Sessions",
-    "degree": 1
+    "degree": 3
   },
   {
     "id": 14,
     "title": "2026-10-20 - Atlas - initial import",
+    "path": "Sessions/2026-10-20 - Atlas - initial import.md",
     "folder": "Sessions",
-    "degree": 1
+    "degree": 3
   }
 ]

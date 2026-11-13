@@ -9,6 +9,7 @@ import (
 	"path"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strings"
 	"time"
 
@@ -37,7 +38,10 @@ func Read(root string) (Result, error) {
 			}
 			return nil
 		}
-		if !entry.Type().IsRegular() || filepath.Ext(file) != ".md" {
+		if strings.HasPrefix(entry.Name(), ".") {
+			return nil
+		}
+		if !entry.Type().IsRegular() || !strings.EqualFold(filepath.Ext(file), ".md") {
 			return nil
 		}
 		rel, err := filepath.Rel(root, file)
@@ -56,7 +60,9 @@ func Read(root string) (Result, error) {
 				source = ""
 			}
 			card := model.ProjectCard{Name: note.Title, Status: meta.first("status"), SourcePath: source,
-				Updated: note.Updated, VerifiedOn: meta.first("verified_on"), VerifiedCommit: leadingSHA(meta.first("verified_commit"))}
+				Branch: strings.TrimSpace(meta.first("branch")), Updated: note.Updated, VerifiedOn: meta.first("verified_on"),
+				VerifiedCommit: leadingSHA(meta.first("verified_commit")), ExpectedNotes: meta.values("expected_notes"),
+				Extra: meta.repos()}
 			for _, technology := range meta.values("technologies") {
 				if target := linkTarget(technology); target != "" {
 					card.Technologies = append(card.Technologies, target)
@@ -99,7 +105,7 @@ func read(root, notePath string) (model.Note, metadata, error) {
 	// macOS stores filenames decomposed. NFC matches Linux, Windows, and the
 	// bytes in this repository. On those systems ForCompare returns rel unchanged.
 	rel = ospath.ForCompare(rel)
-	if rel == ".." || strings.HasPrefix(rel, ".."+string(filepath.Separator)) || filepath.Ext(rel) != ".md" {
+	if rel == ".." || strings.HasPrefix(rel, ".."+string(filepath.Separator)) || !strings.EqualFold(filepath.Ext(rel), ".md") {
 		return note, nil, fmt.Errorf("note outside vault or not Markdown: %s", notePath)
 	}
 	// Do not follow symlinks, including intermediate directory symlinks.
@@ -123,8 +129,13 @@ func read(root, notePath string) (model.Note, metadata, error) {
 		return note, nil, err
 	}
 	body, meta := frontMatter(strings.TrimPrefix(string(raw), "\ufeff"))
-	note = model.Note{Path: filepath.ToSlash(rel), Title: strings.TrimSuffix(filepath.Base(rel), ".md"),
-		Type: meta.first("type"), Updated: meta.first("updated"), Hash: fmt.Sprintf("%x", sha256.Sum256(raw)), Content: body, Links: links(body)}
+	title := filepath.Base(rel)
+	if ext := filepath.Ext(title); strings.EqualFold(ext, ".md") {
+		title = title[:len(title)-len(ext)]
+	}
+	note = model.Note{Path: filepath.ToSlash(rel), Title: title,
+		Type: meta.first("type"), Updated: meta.first("updated"), Hash: fmt.Sprintf("%x", sha256.Sum256(raw)), Content: body,
+		Links: links(body), PropertyLinks: propertyLinks(meta)}
 	if len(segments) > 1 {
 		note.Folder = segments[0]
 	}
@@ -146,6 +157,39 @@ func (m metadata) values(key string) []string {
 		for _, item := range node.Content {
 			if item.Kind == yaml.ScalarNode {
 				result = append(result, item.Value)
+			}
+		}
+	}
+	return result
+}
+
+// repos reads a sequence of paths, or of maps with path and branch.
+func (m metadata) repos() []model.RepoRef {
+	node, ok := m["repos"]
+	if !ok || node.Kind != yaml.SequenceNode {
+		return nil
+	}
+	var result []model.RepoRef
+	for _, item := range node.Content {
+		switch item.Kind {
+		case yaml.ScalarNode:
+			if path := strings.TrimSpace(item.Value); path != "" && absolutePath(path) {
+				result = append(result, model.RepoRef{Path: path})
+			}
+		case yaml.MappingNode:
+			ref := model.RepoRef{}
+			for i := 0; i+1 < len(item.Content); i += 2 {
+				key := item.Content[i].Value
+				val := strings.TrimSpace(item.Content[i+1].Value)
+				switch key {
+				case "path":
+					ref.Path = val
+				case "branch":
+					ref.Branch = val
+				}
+			}
+			if absolutePath(ref.Path) {
+				result = append(result, ref)
 			}
 		}
 	}
@@ -184,22 +228,69 @@ func absolutePath(value string) bool {
 	return strings.HasPrefix(value, "/") || (len(value) >= 3 && ((value[0] >= 'A' && value[0] <= 'Z') || (value[0] >= 'a' && value[0] <= 'z')) && value[1] == ':' && (value[2] == '/' || value[2] == '\\'))
 }
 
-func linkTarget(value string) string {
+// cleanWikilink keeps a path (`Folder/Note`) and drops the alias, heading, and block id.
+// linkTarget is the note title: the last path segment of that target.
+func cleanWikilink(value string) string {
 	value = strings.TrimSpace(value)
 	value = strings.TrimPrefix(value, "!")
 	value = strings.TrimPrefix(value, "[[")
 	value = strings.TrimSuffix(value, "]]")
-	value = strings.SplitN(strings.SplitN(value, "|", 2)[0], "#", 2)[0]
-	value = strings.TrimSpace(value)
+	value = strings.SplitN(value, "|", 2)[0]
+	value = strings.SplitN(value, "#", 2)[0]
+	value = strings.SplitN(value, "^", 2)[0]
+	value = strings.TrimSpace(strings.ReplaceAll(value, "\\", "/"))
 	if value == "" {
 		return ""
 	}
-	value = path.Base(strings.ReplaceAll(value, "\\", "/"))
 	ext := path.Ext(value)
-	if ext != "" && ext != ".md" {
+	if ext != "" && !strings.EqualFold(ext, ".md") {
 		return ""
 	}
-	return strings.TrimSpace(strings.TrimSuffix(value, ".md"))
+	return strings.TrimSpace(strings.TrimSuffix(value, ext))
+}
+
+func linkTarget(value string) string {
+	cleaned := cleanWikilink(value)
+	if cleaned == "" {
+		return ""
+	}
+	return path.Base(cleaned)
+}
+
+func propertyLinks(meta metadata) []string {
+	if meta == nil {
+		return nil
+	}
+	var result []string
+	seen := map[string]bool{}
+	var walk func(yaml.Node)
+	walk = func(node yaml.Node) {
+		if node.Kind == yaml.ScalarNode {
+			if !strings.Contains(node.Value, "[[") {
+				return
+			}
+			target := cleanWikilink(node.Value)
+			if target == "" || seen[target] {
+				return
+			}
+			seen[target] = true
+			result = append(result, target)
+			return
+		}
+		for _, child := range node.Content {
+			walk(*child)
+		}
+	}
+	keys := make([]string, 0, len(meta))
+	for key := range meta {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	for _, key := range keys {
+		walk(meta[key])
+	}
+	sort.Strings(result)
+	return result
 }
 
 // links ignores fenced code and backtick spans (including multiline spans).
@@ -251,7 +342,7 @@ func links(body string) []string {
 			if inline == 0 && strings.HasPrefix(line[i:], "[[") {
 				end := strings.Index(line[i+2:], "]]")
 				if end >= 0 {
-					target := linkTarget(line[i+2 : i+2+end])
+					target := cleanWikilink(line[i+2 : i+2+end])
 					if target != "" && !seen[target] {
 						seen[target] = true
 						result = append(result, target)
@@ -269,12 +360,12 @@ func links(body string) []string {
 // leadingSHA keeps the sha at the start of verified_commit ("0df64eb2 (official upstream)" -> "0df64eb2");
 // "" when the value does not start with a sha ("none", "not verified").
 func leadingSHA(value string) string {
-	return strings.ToLower(shaStart.FindString(strings.TrimSpace(value)))
+	return strings.ToLower(strings.TrimSpace(shaStart.FindString(strings.TrimSpace(value))))
 }
 
-var shaStart = regexp.MustCompile(`(?i)^[0-9a-f]{7,40}\b`)
+var shaStart = regexp.MustCompile(`(?i)^[0-9a-f]{7,40}(?:\s|$)`)
 
-var journalLine = regexp.MustCompile(`^- (\d{4}-\d{2}-\d{2}) - \[\[([^\]]+)\]\] - (.*)$`)
+var journalLine = regexp.MustCompile(`^[-*] (\d{4}-\d{2}-\d{2}) - \[\[([^\]]+)\]\] - (.*)$`)
 
 func journal(body string) []model.JournalEntry {
 	var result []model.JournalEntry

@@ -2,16 +2,37 @@
   {
     "source": 8,
     "source_title": "Atlas",
-    "target_title": "Missing note"
+    "target_title": "Go",
+    "from_property": 1
   },
   {
     "source": 8,
     "source_title": "Atlas",
-    "target_title": "Note"
+    "target_title": "Missing note",
+    "from_property": 0
+  },
+  {
+    "source": 8,
+    "source_title": "Atlas",
+    "target_title": "Note",
+    "from_property": 0
+  },
+  {
+    "source": 8,
+    "source_title": "Atlas",
+    "target_title": "TypeScript",
+    "from_property": 1
   },
   {
     "source": 11,
     "source_title": "Compass",
-    "target_title": "Missing page"
+    "target_title": "Markdown",
+    "from_property": 1
+  },
+  {
+    "source": 11,
+    "source_title": "Compass",
+    "target_title": "Missing page",
+    "from_property": 0
   }
 ]

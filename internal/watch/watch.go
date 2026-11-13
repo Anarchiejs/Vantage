@@ -284,15 +284,15 @@ func Watch(ctx context.Context, opt Options) error {
 	}
 	fin := make(chan outcome, 1)
 	var timer *time.Timer
-	var attente <-chan time.Time
-	enCours, suivant := false, false
+	var pending <-chan time.Time
+	running, again := false, false
 	defer func() {
 		if timer != nil {
 			timer.Stop()
 		}
 	}()
 	startImport := func() {
-		enCours = true
+		running = true
 		go func() { c, err := opt.Import(ctx); fin <- outcome{c, err} }()
 	}
 	for {
@@ -328,24 +328,24 @@ func Watch(ctx context.Context, opt Options) error {
 			if !relevant {
 				continue
 			}
-			if enCours {
-				suivant = true
-			} else if attente == nil {
+			if running {
+				again = true
+			} else if pending == nil {
 				timer = time.NewTimer(opt.Delay)
-				attente = timer.C
+				pending = timer.C
 			}
 		case err, ok := <-w.Errors:
 			if !ok {
 				return nil
 			}
 			s.log("fsnotify error: %v", err)
-		case <-attente:
-			attente = nil
+		case <-pending:
+			pending = nil
 			if ctx.Err() == nil {
 				startImport()
 			}
 		case result := <-fin:
-			enCours = false
+			running = false
 			if result.err != nil {
 				s.log("import error: %v", result.err)
 			} else if !result.c.Empty() && opt.Announce != nil {
@@ -353,8 +353,8 @@ func Watch(ctx context.Context, opt Options) error {
 			}
 			s.repos()
 			s.refresh()
-			if suivant && ctx.Err() == nil {
-				suivant = false
+			if again && ctx.Err() == nil {
+				again = false
 				startImport()
 			}
 		}

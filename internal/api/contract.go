@@ -59,6 +59,7 @@ type Home struct {
 	Active        []ActiveProject  `json:"active"`
 	Dormant       []DormantProject `json:"dormant"`
 	StaleCards    []StaleCard      `json:"stale_cards"`
+	QuietHidden   int64            `json:"quiet_hidden"`
 }
 
 // ---- GET /api/projects and /api/projects/{id}
@@ -112,7 +113,8 @@ type Health struct {
 	LastSHA        *string  `json:"last_sha"`
 	UpToDate       bool     `json:"up_to_date"`
 	CommitsSince   int64    `json:"commits_since"`
-	MissingNotes   []string `json:"missing_notes"`
+	MissingNotes   []string `json:"missing_notes"` // titles listed in the card's expected_notes
+	ActivityNote   string   `json:"activity_note"` // why the card is or is not dormant
 }
 
 type AIActivity struct {
@@ -128,6 +130,13 @@ type ProjectFull struct {
 	Technologies []string `json:"technologies"`
 }
 
+type CommitSince struct {
+	Date  string `json:"date"`
+	Ref   string `json:"ref"`
+	Title string `json:"title"`
+	Since string `json:"since"` // latest session date these commits follow
+}
+
 type ProjectDetail struct {
 	Project           ProjectFull     `json:"project"`
 	Timeline          []TimelineEvent `json:"timeline"`
@@ -137,6 +146,9 @@ type ProjectDetail struct {
 	Hotspots          []Hotspot       `json:"hotspots"`
 	Health            Health          `json:"health"`
 	AI                []AIActivity    `json:"ai"`
+	SinceSession      []CommitSince   `json:"since_session"`
+	RepoPaths         []string        `json:"repo_paths"`
+	ObsidianURL       string          `json:"obsidian_url"`
 }
 
 // ---- GET /api/technologies and /api/ai
@@ -186,6 +198,7 @@ type Assistant struct {
 type GraphNode struct {
 	ID     int64  `json:"id"`
 	Title  string `json:"title"`
+	Path   string `json:"path"`
 	Folder string `json:"folder"`
 	Degree int64  `json:"degree"`
 }
@@ -207,6 +220,7 @@ type Graph struct {
 	Orphans []GraphNode  `json:"orphans"`
 	Central []GraphNode  `json:"central"`
 	Broken  []BrokenLink `json:"broken"`
+	Folders []string     `json:"folders"` // every folder, before the folder filter
 }
 
 type GraphPath struct {
@@ -214,13 +228,32 @@ type GraphPath struct {
 }
 
 type NoteDetail struct {
-	ID        int64       `json:"id"`
-	Title     string      `json:"title"`
-	Path      string      `json:"path"`
-	Folder    string      `json:"folder"`
-	Updated   *string     `json:"updated"`
-	Content   string      `json:"content"`
-	Neighbors []GraphNode `json:"neighbors"`
+	ID          int64       `json:"id"`
+	Title       string      `json:"title"`
+	Path        string      `json:"path"`
+	Folder      string      `json:"folder"`
+	Updated     *string     `json:"updated"`
+	Content     string      `json:"content"`
+	Neighbors   []GraphNode `json:"neighbors"`
+	ObsidianURL string      `json:"obsidian_url"`
+}
+
+// ---- GET /api/repos
+
+type RepoFile struct {
+	Path     string `json:"path"`
+	Branch   string `json:"branch"`
+	Exists   bool   `json:"exists"`
+	Imported bool   `json:"imported"`
+}
+
+type RepoCard struct {
+	ID           int64      `json:"id"`
+	Name         string     `json:"name"`
+	SourcePath   string     `json:"source_path"`
+	SourceExists bool       `json:"source_exists"`
+	Branch       string     `json:"branch"`
+	Repos        []RepoFile `json:"repos"`
 }
 
 // ---- GET /api/search

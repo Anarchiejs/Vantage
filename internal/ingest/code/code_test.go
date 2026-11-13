@@ -10,11 +10,11 @@ import (
 
 func TestMeasureFixtureAlpha(t *testing.T) {
 	repo := "../../../testdata/repos/alpha"
-	first, err := Measure(context.Background(), repo)
+	first, _, err := Measure(context.Background(), repo, "HEAD")
 	if err != nil {
 		t.Fatal(err)
 	}
-	second, err := Measure(context.Background(), repo)
+	second, _, err := Measure(context.Background(), repo, "HEAD")
 	if err != nil {
 		t.Fatal(err)
 	}

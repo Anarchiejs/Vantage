@@ -1,10 +1,15 @@
 package api
 
 import (
+	"context"
 	"database/sql"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
+	"os"
+	"path/filepath"
 	"slices"
 	"sort"
 	"strconv"
@@ -25,6 +30,7 @@ func (s *Server) viewRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/graph/path", s.path)
 	mux.HandleFunc("GET /api/notes/{id}", s.note)
 	mux.HandleFunc("GET /api/search", s.search)
+	mux.HandleFunc("GET /api/repos", s.repos)
 }
 
 // failed writes 500 (or 404 for a missing row) and reports whether the handler should stop.
@@ -135,6 +141,11 @@ func (s *Server) home(w http.ResponseWriter, r *http.Request) {
 	for _, row := range stale {
 		res.StaleCards = append(res.StaleCards, StaleCard{ID: row.ID, Name: row.Name, VerifiedCommit: row.VerifiedCommit, LastSHA: row.LastSha, CommitsSince: row.CommitsSince})
 	}
+	quiet, err := s.q.QuietOutsideStatus(ctx, &today)
+	if failed(w, err) {
+		return
+	}
+	res.QuietHidden = quiet
 	writeJSON(w, res)
 }
 
@@ -160,7 +171,7 @@ func (s *Server) project(w http.ResponseWriter, r *http.Request) {
 	if failed(w, err) {
 		return
 	}
-	res := ProjectDetail{Timeline: []TimelineEvent{}, Volume: []WeeklyVolume{}, Languages: []LanguageShare{}, LanguageEvolution: []LanguagePoint{}, Hotspots: []Hotspot{}, AI: []AIActivity{}}
+	res := ProjectDetail{Timeline: []TimelineEvent{}, Volume: []WeeklyVolume{}, Languages: []LanguageShare{}, LanguageEvolution: []LanguagePoint{}, Hotspots: []Hotspot{}, AI: []AIActivity{}, SinceSession: []CommitSince{}, RepoPaths: []string{}}
 
 	// Summary reuses the list row (commits, last commit, primary language).
 	res.Project = ProjectFull{ProjectSummary: ProjectSummary{ID: row.ID, Name: row.Name, Status: row.Status}, SourcePath: row.SourcePath}
@@ -229,6 +240,21 @@ func (s *Server) project(w http.ResponseWriter, r *http.Request) {
 	if res.Health, err = s.health(r, row); failed(w, err) {
 		return
 	}
+	repositories, err := s.q.ProjectRepositories(ctx, id)
+	if failed(w, err) {
+		return
+	}
+	for _, repo := range repositories {
+		res.RepoPaths = append(res.RepoPaths, repo.Path)
+	}
+	since, err := s.q.CommitsSinceSession(ctx, &id)
+	if failed(w, err) {
+		return
+	}
+	for _, commit := range since {
+		res.SinceSession = append(res.SinceSession, CommitSince{Date: commit.Date, Ref: commit.Ref, Title: textOrEmpty(commit.Title), Since: textOrEmpty(commit.Since)})
+	}
+	res.ObsidianURL = s.obsidianURL(ctx, filepath.ToSlash(filepath.Join("Projects", row.Name, row.Name+".md")))
 	writeJSON(w, res)
 }
 
@@ -259,14 +285,47 @@ func (s *Server) health(r *http.Request, project gen.Project) (Health, error) {
 	if err != nil {
 		return health, err
 	}
-	for _, expected := range []string{project.Name + " - Summary", project.Name + " - Detail"} {
+	var expected []string
+	if project.ExpectedNotes != nil && *project.ExpectedNotes != "" {
+		if err := json.Unmarshal([]byte(*project.ExpectedNotes), &expected); err != nil {
+			return health, err
+		}
+	}
+	for _, name := range expected {
 		found := false
 		for _, title := range present {
-			found = found || title == expected
+			found = found || title == name
 		}
 		if !found {
-			health.MissingNotes = append(health.MissingNotes, expected)
+			health.MissingNotes = append(health.MissingNotes, name)
 		}
+	}
+	status := ""
+	if project.Status != nil {
+		status = strings.ToLower(strings.TrimSpace(*project.Status))
+	}
+	watched := status == "in progress" || status == "active" || status == "ongoing"
+	dormant, err := s.q.DormantProjects(ctx, s.cfg.Today())
+	if err != nil {
+		return health, err
+	}
+	listed := false
+	for _, card := range dormant {
+		if card.ID == project.ID {
+			listed = true
+		}
+	}
+	switch {
+	case !watched:
+		shown := "empty"
+		if project.Status != nil && strings.TrimSpace(*project.Status) != "" {
+			shown = *project.Status
+		}
+		health.ActivityNote = fmt.Sprintf("Not dormant: status %q is outside in progress, active, and ongoing.", shown)
+	case listed:
+		health.ActivityNote = "Dormant: status is in progress, active, or ongoing, and the last commit is missing or older than 30 days."
+	default:
+		health.ActivityNote = "Not dormant: status is watched and the last commit is within 30 days."
 	}
 	return health, nil
 }
@@ -353,22 +412,69 @@ func (s *Server) assistants(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, res)
 }
 
-func graphNode(id int64, title, folder string, degree int64) GraphNode {
-	return GraphNode{ID: id, Title: title, Folder: folder, Degree: degree}
+func graphNode(id int64, title, path, folder string, degree int64) GraphNode {
+	return GraphNode{ID: id, Title: title, Path: path, Folder: folder, Degree: degree}
 }
 
 func (s *Server) graph(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	res := Graph{Nodes: []GraphNode{}, Links: []GraphLink{}, Orphans: []GraphNode{}, Central: []GraphNode{}, Broken: []BrokenLink{}}
+	res := Graph{Nodes: []GraphNode{}, Links: []GraphLink{}, Orphans: []GraphNode{}, Central: []GraphNode{}, Broken: []BrokenLink{}, Folders: []string{}}
 	nodes, err := s.q.GraphNodes(ctx)
 	if failed(w, err) {
 		return
 	}
+	folderSet := map[string]bool{}
 	for _, node := range nodes {
-		item := graphNode(node.ID, node.Title, node.Folder, node.Degree)
-		res.Nodes = append(res.Nodes, item)
+		if node.Folder != "" {
+			folderSet[node.Folder] = true
+		}
+	}
+	for folder := range folderSet {
+		res.Folders = append(res.Folders, folder)
+	}
+	sort.Strings(res.Folders)
+	wanted := map[string]bool{}
+	for _, folder := range r.URL.Query()["folder"] {
+		if folder != "" {
+			wanted[folder] = true
+		}
+	}
+	includeProperties := r.URL.Query().Get("properties") != "0"
+	keep := map[int64]GraphNode{}
+	for _, node := range nodes {
+		if len(wanted) > 0 && !wanted[node.Folder] {
+			continue
+		}
+		keep[node.ID] = graphNode(node.ID, node.Title, node.Path, node.Folder, 0)
+	}
+	links, err := s.q.GraphLinks(ctx)
+	if failed(w, err) {
+		return
+	}
+	degree := map[int64]int64{}
+	for _, link := range links {
+		if link.Target == nil || !includeProperties && link.FromProperty != 0 {
+			continue
+		}
+		if _, ok := keep[link.Source]; !ok {
+			continue
+		}
+		if _, ok := keep[*link.Target]; !ok {
+			continue
+		}
+		res.Links = append(res.Links, GraphLink{Source: link.Source, Target: *link.Target})
+		degree[link.Source]++
+		degree[*link.Target]++
+	}
+	for id, node := range keep {
+		node.Degree = degree[id]
+		keep[id] = node
+		res.Nodes = append(res.Nodes, node)
+	}
+	sort.Slice(res.Nodes, func(i, j int) bool { return res.Nodes[i].ID < res.Nodes[j].ID })
+	for _, node := range res.Nodes {
 		if node.Degree == 0 {
-			res.Orphans = append(res.Orphans, item)
+			res.Orphans = append(res.Orphans, node)
 		}
 	}
 	central := append([]GraphNode(nil), res.Nodes...)
@@ -378,21 +484,19 @@ func (s *Server) graph(w http.ResponseWriter, r *http.Request) {
 			res.Central = append(res.Central, node)
 		}
 	}
-	links, err := s.q.GraphLinks(ctx)
-	if failed(w, err) {
-		return
-	}
-	for _, link := range links {
-		if link.Target != nil {
-			res.Links = append(res.Links, GraphLink{Source: link.Source, Target: *link.Target})
-		}
-	}
 	broken, err := s.q.BrokenLinks(ctx)
 	if failed(w, err) {
 		return
 	}
 	for _, link := range broken {
-		res.Broken = append(res.Broken, BrokenLink{Source: link.Source, SourceTitle: link.SourceTitle, TargetTitle: link.TargetTitle})
+		if !includeProperties && link.FromProperty != 0 {
+			continue
+		}
+		node, ok := keep[link.Source]
+		if !ok {
+			continue
+		}
+		res.Broken = append(res.Broken, BrokenLink{Source: link.Source, SourceTitle: node.Title, TargetTitle: link.TargetTitle})
 	}
 	writeJSON(w, res)
 }
@@ -414,7 +518,7 @@ func (s *Server) path(w http.ResponseWriter, r *http.Request) {
 	}
 	byID := make(map[int64]GraphNode, len(nodes))
 	for _, node := range nodes {
-		byID[node.ID] = graphNode(node.ID, node.Title, node.Folder, node.Degree)
+		byID[node.ID] = graphNode(node.ID, node.Title, node.Path, node.Folder, node.Degree)
 	}
 	if _, ok := byID[from]; !ok {
 		writeError(w, http.StatusNotFound, "start note not found")
@@ -482,7 +586,57 @@ func (s *Server) note(w http.ResponseWriter, r *http.Request) {
 	}
 	res := NoteDetail{ID: row.ID, Title: row.Title, Path: row.Path, Folder: row.Folder, Updated: row.Updated, Content: row.Content, Neighbors: []GraphNode{}}
 	for _, neighbor := range neighbors {
-		res.Neighbors = append(res.Neighbors, graphNode(neighbor.ID, neighbor.Title, neighbor.Folder, neighbor.Degree))
+		res.Neighbors = append(res.Neighbors, graphNode(neighbor.ID, neighbor.Title, neighbor.Path, neighbor.Folder, neighbor.Degree))
+	}
+	res.ObsidianURL = s.obsidianURL(r.Context(), row.Path)
+	writeJSON(w, res)
+}
+
+func (s *Server) obsidianURL(ctx context.Context, file string) string {
+	name, err := s.q.Setting(ctx, "vault_name")
+	if err != nil || name == "" {
+		return ""
+	}
+	return "obsidian://open?vault=" + url.QueryEscape(name) + "&file=" + url.QueryEscape(file)
+}
+
+func (s *Server) repos(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	rows, err := s.q.ListProjects(ctx)
+	if failed(w, err) {
+		return
+	}
+	res := make([]RepoCard, 0, len(rows))
+	for _, row := range rows {
+		project, err := s.q.ProjectByID(ctx, row.ID)
+		if failed(w, err) {
+			return
+		}
+		card := RepoCard{ID: row.ID, Name: row.Name, Repos: []RepoFile{}}
+		if project.SourcePath != nil {
+			card.SourcePath = *project.SourcePath
+			if info, err := os.Stat(card.SourcePath); err == nil && info.IsDir() {
+				card.SourceExists = true
+			}
+		}
+		if project.Branch != nil {
+			card.Branch = *project.Branch
+		}
+		repositories, err := s.q.ProjectRepositories(ctx, row.ID)
+		if failed(w, err) {
+			return
+		}
+		for _, repo := range repositories {
+			file := RepoFile{Path: repo.Path, Imported: true}
+			if repo.Branch != nil {
+				file.Branch = *repo.Branch
+			}
+			if info, err := os.Stat(repo.Path); err == nil && info.IsDir() {
+				file.Exists = true
+			}
+			card.Repos = append(card.Repos, file)
+		}
+		res = append(res, card)
 	}
 	writeJSON(w, res)
 }

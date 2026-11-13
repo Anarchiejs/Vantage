@@ -12,7 +12,7 @@ orphan note, invalid YAML, two broken links, an alias, a link with an anchor,
 an embedded image, a link ignored inside a code block, a nested `.obsidian`
 note that is ignored, and a file stored with LF line endings.
 
-## `vault/.observatoire/repos`
+## `vault/.vantage/repos`
 
 Maps the project names Atlas and Compass onto `repos/alpha` and `repos/beta`, with paths relative to the vault. `import` and `watch` read it, and a `-repos` flag replaces a name. The cards themselves still say `source_path: none (not created yet)` and `source_path: C:/Fixtures/Compass`. The directory is hidden, so it is not imported as a note.
 

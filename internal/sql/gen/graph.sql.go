@@ -10,14 +10,15 @@ import (
 )
 
 const brokenLinks = `-- name: BrokenLinks :many
-SELECT l.source_id AS source,n.title AS source_title,l.target_title
-FROM link l JOIN note n ON n.id=l.source_id WHERE l.target_id IS NULL ORDER BY l.source_id,l.target_title
+SELECT l.source_id AS source, n.title AS source_title, l.target_title, l.from_property
+FROM link l JOIN note n ON n.id=l.source_id WHERE l.target_id IS NULL ORDER BY l.source_id, l.target_title
 `
 
 type BrokenLinksRow struct {
-	Source      int64  `json:"source"`
-	SourceTitle string `json:"source_title"`
-	TargetTitle string `json:"target_title"`
+	Source       int64  `json:"source"`
+	SourceTitle  string `json:"source_title"`
+	TargetTitle  string `json:"target_title"`
+	FromProperty int64  `json:"from_property"`
 }
 
 // The partial index selects unresolved links; the source uses its primary key.
@@ -30,7 +31,12 @@ func (q *Queries) BrokenLinks(ctx context.Context) ([]BrokenLinksRow, error) {
 	var items []BrokenLinksRow
 	for rows.Next() {
 		var i BrokenLinksRow
-		if err := rows.Scan(&i.Source, &i.SourceTitle, &i.TargetTitle); err != nil {
+		if err := rows.Scan(
+			&i.Source,
+			&i.SourceTitle,
+			&i.TargetTitle,
+			&i.FromProperty,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -45,13 +51,15 @@ func (q *Queries) BrokenLinks(ctx context.Context) ([]BrokenLinksRow, error) {
 }
 
 const graphLinks = `-- name: GraphLinks :many
-SELECT DISTINCT source_id AS source,target_id AS target FROM link
-WHERE target_id IS NOT NULL AND source_id<>target_id ORDER BY source_id,target_id
+SELECT source_id AS source, target_id AS target, CAST(min(from_property) AS INTEGER) AS from_property FROM link
+WHERE target_id IS NOT NULL AND source_id<>target_id
+GROUP BY source_id, target_id ORDER BY source_id, target_id
 `
 
 type GraphLinksRow struct {
-	Source int64  `json:"source"`
-	Target *int64 `json:"target"`
+	Source       int64  `json:"source"`
+	Target       *int64 `json:"target"`
+	FromProperty int64  `json:"from_property"`
 }
 
 // DISTINCT merges aliases that resolve to the same directed edge.
@@ -64,7 +72,7 @@ func (q *Queries) GraphLinks(ctx context.Context) ([]GraphLinksRow, error) {
 	var items []GraphLinksRow
 	for rows.Next() {
 		var i GraphLinksRow
-		if err := rows.Scan(&i.Source, &i.Target); err != nil {
+		if err := rows.Scan(&i.Source, &i.Target, &i.FromProperty); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -79,7 +87,7 @@ func (q *Queries) GraphLinks(ctx context.Context) ([]GraphLinksRow, error) {
 }
 
 const graphNodes = `-- name: GraphNodes :many
-SELECT n.id,n.title,n.folder,
+SELECT n.id, n.title, n.path, n.folder,
  (SELECT count(DISTINCT target_id) FROM link WHERE source_id=n.id AND target_id<>n.id) +
  (SELECT count(DISTINCT source_id) FROM link WHERE target_id=n.id AND source_id<>n.id) AS degree
 FROM note n ORDER BY n.id
@@ -88,6 +96,7 @@ FROM note n ORDER BY n.id
 type GraphNodesRow struct {
 	ID     int64  `json:"id"`
 	Title  string `json:"title"`
+	Path   string `json:"path"`
 	Folder string `json:"folder"`
 	Degree int64  `json:"degree"`
 }
@@ -105,6 +114,7 @@ func (q *Queries) GraphNodes(ctx context.Context) ([]GraphNodesRow, error) {
 		if err := rows.Scan(
 			&i.ID,
 			&i.Title,
+			&i.Path,
 			&i.Folder,
 			&i.Degree,
 		); err != nil {
@@ -122,7 +132,7 @@ func (q *Queries) GraphNodes(ctx context.Context) ([]GraphNodesRow, error) {
 }
 
 const neighbors = `-- name: Neighbors :many
-SELECT n.id,n.title,n.folder,
+SELECT n.id, n.title, n.path, n.folder,
  (SELECT count(DISTINCT target_id) FROM link WHERE source_id=n.id AND target_id<>n.id) +
  (SELECT count(DISTINCT source_id) FROM link WHERE target_id=n.id AND source_id<>n.id) AS degree
 FROM note n WHERE n.id<>?1 AND n.id IN (
@@ -134,6 +144,7 @@ FROM note n WHERE n.id<>?1 AND n.id IN (
 type NeighborsRow struct {
 	ID     int64  `json:"id"`
 	Title  string `json:"title"`
+	Path   string `json:"path"`
 	Folder string `json:"folder"`
 	Degree int64  `json:"degree"`
 }
@@ -151,6 +162,7 @@ func (q *Queries) Neighbors(ctx context.Context, id int64) ([]NeighborsRow, erro
 		if err := rows.Scan(
 			&i.ID,
 			&i.Title,
+			&i.Path,
 			&i.Folder,
 			&i.Degree,
 		); err != nil {
@@ -214,7 +226,7 @@ WITH RECURSIVE walk(id,trail,depth) AS (
  SELECT substr(rest,instr(rest,'/')+1),CAST(substr(rest,1,instr(rest,'/')-1) AS INTEGER),position+1
  FROM parts WHERE rest<>''
 )
-SELECT n.id,n.title,n.folder,
+SELECT n.id, n.title, n.path, n.folder,
  (SELECT count(DISTINCT target_id) FROM link WHERE source_id=n.id AND target_id<>n.id) +
  (SELECT count(DISTINCT source_id) FROM link WHERE target_id=n.id AND source_id<>n.id) AS degree
 FROM parts p JOIN note n ON n.id=p.id ORDER BY p.position
@@ -228,6 +240,7 @@ type ShortestPathParams struct {
 type ShortestPathRow struct {
 	ID     int64  `json:"id"`
 	Title  string `json:"title"`
+	Path   string `json:"path"`
 	Folder string `json:"folder"`
 	Degree int64  `json:"degree"`
 }
@@ -246,6 +259,7 @@ func (q *Queries) ShortestPath(ctx context.Context, arg ShortestPathParams) ([]S
 		if err := rows.Scan(
 			&i.ID,
 			&i.Title,
+			&i.Path,
 			&i.Folder,
 			&i.Degree,
 		); err != nil {
