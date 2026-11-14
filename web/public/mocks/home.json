@@ -3813,6 +3813,20 @@
     "sessions": 49,
     "active_projects": 7
   },
+  "year": {
+    "commits": 1872,
+    "additions": 80496,
+    "deletions": 22464,
+    "sessions": 577,
+    "active_projects": 7
+  },
+  "previous_year": {
+    "commits": 0,
+    "additions": 0,
+    "deletions": 0,
+    "sessions": 0,
+    "active_projects": 0
+  },
   "active": [
     {
       "id": 1,
@@ -3894,5 +3908,43 @@
       "commits_since": 12
     }
   ],
-  "quiet_hidden": 0
+  "quiet_hidden": 0,
+  "recent_notes": [
+    {
+      "id": 10,
+      "title": "Waypoint",
+      "folder": "Projects",
+      "day": "2026-10-26"
+    },
+    {
+      "id": 22,
+      "title": "TypeScript",
+      "folder": "Technologies",
+      "day": "2026-10-26"
+    },
+    {
+      "id": 7,
+      "title": "Tidepool",
+      "folder": "Projects",
+      "day": "2026-10-26"
+    },
+    {
+      "id": 28,
+      "title": "Supabase",
+      "folder": "Technologies",
+      "day": "2026-10-26"
+    },
+    {
+      "id": 9,
+      "title": "Sable",
+      "folder": "Projects",
+      "day": "2026-10-26"
+    },
+    {
+      "id": 23,
+      "title": "SQLite",
+      "folder": "Technologies",
+      "day": "2026-10-26"
+    }
+  ]
 }

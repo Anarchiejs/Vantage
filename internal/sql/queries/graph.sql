@@ -55,3 +55,11 @@ SELECT n.id, n.title, n.path, n.folder,
  (SELECT count(DISTINCT target_id) FROM link WHERE source_id=n.id AND target_id<>n.id) +
  (SELECT count(DISTINCT source_id) FROM link WHERE target_id=n.id AND source_id<>n.id) AS degree
 FROM parts p JOIN note n ON n.id=p.id ORDER BY p.position;
+
+-- name: NoteProject :many
+-- Project a note belongs to: a note under Projects/<name>/ or a session assigned to the project.
+-- Zero or one row; the longest matching name wins when folder names nest.
+SELECT p.id, p.name FROM note n JOIN project p
+ ON substr(n.path, 1, length('Projects/' || p.name || '/')) = 'Projects/' || p.name || '/'
+ OR p.id = (SELECT s.project_id FROM session s WHERE s.note_id = n.id)
+WHERE n.id = sqlc.arg(id) ORDER BY length(p.name) DESC LIMIT 1;

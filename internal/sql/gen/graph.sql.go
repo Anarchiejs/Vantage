@@ -209,6 +209,43 @@ func (q *Queries) NoteByID(ctx context.Context, id int64) (NoteByIDRow, error) {
 	return i, err
 }
 
+const noteProject = `-- name: NoteProject :many
+SELECT p.id, p.name FROM note n JOIN project p
+ ON substr(n.path, 1, length('Projects/' || p.name || '/')) = 'Projects/' || p.name || '/'
+ OR p.id = (SELECT s.project_id FROM session s WHERE s.note_id = n.id)
+WHERE n.id = ?1 ORDER BY length(p.name) DESC LIMIT 1
+`
+
+type NoteProjectRow struct {
+	ID   int64  `json:"id"`
+	Name string `json:"name"`
+}
+
+// Project a note belongs to: a note under Projects/<name>/ or a session assigned to the project.
+// Zero or one row; the longest matching name wins when folder names nest.
+func (q *Queries) NoteProject(ctx context.Context, id int64) ([]NoteProjectRow, error) {
+	rows, err := q.query(ctx, q.noteProjectStmt, noteProject, id)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []NoteProjectRow
+	for rows.Next() {
+		var i NoteProjectRow
+		if err := rows.Scan(&i.ID, &i.Name); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const shortestPath = `-- name: ShortestPath :many
 WITH RECURSIVE walk(id,trail,depth) AS (
  SELECT note.id,'/' || note.id || '/' AS trail,0 AS depth FROM note WHERE note.id=?1

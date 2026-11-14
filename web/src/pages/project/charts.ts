@@ -1,15 +1,14 @@
 import type { EChartsOption } from 'echarts'
-import type { LanguagePoint, LanguageShare, WeeklyVolume } from '../../api/types'
+import type { LanguagePoint, WeeklyVolume } from '../../api/types'
 import { series, token } from '../../theme/theme'
+/** Diverging bars: additions above zero, deletions below, so both stay visible. */
 export function volumeOption(volume: WeeklyVolume[]): EChartsOption {
   volume = [...volume].sort((a, b) => a.week.localeCompare(b.week))
-  return { color: [token('series-1'), token('danger')], tooltip: { trigger: 'axis', valueFormatter: value => typeof value === 'number' ? Math.abs(value).toLocaleString('en-US') : String(value) }, legend: { data: ['Additions', 'Deletions'] }, xAxis: { type: 'category', data: volume.map(item => item.week), axisLabel: { formatter: (value: string) => new Date(`${value}T12:00:00`).toLocaleDateString('en-US', { day: 'numeric', month: 'short' }), hideOverlap: true } }, yAxis: { type: 'value' }, series: [
-    { name: 'Additions', type: 'bar', stack: 'volume', data: volume.map(item => item.additions) },
-    { name: 'Deletions', type: 'bar', stack: 'volume', data: volume.map(item => -item.deletions) },
+  const bar = { type: 'bar' as const, stack: 'volume', barMaxWidth: 22 }
+  return { color: [token('series-1'), token('danger')], tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, valueFormatter: value => typeof value === 'number' ? Math.abs(value).toLocaleString('en-US') : String(value) }, legend: { data: ['Additions', 'Deletions'], right: 0 }, xAxis: { type: 'category', data: volume.map(item => item.week), axisTick: { show: false }, axisLabel: { formatter: (value: string) => new Date(`${value}T12:00:00`).toLocaleDateString('en-US', { day: 'numeric', month: 'short' }), hideOverlap: true } }, yAxis: { type: 'value', axisLabel: { formatter: (value: number) => Math.abs(value).toLocaleString('en-US') } }, series: [
+    { ...bar, name: 'Additions', itemStyle: { borderRadius: [3, 3, 0, 0] }, data: volume.map(item => item.additions) },
+    { ...bar, name: 'Deletions', itemStyle: { borderRadius: [0, 0, 3, 3] }, data: volume.map(item => -item.deletions), markLine: { silent: true, symbol: 'none', label: { show: false }, lineStyle: { color: token('muted'), type: 'solid', width: 1 }, data: [{ yAxis: 0 }] } },
   ] }
-}
-export function languagesOption(languages: LanguageShare[]): EChartsOption {
-  return { xAxis: { show: false }, yAxis: { show: false }, color: series(), tooltip: { trigger: 'item', renderMode: 'richText' }, legend: { bottom: 0, type: 'scroll' }, series: [{ type: 'pie', radius: ['40%', '65%'], center: ['50%', '43%'], label: { show: false }, data: languages.map(item => ({ name: item.language, value: item.code_lines })) }] }
 }
 export function evolutionOption(points: LanguagePoint[]): EChartsOption {
   const dates = [...new Set(points.map(point => point.measured_on))].sort()

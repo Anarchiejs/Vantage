@@ -1,6 +1,6 @@
 # Query contract
 
-- 28 named queries, generated only with sqlc 1.31.1.
+- 35 named queries, generated only with sqlc 1.31.1.
 - Search uses `FROM search_index(sqlc.arg(terms))`, FTS5 syntax equivalent to `WHERE search_index MATCH ...`. sqlc rejects the hidden column that has the table name in the second syntax. The plan confirms MATCH `0:M4`.
 - `char(8230)` is the requested snippet separator (U+2026), while SQL sources stay ASCII to avoid sqlc's truncation problem.
 - Nullable computed fields may be `interface{}` in sqlc structs (notably Search.Date); they contain a string or nil. The API converts them to its contract. ProjectAI expects a `*int64` (nullable column).

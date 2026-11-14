@@ -31,6 +31,8 @@ func (s *Server) viewRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/notes/{id}", s.note)
 	mux.HandleFunc("GET /api/search", s.search)
 	mux.HandleFunc("GET /api/repos", s.repos)
+	mux.HandleFunc("GET /api/status", s.status)
+	mux.HandleFunc("POST /api/projects/{id}/repo", s.linkRepo)
 }
 
 // failed writes 500 (or 404 for a missing row) and reports whether the handler should stop.
@@ -94,7 +96,7 @@ func (s *Server) stats(r *http.Request, start, end string) (Stats, error) {
 func (s *Server) home(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	today := s.cfg.Today()
-	res := Home{Calendar: []ActivityDay{}, Active: []ActiveProject{}, Dormant: []DormantProject{}, StaleCards: []StaleCard{}}
+	res := Home{Calendar: []ActivityDay{}, Active: []ActiveProject{}, Dormant: []DormantProject{}, StaleCards: []StaleCard{}, RecentNotes: []RecentNote{}}
 
 	calendar, err := s.q.Calendar(ctx, today)
 	if failed(w, err) {
@@ -113,6 +115,7 @@ func (s *Server) home(w http.ResponseWriter, r *http.Request) {
 		start, end int
 	}{
 		{&res.Week, -6, 0}, {&res.PreviousWeek, -13, -7}, {&res.Month, -29, 0}, {&res.PreviousMonth, -59, -30},
+		{&res.Year, -364, 0}, {&res.PreviousYear, -729, -365},
 	}
 	for _, period := range periods {
 		if *period.dest, err = s.stats(r, shiftDay(today, period.start), shiftDay(today, period.end)); failed(w, err) {
@@ -146,6 +149,13 @@ func (s *Server) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	res.QuietHidden = quiet
+	recent, err := s.q.RecentNotes(ctx)
+	if failed(w, err) {
+		return
+	}
+	for _, row := range recent {
+		res.RecentNotes = append(res.RecentNotes, RecentNote{ID: row.ID, Title: row.Title, Folder: row.Folder, Day: row.Day})
+	}
 	writeJSON(w, res)
 }
 
@@ -589,6 +599,13 @@ func (s *Server) note(w http.ResponseWriter, r *http.Request) {
 		res.Neighbors = append(res.Neighbors, graphNode(neighbor.ID, neighbor.Title, neighbor.Path, neighbor.Folder, neighbor.Degree))
 	}
 	res.ObsidianURL = s.obsidianURL(r.Context(), row.Path)
+	owners, err := s.q.NoteProject(r.Context(), id)
+	if failed(w, err) {
+		return
+	}
+	if len(owners) > 0 {
+		res.Project = &ProjectRef{ID: owners[0].ID, Name: owners[0].Name}
+	}
 	writeJSON(w, res)
 }
 

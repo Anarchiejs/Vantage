@@ -1,7 +1,7 @@
 const nf = new Intl.NumberFormat('en-US')
 
-/** Key figure with its change from the previous period (up, down, or unchanged). */
-export function Stat({ label, value, previous }: { label: string; value: number; previous?: number }) {
+/** Key figure with its change from the previous period (up, down, or unchanged), and an optional context line. */
+export function Stat({ label, value, previous, note }: { label: string; value: number; previous?: number; note?: string }) {
   let change = null
   if (previous !== undefined) {
     const diff = value - previous
@@ -18,9 +18,10 @@ export function Stat({ label, value, previous }: { label: string; value: number;
     <div className="flex flex-col gap-1">
       <span className="text-xs text-muted">{label}</span>
       <span className="flex items-baseline gap-2">
-        <span className="text-2xl font-semibold tabular-nums">{nf.format(value)}</span>
+        <span className={`text-2xl font-semibold tabular-nums ${value === 0 ? 'text-faint' : ''}`}>{nf.format(value)}</span>
         {change}
       </span>
+      {note && <span className="stat-note text-xs text-muted">{note}</span>}
     </div>
   )
 }

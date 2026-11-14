@@ -7,6 +7,7 @@ import {
   GridComponent,
   LegendComponent,
   LegendScrollComponent,
+  MarkLineComponent,
   TooltipComponent,
   VisualMapComponent,
   VisualMapPiecewiseComponent,
@@ -28,6 +29,7 @@ registerECharts([
   AxisPointerComponent,
   LegendComponent,
   LegendScrollComponent,
+  MarkLineComponent,
   VisualMapComponent,
   VisualMapPiecewiseComponent,
   CalendarComponent,
@@ -70,22 +72,28 @@ export function Chart({
   option,
   height = 260,
   onClick,
+  onReady,
   className = '',
   'aria-label': label,
 }: {
   option: EChartsOption | (() => EChartsOption)
   height?: number
   onClick?: (event: ECElementEvent) => void
+  /** Receives the instance once created (null on unmount), for actions such as zoom buttons. */
+  onReady?: (chart: ECharts | null) => void
   className?: string
   'aria-label'?: string
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const chart = useRef<ECharts | null>(null)
+  const readyRef = useRef(onReady)
+  readyRef.current = onReady
 
   useEffect(() => {
     if (!ref.current) return
     const instance = init(ref.current, undefined, { renderer: 'canvas' })
     chart.current = instance
+    readyRef.current?.(instance)
     let frame = 0
     const observer = new ResizeObserver(() => { cancelAnimationFrame(frame); frame = requestAnimationFrame(() => { if (!instance.isDisposed()) instance.resize() }) })
     observer.observe(ref.current)
@@ -94,6 +102,7 @@ export function Chart({
       cancelAnimationFrame(frame)
       instance.dispose()
       chart.current = null
+      readyRef.current?.(null)
     }
   }, [])
 

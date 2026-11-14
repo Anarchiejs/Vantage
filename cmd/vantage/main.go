@@ -12,6 +12,7 @@ import (
 	"os/signal"
 	"path/filepath"
 	"strings"
+	"sync"
 	"syscall"
 	"time"
 
@@ -318,8 +319,8 @@ func runWatch(args []string) error {
 	if err := requireVault(*vault); err != nil {
 		return err
 	}
-	replacements, err := reposForVault(*vault, repos)
-	if err != nil {
+	// Fail before serving when the remap file or a flag is malformed.
+	if _, err := reposForVault(*vault, repos); err != nil {
 		return err
 	}
 
@@ -331,19 +332,43 @@ func runWatch(args []string) error {
 	ctx, stop := cancelOnSignal()
 	defer stop()
 
-	opt := ingest.Options{Vault: *vault, Repos: replacements}
-	summary, err := ingest.Import(ctx, base, opt)
+	// One import at a time: the watcher and the UI ("link a folder") both trigger imports.
+	// The remap file is read again on every import so a folder linked from the UI applies at once.
+	var importing sync.Mutex
+	importNow := func(ctx context.Context) (ingest.Summary, error) {
+		importing.Lock()
+		defer importing.Unlock()
+		current, err := reposForVault(*vault, repos)
+		if err != nil {
+			return ingest.Summary{}, err
+		}
+		return ingest.Import(ctx, base, ingest.Options{Vault: *vault, Repos: current})
+	}
+	summary, err := importNow(ctx)
 	if err != nil {
 		return err
 	}
 	printSummary(summary)
+
+	server.EnableRepoLinking(api.RepoLinking{
+		Vault: *vault,
+		Reimport: func(ctx context.Context) error {
+			summary, err := importNow(ctx)
+			if err != nil {
+				return err
+			}
+			printSummary(summary)
+			server.Broadcaster().Announce(watch.Changes{Notes: summary.NotesWritten + summary.NotesDeleted, Commits: max(summary.Commits, 1)}.Tables()...)
+			return nil
+		},
+	})
 
 	go func() {
 		err := watch.Watch(ctx, watch.Options{
 			Vault: *vault,
 			Repos: func() []string { return repositoryPaths(ctx, base) },
 			Import: func(ctx context.Context) (watch.Changes, error) {
-				summary, err := ingest.Import(ctx, base, opt)
+				summary, err := importNow(ctx)
 				if err != nil {
 					return watch.Changes{}, err
 				}

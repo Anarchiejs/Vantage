@@ -31,7 +31,7 @@ test('figures, comparison, and week/month switch', async () => {
   fireEvent.click(screen.getByRole('button', {name: 'Month'}))
   expect(screen.getByText('Last 30 days / previous 30 days')).toBeTruthy()
   expect(screen.getByTitle(`Previous period: ${mock.previous_month.commits.toLocaleString('en-US')}`)).toBeTruthy()
-  expect(screen.getAllByRole('link', {name: 'Compass'})[0].getAttribute('href')).toBe('/projects/2')
+  expect(screen.getAllByRole('link', {name: /^Compass/})[0].getAttribute('href')).toBe('/projects/2')
 })
 test('empty lists and calendar are explicit', async () => {
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ok:true,json:async()=>({...mock,calendar:[],active:[],dormant:[],stale_cards:[]})}))
@@ -43,4 +43,12 @@ test('API error is readable', async () => {
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ok:false,status:503,json:async()=>({error:'Import unavailable'})}))
   render(<MemoryRouter><Home /></MemoryRouter>)
   expect((await screen.findByRole('alert')).textContent).toBe('Import unavailable')
+})
+test('a quiet week names the last commit instead of zeros', async () => {
+  const zero = { commits: 0, additions: 0, deletions: 0, sessions: 0, active_projects: 0 }
+  const calendar = mock.calendar.map((day, i) => ({ ...day, commits: i === 300 ? 3 : 0, projects: i === 300 ? ['Compass'] : [] }))
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({ ...mock, calendar, week: zero }) }))
+  render(<MemoryRouter><Home /></MemoryRouter>)
+  expect(await screen.findByText('A quiet week: nothing committed in the last 7 days.')).toBeTruthy()
+  expect(screen.getByRole('link', { name: 'Resume Compass →' }).getAttribute('href')).toBe('/projects/2')
 })

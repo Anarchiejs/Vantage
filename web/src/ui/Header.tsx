@@ -1,4 +1,6 @@
 import type { ReactNode } from 'react'
-export function Header({ title, description, action }: { title: string; description: string; action?: ReactNode }) {
-  return <header className="page-heading"><div><p className="eyebrow">YOUR DEVELOPMENT SPACE</p><h1>{title}</h1><p className="page-description">{description}</p></div>{action}</header>
+
+/** Page title. `eyebrow` is a short context line above it (the date on Home). */
+export function Header({ title, description, action, eyebrow }: { title: string; description?: string; action?: ReactNode; eyebrow?: string }) {
+  return <header className="page-heading"><div>{eyebrow && <p className="eyebrow">{eyebrow}</p>}<h1>{title}</h1>{description && <p className="page-description">{description}</p>}</div>{action}</header>
 }

@@ -14,6 +14,8 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    // The server's CSP allows fonts from 'self' only: keep font files as files, never data: URIs.
+    assetsInlineLimit: (file: string) => (/\.(woff2?|ttf|otf)$/.test(file) ? false : undefined),
     rolldownOptions: {
       output: {
         // Keep echarts and CodeMirror out of the route chunks. The chart

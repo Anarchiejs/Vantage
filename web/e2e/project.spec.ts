@@ -11,6 +11,6 @@ test('Atlas project: timeline, languages, and card health', async ({ page }) => 
   await expect(page.getByRole('heading', { name: 'Card health' })).toBeVisible()
   await expect(page.getByText('Stale')).toBeVisible()
   await expect(page.getByText('Reference unknown in the repository')).toBeVisible()
-  const languages = page.getByRole('img', { name: 'Share of lines of code by language' })
-  await expect(languages.locator('canvas')).toBeVisible()
+  await expect(page.getByRole('img', { name: 'Share of lines of code by language' })).toBeVisible()
+  await expect(page.getByRole('img', { name: 'Lines added and deleted per week' }).locator('canvas')).toBeVisible()
 })

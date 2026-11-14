@@ -25,5 +25,9 @@
       "folder": "AI",
       "degree": 2
     }
-  ]
+  ],
+  "project": {
+    "id": 4,
+    "name": "Harbor"
+  }
 }

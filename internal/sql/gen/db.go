@@ -147,6 +147,9 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.noteHashStmt, err = db.PrepareContext(ctx, noteHash); err != nil {
 		return nil, fmt.Errorf("error preparing query NoteHash: %w", err)
 	}
+	if q.noteProjectStmt, err = db.PrepareContext(ctx, noteProject); err != nil {
+		return nil, fmt.Errorf("error preparing query NoteProject: %w", err)
+	}
 	if q.periodStatsStmt, err = db.PrepareContext(ctx, periodStats); err != nil {
 		return nil, fmt.Errorf("error preparing query PeriodStats: %w", err)
 	}
@@ -171,6 +174,9 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.quietOutsideStatusStmt, err = db.PrepareContext(ctx, quietOutsideStatus); err != nil {
 		return nil, fmt.Errorf("error preparing query QuietOutsideStatus: %w", err)
 	}
+	if q.recentNotesStmt, err = db.PrepareContext(ctx, recentNotes); err != nil {
+		return nil, fmt.Errorf("error preparing query RecentNotes: %w", err)
+	}
 	if q.sankeyLinksStmt, err = db.PrepareContext(ctx, sankeyLinks); err != nil {
 		return nil, fmt.Errorf("error preparing query SankeyLinks: %w", err)
 	}
@@ -185,6 +191,9 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	}
 	if q.shortestPathStmt, err = db.PrepareContext(ctx, shortestPath); err != nil {
 		return nil, fmt.Errorf("error preparing query ShortestPath: %w", err)
+	}
+	if q.sourcesStmt, err = db.PrepareContext(ctx, sources); err != nil {
+		return nil, fmt.Errorf("error preparing query Sources: %w", err)
 	}
 	if q.staleCardsStmt, err = db.PrepareContext(ctx, staleCards); err != nil {
 		return nil, fmt.Errorf("error preparing query StaleCards: %w", err)
@@ -429,6 +438,11 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing noteHashStmt: %w", cerr)
 		}
 	}
+	if q.noteProjectStmt != nil {
+		if cerr := q.noteProjectStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing noteProjectStmt: %w", cerr)
+		}
+	}
 	if q.periodStatsStmt != nil {
 		if cerr := q.periodStatsStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing periodStatsStmt: %w", cerr)
@@ -469,6 +483,11 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing quietOutsideStatusStmt: %w", cerr)
 		}
 	}
+	if q.recentNotesStmt != nil {
+		if cerr := q.recentNotesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing recentNotesStmt: %w", cerr)
+		}
+	}
 	if q.sankeyLinksStmt != nil {
 		if cerr := q.sankeyLinksStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing sankeyLinksStmt: %w", cerr)
@@ -492,6 +511,11 @@ func (q *Queries) Close() error {
 	if q.shortestPathStmt != nil {
 		if cerr := q.shortestPathStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing shortestPathStmt: %w", cerr)
+		}
+	}
+	if q.sourcesStmt != nil {
+		if cerr := q.sourcesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing sourcesStmt: %w", cerr)
 		}
 	}
 	if q.staleCardsStmt != nil {
@@ -629,6 +653,7 @@ type Queries struct {
 	neighborsStmt                       *sql.Stmt
 	noteByIDStmt                        *sql.Stmt
 	noteHashStmt                        *sql.Stmt
+	noteProjectStmt                     *sql.Stmt
 	periodStatsStmt                     *sql.Stmt
 	projectAIStmt                       *sql.Stmt
 	projectByIDStmt                     *sql.Stmt
@@ -637,11 +662,13 @@ type Queries struct {
 	projectTechnologiesStmt             *sql.Stmt
 	projectsByAIStmt                    *sql.Stmt
 	quietOutsideStatusStmt              *sql.Stmt
+	recentNotesStmt                     *sql.Stmt
 	sankeyLinksStmt                     *sql.Stmt
 	searchStmt                          *sql.Stmt
 	setLinkTargetStmt                   *sql.Stmt
 	settingStmt                         *sql.Stmt
 	shortestPathStmt                    *sql.Stmt
+	sourcesStmt                         *sql.Stmt
 	staleCardsStmt                      *sql.Stmt
 	technologyTrendStmt                 *sql.Stmt
 	timelineStmt                        *sql.Stmt
@@ -700,6 +727,7 @@ func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 		neighborsStmt:                       q.neighborsStmt,
 		noteByIDStmt:                        q.noteByIDStmt,
 		noteHashStmt:                        q.noteHashStmt,
+		noteProjectStmt:                     q.noteProjectStmt,
 		periodStatsStmt:                     q.periodStatsStmt,
 		projectAIStmt:                       q.projectAIStmt,
 		projectByIDStmt:                     q.projectByIDStmt,
@@ -708,11 +736,13 @@ func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 		projectTechnologiesStmt:             q.projectTechnologiesStmt,
 		projectsByAIStmt:                    q.projectsByAIStmt,
 		quietOutsideStatusStmt:              q.quietOutsideStatusStmt,
+		recentNotesStmt:                     q.recentNotesStmt,
 		sankeyLinksStmt:                     q.sankeyLinksStmt,
 		searchStmt:                          q.searchStmt,
 		setLinkTargetStmt:                   q.setLinkTargetStmt,
 		settingStmt:                         q.settingStmt,
 		shortestPathStmt:                    q.shortestPathStmt,
+		sourcesStmt:                         q.sourcesStmt,
 		staleCardsStmt:                      q.staleCardsStmt,
 		technologyTrendStmt:                 q.technologyTrendStmt,
 		timelineStmt:                        q.timelineStmt,

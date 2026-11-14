@@ -25,6 +25,12 @@ type Config struct {
 	Today   func() string
 }
 
+// RepoLinking lets the UI record a repository folder for a project ("vantage watch" only).
+type RepoLinking struct {
+	Vault    string                          // vault root; the remap file is <Vault>/.vantage/repos
+	Reimport func(ctx context.Context) error // imports again after the remap file changed
+}
+
 // Server is Vantage's HTTP server.
 type Server struct {
 	cfg     Config
@@ -32,7 +38,11 @@ type Server struct {
 	updates *Broadcaster
 	// console limits simultaneous SQL queries (a token is held during execution).
 	console chan struct{}
+	linking *RepoLinking // nil: the server cannot change repository paths
 }
+
+// EnableRepoLinking turns on POST /api/projects/{id}/repo.
+func (s *Server) EnableRepoLinking(l RepoLinking) { s.linking = &l }
 
 // New prepares the server. Broadcaster() announces updates.
 func New(cfg Config) (*Server, error) {

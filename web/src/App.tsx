@@ -3,6 +3,9 @@ import { BrowserRouter, NavLink, Route, Routes, useNavigate, useLocation } from 
 import { Icon } from './ui/Icon'
 import { useTheme } from './theme/theme'
 import { Loading } from './ui/Status'
+import { useApi } from './api/useApi'
+import type { Status } from './api/types'
+import { BrandMark } from './ui/BrandMark'
 
 const Home = lazy(() => import('./pages/home/Home'))
 const Projects = lazy(() => import('./pages/project/Projects'))
@@ -24,16 +27,34 @@ const NAV = [
   { to: '/console', label: 'SQL console', icon: 'console' },
 ]
 
-/** Relays the server's SSE events as "vantage:update" (listened to by useApi). */
-function useLiveUpdates() {
+type Live = 'live' | 'offline' | 'static'
+
+/** Relays the server's SSE events as "vantage:update" (listened to by useApi), and reports the connection. */
+function useLiveUpdates(): Live {
+  const [live, setLive] = useState<Live>('static')
   useEffect(() => {
     if (import.meta.env.VITE_MOCK === '1' || typeof EventSource === 'undefined') return
     const source = new EventSource('/api/events')
+    source.onopen = () => setLive('live')
+    source.onerror = () => setLive('offline')
     source.addEventListener('update', (event) => {
+      setLive('live')
       window.dispatchEvent(new CustomEvent('vantage:update', { detail: JSON.parse((event as MessageEvent).data) }))
     })
     return () => source.close()
   }, [])
+  return live
+}
+
+const plural = (n: number, word: string) => `${n.toLocaleString('en-US')} ${word}${n === 1 ? '' : 's'}`
+
+/** Sidebar line: what the import tracks, and whether live updates are flowing. */
+function SourceStatus({ live }: { live: Live }) {
+  const status = useApi<Status>('/api/status')
+  if (status.status !== 'ok') return null
+  const { repositories, notes } = status.data
+  const label = live === 'live' ? 'Watching' : live === 'offline' ? 'Disconnected from' : 'Tracking'
+  return <div className="source-status" role="status"><span className="live-dot" data-state={live} aria-hidden="true" /><span>{label} {plural(repositories, 'repo')} &amp; {plural(notes, 'note')}</span></div>
 }
 
 /** Global shortcuts: Ctrl+K opens the palette, "/" goes to search. */
@@ -61,7 +82,7 @@ function Frame() {
   useEffect(() => { window.scrollTo(0, 0) }, [pathname])
   const [theme, toggle] = useTheme()
   const [palette, setPalette] = useState(false)
-  useLiveUpdates()
+  const live = useLiveUpdates()
   useShortcuts(() => setPalette(true))
   // The palette (or any page) toggles the theme by emitting this event.
   useEffect(() => {
@@ -76,10 +97,9 @@ function Frame() {
       <a className="skip-link" href="#content">Skip to content</a>
       <nav aria-label="Main" className="app-sidebar">
         <div className="brand">
-          <span className="brand-mark">◉</span>
-          <div><span className="font-semibold">Vantage</span><small>The thread of your projects</small></div>
+          <BrandMark />
+          <span>Vantage</span>
         </div>
-        <p className="nav-caption">WORKSPACE</p>
         <div className="nav-links">
         {NAV.map((item) => (
           <NavLink
@@ -95,13 +115,13 @@ function Frame() {
         ))}
         </div>
         <div className="sidebar-bottom">
-          <div className="local-note"><span>◎</span><div>Your activity, in one place.<small>Git repositories and an Obsidian vault</small></div></div>
+          <SourceStatus live={live} />
           <button
             type="button"
             onClick={() => setPalette(true)}
             className="sidebar-command"
           >
-            Commands <kbd className="font-mono">Ctrl K</kbd>
+            Commands <kbd>Ctrl K</kbd>
           </button>
           <button type="button" onClick={toggle} className="sidebar-command">
             <Icon name={theme === 'light' ? 'moon' : 'sun'} />
@@ -110,7 +130,7 @@ function Frame() {
         </div>
       </nav>
       <div className="app-workspace">
-      <div className="app-topbar"><span>My Vantage <span className="text-muted">/ {current}</span></span><button onClick={() => setPalette(true)} className="top-search"><Icon name="search" /> Search… <kbd>Ctrl K</kbd></button></div>
+      <div className="app-topbar"><span className="crumbs">Vantage <span aria-hidden="true">/</span> <b>{current}</b></span><button type="button" aria-label="Command palette (Ctrl K)" onClick={() => setPalette(true)} className="top-search"><Icon name="search" /><span>Search notes, projects, commits…</span><kbd>Ctrl K</kbd></button></div>
       <main id="content" className="app-main">
         <Suspense fallback={<Loading lines={6} />}>
           <Routes>

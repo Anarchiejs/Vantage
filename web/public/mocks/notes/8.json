@@ -19,5 +19,9 @@
       "folder": "AI",
       "degree": 2
     }
-  ]
+  ],
+  "project": {
+    "id": 7,
+    "name": "Quartz"
+  }
 }

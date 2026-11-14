@@ -19,5 +19,9 @@
       "folder": "AI",
       "degree": 3
     }
-  ]
+  ],
+  "project": {
+    "id": 8,
+    "name": "Sable"
+  }
 }

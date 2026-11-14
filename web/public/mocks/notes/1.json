@@ -49,5 +49,9 @@
       "folder": "Sessions",
       "degree": 2
     }
-  ]
+  ],
+  "project": {
+    "id": 1,
+    "name": "Atlas"
+  }
 }

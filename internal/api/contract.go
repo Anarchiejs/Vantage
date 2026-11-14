@@ -56,10 +56,21 @@ type Home struct {
 	PreviousWeek  Stats            `json:"previous_week"`
 	Month         Stats            `json:"month"`
 	PreviousMonth Stats            `json:"previous_month"`
+	Year          Stats            `json:"year"`
+	PreviousYear  Stats            `json:"previous_year"`
 	Active        []ActiveProject  `json:"active"`
 	Dormant       []DormantProject `json:"dormant"`
 	StaleCards    []StaleCard      `json:"stale_cards"`
 	QuietHidden   int64            `json:"quiet_hidden"`
+	RecentNotes   []RecentNote     `json:"recent_notes"`
+}
+
+// RecentNote is a dated note for the home page: a session date or the note's updated date.
+type RecentNote struct {
+	ID     int64  `json:"id"`
+	Title  string `json:"title"`
+	Folder string `json:"folder"`
+	Day    string `json:"day"`
 }
 
 // ---- GET /api/projects and /api/projects/{id}
@@ -236,6 +247,33 @@ type NoteDetail struct {
 	Content     string      `json:"content"`
 	Neighbors   []GraphNode `json:"neighbors"`
 	ObsidianURL string      `json:"obsidian_url"`
+	Project     *ProjectRef `json:"project"` // project the note belongs to, or null
+}
+
+// ProjectRef names a project without its details.
+type ProjectRef struct {
+	ID   int64  `json:"id"`
+	Name string `json:"name"`
+}
+
+// ---- GET /api/status
+
+// Status describes what Vantage tracks and what the server can change.
+type Status struct {
+	Repositories int64  `json:"repositories"`
+	Notes        int64  `json:"notes"`
+	Vault        string `json:"vault"`          // vault name, empty when unknown
+	CanLinkRepos bool   `json:"can_link_repos"` // true under "vantage watch"
+}
+
+// ---- POST /api/projects/{id}/repo
+
+type LinkRepoRequest struct {
+	Path string `json:"path"` // absolute folder of a Git repository
+}
+
+type LinkRepoResponse struct {
+	SourcePath string `json:"source_path"`
 }
 
 // ---- GET /api/repos

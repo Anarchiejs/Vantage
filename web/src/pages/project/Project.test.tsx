@@ -4,7 +4,7 @@ import { afterEach, expect, test, vi } from 'vitest'
 import detail from '../../../public/mocks/projects/1.json'
 import list from '../../../public/mocks/projects.json'
 import type { ProjectDetail, ProjectSummary, TimelineEvent } from '../../api/types'
-import Project, { CardHealth, Timeline, filterTimeline } from './Project'
+import Project, { CardHealth, LanguageBar, LinkFolder, Timeline, filterTimeline, projectFigures } from './Project'
 import Projects, { sortProjects } from './Projects'
 
 vi.mock('../../ui/Chart', () => ({ Chart: () => <div aria-label="Chart" /> }))
@@ -75,4 +75,40 @@ test('project page shows the card and its source path', async () => {
   expect(await screen.findByRole('heading', { name: 'Atlas' })).toBeTruthy()
   expect(screen.getAllByText('C:/dev/Atlas').length).toBeGreaterThan(0)
   expect(screen.getByText('Up to date')).toBeTruthy()
+})
+
+test('figures come from the weekly volume', () => {
+  const figures = projectFigures({ ...project, volume: [
+    { week: '2026-01-05', commits: 0, additions: 0, deletions: 0 },
+    { week: '2026-01-12', commits: 2, additions: 9, deletions: 1 },
+    { week: '2026-01-19', commits: 3, additions: 15, deletions: 0 },
+  ] })
+  expect(figures.activeWeeks).toBe(2)
+  expect(figures.totalWeeks).toBe(3)
+  expect(figures.peak?.week).toBe('2026-01-19')
+})
+
+test('languages show as a labelled bar, largest first', () => {
+  render(<LanguageBar languages={[{ language: 'TypeScript', code_lines: 10, share: 0.1 }, { language: 'Go', code_lines: 90, share: 0.9 }]} />)
+  expect(screen.getByRole('img', { name: 'Share of lines of code by language' })).toBeTruthy()
+  expect(screen.getAllByRole('listitem').map(item => item.textContent)).toEqual(['Go90 lines90%', 'TypeScript10 lines10%'])
+})
+
+test('a missing source path explains how to link the folder', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({ repositories: 1, notes: 1, vault: '', can_link_repos: false }) }))
+  render(<LinkFolder project={{ ...project.project, source_path: null }} onLinked={() => {}} />)
+  expect(screen.getByText('No source folder linked.')).toBeTruthy()
+  expect(screen.queryByRole('button', { name: 'Link a folder' })).toBeNull()
+})
+
+test('a folder can be linked under vantage watch', async () => {
+  const fetch = vi.fn(async (url: string) => ({ ok: true, json: async () => url === '/api/status' ? { repositories: 1, notes: 1, vault: '', can_link_repos: true } : { source_path: '/code/atlas' } }))
+  vi.stubGlobal('fetch', fetch)
+  const linked = vi.fn()
+  render(<LinkFolder project={{ ...project.project, source_path: null }} onLinked={linked} />)
+  fireEvent.click(await screen.findByRole('button', { name: 'Link a folder' }))
+  fireEvent.change(screen.getByLabelText('Repository folder'), { target: { value: '/code/atlas' } })
+  fireEvent.click(screen.getByRole('button', { name: 'Link and import' }))
+  await vi.waitFor(() => expect(linked).toHaveBeenCalled())
+  expect(fetch).toHaveBeenCalledWith(`/api/projects/${project.project.id}/repo`, expect.objectContaining({ method: 'POST', body: JSON.stringify({ path: '/code/atlas' }) }))
 })

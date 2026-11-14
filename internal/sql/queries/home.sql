@@ -67,3 +67,14 @@ LEFT JOIN commit_git v ON v.sha=(SELECT c.sha FROM commit_git c WHERE c.reposito
 WHERE d.last_imported_sha IS NOT NULL AND
  (p.verified_commit IS NULL OR p.verified_commit='' OR substr(d.last_imported_sha,1,length(p.verified_commit))<>p.verified_commit)
 ORDER BY p.name, d.id;
+
+-- name: RecentNotes :many
+-- Six latest dated notes: a session uses its date, any other note its updated date. Undated notes are skipped.
+SELECT n.id, n.title, n.folder, CAST(coalesce(s.date, n.updated) AS TEXT) AS day
+FROM note n LEFT JOIN session s ON s.note_id = n.id
+WHERE coalesce(s.date, n.updated) IS NOT NULL
+ORDER BY day DESC, n.title LIMIT 6;
+
+-- name: Sources :one
+-- What the import tracks, for the sidebar status line.
+SELECT (SELECT count(*) FROM repository) AS repositories, (SELECT count(*) FROM note) AS notes;

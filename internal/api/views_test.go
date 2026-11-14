@@ -193,7 +193,8 @@ func TestContractMirror(t *testing.T) {
 	for _, v := range []any{APIError{}, ActivityDay{}, Stats{}, ActiveProject{}, DormantProject{}, StaleCard{}, Home{},
 		ProjectSummary{}, TimelineEvent{}, WeeklyVolume{}, LanguageShare{}, LanguagePoint{}, Hotspot{}, Health{}, AIActivity{},
 		CommitSince{}, ProjectDetail{}, SankeyNode{}, SankeyLink{}, TechTrend{}, Technologies{}, Assistant{}, GraphNode{}, Graph{}, GraphPath{},
-		NoteDetail{}, RepoFile{}, RepoCard{}, SearchHit{}, SQLRequest{}, SQLResult{}, SchemaTable{}, SavedQuery{}, UpdateEvent{}} {
+		NoteDetail{}, RepoFile{}, RepoCard{}, SearchHit{}, SQLRequest{}, SQLResult{}, SchemaTable{}, SavedQuery{}, UpdateEvent{},
+		RecentNote{}, ProjectRef{}, Status{}, LinkRepoRequest{}, LinkRepoResponse{}} {
 		types[reflect.TypeOf(v).Name()] = reflect.TypeOf(v)
 	}
 	if len(blocks) < 25 {

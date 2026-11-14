@@ -122,6 +122,7 @@ func TestExpectations(t *testing.T) {
 		{"GraphNodes", nil}, {"GraphLinks", nil}, {"BrokenLinks", nil}, {"NoteByID", note}, {"Neighbors", note},
 		{"ShortestPath", gen.ShortestPathParams{StartID: note, EndID: concept}},
 		{"Search", gen.SearchParams{Terms: "naive", RowLimit: 20}},
+		{"RecentNotes", nil}, {"Sources", nil}, {"NoteProject", note},
 	}
 	var plans []string
 	for _, c := range cases {

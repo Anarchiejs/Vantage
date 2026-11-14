@@ -11,6 +11,11 @@ The project is now named Vantage. It is a local application built for Obsidian. 
 - `start.sh` remembers the vault path (`$XDG_DATA_HOME/vantage/vault.txt` on Linux, `~/Library/Application Support/Vantage/vault.txt` on macOS). If a path was stored under the previous Observatoire directory, the start script still reads it, warns, and then writes the Vantage location.
 - CI runs on Ubuntu, macOS, and Windows. Web unit tests run on all three. Playwright end-to-end tests run on Ubuntu.
 - `go test ./...` creates `testdata/repos` when the fixture repositories are missing.
+- Visual refresh of the UI: Inter and JetBrains Mono are bundled, text colors pass WCAG AA in both themes, chart colors pass 3:1, three corner radii instead of seven, a drawn logo and favicon, and a 56 px top bar with a real search field.
+- Home: a "quiet week" banner names the last commit and its project instead of a row of zeros; key figures gain a Year period and a 12-month total under each figure; the calendar comes first and the daily chart uses bars; a "Latest notes & sessions" card.
+- Project page: a status pill, four figures (last commit, commits, active weeks, peak week), deletions drawn below the axis, languages as a labelled bar, and a "Link a folder" action. Under `watch`, it writes `Name=path` into `<vault>/.vantage/repos` (other lines are kept) and imports again.
+- Graph: labels beside the nodes, the same color for a folder in the filter, the legend and the panel, note counts per folder, zoom buttons, notes outside the selection faded, and a link from a note to its project page.
+- API: `GET /api/status`; `POST /api/projects/{id}/repo`; `year`, `previous_year` and `recent_notes` on `/api/home`; `project` on `/api/notes/{id}`.
 
 ### Fixed
 

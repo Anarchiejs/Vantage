@@ -52,10 +52,20 @@ export interface Home {
   previous_week: Stats
   month: Stats // last 30 days
   previous_month: Stats
+  year: Stats // last 365 days
+  previous_year: Stats
   active: ActiveProject[]
   dormant: DormantProject[] // status "in progress" with no commit for more than 30 days
   stale_cards: StaleCard[]
   quiet_hidden: number // quiet cards hidden because status is outside the watched set
+  recent_notes: RecentNote[] // six latest dated notes
+}
+
+export interface RecentNote {
+  id: number
+  title: string
+  folder: string
+  day: string // session date, or the note's updated date
 }
 
 // ---- GET /api/projects and /api/projects/{id} ------------------------------
@@ -207,6 +217,29 @@ export interface NoteDetail {
   content: string
   neighbors: GraphNode[]
   obsidian_url: string
+  project: ProjectRef | null // project the note belongs to
+}
+
+export interface ProjectRef {
+  id: number
+  name: string
+}
+
+// ---- GET /api/status and POST /api/projects/{id}/repo ----------------------
+
+export interface Status {
+  repositories: number
+  notes: number
+  vault: string // vault name, empty when unknown
+  can_link_repos: boolean // true under "vantage watch"
+}
+
+export interface LinkRepoRequest {
+  path: string // absolute folder of a Git repository
+}
+
+export interface LinkRepoResponse {
+  source_path: string
 }
 
 export interface RepoFile {

@@ -19,5 +19,9 @@
       "folder": "AI",
       "degree": 4
     }
-  ]
+  ],
+  "project": {
+    "id": 1,
+    "name": "Atlas"
+  }
 }

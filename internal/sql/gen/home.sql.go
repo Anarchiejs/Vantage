@@ -214,6 +214,66 @@ func (q *Queries) QuietOutsideStatus(ctx context.Context, today *string) (int64,
 	return count, err
 }
 
+const recentNotes = `-- name: RecentNotes :many
+SELECT n.id, n.title, n.folder, CAST(coalesce(s.date, n.updated) AS TEXT) AS day
+FROM note n LEFT JOIN session s ON s.note_id = n.id
+WHERE coalesce(s.date, n.updated) IS NOT NULL
+ORDER BY day DESC, n.title LIMIT 6
+`
+
+type RecentNotesRow struct {
+	ID     int64  `json:"id"`
+	Title  string `json:"title"`
+	Folder string `json:"folder"`
+	Day    string `json:"day"`
+}
+
+// Six latest dated notes: a session uses its date, any other note its updated date. Undated notes are skipped.
+func (q *Queries) RecentNotes(ctx context.Context) ([]RecentNotesRow, error) {
+	rows, err := q.query(ctx, q.recentNotesStmt, recentNotes)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []RecentNotesRow
+	for rows.Next() {
+		var i RecentNotesRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Title,
+			&i.Folder,
+			&i.Day,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const sources = `-- name: Sources :one
+SELECT (SELECT count(*) FROM repository) AS repositories, (SELECT count(*) FROM note) AS notes
+`
+
+type SourcesRow struct {
+	Repositories int64 `json:"repositories"`
+	Notes        int64 `json:"notes"`
+}
+
+// What the import tracks, for the sidebar status line.
+func (q *Queries) Sources(ctx context.Context) (SourcesRow, error) {
+	row := q.queryRow(ctx, q.sourcesStmt, sources)
+	var i SourcesRow
+	err := row.Scan(&i.Repositories, &i.Notes)
+	return i, err
+}
+
 const staleCards = `-- name: StaleCards :many
 SELECT p.id, p.name, p.verified_commit, d.last_imported_sha AS last_sha,
  CAST(CASE WHEN v.sha IS NULL THEN -1 ELSE

@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import type { Graph as GraphData } from '../../api/types'
-import { mockPath, nodeSize, selectedNote } from './Graph'
+import { folderColors, folderLabel, mockPath, nodeSize, selectedNote } from './Graph'
 
 const node = (id: number, title: string): GraphData['nodes'][number] => ({ id, title, path: `Projects/${title}.md`, folder: 'Projects', degree: 1 })
 
@@ -28,4 +28,12 @@ test('mock path walks links in either direction', () => {
   expect(mockPath(graph, 1, 3).path.map(item => item.title)).toEqual(['Atlas', 'Compass', 'Harbor'])
   expect(mockPath(graph, 3, 1).path.map(item => item.id)).toEqual([3, 2, 1])
   expect(mockPath(graph, 1, 99).path).toEqual([])
+})
+
+test('folder colors do not depend on the folders shown', () => {
+  for (let i = 1; i <= 8; i++) document.documentElement.style.setProperty(`--series-${i}`, `#00000${i}`)
+  const colorOf = folderColors(['Sessions', '', 'Projects'])
+  expect(folderLabel('')).toBe('Vault root')
+  expect(new Set(['', 'Projects', 'Sessions'].map(colorOf)).size).toBe(3)
+  expect(folderColors(['Projects', 'Sessions', ''])('Projects')).toBe(colorOf('Projects'))
 })

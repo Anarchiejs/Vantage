@@ -31,5 +31,9 @@
       "folder": "AI",
       "degree": 4
     }
-  ]
+  ],
+  "project": {
+    "id": 2,
+    "name": "Compass"
+  }
 }
